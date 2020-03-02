@@ -50,3 +50,4 @@
 * https://d0.awsstatic.com/events/aws-hosted-events/2017/US/GameDay.pdf
 * https://jon.sprig.gs/blog/post/1238
 * https://aws.amazon.com/de/blogs/apn/how-we-rebuilt-a-mythical-startup-at-aws-gameday/
+* https://github.com/fedorovdima/aws-gameday/blob/master/runbook.md
