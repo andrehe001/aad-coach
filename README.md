@@ -58,7 +58,7 @@ Ich würde gerne auch haben, das ein sehr Dev oder data lastiges Team auf seine 
 
 ### Background
 * [Microsoft OpenHack](https://openhack.microsoft.com/)
-** [Github repos](https://github.com/Azure-Samples?utf8=%E2%9C%93&q=openhack&type=&language=)
+  * [Github repos](https://github.com/Azure-Samples?utf8=%E2%9C%93&q=openhack&type=&language=)
 * [Microsoft Cloud Workshop (MCW)](https://microsoftcloudworkshop.com/)
 * [WhatTheHack](https://github.com/microsoft/whatthehack)
 
