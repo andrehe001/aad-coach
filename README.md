@@ -37,6 +37,7 @@ ich wollte auch gerade zu klein gesetzte resource limits setzen damit die contai
 * Narrative: You have to define against agressive consumers and defend your application against DDOS
 * Tech: Using Azure Security Center - Pod Security Policy to ensure an bad executable cannot be executed/gain root access
 * Tech: Ensure throttling of requests coming from the same ip to ensure availability
+
 Hab so ne geile Idee wegen Security und Monitoring: wir packen ins basis Image ne exe die raustelefoniert und in der security phase einen account anlegt, um dann diesen zu nutzen wahllos dinge zu zerstören im Cluster xD 
 
 Dh K8s API Firewall kann helfen, vernünftiges RBAC kann helfen, Pod Sec Policy kann helfen 
@@ -46,12 +47,16 @@ Das mit den resource limits auf jeden Fall, ist dann monitoring: warum werden me
 
 #### 6. Phase: Cost
 wir schreiben code der bspw besonders CPU intensiv ist, nutzen aber default VMs due nicht CPU lastig sind, dann müssen sie im laufenden einen neuen node Pool erstellen und alles rüber schieben
+Kosten sollten keine eigene Challenge sein - wir messen die Kosten ab der Monitoring Challenge immer mit und bewerten dann am Ende.
 
 Was ist nicht weiß : wie bekommen wir die kosten, bei sponsored subscriptions gehen die cost APIs nicht
     aber ich würde das problem im Cluster lösen - mit KubeCost
     es geht ja um die Pods im Cluster und nicht direkt um die azure kosten
 
-#### Ongoing: Dev Challenge
+#### 7. Phase: Intelligence
+* Narrative: Win against the computer and be better than your competition
+* Tech: We will send the name of the algorithm in the header of each post. Teams can find out through the logs on how to beat each algorithm by statistics. The challenge can be solved by either building your own smart algorithm or hosting multiple algorithm in cluster cluster and route the request (by logic in the ingress controller) to the one that is most likely going to win against the opponent. So both dev and ops people can win here.
+
 Ich würde gerne auch haben, das ein sehr Dev oder data lastiges Team auf seine Kosten kommt.... Bspw in dem sie AI über die Anfragen laufen lassen und so rausfinden können wie der "Algorithmus" der Kunden ist um öfter zu gewinnen
 
 
