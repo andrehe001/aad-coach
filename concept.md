@@ -15,7 +15,7 @@ A rough agenda could look like:
 
 The Game Play itself will have a six-phase narrative around Deployment, Scaling, Change Management, Monitoring, Security, and Cost Optimization.
 A Leaderboard at the front will always show how many points each team have.
-The score calculation will be based on a couple of metrics also visible to the teams: Requests/s, Latency, Azure Costs/h, Game Revenue, etc.
+The score calculation will be based on a couple of metrics also visible to the teams: Requests/s, Availability, Latency, Azure Costs/h, Game Revenue, etc.
 
 An instructor system will be deployed beforehand and run during the event to facilitate the phases and leaderboard functionality.
 
@@ -48,7 +48,7 @@ The theme and thus also the narrative, the challenges and marketing materials wi
 
 ## Milestones
 1. Pilot delivery at Bosch in April
-2. Second pilot delivery in May
+2. Second pilot delivery in May (cloud native day in cologne on the 5th of May with 60 people?)
 3. Releasing it to the public across CSAs, GBBs, WW Azure DL in June
 4. Internal delivery at Ready, Las Vegas, in July
 
