@@ -18,19 +18,22 @@
 * Narrative: It was all deleted after the most important team member left the team - it was his last fight -.-
 * Tech: Terraform templates are already there, just needs to be executed
 
-#### 2. Phase: Scaling
-* Narrative: A bunch of tweets are hitting up right after going online again - alle your fans in the world are trying to access the side again
-* Tech: Scale pod and node count automatically
-
-#### 3. Phase: Change
+#### 2. Phase: Change
 * Narrative: Multiple support tickets are coming up, asking for a feature which was already there last week. It seems the deployment was not using the latest codebase.
 * Tech: Deploy new version of code without any downtime
+* Builtin Challenge: Learn how to define readiness probes, initialDelaySeconds and upgrade strategy. Learn how to build and deploy containers using github actions.
 
-#### 4. Phase: Monitoring
+#### 3. Phase: Monitoring
 *AWS is doing a decoupling phase here - we are thinking about replacing it with this monitoring phase*
-* Narrative: Understand performance metrics of your application, identify issues and ensure economic scaling
-* Tech: Ensure resource quotas and vm types that are just big enough and scale fast. Potentially evaluate virtual nodes?
-ich wollte auch gerade zu klein gesetzte resource limits setzen damit die container unter hoher Memory Last gekillt werden
+* Narrative: Understand performance metrics of your application, identify issues and ensure economic scaling. 
+* Tech: Ensure resource quotas and vm types that are just big enough and scale fast.
+* Tech: Use application insights codeless attach to evaluate performance inside the cluster.
+* Builtin Challenge: The resource quota for some pods will be too small (pods get kill) and others will be too big (waste).
+
+#### 4. Phase: Scaling
+* Narrative: A bunch of tweets are hitting up right after going online again - alle your fans in the world are trying to access the side again. KubeCost https://github.com/hjacobs/kube-resource-report will be used for measuring economics.
+* Tech: Potentially evaluate virtual nodes?
+* Tech: Scale pod and node count automatically
 
 #### 5. Phase: Security
 * Narrative: We got an email - a hacker want 1 million dollor from us, otherwise he will 
@@ -40,18 +43,11 @@ ich wollte auch gerade zu klein gesetzte resource limits setzen damit die contai
 
 Hab so ne geile Idee wegen Security und Monitoring: wir packen ins basis Image ne exe die raustelefoniert und in der security phase einen account anlegt, um dann diesen zu nutzen wahllos dinge zu zerstören im Cluster xD 
 
-Dh K8s API Firewall kann helfen, vernünftiges RBAC kann helfen, Pod Sec Policy kann helfen 
-
 den fall oben könnte man regeln indem man den pod nur mit berechtigen deployt der keine berechtigungen auf der kubernetes api hat
-Das mit den resource limits auf jeden Fall, ist dann monitoring: warum werden meine pods gekillt
 
 #### 6. Phase: Cost
 wir schreiben code der bspw besonders CPU intensiv ist, nutzen aber default VMs due nicht CPU lastig sind, dann müssen sie im laufenden einen neuen node Pool erstellen und alles rüber schieben
 Kosten sollten keine eigene Challenge sein - wir messen die Kosten ab der Monitoring Challenge immer mit und bewerten dann am Ende.
-
-Was ist nicht weiß : wie bekommen wir die kosten, bei sponsored subscriptions gehen die cost APIs nicht
-    aber ich würde das problem im Cluster lösen - mit KubeCost
-    es geht ja um die Pods im Cluster und nicht direkt um die azure kosten
 
 #### 7. Phase: Intelligence
 * Narrative: Win against the computer and be better than your competition
