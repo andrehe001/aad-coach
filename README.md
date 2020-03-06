@@ -28,13 +28,15 @@
 
 #### 4. Phase: Monitoring
 *AWS is doing a decoupling phase here - we are thinking about replacing it with this monitoring phase*
-
+* Narrative: Understand performance metrics of your application, identify issues and ensure economic scaling
+* Tech: Ensure resource quotas and vm types that are just big enough and scale fast. Potentially evaluate virtual nodes?
 ich wollte auch gerade zu klein gesetzte resource limits setzen damit die container unter hoher Memory Last gekillt werden
 
 #### 5. Phase: Security
 * Narrative: We got an email - a hacker want 1 million dollor from us, otherwise he will 
+* Narrative: You have to define against agressive consumers and defend your application against DDOS
 * Tech: Using Azure Security Center - Pod Security Policy to ensure an bad executable cannot be executed/gain root access
-
+* Tech: Ensure throttling of requests coming from the same ip to ensure availability
 Hab so ne geile Idee wegen Security und Monitoring: wir packen ins basis Image ne exe die raustelefoniert und in der security phase einen account anlegt, um dann diesen zu nutzen wahllos dinge zu zerstören im Cluster xD 
 
 Dh K8s API Firewall kann helfen, vernünftiges RBAC kann helfen, Pod Sec Policy kann helfen 
