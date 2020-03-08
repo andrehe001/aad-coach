@@ -11,12 +11,12 @@
   * min. 12 (3 teams a 4)
   * max. 48 (12 teams a 4)
 * Azure Subscriptions: Lab Service (Dennis knows more about it)
-* Prerequisite: [AZ-900 Microsoft Azure Fundamentals](https://docs.microsoft.com/en-us/learn/certifications/exams/az-900) or [Azure Fundamentals Online Learning Path](https://docs.microsoft.com/en-us/learn/paths/azure-fundamentals/)
+* Prerequisite: [AZ-900 Microsoft Azure Fundamentals](https://docs.microsoft.com/en-us/learn/certifications/exams/az-900) or [Azure Fundamentals Online Learning Path](https://docs.microsoft.com/en-us/learn/paths/azure-fundamentals/), or [other Azure certificates](https://www.microsoft.com/en-us/learning/azure-exams.aspx)
 
 ### Phases:
 #### 1. Phase: Deployment
 * Narrative: It was all deleted after the most important team member left the team - it was his last fight -.-
-* Tech: Terraform templates are already there, just needs to be executed
+* Tech: Terraform templates are already there, just needs to be processed
 
 #### 2. Phase: Change
 * Narrative: Multiple support tickets are coming up, asking for a feature which was already there last week. It seems the deployment was not using the latest codebase.
@@ -36,7 +36,7 @@
 * Tech: Scale pod and node count automatically
 
 #### 5. Phase: Security
-* Narrative: We got an email - a hacker want 1 million dollor from us, otherwise he will 
+* Narrative: We got an email - a hacker want 1 million dollor from us, otherwise he will attack the service
 * Narrative: You have to define against agressive consumers and defend your application against DDOS
 * Tech: Using Azure Security Center - Pod Security Policy to ensure an bad executable cannot be executed/gain root access
 * Tech: Ensure throttling of requests coming from the same ip to ensure availability
@@ -54,6 +54,17 @@ Kosten sollten keine eigene Challenge sein - wir messen die Kosten ab der Monito
 * Tech: We will send the name of the algorithm in the header of each post. Teams can find out through the logs on how to beat each algorithm by statistics. The challenge can be solved by either building your own smart algorithm or hosting multiple algorithm in cluster cluster and route the request (by logic in the ingress controller) to the one that is most likely going to win against the opponent. So both dev and ops people can win here.
 
 Ich würde gerne auch haben, das ein sehr Dev oder data lastiges Team auf seine Kosten kommt.... Bspw in dem sie AI über die Anfragen laufen lassen und so rausfinden können wie der "Algorithmus" der Kunden ist um öfter zu gewinnen
+
+Mir fehlt noch ein bisschen der Gamification Faktor. Bei AWS ist es so, dass man am Ende Punkte einsammelt, wenn die Applikation live ist. Der Service generiert quasi selber Punkte. Und wenn er skaliert eben noch mehr.
+Ich fände es aber super, wenn man am Ende jeder Phase 1. Punkte bekommen kann, je nachdem wie gut man etwas gemacht hat zwischen 0 und 100 vielleicht und 2. wenn man awards zwischendurch für besondere Leistungen bekommen kann. Zb. AI Award für das Beispiel oben drüber.
+Man müsste mal schauen, wie man sowas vorbereiten kann. Ansonsten ist der manuelle Aufwand für die Bewertung zu hoch. Aber ich glaube das würde dem Namen Game Day eben besonders gerecht werden.
+
+Auf jeden Fall bräuchten wir extra sticker für den Gameday, für den ausgedachten Service auch (vielleicht fällt uns was besseres als Contoso ein) und für die Awards. NAja und logischerweise für die Azure Services + Github.
+
+Lass uns bitte noch nächste Woche ein paar Tage dran arbeiten und nicht Montag direkt rausschicken.
+Generell würde ich sagen, dass das hier ein Cloud native GameDay ist. Man könnte auch GameDays für andere Themengebiete erarbeiten.
+Bin auf jeden Fall dabei!
+
 
 
 ## Resources
