@@ -62,7 +62,15 @@ Background: Limit Sessions per Pod (based on memory)
 #### 5. Phase: Security
 * Narrative: We got an email - a hacker want 1 million dollor from us, otherwise he will attack the service
 * Tech: Using Azure Security Center - Pod Security Policy to ensure an bad executable cannot be executed/gain root access
+  * "Pod Security Policies should be defined to reduce the attack vector by removing unnecessary application privileges"
+  * "Privileged command run in container"
 * Tech: Using Azure Security Center - Pod as Cluster Admin
+  * "Role binding to the cluster-admin role detected"
+  * "Suspicious request to Kubernetes API"
+* AKS Security Center Ref:  
+  * [Container recommendations](https://docs.microsoft.com/en-us/azure/security-center/recommendations-reference#recs-containers)
+  * [Alerts for containers - AKS clusters](https://docs.microsoft.com/en-us/azure/security-center/alerts-reference#alerts-akscluster)
+  * [Alerts for containers - host level](https://docs.microsoft.com/en-us/azure/security-center/alerts-reference#alerts-containerhost)
 * Tech: App Gateway WAF needs to be enabled (SQL injection)
 
 Hab so ne geile Idee wegen Security und Monitoring: wir packen ins basis Image ne exe die raustelefoniert und in der security phase einen account anlegt, um dann diesen zu nutzen wahllos dinge zu zerstören im Cluster xD 
