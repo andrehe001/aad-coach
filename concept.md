@@ -55,7 +55,7 @@ The theme and thus also the narrative, the challenges and marketing materials wi
 ## Background
 The term *GameDay* was coined by [Jesse Robbins](https://en.wikipedia.org/wiki/Jesse_Robbins) when he worked at Amazon as Master of Disaster and was responsible for availability. Jesse created GameDays with the goal of increasing reliability by purposefully creating major failures on a regular basis. They also help facilitate the value of Chaos Engineering. Typically, a GameDay would run between 2-4 hours, and involve a team of engineers who either develop an application, or support it, but ideally it involved members from both sides of an application.
 
-The idea of GameDays also has catched up with other scenarios as availability and is also be used as an effective training mechanism beside Chaos Engineering to simulate systems, process, and team responses. Having GameDays specific for security, performance, scalability, cost optimization, or operations in general can bring a huge value to the teams, processes and applications involved.
+The idea of GameDays also has catched up with other scenarios as availability and is be used as an effective training mechanism beside Chaos Engineering to simulate systems, process, and team responses. Having GameDays specific for security, performance, scalability, cost optimization, or operations in general can bring a huge value to the teams, processes and applications involved.
 
 ## Team
 * Dennis Zielke, GBB
