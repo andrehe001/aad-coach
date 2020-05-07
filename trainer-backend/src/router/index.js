@@ -21,7 +21,14 @@ Vue.use(VueRouter)
   {
     path: '/leaderboard',
     name: 'Leaderboard',
+    meta: { layout: 'main' },
     component: () => import(/* webpackChunkName: "leaderboard" */ '../views/Leaderboard.vue')
+  },
+  {
+    path: '/team-details',
+    name: 'Team Details',
+    meta: { layout: 'console' },
+    component: () => import(/* webpackChunkName: "team-details" */ '../views/TeamDetails.vue')
   }
 ]
 

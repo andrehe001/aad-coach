@@ -16,7 +16,7 @@
         class="footer-text-link"
         target="_blank"
         href="https://privacy.microsoft.com/en-gb/privacystatement"
-      >Privacy</a>
+      >Privacy</a>&nbsp;
       <a
         class="footer-text-link"
         target="_blank"

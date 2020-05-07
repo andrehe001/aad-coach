@@ -7,6 +7,55 @@
   margin: 10px;
 }
 
+.console-screen.stats {
+  max-width: 400px;
+}
+
+.team-details {
+  height: 70vh;
+}
+
+.console-screen.log .leaderboard {
+  font-size: 1em;
+  height: calc(100% - 90px);
+  width: 100%;
+}
+
+.console-screen.log .leaderboard thead, .console-screen.log .leaderboard tbody {
+  display: table-row-group;
+}
+
+.console-screen.log .challenger-picks {
+  overflow: auto;
+  height: calc(100% - 90px);
+}
+
+  .console-screen.log .challenger-picks::-webkit-scrollbar-track {
+      display: none;
+  }
+
+  .console-screen.log .challenger-picks::-webkit-scrollbar {
+      width: 12px;
+  }
+
+  .console-screen.log .challenger-picks::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 6px;
+  }
+
+
+.console-screen.log .lb-metrics {
+  width: 140px;
+  text-align: center;
+  justify-self: center;
+}
+
+.console-screen.log .lb-reason {
+  width: auto;
+  text-align: left;
+  justify-self: left;
+}
+
 .challenger-player img {
   max-width: 290px;
   width: 80%;
@@ -104,12 +153,10 @@
 }
 
 .pick {
-  width: 6.5vw;
-  display: flex;
+  display: table;
   flex-direction: column;
   align-items: baseline;
   margin: 5px 10px;
-  align-items: center;
 }
 
 .pick.selectable {
@@ -126,12 +173,20 @@
 }
 
 .pick-text {
+  display: table-row;
   font-family: Voyager;
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 1.4em;
   margin: 0;
   margin-top: 10px;
   text-shadow: 0 2px 2px rgba(0, 0, 0, 0.9);
+}
+
+.pick .pick-text span {
+  display: table-cell;
+  color: #f2a140;
+  padding-left: 0.5em;
+  padding-top: 10px;
 }
 
 .pick.active .pick-text {

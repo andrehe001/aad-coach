@@ -1,55 +1,30 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/leaderboard">Leaderboard</router-link>
-    </div>-->
-    <!-- 
-    I think we don't need this  
-    <div class="no-vertical">
-      <div class="main">
-        <div class="content">
-          <img src="./assets/images/svg/horizontal_mobile.svg" />
-          <p>This game is only available in horizontal mode</p>
-        </div>
-      </div>
-      <div class="background"></div>
-      <div class="stars-container">
-        <div class="stars-item-1"></div>
-        <div class="stars-item-2"></div>
-        <div class="stars-item-3"></div>
-      </div>
-    </div> -->
-
-    <div class="stars-container">
-      <div class="stars-item-1"></div>
-      <div class="stars-item-2"></div>
-      <div class="stars-item-3"></div>
-    </div>
-
-    <router-view />
-
-    <Footer />
+    <component v-bind:is="layout"></component>
   </div>
 </template>
 
 <script>
-import Footer from '@/components/Footer.vue'
+import MainLayout from '@/layouts/MainLayout.vue'
+import ConsoleLayout from '@/layouts/ConsoleLayout.vue'
+
+const default_layout = 'main';
 
 export default {
   name: 'App',
+  computed: {
+    layout () {
+      return( this.$route.meta.layout || default_layout) + '-layout';
+    }
+  },
   components: {
-    Footer
+    'main-layout': MainLayout,
+    'console-layout': ConsoleLayout
   }
 }
 </script>
 
 <style>
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-
 @import "assets/css/main.css";
 @import "assets/css/reconnect.css";
 @import "assets/css/stars.css";
@@ -60,6 +35,5 @@ export default {
 @import "assets/css/console.css";
 @import "assets/css/mainTitle.css";
 @import "assets/css/result.css";
-/* @import "assets/css/no-vertical.css"; */
 @import "assets/css/not-found.css";
 </style>

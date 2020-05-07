@@ -37,17 +37,6 @@
             </tr>
           </tbody>
         </table>
-        <!-- <div class="leaderboard-powered">
-          <p>
-            Powered by
-            <a href="https://playfab.com/" target="_blank">Playfab</a>
-          </p>
-        </div>
-        <div class="leaderboard-buttons">
-          <div class="custom-button">
-            <a class="custom-button-link" href="/">play again</a>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
