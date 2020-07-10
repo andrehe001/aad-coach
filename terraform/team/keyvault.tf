@@ -16,3 +16,14 @@ resource "azurerm_key_vault" "aksvauls" {
     environment = var.deployment_name
   }
 }
+
+# https://www.terraform.io/docs/providers/azurerm/r/key_vault_secret.html
+# resource "azurerm_key_vault_secret" "appinsights_secret" {
+#   name         = "appinsights-key"
+#   value        = azurerm_application_insights.aksainsights.instrumentation_key
+#   key_vault_id = azurerm_key_vault.aksvault.id
+  
+#   tags = {
+#     environment = var.deployment_name
+#   }
+# }

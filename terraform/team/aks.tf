@@ -67,7 +67,6 @@ resource "azurerm_kubernetes_cluster" "akstf" {
     policy = "calico"
   }
 
-  #depends_on = [azurerm_subnet.aksnet, azuread_service_principal.aks_sp, azuread_service_principal_password.aks_sp_set_pw, null_resource.after]
   depends_on = [azurerm_subnet.aksnet]
 }
 

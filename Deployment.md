@@ -8,6 +8,7 @@ A Team environment consists of the following azure resources:
 - Azure Virtual Network
 - Azure Container Registry
 - Azure Kubernetes Service
+- Azure Application Insights
 - Azure Application Gateway V2
 - Azure Log Analytics Workspace
 - Azure KeyVault
@@ -23,7 +24,7 @@ A team can be deployed by running the `deploy-team.sh` script with the following
 cd terraform
 
 TEAM_NAME=myteam34 # required, make sure the name dns compatible - lowercase, no special characters, only letters and numbers
-TERRAFORM_PATH=. # required, path to terraform executable
+TERRAFORM_PATH=terraform # required, full path to terraform executable
 LOCATION=westeurope # optional, azure region - if not provided westeurope will be selected
 SUBSCRIPTION_ID=$(az account show --query id -o tsv) # optional, if not provided default azure subscription will be selected
 
@@ -46,7 +47,7 @@ A set of teams can be deployed by running the `deploy-teams.sh` script with the 
 cd terraform
 
 CSV_LIST=teams.csv # required, make sure the name dns compatible - lowercase, no special characters, only letters and numbers
-TERRAFORM_PATH=. # required, path to terraform executable
+TERRAFORM_PATH=terraform # required, full path to terraform executable
 
 ./deploy-teams.sh $CSV_LIST $TERRAFORM_PATH
 ```

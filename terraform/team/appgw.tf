@@ -5,6 +5,10 @@ resource "azurerm_public_ip" "appgw_ip" {
   location            = azurerm_resource_group.aksrg.location
   allocation_method   = "Static"
   sku                 = "Standard"
+
+  tags = {
+    environment = var.deployment_name
+  }
 }
 
 # https://www.terraform.io/docs/providers/azurerm/r/application_gateway.html
@@ -74,5 +78,9 @@ resource "azurerm_application_gateway" "appgw" {
     http_listener_name         = "listener-name"
     backend_address_pool_name  = "backend-pool-name"
     backend_http_settings_name = "http-setting-name"
+  }
+
+  tags = {
+    environment = var.deployment_name
   }
 }

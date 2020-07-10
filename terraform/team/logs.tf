@@ -1,6 +1,6 @@
 # https://www.terraform.io/docs/providers/azurerm/d/log_analytics_workspace.html
 resource "azurerm_log_analytics_workspace" "akslogs" {
-  name                = "${var.deployment_name}-lga"
+  name                = "${var.deployment_name}-law"
   location            = azurerm_resource_group.aksrg.location
   resource_group_name = azurerm_resource_group.aksrg.name
   sku                 = "PerGB2018"

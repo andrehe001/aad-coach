@@ -9,8 +9,6 @@ export terra_path="$2"
 export location="$3"
 export subscriptionid="$4"
 
-TERRA_PATH=$terra_path/terraform
-
 if [ "$location" == "" ]; then
 location="westeurope"
 echo "No location provided - defaulting to $location"
@@ -52,10 +50,10 @@ fi
 
 echo "initialzing terraform state storage..."
 
-$TERRA_PATH init -backend-config="storage_account_name=$TERRAFORM_STORAGE_NAME" -backend-config="container_name=tfstate" -backend-config="access_key=$TERRAFORM_STORAGE_KEY" -backend-config="key=codelab.microsoft.tfstate" ./team
+$terra_path init -backend-config="storage_account_name=$TERRAFORM_STORAGE_NAME" -backend-config="container_name=tfstate" -backend-config="access_key=$TERRAFORM_STORAGE_KEY" -backend-config="key=codelab.microsoft.tfstate" ./team
 
 echo "planning terraform..."
-$TERRA_PATH plan -out $team_name-out.plan -var="deployment_name=$team_name" -var="location=$location" -var="tenant_id=$tenantid" -var="subscription_id=$subscriptionid"  ./team
+$terra_path plan -out $team_name-out.plan -var="deployment_name=$team_name" -var="location=$location" -var="tenant_id=$tenantid" -var="subscription_id=$subscriptionid"  ./team
 
 echo "running terraform apply..."
-$TERRA_PATH apply $team_name-out.plan
+$terra_path apply $team_name-out.plan
