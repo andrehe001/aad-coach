@@ -3,8 +3,6 @@
 
 provider "azurerm" {
     subscription_id = var.subscription_id
-    # client_id       = var.terraform_client_id
-    # client_secret   = var.terraform_client_secret
     tenant_id       = var.tenant_id
     features {}
 }
@@ -18,17 +16,6 @@ resource "azurerm_resource_group" "aksrg" {
     environment = var.deployment_name
   }
 }
-
-# # https://www.terraform.io/docs/providers/azurerm/d/network_security_group.html
-# resource "azurerm_network_security_group" "aksnsg" {
-#   name                = var.deployment_name"-nsg"
-#   location            = azurerm_resource_group.aksrg.location
-#   resource_group_name = azurerm_resource_group.aksrg.name
-
-#   tags {
-#     environment = var.deployment_name
-#   }
-# }
 
 # https://www.terraform.io/docs/providers/azurerm/d/virtual_network.html
 resource "azurerm_virtual_network" "kubevnet" {

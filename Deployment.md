@@ -3,6 +3,15 @@
 
 ## Team environment
 
+A Team environment consists of the following azure resources:
+- Azure Resource group
+- Azure Virtual Network
+- Azure Container Registry
+- Azure Kubernetes Service
+- Azure Application Gateway V2
+- Azure Log Analytics Workspace
+- Azure KeyVault
+
 Each team environment is designed to be deployed in different subscriptions.
 To automate the deployment of multiple environments use the following script.
 
