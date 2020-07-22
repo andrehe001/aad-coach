@@ -4,22 +4,31 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AzureGameDay.Web.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 
 namespace AzureGameDay.Web.Services
 {
     public class MatchService
     {
         private readonly IOverlordStrategy _overlordStrategy;
-        
+        private readonly IDistributedCache _cache;
+        private readonly MatchDBContext _dbContext;
+
         // TODO Use something real and not a half-ass locked in mem KV.
-        private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1,1);
+        private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly Dictionary<Guid, long> _matchSequenceNumbers = new Dictionary<Guid, long>();
         private readonly Dictionary<Guid, List<MatchSetup>> _matchSetups = new Dictionary<Guid, List<MatchSetup>>();
         private readonly Dictionary<Guid, List<Match>> _matches = new Dictionary<Guid, List<Match>>();
 
-        public MatchService(IOverlordStrategy overlordStrategy)
+
+        public MatchService(IDistributedCache cache, MatchDBContext dbContext)
+
         {
-            _overlordStrategy = overlordStrategy;
+
+            _cache = cache;
+            _dbContext = dbContext;
         }
 
         public async Task<MatchSetup> SetupMatch(MatchSetupRequest matchSetupRequest)
@@ -30,11 +39,11 @@ namespace AzureGameDay.Web.Services
                 ChallengerId = challengerId,
                 MatchId = Guid.NewGuid(),
             };
-            
+
             await _semaphoreSlim.WaitAsync();
             try
             {
-                
+
                 if (!_matchSetups.ContainsKey(challengerId))
                 {
                     _matchSetups[challengerId] = new List<MatchSetup>();
@@ -62,42 +71,127 @@ namespace AzureGameDay.Web.Services
             var hasValue = _matches.TryGetValue(challengerId, out List<Match> challengerMatches);
             return Task.FromResult(hasValue ? challengerMatches : Enumerable.Empty<Match>());
         }
-        
+
         public async Task<Match> PlayMatch(MatchRequest matchRequest)
         {
-            await _semaphoreSlim.WaitAsync();
-            try
-            {
-                if (!_matchSetups.TryGetValue(matchRequest.ChallengerId, out List<MatchSetup> challengerMatchSetups))
-                {
-                    return null;
-                }
 
-                var matchSetup = challengerMatchSetups.FirstOrDefault(m => 
-                    m.MatchId == matchRequest.MatchId 
-                    && m.MatchSequenceNumber == matchRequest.MatchSequenceNumber);
-                if (matchSetup == null)
-                {
-                    return null;
-                }
+            var currentMatch = (matchRequest.MatchId != Guid.Empty) ? await GetMatchFromCacheAsync(matchRequest.MatchId) : Match.CreateNewFromMatchRequest(matchRequest);
 
-                challengerMatchSetups.Remove(matchSetup);
-                
-                var res = Match.CreateNewFromMatchSetup(matchSetup);
-                res.ChallengerMove = matchRequest.Move;
-                res.OverlordMove = _overlordStrategy.NextMove(matchRequest.ChallengerId);
-                res.Outcome = CalculateResult(matchRequest.Move, res.OverlordMove);
-                if (!_matches.ContainsKey(res.ChallengerId))
-                {
-                    _matches.Add(res.ChallengerId, new List<Match>());
-                }
-                _matches[res.ChallengerId].Add(res);
-                return res;
-            }
-            finally
+            currentMatch.TurnsPlayer1Values.Add(matchRequest.Move);
+            var botMove = await GetBotMoveAsync();
+            currentMatch.TurnsPlayer2Values.Add(botMove);
+
+            currentMatch.LastRoundOutcome = CalculateResult(matchRequest.Move, botMove);
+            currentMatch.Turn++;
+
+
+            var matchwinner = CalculateMatchWinner(currentMatch);
+
+            currentMatch.MatchOutcome = matchwinner;
+
+            // save current match state in cache
+            SaveMatchToCache(currentMatch);
+
+            // if game over store to db
+            if (currentMatch.MatchOutcome != null)
             {
-                _semaphoreSlim.Release();
+                StoreMatchToDB(currentMatch);   
             }
+
+            return currentMatch;
+
+        }
+
+        private Outcome? CalculateMatchWinner(Match currentMatch)
+        {
+            // check for winner
+            var turnsCounter = 0;
+            var turnsWonByPlayer1 = 0;
+            var turnsWonByPlayer2 = 0;
+            foreach (var item in currentMatch.TurnsPlayer1Values)
+            {
+                switch (CalculateResult(item, currentMatch.TurnsPlayer2Values[turnsCounter++]))
+                {
+                    case Outcome.ChallengerWins:
+                        turnsWonByPlayer1++;
+                        break;
+
+                    case Outcome.OverlordWins:
+                        turnsWonByPlayer2++;
+                        break;
+                    default: // Tie
+                        break;
+                }
+            }
+            if (turnsCounter > 3)
+            {
+                // error 
+                throw new Exception("There can only be 3 turns in one match." + currentMatch);
+            }
+
+            if (turnsCounter == 3) // three rounds, there must be a winner
+            {
+                return (turnsWonByPlayer1 > turnsWonByPlayer2) ? Outcome.ChallengerWins : Outcome.OverlordWins;
+            }
+            if (turnsCounter == 2) // two rounds have been played, there might be a winner
+            {
+                if (turnsWonByPlayer1 == 2) return Outcome.ChallengerWins;
+                if (turnsWonByPlayer2 == 2) return Outcome.OverlordWins;
+            }
+            // only one round has been played, there can't be a winner
+            return null;
+        }
+
+        private void StoreMatchToDB(Match currentMatch)
+        {
+            _dbContext.MatchResults.Add(new MatchResult
+            {
+                MatchId = currentMatch.MatchId,
+                WhenUtc = currentMatch.WhenUtc,
+                MatchOutcome = currentMatch.MatchOutcome.ToString(),
+                MatchSequenceNumber = currentMatch.MatchSequenceNumber,
+                Player1Name = currentMatch.Player1Name,
+                Player2Name = currentMatch.Player2Name
+            }
+                );
+
+            int i = 0;
+            foreach (var item in currentMatch.TurnsPlayer1Values)
+            {
+                _dbContext.Turns.Add(new Turn
+                {
+                    MatchId = currentMatch.MatchId,
+                    WhenUtc = currentMatch.WhenUtc,
+                    Player1Name = currentMatch.Player1Name,
+                    Player2Name = currentMatch.Player2Name,
+                    Player1Move = item.ToString(),
+                    TurnNumber = i,
+                    Player2Move = currentMatch.TurnsPlayer2Values[i++].ToString(),
+                });
+            }
+
+            _dbContext.SaveChanges();
+
+        }
+
+        private void SaveMatchToCache(Match m)
+        {
+            string serializedMatch = JsonConvert.SerializeObject(m);
+            _cache.SetStringAsync(m.MatchId.ToString(), serializedMatch);
+
+        }
+
+        private async Task<Match> GetMatchFromCacheAsync(Guid matchId)
+        {
+            var o = await _cache.GetStringAsync(matchId.ToString());
+            Match item = JsonConvert.DeserializeObject<Match>(o);
+            return item;
+        }
+
+        private async Task<Move> GetBotMoveAsync()
+        {
+            //todo: reach out to backend service of arcade team to get move; send gameid, challengerid, turn
+            return Move.Lizard;
         }
 
         private Outcome CalculateResult(Move challengerMove, Move overlordMove)

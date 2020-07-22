@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace AzureGameDay.Web.Models
 {
@@ -17,35 +18,60 @@ namespace AzureGameDay.Web.Models
         /// <summary>
         /// The challenger's identifier.
         /// </summary>
-        public Guid ChallengerId { get; set; }
+        public string Player1Name { get; set; }
+        public string Player2Name { get; set; }
+
+        /// <summary>
+        /// The moves
+        /// </summary>
+        public List<Move>  TurnsPlayer1Values { get; set; }
+        public List<Move> TurnsPlayer2Values { get; set; }
         
+
+        /// <summary>
+        /// Turn of game; first turn is 0; after 3 turns game over;
+        /// </summary>
+        public int Turn { get; set; }
+
         /// <summary>
         /// The timestamp of the match.
         /// </summary>
-        public DateTime WhenUtc { get; set; }
+        public DateTime WhenUtc { get; set; }         
+        
         
         /// <summary>
-        /// The move of the challenger.
+        /// Outcome of last round
         /// </summary>
-        public Move ChallengerMove { get; set; }
-        
-        /// <summary>
-        /// The move of the overlord.
-        /// </summary>
-        public Move OverlordMove { get; set; }
-        
+        public Outcome? LastRoundOutcome { get; set; }
+
         /// <summary>
         /// The outcome of the match.
         /// </summary>
-        public Outcome Outcome { get; set; }
+        public Outcome? MatchOutcome { get; set; }
 
-        public static Match CreateNewFromMatchSetup(MatchSetup matchSetup)
+        //public static Match CreateNewFromMatchSetup(MatchSetup matchSetup)
+        //{
+        //    return new Match()
+        //    {
+        //        MatchId = matchSetup.MatchId,
+        //        Player1Name = matchSetup.ChallengerId,
+                
+        //        MatchSequenceNumber =  matchSetup.MatchSequenceNumber,
+        //        WhenUtc = DateTime.UtcNow
+        //    };
+        //}
+
+        internal static Match CreateNewFromMatchRequest(MatchRequest matchRequest)
         {
             return new Match()
             {
-                MatchId = matchSetup.MatchId,
-                ChallengerId = matchSetup.ChallengerId,
-                MatchSequenceNumber =  matchSetup.MatchSequenceNumber,
+                MatchId = Guid.NewGuid(),
+                Player1Name = matchRequest.ChallengerId.ToString(),
+                Player2Name = "bot",
+                Turn = 0,
+                TurnsPlayer1Values = new List<Move>(),
+                TurnsPlayer2Values = new List<Move>(),
+                MatchOutcome = null,
                 WhenUtc = DateTime.UtcNow
             };
         }

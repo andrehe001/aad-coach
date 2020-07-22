@@ -1,7 +1,9 @@
 using System.Text.Json.Serialization;
+using AzureGameDay.Web.Models;
 using AzureGameDay.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,8 +25,15 @@ namespace AzureGameDay.Web
         {
             services.AddHealthChecks();
             services.AddControllers().AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
-            services.AddSingleton<MatchService>();
-            services.AddSingleton<IOverlordStrategy, SpockLizardOverlordStrategy>();
+            //services.AddSingleton<IOverlordStrategy, SpockLizardOverlordStrategy>();
+            services.AddTransient<MatchService>();
+
+            services.AddDbContext<MatchDBContext>(opt =>
+               opt.UseSqlServer(Configuration.GetConnectionString("GameEngineDB")));
+
+            services.AddDistributedRedisCache(opt =>
+                opt.Configuration = Configuration.GetConnectionString("GameEngineRedis")
+            );
             services.AddOpenApiDocument(s =>
             {
                 s.Title = "Azure Game Day - RPSLS API";

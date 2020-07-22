@@ -20,7 +20,15 @@ namespace AzureGameDay.Web.Controllers
             _logger = logger;
             _matchService = matchService;
         }
-    
+
+        [HttpGet]
+        public String GetMatch()
+        {
+            return "Hello, I'm ready to start a match. Just post your first turn.";
+        }
+
+
+
         [HttpPost]
         public async Task<ActionResult<Match>> Post(MatchRequest request)
         {
@@ -34,6 +42,8 @@ namespace AzureGameDay.Web.Controllers
             {
                 return Ok(match);
             }
+
+
         }
 
         [HttpGet]
