@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AzureGameDay.Web.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace AzureGameDay.Web.Services
@@ -15,6 +18,7 @@ namespace AzureGameDay.Web.Services
         private readonly IOverlordStrategy _overlordStrategy;
         private readonly IDistributedCache _cache;
         private readonly MatchDBContext _dbContext;
+        private readonly IConfiguration _config;
 
         // TODO Use something real and not a half-ass locked in mem KV.
         private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
@@ -23,12 +27,13 @@ namespace AzureGameDay.Web.Services
         private readonly Dictionary<Guid, List<Match>> _matches = new Dictionary<Guid, List<Match>>();
 
 
-        public MatchService(IDistributedCache cache, MatchDBContext dbContext)
+        public MatchService(IDistributedCache cache, MatchDBContext dbContext, IConfiguration config)
 
         {
 
             _cache = cache;
             _dbContext = dbContext;
+            _config = config;
         }
 
         public async Task<MatchSetup> SetupMatch(MatchSetupRequest matchSetupRequest)
@@ -82,7 +87,9 @@ namespace AzureGameDay.Web.Services
                 throw new Exception("this game is already over.");
             }
             currentMatch.TurnsPlayer1Values.Add(matchRequest.Move);
-            var botMove = await GetBotMoveAsync();
+
+            // get move from bot
+            var botMove = await GetBotMoveAsync(new GameInfoForBackend { Challenger = matchRequest.ChallengerId, MatchId = matchRequest.MatchId });
             currentMatch.TurnsPlayer2Values.Add(botMove);
 
             currentMatch.LastRoundOutcome = CalculateResult(matchRequest.Move, botMove);
@@ -192,9 +199,16 @@ namespace AzureGameDay.Web.Services
             return item;
         }
 
-        private async Task<Move> GetBotMoveAsync()
+        private async Task<Move> GetBotMoveAsync(GameInfoForBackend gameInfoForBackend)
         {
             //todo: reach out to backend service of arcade team to get move; send gameid, challengerid, turn
+            //string backendurl = _config.GetValue<string>("ARCADE_BACKENDURL");
+            //HttpClient cl = new HttpClient();
+            //var content = new StringContent(JsonConvert.SerializeObject(gameInfoForBackend), Encoding.UTF8, "application/json");
+            //var res = await cl.PostAsync(backendurl, content);
+            //return JsonConvert.DeserializeObject<MoveDTO>(await res.Content.ReadAsStringAsync()).Move;
+
+
             return Move.Lizard;
         }
 
