@@ -24,7 +24,9 @@ namespace AzureGameDay.Web.Controllers
         [HttpGet]
         public String GetMatch()
         {
-            return "Hello, I'm ready to start a match. Just post your first turn.";
+            return "Hello, I'm ready to start a match. Just post your first turn. It should look like this:" + Environment.NewLine +
+                "{    \"ChallengerId\": \"daniel\",  \"Move\":\"Rock\" }" + Environment.NewLine +
+                "For subsequent calls add the matchId taken from the first response.";
         }
 
 

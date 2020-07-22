@@ -76,7 +76,11 @@ namespace AzureGameDay.Web.Services
         {
 
             var currentMatch = (matchRequest.MatchId != Guid.Empty) ? await GetMatchFromCacheAsync(matchRequest.MatchId) : Match.CreateNewFromMatchRequest(matchRequest);
-
+            if (currentMatch.MatchOutcome!=null)
+            {
+                // game was already finished
+                throw new Exception("this game is already over.");
+            }
             currentMatch.TurnsPlayer1Values.Add(matchRequest.Move);
             var botMove = await GetBotMoveAsync();
             currentMatch.TurnsPlayer2Values.Add(botMove);
