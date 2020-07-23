@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: blackboxgameengine
+  labels:
+    name: blackboxgameengine    
+spec:
+  selector:
+    name: blackboxgameengine    
+  type: LoadBalancer
+  ports:
+   - port: 80
+     name: blackboxgameengine
+     targetPort: 80
+     protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blackboxgameengine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: blackboxgameengine      
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        name: blackboxgameengine        
+    spec:
+      containers:
+      - name: blackboxgameengine
+        image: danielmeixner/blackboxgameengine:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+            name: blackboxgameengine         
+            protocol: TCP
+        env: 
+          - name: "ConnectionStrings__GameEngineRedis"
+            value: ""
+          - name: "ConnectionStrings__GameEngineDB"
+            value: ""
+          - name: "ARCADE_BACKENDURL"
+            value: ""
+          

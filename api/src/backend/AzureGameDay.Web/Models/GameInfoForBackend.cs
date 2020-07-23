@@ -7,7 +7,7 @@ namespace AzureGameDay.Web.Models
 {
     public class GameInfoForBackend
     {
-        public Guid MatchId { get; set; }
-        public string Challenger { get; set; }
+        public Guid matchId { get; set; }
+        public string challengerId { get; set; }
     }
 }

@@ -89,7 +89,7 @@ namespace AzureGameDay.Web.Services
             currentMatch.TurnsPlayer1Values.Add(matchRequest.Move);
 
             // get move from bot
-            var botMove = await GetBotMoveAsync(new GameInfoForBackend { Challenger = matchRequest.ChallengerId, MatchId = matchRequest.MatchId });
+            var botMove = await GetBotMoveAsync(new GameInfoForBackend { challengerId = matchRequest.ChallengerId, matchId = matchRequest.MatchId });
             currentMatch.TurnsPlayer2Values.Add(botMove);
 
             currentMatch.LastRoundOutcome = CalculateResult(matchRequest.Move, botMove);
@@ -201,15 +201,16 @@ namespace AzureGameDay.Web.Services
 
         private async Task<Move> GetBotMoveAsync(GameInfoForBackend gameInfoForBackend)
         {
-            //todo: reach out to backend service of arcade team to get move; send gameid, challengerid, turn
-            //string backendurl = _config.GetValue<string>("ARCADE_BACKENDURL");
-            //HttpClient cl = new HttpClient();
-            //var content = new StringContent(JsonConvert.SerializeObject(gameInfoForBackend), Encoding.UTF8, "application/json");
-            //var res = await cl.PostAsync(backendurl, content);
-            //return JsonConvert.DeserializeObject<MoveDTO>(await res.Content.ReadAsStringAsync()).Move;
+            
+            string backendurl = _config.GetValue<string>("ARCADE_BACKENDURL");
 
+            HttpClient cl = new HttpClient();
+            var content = new StringContent(JsonConvert.SerializeObject(gameInfoForBackend), Encoding.UTF8, "application/json");
+            var res = await cl.PostAsync(backendurl, content);
+            return JsonConvert.DeserializeObject<MoveDTO>(await res.Content.ReadAsStringAsync()).Move;
 
-            return Move.Lizard;
+            // uncomment if you want to work without a backend
+            // return Move.Lizard;
         }
 
         private Outcome CalculateResult(Move challengerMove, Move overlordMove)
