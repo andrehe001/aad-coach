@@ -14,16 +14,11 @@ using Newtonsoft.Json;
 namespace AzureGameDay.Web.Services
 {
     public class MatchService
-    {
-        private readonly IOverlordStrategy _overlordStrategy;
+    {        
         private readonly IDistributedCache _cache;
         private readonly MatchDBContext _dbContext;
         private readonly IConfiguration _config;
 
-        // TODO Use something real and not a half-ass locked in mem KV.
-        private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
-        private readonly Dictionary<Guid, long> _matchSequenceNumbers = new Dictionary<Guid, long>();
-        private readonly Dictionary<Guid, List<MatchSetup>> _matchSetups = new Dictionary<Guid, List<MatchSetup>>();
         private readonly Dictionary<Guid, List<Match>> _matches = new Dictionary<Guid, List<Match>>();
 
 
@@ -36,40 +31,7 @@ namespace AzureGameDay.Web.Services
             _config = config;
         }
 
-        public async Task<MatchSetup> SetupMatch(MatchSetupRequest matchSetupRequest)
-        {
-            var challengerId = matchSetupRequest.ChallengerId;
-            var matchSetup = new MatchSetup()
-            {
-                ChallengerId = challengerId,
-                MatchId = Guid.NewGuid(),
-            };
-
-            await _semaphoreSlim.WaitAsync();
-            try
-            {
-
-                if (!_matchSetups.ContainsKey(challengerId))
-                {
-                    _matchSetups[challengerId] = new List<MatchSetup>();
-                }
-
-                if (!_matchSequenceNumbers.ContainsKey(challengerId))
-                {
-                    _matchSequenceNumbers[challengerId] = 0;
-                }
-
-                _matchSequenceNumbers[challengerId] = _matchSequenceNumbers[challengerId] + 1;
-                matchSetup.MatchSequenceNumber = _matchSequenceNumbers[challengerId];
-                _matchSetups[challengerId].Add(matchSetup);
-            }
-            finally
-            {
-                _semaphoreSlim.Release();
-            }
-
-            return matchSetup;
-        }
+        
 
         public Task<IEnumerable<Match>> GetChallengerMatches(Guid challengerId)
         {
@@ -86,10 +48,13 @@ namespace AzureGameDay.Web.Services
                 // game was already finished
                 throw new Exception("this game is already over.");
             }
+
+            // send matchinfo to backend. Important! Do this before you set the value of Player1!
+            var botMove = await GetBotMoveAsync(currentMatch);
+
             currentMatch.TurnsPlayer1Values.Add(matchRequest.Move);
 
             // get move from bot
-            var botMove = await GetBotMoveAsync(new GameInfoForBackend { challengerId = matchRequest.ChallengerId, matchId = matchRequest.MatchId });
             currentMatch.TurnsPlayer2Values.Add(botMove);
 
             currentMatch.LastRoundOutcome = CalculateResult(matchRequest.Move, botMove);
@@ -199,7 +164,7 @@ namespace AzureGameDay.Web.Services
             return item;
         }
 
-        private async Task<Move> GetBotMoveAsync(GameInfoForBackend gameInfoForBackend)
+        private async Task<Move> GetBotMoveAsync(Match gameInfoForBackend)
         {
             
             string backendurl = _config.GetValue<string>("ARCADE_BACKENDURL");

@@ -49,17 +49,7 @@ namespace AzureGameDay.Web.Models
         /// </summary>
         public Outcome? MatchOutcome { get; set; }
 
-        //public static Match CreateNewFromMatchSetup(MatchSetup matchSetup)
-        //{
-        //    return new Match()
-        //    {
-        //        MatchId = matchSetup.MatchId,
-        //        Player1Name = matchSetup.ChallengerId,
-                
-        //        MatchSequenceNumber =  matchSetup.MatchSequenceNumber,
-        //        WhenUtc = DateTime.UtcNow
-        //    };
-        //}
+        
 
         internal static Match CreateNewFromMatchRequest(MatchRequest matchRequest)
         {

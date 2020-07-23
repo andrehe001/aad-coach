@@ -48,11 +48,5 @@ namespace AzureGameDay.Web.Controllers
 
         }
 
-        [HttpGet]
-        [Route("{challengerId:guid}")]
-        public Task<IEnumerable<Match>> Get([FromRoute] Guid challengerId)
-        {
-            return _matchService.GetChallengerMatches(challengerId);
-        }
     }
 }

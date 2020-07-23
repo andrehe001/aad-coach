@@ -14,8 +14,8 @@ docker run -p 8080:8080 -e PICK_STRATEGY=RANDOM -e PORT=8080 danielmeixner/arcad
 Post e.g. 
 ```
 {
-    "challengerId":"daniel",
-    "matchId":"42"
+    "Player1Name":"daniel",
+    "MatchId":"42"
 }
 ```
 to http://localhost:8080/pick
