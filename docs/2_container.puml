@@ -1,0 +1,48 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_TOP_DOWN
+
+title Container diagram for Azure GameDay
+
+Person(hack_coach, "Hack Coaches")
+Person(hack_team, "Hack Team")
+
+
+Rel(hack_coach, gameday_backend, "Provisions")
+Rel(hack_team, game_system, "Provisions and improves during the day")
+
+
+
+System_Boundary(gameday_backend, "GameDay Backend") {
+    Container(backend_spa, "Backend SPA", "Vue.JS", "Provides a UI into the current team scores, the team details, team registration page and a admin UI for game day progress.")
+    Container(backend_app, "Backend  Application", "ASP.NET", "Delivers the static content and the Backend SPA. Provides all functionality via API.")
+    ContainerDb(teamscoring_database, "Team Scoring DB", "Azure SQL Database", "Stores hack team information, their scores, the challeneges etc.")
+}
+
+System_Boundary(game_system, "Game System") {
+    Container(game_app, "Game  Application", "NODE.JS", "Provides all gaming functionality via API.")
+    ContainerDb(scoring_database, "Game Scoring DB", "Azure SQL Database", "Stores scores for each individual game match.")
+}
+
+Rel(hack_coach, backend_spa, "Uses", "HTTPS")
+Rel(hack_team, backend_spa, "Uses", "HTTPS")
+
+Rel(backend_app, game_app, "Sends requests to")
+
+Rel_Neighbor(backend_app, backend_spa, "Delivers")
+Rel(backend_spa, backend_app, "Uses", "async, JSON/HTTPS")
+Rel_Back_Neighbor(teamscoring_database, backend_app, "Reads from and writes to", "sync, EF?")
+
+Rel_Back_Neighbor(scoring_database, game_app, "Reads from and writes to", "sync")
+
+
+' Rel_Neighbor(web_app, spa, "Delivers")
+' Rel(spa, backend_api, "Uses", "async, JSON/HTTPS")
+' Rel(mobile_app, backend_api, "Uses", "async, JSON/HTTPS")
+' Rel_Back_Neighbor(database, backend_api, "Reads from and writes to", "sync, JDBC")
+
+' Rel_Back(customer, email_system, "Sends e-mails to")
+' Rel_Back(email_system, backend_api, "Sends e-mails using", "sync, SMTP")
+' Rel_Neighbor(backend_api, banking_system, "Uses", "sync/async, XML/HTTPS")
+@enduml
