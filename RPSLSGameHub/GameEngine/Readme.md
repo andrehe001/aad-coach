@@ -1,4 +1,7 @@
-# GameDay Arcade Blackbox Engine
+# RPSLS Game Hub - Game Engine
+
+* Blackbox, team has **NO** access to source code
+* Deployed into each team environment
 
 
 ## Prepare

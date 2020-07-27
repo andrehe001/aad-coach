@@ -1,4 +1,7 @@
-## RPSLS NodePlayer Default Backend
+# RPSLS Game Hub - Game Bot
+
+* Team has access to source code
+* Deployed into each team environment
 
 ### Build
 ```
