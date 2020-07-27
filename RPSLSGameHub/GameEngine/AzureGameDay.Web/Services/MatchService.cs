@@ -55,7 +55,7 @@ namespace RPSLSGameHub.GameEngine.WebApi.Services
 
             if (currentMatch.Turn == 0)
             {
-                if (botMove.Bet < 0 || botMove.Bet > 1)
+                if (botMove.Bet.HasValue && (botMove.Bet < 0 || botMove.Bet > 1))
                 {
                     throw new Exception("The bet can only be between (inclusive) 0 and 1.");
                 }
