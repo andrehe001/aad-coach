@@ -7,8 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPSLSGameHub.GameEngine.Web
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabaseScripts", "DatabaseScripts", "{77ABBFBB-A4DB-4C44-9E5D-A15E31560903}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\AppData\Local\Temp\dbo.MatchResults.sql = ..\..\..\..\AppData\Local\Temp\dbo.MatchResults.sql
-		..\..\..\..\AppData\Local\Temp\dbo.Turns.sql = ..\..\..\..\AppData\Local\Temp\dbo.Turns.sql
+		DatabaseScripts\dbo.MatchResults.sql = DatabaseScripts\dbo.MatchResults.sql
+		DatabaseScripts\dbo.Turns.sql = DatabaseScripts\dbo.Turns.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{64E8B898-0685-4BE1-91A0-F602AF3BB11D}"
