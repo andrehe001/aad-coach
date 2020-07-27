@@ -17,15 +17,21 @@ Set these env vars:
 * ```ConnectionStrings__GameEngineRedis```: connectionstring to your Redis
 
 ## How to play
-1. Call this service via HTTP-POST to e.g. https://localhost:32770/Match/.
-1. POST this content:
-	```
-	{
+Call this service via HTTP-POST to e.g. https://localhost:58937/Match/.
+```
+POST http://localhost:58937/Match/ HTTP/1.1
+content-type: application/json
+
+{
     "ChallengerId": "daniel",    
-    "Move":"Paper"    
-	}
-	```
-1. For subsequent calls provide the matchId found in the response.
+    "Move": "Paper"
+}
+```
+
+For subsequent calls provide the matchId found in the response.
+
+
+
 
 
 ## How it works

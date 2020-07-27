@@ -139,8 +139,7 @@ namespace RPSLSGameHub.GameEngine.WebApi.Services
                 MatchSequenceNumber = currentMatch.MatchSequenceNumber,
                 Player1Name = currentMatch.Player1Name,
                 Player2Name = currentMatch.Player2Name
-            }
-                );
+            });
 
             int i = 0;
             foreach (var item in currentMatch.TurnsPlayer1Values)
