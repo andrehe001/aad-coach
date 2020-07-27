@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using AzureGameDay.Web.Models;
-using AzureGameDay.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RPSLSGameHub.GameEngine.WebApi.Models;
+using RPSLSGameHub.GameEngine.WebApi.Services;
 
-namespace AzureGameDay.Web.Controllers
+namespace RPSLSGameHub.GameEngine.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

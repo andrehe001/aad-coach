@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AzureGameDay.Web.Models
+namespace RPSLSGameHub.GameEngine.WebApi.Models
 {
     public class MatchResult
     {

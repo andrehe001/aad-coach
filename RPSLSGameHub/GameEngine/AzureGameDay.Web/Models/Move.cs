@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AzureGameDay.Web.Models
+namespace RPSLSGameHub.GameEngine.WebApi.Models
 {
     public enum Move
     {

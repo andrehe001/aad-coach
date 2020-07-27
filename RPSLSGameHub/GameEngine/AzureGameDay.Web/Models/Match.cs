@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AzureGameDay.Web.Models
+namespace RPSLSGameHub.GameEngine.WebApi.Models
 {
     public class Match
     {
@@ -24,7 +24,7 @@ namespace AzureGameDay.Web.Models
         /// <summary>
         /// The moves
         /// </summary>
-        public List<Move>  TurnsPlayer1Values { get; set; }
+        public List<Move> TurnsPlayer1Values { get; set; }
         public List<Move> TurnsPlayer2Values { get; set; }
         
 
@@ -36,7 +36,13 @@ namespace AzureGameDay.Web.Models
         /// <summary>
         /// The timestamp of the match.
         /// </summary>
-        public DateTime WhenUtc { get; set; }         
+        public DateTime WhenUtc { get; set; }    
+
+        /// <summary>
+        /// The bet of Player2, value of 1 means if player 2 wins, he gets 2x of the score - if he loose Player1 gets 2x of the score
+        /// If null the Player2 does not support bets, value needs to be between 0 and 1.
+        /// </summary>
+        public decimal? Bet { get; set; }       
         
         
         /// <summary>

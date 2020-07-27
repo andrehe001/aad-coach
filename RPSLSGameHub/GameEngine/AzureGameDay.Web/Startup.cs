@@ -1,6 +1,4 @@
 using System.Text.Json.Serialization;
-using AzureGameDay.Web.Models;
-using AzureGameDay.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NJsonSchema;
+using RPSLSGameHub.GameEngine.WebApi.Models;
+using RPSLSGameHub.GameEngine.WebApi.Services;
 
 namespace AzureGameDay.Web
 {

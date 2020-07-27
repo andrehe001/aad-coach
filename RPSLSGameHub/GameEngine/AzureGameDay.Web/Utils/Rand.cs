@@ -1,6 +1,6 @@
 using System;
 
-namespace AzureGameDay.Web.Utils
+namespace RPSLSGameHub.GameEngine.WebApi.Utils
 {
     public static class Rand
     {

@@ -5,13 +5,13 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AzureGameDay.Web.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using RPSLSGameHub.GameEngine.WebApi.Models;
 
-namespace AzureGameDay.Web.Services
+namespace RPSLSGameHub.GameEngine.WebApi.Services
 {
     public class MatchService
     {        
@@ -49,17 +49,28 @@ namespace AzureGameDay.Web.Services
                 throw new Exception("this game is already over.");
             }
 
-            // send matchinfo to backend. Important! Do this before you set the value of Player1!
+            // send matchinfo to backend and get move from bot.
+            // Important! Do this before you set the value of Player1!
             var botMove = await GetBotMoveAsync(currentMatch);
 
+            if (currentMatch.Turn == 0)
+            {
+                if (botMove.Bet < 0 || botMove.Bet > 1)
+                {
+                    throw new Exception("The bet can only be between (inclusive) 0 and 1.");
+                }
+                currentMatch.Bet = botMove.Bet;
+            }
+            else if (currentMatch.Bet != botMove.Bet)
+            {
+                throw new Exception("The bet can only be set at the beginning and not changed afterwards.");
+            }
+
             currentMatch.TurnsPlayer1Values.Add(matchRequest.Move);
+            currentMatch.TurnsPlayer2Values.Add(botMove.Move);
 
-            // get move from bot
-            currentMatch.TurnsPlayer2Values.Add(botMove);
-
-            currentMatch.LastRoundOutcome = CalculateResult(matchRequest.Move, botMove);
+            currentMatch.LastRoundOutcome = CalculateResult(matchRequest.Move, botMove.Move);
             currentMatch.Turn++;
-
 
             var matchwinner = CalculateMatchWinner(currentMatch);
 
@@ -164,7 +175,7 @@ namespace AzureGameDay.Web.Services
             return item;
         }
 
-        private async Task<Move> GetBotMoveAsync(Match gameInfoForBackend)
+        private async Task<MoveDTO> GetBotMoveAsync(Match gameInfoForBackend)
         {
             
             string backendurl = _config.GetValue<string>("ARCADE_BACKENDURL");
@@ -172,7 +183,7 @@ namespace AzureGameDay.Web.Services
             HttpClient cl = new HttpClient();
             var content = new StringContent(JsonConvert.SerializeObject(gameInfoForBackend), Encoding.UTF8, "application/json");
             var res = await cl.PostAsync(backendurl, content);
-            return JsonConvert.DeserializeObject<MoveDTO>(await res.Content.ReadAsStringAsync()).Move;
+            return JsonConvert.DeserializeObject<MoveDTO>(await res.Content.ReadAsStringAsync());
 
             // uncomment if you want to work without a backend
             // return Move.Lizard;

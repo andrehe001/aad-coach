@@ -2,7 +2,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AzureGameDay.Web.Utils
+namespace RPSLSGameHub.GameEngine.WebApi.Utils
 {
     public class StringNullableEnumConverter<T> : JsonConverter<T>
     {

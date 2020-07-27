@@ -12,9 +12,9 @@
 ## Run
 Set these env vars:
 
-ARCADE_BACKENDURL: your backend service url, e.g. http://51.124.129.82/pick. Could also be http://mybackend/pick if inside a K8s cluster.
-ConnectionStrings__GameEngineDB: connectionstring to your Azure SQL DB
-ConnectionStrings__GameEngineRedis: connectionstring to your Redis
+* ```ARCADE_BACKENDURL```: your backend service url, e.g. http://51.124.129.82/pick. Could also be http://mybackend/pick if inside a K8s cluster.
+* ```ConnectionStrings__GameEngineDB```: connectionstring to your Azure SQL DB
+* ```ConnectionStrings__GameEngineRedis```: connectionstring to your Redis
 
 ## How to play
 1. Call this service via HTTP-POST to e.g. https://localhost:32770/Match/.

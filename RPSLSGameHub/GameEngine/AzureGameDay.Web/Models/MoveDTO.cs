@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AzureGameDay.Web.Models
+namespace RPSLSGameHub.GameEngine.WebApi.Models
 {
     /// <summary>
     /// This is what the bot returns
@@ -12,6 +12,6 @@ namespace AzureGameDay.Web.Models
     {
         public Move Move { get; set; }
         
-
+        public decimal? Bet { get; set; }
     }
 }

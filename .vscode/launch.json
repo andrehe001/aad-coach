@@ -1,0 +1,42 @@
+{
+    // Use IntelliSense to find out which attributes exist for C# debugging
+    // Use hover for the description of the existing attributes
+    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch GameBot",
+            "program": "${workspaceFolder}/RPSLSGameHub/GameBot/index.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node",
+            "env": {
+                "PORT": 8080
+            }
+        },
+        {
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/api/src/client/AzureGameDay.Console/bin/Debug/netcoreapp3.1/AzureGameDay.Console.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/api/src/client/AzureGameDay.Console",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
+        },
+        {
+            "name": "Local Process with Kubernetes",
+            "type": "local-process-with-kubernetes.configuration",
+            "request": "launch"
+        }
+    ]
+}
