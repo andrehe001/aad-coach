@@ -9,10 +9,28 @@ spec:
     name: blackboxgameengine    
   type: LoadBalancer
   ports:
-   - port: 80
-     name: blackboxgameengine
-     targetPort: 80
-     protocol: TCP
+    - port: 80
+      name: blackboxgameengine
+      targetPort: 80
+      protocol: TCP
+    - port: 81
+      name: istio-proxy
+      targetPort: 81
+      protocol: TCP    
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: default-reader
+  namespace: default
+subjects:
+- kind: Group
+  name: system:serviceaccounts
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,17 +54,33 @@ spec:
     spec:
       containers:
       - name: blackboxgameengine
-        image: danielmeixner/blackboxgameengine:latest
+        image: gamedayexploitreg.azurecr.io/gameengine:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 80
-            name: blackboxgameengine         
+            name: gameengine
             protocol: TCP
         env: 
           - name: "ConnectionStrings__GameEngineRedis"
-            value: ""
+            value: "agdredis.redis.cache.windows.net:6380,password=,ssl=True,abortConnect=False"
           - name: "ConnectionStrings__GameEngineDB"
-            value: ""
+            value: "Server=tcp:agdsqlserver.database.windows.net,1433;Initial Catalog=adgdatabase;Persist Security Info=False;User ID=agdserver;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
           - name: "ARCADE_BACKENDURL"
-            value: ""
-          
+            value: "http://mybackend/pick"
+      - name: istio-proxy
+        image: gamedayexploitreg.azurecr.io/sidecar:1
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /meshconfig
+          name: config-volume
+        ports:
+          - containerPort: 81
+            name: servicemesh         
+            protocol: TCP
+        env: 
+          - name: "ASPNETCORE_URLS"
+            value: "http://*:81"
+      volumes:
+      - name: config-volume
+        hostPath:
+          path: /etc/kubernetes/
