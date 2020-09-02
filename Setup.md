@@ -36,11 +36,11 @@ After the script has been executed you will see two resource groups for every te
 
 ## Setup of gameengine(done by hack-teams)
 
-1. Deploy an azure sql DB and find the connection string.
+1. An instance of Azure SQL DB should be deployed to your RG already. Change the password to be able to access it, find the connection string and adjust the firewall.
 
 2. Create table matchresults and turns based on provided scripts.
 
-3. Deploy a redis cache and find the connection string.
+3. Redis should be deployed into your RG already. Get the connection string.
 
 4. Deploy Gameengine
 Modify the blackbox_gameengine_deployment file to reference your connection strings.
