@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: arcadebackend
-        image: danielmeixner/arcadedefaultbackend:latest
+        image: danielmeixner/gamebot:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 8080
