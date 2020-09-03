@@ -19,7 +19,7 @@ jobs:
       uses: docker/build-push-action@v1.1.0
       with:
         # Username used to log in to a Docker registry. If not set then no login will occur
-        username: danielmeixner
+        username: ricardoniepel
         # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
         password: ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }}
         # Server address of Docker registry. If not set then will default to Docker Hub
@@ -27,9 +27,9 @@ jobs:
         tags: latest
         dockerfile: RPSLSGameHub/GameEngine/WebApi/Dockerfile
         # Docker repository to tag the image with
-        repository: ricardoniepel/azure-adventure-day-coach 
+        repository: ricardoniepel/azure-adventure-day-coach/aad-gameengine-web 
         push: true
-        name: aad-gameengine-web
+        
         
         
         
