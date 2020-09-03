@@ -3,7 +3,9 @@ name: Build and Push GameEngine
 on:
   push:
     branches: [ master ]
-    paths: RPSLSGameHub/GameEngine/**
+    paths:
+      - RPSLSGameHub/GameEngine/**
+      - .github/workflows/build-push-gameengine.yml
    
 
 jobs:
@@ -14,7 +16,7 @@ jobs:
     steps:
     - name: print cwd
       run: |    
-        pwd
+        ls
     - name: Docker build, tag and push     
       run: |        
         docker login -u ricardoniepel -p ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }} docker.pkg.github.com
