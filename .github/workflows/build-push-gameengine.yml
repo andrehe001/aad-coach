@@ -16,11 +16,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-        
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Docker build, tag and push     
       run: |        
-        dir
-        cd ./Controllers
+  
         docker login -u ricardoniepel -p ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }} docker.pkg.github.com
         docker build -t docker.pkg.github.com/ricardoniepel/azure-adventure-day-coach/gamedayengine-web:latest .
         docker push docker.pkg.github.com/ricardoniepel/azure-adventure-day-coach/gamedayengine-web:latest
