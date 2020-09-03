@@ -22,8 +22,8 @@ jobs:
       run: |        
   
         docker login -u ricardoniepel -p ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }} ghcr.io
-        docker build -t ghcr.io/ricardoniepel/azure-adventure-day-coach/GameBot:latest .
-        docker push ghcr.io/ricardoniepel/azure-adventure-day-coach/GameBot:latest
+        docker build -t ghcr.io/ricardoniepel/azure-adventure-day-coach/gamebot:latest .
+        docker push ghcr.io/ricardoniepel/azure-adventure-day-coach/gamebot:latest
         
         
         
