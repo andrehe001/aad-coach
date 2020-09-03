@@ -66,7 +66,7 @@ spec:
           - name: "ConnectionStrings__GameEngineDB"
             value: "Server=tcp:agdsqlserver.database.windows.net,1433;Initial Catalog=adgdatabase;Persist Security Info=False;User ID=agdserver;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
           - name: "ARCADE_BACKENDURL"
-            value: "http://mybackend/pick"
+            value: "http://arcadebackend/pick"
       - name: istio-proxy
         image: ghcr.io/ricardoniepel/azure-adventure-day-coach/gamedayengine-sidecar:latest
         imagePullPolicy: Always
