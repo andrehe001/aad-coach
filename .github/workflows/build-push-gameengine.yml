@@ -3,7 +3,7 @@ name: Build and Push GameEngine
 on:
   push:
     branches: [ master ]
-    paths: /RPSLSGameHub/GameEngine
+    paths: 'RPSLSGameHub/GameEngine'
    
 
 jobs:
