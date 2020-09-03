@@ -21,7 +21,7 @@ jobs:
         username: RicardoNiepel
         password: ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }}
         registry: docker.pkg.github.com
-        repository: ricardoniepel/azure-adventure-day-coach
+        repository: ricardoniepel/azure-adventure-day-coach/gamedayengine-web
         tags: latest
         dockerfile: RPSLSGameHub/GameEngine/WebApi/Dockerfile                
         push: true
