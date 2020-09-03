@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
     paths:
-      - RPSLSGameHub/GameEngine/**
+      - RPSLSGameHub/GameEngine/WebApi/**
       - .github/workflows/build-push-gameengine.yml
    
 defaults:
