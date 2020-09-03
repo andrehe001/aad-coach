@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     paths:
       - RPSLSGameHub/GameBot/**
-      - .github/workflows/build-push-gamesidecar.yml
+      - .github/workflows/build-push-gamebot.yml
    
 defaults:
   run:
