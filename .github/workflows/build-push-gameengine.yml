@@ -27,7 +27,7 @@ jobs:
         tags: latest
         dockerfile: RPSLSGameHub/GameEngine/WebApi/Dockerfile
         # Docker repository to tag the image with
-        repository: docker.pkg.github.com/RicardoNiepel/azure-adventure-day-coach/gameengine-web  
+        repository: docker.pkg.github.com/ricardoniepel/azure-adventure-day-coach/gameengine-web  
         push: true
         
         
