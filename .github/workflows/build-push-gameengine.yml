@@ -16,7 +16,9 @@ jobs:
     steps:
     - name: print cwd
       run: |    
+        pwd
         ls
+        cd ./RPSLSGameHub 
     - name: Docker build, tag and push     
       run: |        
         docker login -u ricardoniepel -p ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }} docker.pkg.github.com
