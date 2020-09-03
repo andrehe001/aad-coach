@@ -1,0 +1,33 @@
+name: Build and Push GameEngine
+
+on:
+  push:
+    branches: [ master ]
+    paths: /RPSLSGameHub/GameEngine
+   
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and push Docker images
+      # You may pin to the exact commit or the version.
+      # uses: docker/build-push-action@92e71463491f2d026a477188b8ad3a0fdd9d672c
+      uses: docker/build-push-action@v1.1.0
+      with:
+        # Username used to log in to a Docker registry. If not set then no login will occur
+        username: danielmeixner
+        # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
+        password: ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }}
+        # Server address of Docker registry. If not set then will default to Docker Hub
+        registry: docker.pkg.github.com
+        # Docker repository to tag the image with
+        repository: docker.pkg.github.com/RicardoNiepel/azure-adventure-day-coach/gameengine-web:VERSION                       
+        
+        
+        
+        
+    
