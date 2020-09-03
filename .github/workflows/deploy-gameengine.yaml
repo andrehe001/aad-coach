@@ -1,0 +1,41 @@
+# This deploys the gameengine to AKS
+# 1. Provide a Secret in GitHub which holds your SPN like described here: https://github.com/Azure/aks-set-context/tree/releases/v1#azure-credentials
+# 2. Provide the right name for your cluster and RG
+# 3. Adjust the yaml file to reflect your connection strings
+
+name: Deploy GameEngine to AKS
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+    paths: 
+        - RPSLSGameHub/GameEngine/blackbox_gameengine_deployment.yaml   
+        - .github/workflows/deploy-gameengine.yaml
+
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    
+    steps:
+      - uses: azure/aks-set-context@v1
+        with:
+            creds: '${{ secrets.AZURE_ADVENTURE_DAY_COACH_CREDENTIALS }}' 
+            resourceGroupName: 'teamred'
+            clusterName: 'teamred'
+        id: login
+        
+      - uses: Azure/k8s-deploy@v1
+        with:        
+          manifests: |
+              RPSLSGameHub/GameEngine/blackbox_gameengine_deployment.yaml          
+          kubectl-version: 'latest'
+
+          
+          
+      
