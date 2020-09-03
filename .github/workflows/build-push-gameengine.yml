@@ -11,7 +11,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:    
+    steps:
+    - name: print cwd
+      run: |    
+        pwd
     - name: Docker build, tag and push     
       run: |        
         docker login -u ricardoniepel -p ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }} docker.pkg.github.com
