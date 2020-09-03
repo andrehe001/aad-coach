@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["RPSLSGameHub.GameEngine.Sidecar.csproj", "Sidecar/"]
 RUN dotnet restore "Sidecar/RPSLSGameHub.GameEngine.Sidecar.csproj"
-COPY . /src/Sidecar
+COPY . /Sidecar
 WORKDIR "/src/Sidecar"
 RUN dotnet build "RPSLSGameHub.GameEngine.Sidecar.csproj" -c Release -o /app/build
 
