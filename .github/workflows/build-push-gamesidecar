@@ -5,11 +5,11 @@ on:
     branches: [ master ]
     paths:
       - RPSLSGameHub/GameEngine/Sidecar/**
-      - .github/workflows/build-push-game-sidecar.yml
+      - .github/workflows/build-push-gamesidecar.yml
    
 defaults:
   run:
-    working-directory: RPSLSGameHub/GameEngine/SideCar
+    working-directory: RPSLSGameHub/GameEngine/Sidecar
 jobs:
   build:
 
