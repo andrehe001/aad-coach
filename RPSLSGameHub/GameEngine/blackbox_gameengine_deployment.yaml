@@ -54,7 +54,7 @@ spec:
     spec:
       containers:
       - name: blackboxgameengine
-        image: gamedayexploitreg.azurecr.io/gameengine:latest
+        image: ghcr.io/ricardoniepel/azure-adventure-day-coach/gamedayengine-web:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 80
@@ -68,7 +68,7 @@ spec:
           - name: "ARCADE_BACKENDURL"
             value: "http://mybackend/pick"
       - name: istio-proxy
-        image: gamedayexploitreg.azurecr.io/sidecar:1
+        image: ghcr.io/ricardoniepel/azure-adventure-day-coach/gamedayengine-sidecar:latest
         imagePullPolicy: Always
         volumeMounts:
         - mountPath: /meshconfig
