@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["RPSLSGameHub/GameEngine/WebApi/RPSLSGameHub.GameEngine.WebApi.csproj", "WebApi/"]
 RUN dotnet restore "WebApi/RPSLSGameHub.GameEngine.WebApi.csproj"
-COPY . /WebApi
+COPY RPSLSGameHub/GameEngine/WebApi/* WebApi/
 WORKDIR "/src/WebApi"
 RUN dotnet build "RPSLSGameHub.GameEngine.WebApi.csproj" -c Release -o /app/build
 
