@@ -6,10 +6,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RPSLSGameHub.GameEngine.WebApi.Models;
+using System.IO;
+using Microsoft.Extensions.DependencyModel.Resolution;
 
 namespace RPSLSGameHub.GameEngine.WebApi.Services
 {
@@ -21,11 +24,12 @@ namespace RPSLSGameHub.GameEngine.WebApi.Services
 
         private readonly Dictionary<Guid, List<Match>> _matches = new Dictionary<Guid, List<Match>>();
 
+        public static string _EncryptionKey { get; private set; }
 
         public MatchService(IDistributedCache cache, MatchDBContext dbContext, IConfiguration config)
 
         {
-
+            _EncryptionKey = "asdfbaasdfjknasere456789";
             _cache = cache;
             _dbContext = dbContext;
             _config = config;
@@ -163,15 +167,62 @@ namespace RPSLSGameHub.GameEngine.WebApi.Services
         private void SaveMatchToCache(Match m)
         {
             string serializedMatch = JsonConvert.SerializeObject(m);
-            _cache.SetStringAsync(m.MatchId.ToString(), serializedMatch);
+            var encryptedString = Encrypt(serializedMatch);
+            _cache.SetStringAsync(m.MatchId.ToString(), encryptedString);
 
         }
 
+        
         private async Task<Match> GetMatchFromCacheAsync(Guid matchId)
         {
             var o = await _cache.GetStringAsync(matchId.ToString());
-            Match item = JsonConvert.DeserializeObject<Match>(o);
+            var decryptedString = Decrypt(o);
+            Match item = JsonConvert.DeserializeObject<Match>(decryptedString);
             return item;
+        }
+
+        public static string Encrypt(string clearText)
+        {
+            string EncryptionKey = _EncryptionKey;
+            byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes rdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = rdb.GetBytes(32);
+                encryptor.IV = rdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
+                    }
+                    clearText = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            return clearText;
+        }
+        public static string Decrypt(string cipherText)
+        {
+            string EncryptionKey = _EncryptionKey;
+            cipherText = cipherText.Replace(" ", "+");
+            byte[] cipherBytes = Convert.FromBase64String(cipherText);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes rdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = rdb.GetBytes(32);
+                encryptor.IV = rdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(cipherBytes, 0, cipherBytes.Length);
+                        cs.Close();
+                    }
+                    cipherText = Encoding.Unicode.GetString(ms.ToArray());
+                }
+            }
+            return cipherText;
         }
 
         private async Task<MoveDTO> GetBotMoveAsync(Match gameInfoForBackend)

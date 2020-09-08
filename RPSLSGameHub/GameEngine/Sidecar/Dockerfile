@@ -1,5 +1,5 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
+#
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 81
@@ -7,9 +7,9 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["Sidecar/RPSLSGameHub.GameEngine.Sidecar.csproj", "Sidecar/"]
+COPY ["RPSLSGameHub.GameEngine.Sidecar.csproj", "Sidecar/"]
 RUN dotnet restore "Sidecar/RPSLSGameHub.GameEngine.Sidecar.csproj"
-COPY . .
+COPY . Sidecar/
 WORKDIR "/src/Sidecar"
 RUN dotnet build "RPSLSGameHub.GameEngine.Sidecar.csproj" -c Release -o /app/build
 
