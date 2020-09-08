@@ -57,7 +57,9 @@ namespace AdventureDayRunner
             var dict = new Dictionary<string, string>();
             var builder = new ConfigurationBuilder()
                                 .SetBasePath(Directory.GetCurrentDirectory())
-                                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                                .AddEnvironmentVariables();
+            
             var builtBuilder = builder.Build();
  
             dict.Add("DbName", builtBuilder.GetSection("Parameter").GetSection("DbName").Value);
