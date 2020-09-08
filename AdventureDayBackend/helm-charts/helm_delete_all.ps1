@@ -22,6 +22,6 @@ Write-Verbose "  Namespace:                     $Namespace"
 Write-Verbose "  ImageTag:                      $ImageTag"
 Write-Verbose "================================================================================"
 
-helm delete adventure-day-runner ./adventure-day-runner --namespace $Namespace
-helm delete adventure-day-runner-api ./adventure-day-runner-api --namespace $Namespace 
+helm delete adventure-day-runner --namespace $Namespace
+helm delete adventure-day-runner-api --namespace $Namespace 
 if ($LastExitCode -gt 0) { throw "helm error." }
