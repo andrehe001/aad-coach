@@ -11,13 +11,7 @@ param
     [ValidateLength(1,255)]
     [ValidatePattern('^[^$()]+$', ErrorMessage = "{0} is not valid. Is it perhaps a non-set Azure DevOps Variable?")]
     [string]
-    $Namespace = "adventure-day-backend",
-
-    [Parameter(Mandatory = $true)]
-    [ValidateLength(1,255)]
-    [ValidatePattern('^[^$()]+$', ErrorMessage = "{0} is not valid. Is it perhaps a non-set Azure DevOps Variable?")]
-    [string]
-    $ImageTag
+    $Namespace = "adventure-day-backend"
 )
 
 Write-Verbose "================================================================================"
