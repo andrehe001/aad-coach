@@ -1,7 +1,7 @@
 <template>
   <div id="main">
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" v-if="loggedIn">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
@@ -44,10 +44,17 @@
               <li>
                 <div class="dropdown-divider"></div>
               </li>
-              <li class="nav-item">
-                <router-link to="/team-console" v-slot="{ href, route, navigate, isActive, isExactActive }" >
+              <li class="nav-item" v-if="isAdmin">
+                <router-link to="/administration" v-slot="{ href, route, navigate, isActive, isExactActive }" >
                     <a :href="href" @click="navigate" :class="['nav-link', isExactActive && 'active']" data-dismiss="modal">
-                      Management
+                      Administration
+                    </a>
+                </router-link>
+              </li>
+               <li class="nav-item">
+                <router-link v-if="loggedIn" to="/logout" v-slot="{ href, route, navigate, isActive, isExactActive }" >
+                    <a :href="href" @click="navigate" :class="['nav-link', isExactActive && 'active']" data-dismiss="modal">
+                      [Logout]
                     </a>
                 </router-link>
               </li>
@@ -58,13 +65,13 @@
     </div>
 
     <div class="content-container">
-      <div class="navbar-dark">
+      <div class="navbar-dark" v-if="loggedIn">
         <button class="navbar-toggler" type="button" data-toggle="modal" data-target="#exampleModal">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
       
-      <router-view />
+      <router-view @loggedIn="updateLoginStatus" />
     </div>
   </div>
 </template>
@@ -72,11 +79,35 @@
 <script>
 export default {
   name: 'MainLayout',
+  data() {
+      return {
+          loggedIn : false,
+          isAdmin : false
+      }
+  },
+  created() {
+      this.updateLoginStatus();
+  },
+  methods: {
+    updateLoginStatus() {
+      let user = JSON.parse(localStorage.getItem('user'))
+      this.isAdmin = user.is_admin == 1;
+
+      this.loggedIn = localStorage.getItem('jwt') != null;
+    }
+  },
   components: {
+
   }
 }
 </script>
 
 <style>
+a {
+  color: #366aaf;
+}
 
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #366aaf;
+}
 </style>
