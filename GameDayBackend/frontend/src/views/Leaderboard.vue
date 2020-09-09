@@ -1,43 +1,35 @@
 <template>
   <div class="Leaderboard">
-    <div class="index-content">
-      <img class="lb-astronaut" src="../assets/images/png/astronaut-bg.png" />
-      <img class="lb-spaceship" src="../assets/images/png/spaceship-bg.png" />
-      <div class="leaderboard-container">
-        <h1 class="leaderboard-title">THE LEADERBOARD</h1>
-        <h2 class="leaderboard-subtitle">Azure Game Day Experience</h2>
-        <p class="info-contest">
-          Next scenario will be presented in 59 minutes.
-        </p>
-        <table class="leaderboard">
-          <thead>
-            <tr>
-              <th class="lb-position">Rank</th>
-              <th class="lb-user">Team Name</th>
-              <th class="lb-points">Score</th>
-              <th class="lb-metrics">Games per Second</th>
-              <th class="lb-metrics">Win Rate</th>
-              <th class="lb-metrics">Error Rate</th>
-              <th class="lb-metrics">Profit</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="team in Teams" v-bind:key="team.Name">
-              <td class="lb-position">
-                <span>{{ team.Position | formatPosition }}</span>
-              </td>
-              <td class="lb-user">
-                {{ team.Name }}
-              </td>
-              <td class="lb-points">{{ team.Score }}</td>
-              <td class="lb-metrics">{{ team.Score }}</td>
-              <td class="lb-metrics">{{ team.Score }}</td>
-              <td class="lb-metrics">{{ team.Score }}</td>
-              <td class="lb-metrics">{{ team.Score }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <h1>The Leaderboard</h1>
+    <div class="content overflow-auto">
+      <table class="leaderboard">
+        <thead>
+          <tr>
+            <th class="lb-position">Rank</th>
+            <th class="lb-user">Team Name</th>
+            <th class="lb-points">Score</th>
+            <th class="lb-metrics">Games per Second</th>
+            <th class="lb-metrics">Win Rate</th>
+            <th class="lb-metrics">Error Rate</th>
+            <th class="lb-metrics">Profit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="team in Teams" v-bind:key="team.Name">
+            <td class="lb-position">
+              <span>{{ team.Position | formatPosition }}</span>
+            </td>
+            <td class="lb-user">
+              {{ team.Name }}
+            </td>
+            <td class="lb-points">{{ team.Score }}</td>
+            <td class="lb-metrics">{{ team.Score }}</td>
+            <td class="lb-metrics">{{ team.Score }}</td>
+            <td class="lb-metrics">{{ team.Score }}</td>
+            <td class="lb-metrics">{{ team.Score }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -64,5 +56,5 @@ export default {
 </script>
 
 <style>
-@import "../assets/css/leaderboard.css";
+/* @import "../assets/css/leaderboard.css"; */
 </style>
