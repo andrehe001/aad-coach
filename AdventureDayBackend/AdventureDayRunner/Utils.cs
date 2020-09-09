@@ -63,6 +63,7 @@ namespace AdventureDayRunner
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
             var config = builder.Build();
@@ -86,9 +87,10 @@ namespace AdventureDayRunner
             var connectionString = Configuration.GetConnectionString("DbConnection");
             var dbName = Configuration.GetSection("Parameter").GetSection("DbName").Value;
             var dbCollectionName = Configuration.GetSection("Parameter").GetSection("DbCollectionName").Value;
+            var dbDocumentName = Configuration.GetSection("Parameter").GetSection("DbDocumentName").Value;
 
             var repo = new AdventureDayPropertiesRepository(new AdventureDayDatabaseSettings() { ConnectionString = connectionString, CollectionName = dbCollectionName, DatabaseName = dbName});
-            await repo.CreateAsync(AdventureDayRunnerProperties.Default);
+            await repo.CreateAsync(AdventureDayRunnerProperties.CreateDefault(dbDocumentName));
         }
 
 
@@ -97,13 +99,14 @@ namespace AdventureDayRunner
             var connectionString = Configuration.GetConnectionString("DbConnection");
             var dbName = Configuration.GetSection("Parameter").GetSection("DbName").Value;
             var dbCollectionName = Configuration.GetSection("Parameter").GetSection("DbCollectionName").Value;
+            var dbDocumentName = Configuration.GetSection("Parameter").GetSection("DbDocumentName").Value;
 
             var repo = new AdventureDayPropertiesRepository(new AdventureDayDatabaseSettings() { ConnectionString = connectionString, CollectionName = dbCollectionName, DatabaseName = dbName});
 
             do
             {
                 // TODO: Make doc configurable.
-                var document = repo.Get("Default");
+                var document = repo.Get(dbDocumentName);
                 if (document == null)
                 {
                     Log.Error($"Found no Properties in configured persistence: ${repo.Settings}");

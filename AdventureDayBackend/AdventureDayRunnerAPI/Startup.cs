@@ -1,3 +1,4 @@
+using AdventureDayRunner.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,8 +19,18 @@ namespace AdventureDayRunnerAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Important for all Enum Serializations!
+            BsonSerializerSettings.Configure();
+            
             services.AddHealthChecks();
             services.AddControllers().AddNewtonsoftJson();
+            services.AddSingleton(new AdventureDayPropertiesRepository(
+                new AdventureDayDatabaseSettings()
+                {
+                    ConnectionString = Configuration.GetConnectionString("DbConnection"),
+                    DatabaseName = Configuration.GetSection("Parameter").GetSection("DbName").Value,
+                    CollectionName = Configuration.GetSection("Parameter").GetSection("DbCollectionName").Value
+                }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

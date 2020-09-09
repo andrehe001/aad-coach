@@ -46,7 +46,7 @@ namespace AdventureDayRunner
             {
                 await engine.Run(cancellationTokenSource.Token);
             }
-            catch (TaskCanceledException exception)
+            catch (TaskCanceledException)
             {
                 Console.WriteLine("Cancelled by user.");
             }

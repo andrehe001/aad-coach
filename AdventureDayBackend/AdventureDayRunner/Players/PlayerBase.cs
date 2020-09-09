@@ -42,6 +42,7 @@ namespace AdventureDayRunner.Players
             if (statisticSoFar.MatchId != null) {
                 matchRequestParameter.Add("MatchId", statisticSoFar.MatchId.ToString());
             }
+            
             Log.Information($"Player {Name} sends request against {Uri}");
             String response = await Utils.SendMatchRequest(Uri, matchRequestParameter);
             

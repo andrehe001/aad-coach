@@ -43,11 +43,15 @@ namespace AdventureDayRunner.Shared
 
         public void Update(string name, AdventureDayRunnerProperties propertiesIn) =>
             _properties.ReplaceOne(properties => properties.Name == name, propertiesIn);
-
+        public Task UpdateAsync(string name, AdventureDayRunnerProperties propertiesIn) =>
+            _properties.ReplaceOneAsync(properties => properties.Name == name, propertiesIn);
         public void Remove(AdventureDayRunnerProperties propertiesIn) =>
             _properties.DeleteOne(properties => properties.Name == propertiesIn.Name);
-
+        public Task RemoveAsync(AdventureDayRunnerProperties propertiesIn) =>
+            _properties.DeleteOneAsync(properties => properties.Name == propertiesIn.Name);
         public void Remove(string name) =>
             _properties.DeleteOne(properties => properties.Name == name);
+        public Task RemoveAsycn(string name) =>
+            _properties.DeleteOneAsync(properties => properties.Name == name);
     }
 }

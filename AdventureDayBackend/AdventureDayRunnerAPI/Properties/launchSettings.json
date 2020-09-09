@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "GameDayRunnerService": {
+    "AdventureDayRunnerService": {
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "adventuredayrunner",

@@ -6,15 +6,18 @@ namespace AdventureDayRunner.Shared
 {
     public class AdventureDayRunnerProperties
     {
-        public static readonly AdventureDayRunnerProperties Default = new AdventureDayRunnerProperties()
+        public static AdventureDayRunnerProperties CreateDefault(string name)
         {
-            Name = "Default",
-            Teams = new AdventureDayTeamInformation[] {},
-            AdventureDayRunnerStatus = AdventureDayRunnerStatus.Active,
-            PhaseConfigurations = DefaultAdventureDayPhaseConfiguration.DefaultConfiguration,
-            CurrentPhase = AdventureDayPhase.Phase1_Deployment
-        };
-        
+            return new AdventureDayRunnerProperties()
+            {
+                Name = name,
+                Teams = new AdventureDayTeamInformation[] { },
+                AdventureDayRunnerStatus = AdventureDayRunnerStatus.Stopped,
+                PhaseConfigurations = DefaultAdventureDayPhaseConfiguration.DefaultConfiguration,
+                CurrentPhase = AdventureDayPhase.Phase1_Deployment
+            };
+        }
+
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }

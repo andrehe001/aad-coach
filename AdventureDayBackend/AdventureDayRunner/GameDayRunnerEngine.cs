@@ -12,29 +12,37 @@ namespace AdventureDayRunner
         public async Task Run(CancellationToken cancellationToken)
         {
             var adventureDayRunnerProperties = await Utils.ReadPropertiesFromDb(cancellationToken);
-            
+
             do
             {
                 var currentPhase = adventureDayRunnerProperties.CurrentPhase;
                 var phaseConfiguration = adventureDayRunnerProperties.PhaseConfigurations[currentPhase];
-                Log.Information($"[Loop] Phase: {currentPhase.ToString()} NumberOfReqPerTeam: {phaseConfiguration.NumberOfRequestExecutorsPerTeam} Latency: {phaseConfiguration.RequestExecutorLatencyMillis}");
-                foreach (var team in adventureDayRunnerProperties.Teams)
+                if (adventureDayRunnerProperties.AdventureDayRunnerStatus == AdventureDayRunnerStatus.Running)
                 {
-                    for (int i = 0; i < phaseConfiguration.NumberOfRequestExecutorsPerTeam; i++)
+                    Log.Information(
+                        $"Phase: {currentPhase.ToString()} NumberOfReqPerTeam: {phaseConfiguration.NumberOfRequestExecutorsPerTeam} Latency: {phaseConfiguration.RequestExecutorLatencyMillis}");
+                    foreach (var team in adventureDayRunnerProperties.Teams)
                     {
-                        InvokePlayerWithFireAndForget(team, cancellationToken);
+                        for (int i = 0; i < phaseConfiguration.NumberOfRequestExecutorsPerTeam; i++)
+                        {
+                            InvokePlayerWithFireAndForget(team, cancellationToken);
+                        }
                     }
+                    
+                    await Task.Delay(phaseConfiguration.RequestExecutorLatencyMillis, cancellationToken);
+                }
+                else
+                {
+                    Log.Information($"Status: {adventureDayRunnerProperties.AdventureDayRunnerStatus.ToString()} (retry in 5secs)");
+                    await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
                 }
                 
                 adventureDayRunnerProperties = await Utils.ReadPropertiesFromDb(cancellationToken);
-                await Task.Delay(phaseConfiguration.RequestExecutorLatencyMillis, cancellationToken);
-                
-            } while (
-                adventureDayRunnerProperties.AdventureDayRunnerStatus == AdventureDayRunnerStatus.Active 
-                     && !cancellationToken.IsCancellationRequested);
+            } while (!cancellationToken.IsCancellationRequested);
         }
 
-        private static void InvokePlayerWithFireAndForget(AdventureDayTeamInformation teamInformation, CancellationToken cancellationToken)
+        private static void InvokePlayerWithFireAndForget(AdventureDayTeamInformation teamInformation,
+            CancellationToken cancellationToken)
         {
             Task.Run(async () =>
             {
@@ -46,7 +54,8 @@ namespace AdventureDayRunner
                 }
                 catch (Exception exception)
                 {
-                    Log.Error(exception, $"Issue in Fire and Forget for Team {teamInformation.Name} URI: {teamInformation.GameEngineUri}");
+                    Log.Error(exception,
+                        $"Issue in Fire and Forget for Team {teamInformation.Name} URI: {teamInformation.GameEngineUri}");
                 }
             }, cancellationToken).Forget();
         }
