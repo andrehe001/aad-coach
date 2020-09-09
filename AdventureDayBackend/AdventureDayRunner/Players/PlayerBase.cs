@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
+using Serilog;
 
-namespace AdventureDayRunner
+namespace AdventureDayRunner.Players
 {
-    public abstract class Player
+    public abstract class PlayerBase
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        public Player(string uri)
+        protected PlayerBase(string uri)
         {
             Name = Utils.GenerateName();
             Id = System.Guid.NewGuid().ToString();
@@ -20,7 +21,7 @@ namespace AdventureDayRunner
 
         private string Uri;
 
-        public async Task<MatchStatistic> Play()
+        public async Task<MatchStatistic> Play(CancellationToken cancellationToken)
         {
             MatchStatistic statistic = new MatchStatistic();
             do
@@ -32,23 +33,27 @@ namespace AdventureDayRunner
  
         private async Task<MatchStatistic> SendMove(MatchStatistic statisticSoFar)
         {
-            var matchRequestParameter = new Dictionary<string, string>();
-            matchRequestParameter.Add("ChallengerId", Name);
-            matchRequestParameter.Add("Move", getNextMove(statisticSoFar).ToString());
+            var matchRequestParameter = new Dictionary<string, string>
+            {
+                {"ChallengerId", Name},
+                {"Move", GetNextMove(statisticSoFar).ToString()}
+            };
+            
             if (statisticSoFar.MatchId != null) {
                 matchRequestParameter.Add("MatchId", statisticSoFar.MatchId.ToString());
             }
-            Logger.Info(string.Format("Player {0} sends request against {1}", Name, Uri));
+            Log.Information($"Player {Name} sends request against {Uri}");
             String response = await Utils.SendMatchRequest(Uri, matchRequestParameter);
             
             var serializeOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
+            
             MatchStatistic statistic = JsonSerializer.Deserialize<MatchStatistic>(response, serializeOptions);
             return statistic;
         }
 
-        protected abstract Move getNextMove(MatchStatistic statisticSoFar);
+        protected abstract Move GetNextMove(MatchStatistic historicMatchStatistics);
     }
 }

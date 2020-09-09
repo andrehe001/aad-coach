@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace GameDayRunner.Models.Services
+namespace AdventureDayRunnerAPI.Models.Services
 {
     public class TimedHostedService : IHostedService, IDisposable
     {
-        private int executionCount = 0;
+        private int _executionCount = 0;
         private readonly ILogger<TimedHostedService> _logger;
         private Timer _timer;
 
@@ -29,7 +29,7 @@ namespace GameDayRunner.Models.Services
 
         private void DoWork(object state)
         {
-            var count = Interlocked.Increment(ref executionCount);
+            var count = Interlocked.Increment(ref _executionCount);
 
             _logger.LogInformation(
                 "Timed Hosted Service is working. Count: {Count}", count);

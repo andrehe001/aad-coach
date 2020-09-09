@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AdventureDayRunner.Shared;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-
-namespace GameDayRunner.Models.Controllers
+namespace AdventureDayRunnerAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -20,7 +20,7 @@ namespace GameDayRunner.Models.Controllers
         [HttpPost]
         [Consumes("application/json")]
         [Route("Start")]
-        public async System.Threading.Tasks.Task<IActionResult> StartAsync([FromBody] GameDayRunnerProperties properties)
+        public async System.Threading.Tasks.Task<IActionResult> StartAsync([FromBody] AdventureDayRunnerProperties properties)
         {
             await Utils.PersistPropertiesUpdateAsync(properties);
             return Ok(properties);

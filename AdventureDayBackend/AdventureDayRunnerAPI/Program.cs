@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
+using AdventureDayRunnerAPI.Models.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using GameDayRunner.Models.Services;
 
-namespace GameDayRunner
+namespace AdventureDayRunnerAPI
 {
     public class Program
     {

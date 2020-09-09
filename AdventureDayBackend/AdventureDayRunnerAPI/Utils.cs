@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Authentication;
 using System.Threading.Tasks;
-using GameDayRunner.Models;
+using AdventureDayRunner.Shared;
+using AdventureDayRunnerAPI.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace GameDayRunner
+namespace AdventureDayRunnerAPI
 {
     public class Utils
     {
@@ -33,7 +34,7 @@ namespace GameDayRunner
             return dict;
         }
 
-        internal static async Task PersistPropertiesUpdateAsync(GameDayRunnerProperties properties)
+        internal static async Task PersistPropertiesUpdateAsync(AdventureDayRunnerProperties adventureDayRunnerProperties)
         {
             var dict = Utils.GetParameters();
             string connectionString = Utils.GetConnectionString();
@@ -42,7 +43,7 @@ namespace GameDayRunner
             var mongoClient = new MongoClient(settings);
             IMongoDatabase mongoDatabase = mongoClient.GetDatabase(dict.GetValueOrDefault("DbName", string.Empty));
             var mongoCollection = mongoDatabase.GetCollection<BsonDocument>(dict.GetValueOrDefault("DbCollectionName", string.Empty));
-            var document = properties.ToBsonDocument();
+            var document = adventureDayRunnerProperties.ToBsonDocument();
             await mongoCollection.DeleteOneAsync(new BsonDocument());
             await mongoCollection.InsertOneAsync(document);            
         }

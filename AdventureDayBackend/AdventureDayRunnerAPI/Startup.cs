@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace GameDayRunner
+namespace AdventureDayRunnerAPI
 {
     public class Startup
     {
@@ -19,9 +19,7 @@ namespace GameDayRunner
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHealthChecks();
-            
-            services.AddControllers()
-                .AddNewtonsoftJson();
+            services.AddControllers().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,9 +31,7 @@ namespace GameDayRunner
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
