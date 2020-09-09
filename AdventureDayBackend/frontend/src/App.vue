@@ -6,7 +6,6 @@
 
 <script>
 import MainLayout from '@/layouts/MainLayout.vue'
-import ConsoleLayout from '@/layouts/ConsoleLayout.vue'
 
 const default_layout = 'main';
 
@@ -18,22 +17,11 @@ export default {
     }
   },
   components: {
-    'main-layout': MainLayout,
-    'console-layout': ConsoleLayout
+    'main-layout': MainLayout
   }
 }
 </script>
 
 <style>
 @import "assets/css/main.css";
-@import "assets/css/reconnect.css";
-@import "assets/css/stars.css";
-@import "assets/css/controls.css";
-@import "assets/css/index.css";
-@import "assets/css/challengers.css";
-@import "assets/css/battle.css";
-@import "assets/css/console.css";
-@import "assets/css/mainTitle.css";
-@import "assets/css/result.css";
-@import "assets/css/not-found.css";
 </style>
