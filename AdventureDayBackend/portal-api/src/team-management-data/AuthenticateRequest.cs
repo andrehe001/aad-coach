@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace team_management_data
 {
-    public class Member
+    public class AuthenticateRequest
     {
-        public int Id { get; set; }
+        [Required]
+        public string Teamname { get; set; }
 
-        public string DisplayName { get; set; }
-
-        public string Username { get; set; }
-
+        [Required]
         public string Password { get; set; }
     }
 }

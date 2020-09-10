@@ -9,6 +9,7 @@ namespace team_management_api.Models
 {
     public class TeamManagementContext : DbContext
     {
+
         public TeamManagementContext(DbContextOptions<TeamManagementContext> options)
             : base(options)
         {
