@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "adventure-day-frontend.name" -}}
+{{- define "adventure-day-portal-api.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "adventure-day-frontend.fullname" -}}
+{{- define "adventure-day-portal-api.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "adventure-day-frontend.chart" -}}
+{{- define "adventure-day-portal-api.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "adventure-day-frontend.labels" -}}
-helm.sh/chart: {{ include "adventure-day-frontend.chart" . }}
-{{ include "adventure-day-frontend.selectorLabels" . }}
+{{- define "adventure-day-portal-api.labels" -}}
+helm.sh/chart: {{ include "adventure-day-portal-api.chart" . }}
+{{ include "adventure-day-portal-api.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "adventure-day-frontend.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "adventure-day-frontend.name" . }}
+{{- define "adventure-day-portal-api.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "adventure-day-portal-api.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "adventure-day-frontend.serviceAccountName" -}}
+{{- define "adventure-day-portal-api.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "adventure-day-frontend.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "adventure-day-portal-api.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "adventure-day-frontend.fullname" . }}
+  name: {{ include "adventure-day-portal-frontend.fullname" . }}
   labels:
-    {{- include "adventure-day-frontend.labels" . | nindent 4 }}
+    {{- include "adventure-day-portal-frontend.labels" . | nindent 4 }}
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
 {{- end }}
   selector:
     matchLabels:
-      {{- include "adventure-day-frontend.selectorLabels" . | nindent 6 }}
+      {{- include "adventure-day-portal-frontend.selectorLabels" . | nindent 6 }}
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "adventure-day-frontend.selectorLabels" . | nindent 8 }}
+        {{- include "adventure-day-portal-frontend.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "adventure-day-frontend.serviceAccountName" . }}
+      serviceAccountName: {{ include "adventure-day-portal-frontend.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

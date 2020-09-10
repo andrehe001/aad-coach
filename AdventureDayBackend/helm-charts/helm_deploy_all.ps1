@@ -11,18 +11,10 @@ param
     [ValidateLength(1,255)]
     [ValidatePattern('^[^$()]+$', ErrorMessage = "{0} is not valid. Is it perhaps a non-set Azure DevOps Variable?")]
     [string]
-    $Namespace = "adventure-day-backend"
+    $Namespace = "adventure-day"
 )
-
-Write-Verbose "================================================================================"
-Write-Verbose "= Configuration                                                                ="
-Write-Verbose "================================================================================"
-Write-Verbose "  Environment:                   $Environment"
-Write-Verbose "  Namespace:                     $Namespace"
-Write-Verbose "  ImageTag:                      $ImageTag"
-Write-Verbose "================================================================================"
 
 helm upgrade adventure-day-runner ./adventure-day-runner --install --namespace $Namespace -f ./adventure-day-runner.values.$($Environment).yaml --create-namespace
 helm upgrade adventure-day-runner-api ./adventure-day-runner-api --install --namespace $Namespace -f ./adventure-day-runner-api.values.$($Environment).yaml --create-namespace
-helm upgrade adventure-day-frontend ./adventure-day-frontend --install --namespace $Namespace -f ./adventure-day-frontend.values.$($Environment).yaml --create-namespace
-if ($LastExitCode -gt 0) { throw "helm error." }
+helm upgrade adventure-day-portal-frontend ./adventure-day-portal-frontend --install --namespace $Namespace -f ./adventure-day-portal-frontend.values.$($Environment).yaml --create-namespace
+helm upgrade adventure-day-portal-api ./adventure-day-portal-api --install --namespace $Namespace -f ./adventure-day-portal-api.values.$($Environment).yaml --create-namespace
