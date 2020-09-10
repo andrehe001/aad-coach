@@ -1,0 +1,9 @@
+namespace AdventureDayRunner.Shared
+{
+    public class AdventureDayDatabaseSettings 
+    {
+        public string ConnectionString { get; set; }
+        public string CollectionName { get; set; }
+        public string DatabaseName { get; set; }
+    }
+}

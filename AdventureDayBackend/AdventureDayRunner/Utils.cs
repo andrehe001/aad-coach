@@ -1,30 +1,48 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Authentication;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
+using AdventureDayRunner.Shared;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
+using MongoDB.Bson.IO;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
+using Serilog;
 
 namespace AdventureDayRunner
 {
     public class Utils
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private static readonly HttpClient client = new HttpClient();
-        public static string GenerateName(int len=5)
-        { 
+        private static Lazy<IConfiguration> configuration;
+
+        static Utils()
+        {
+            configuration = new Lazy<IConfiguration>(BuildConfiguration);
+        }
+
+        public static string GenerateName(int len = 5)
+        {
             Random r = new Random();
-            string[] consonants = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "l", "n", "p", "q", "r", "s", "sh", "zh", "t", "v", "w", "x" };
-            string[] vowels = { "a", "e", "i", "o", "u", "ae", "y" };
+            string[] consonants =
+            {
+                "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "l", "n", "p", "q", "r", "s", "sh", "zh", "t", "v",
+                "w", "x"
+            };
+            string[] vowels = {"a", "e", "i", "o", "u", "ae", "y"};
             string Name = "";
             Name += consonants[r.Next(consonants.Length)].ToUpper();
             Name += vowels[r.Next(vowels.Length)];
-            int b = 2; //b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
+            int
+                b = 2; //b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
             while (b < len)
             {
                 Name += consonants[r.Next(consonants.Length)];
@@ -32,55 +50,77 @@ namespace AdventureDayRunner
                 Name += vowels[r.Next(vowels.Length)];
                 b++;
             }
+
             return Name;
         }
 
-        internal static async Task<string> SendMatchRequest(String uri, Dictionary<string, string> matchRequestParameter)
+        #region Configuration
+
+        private static IConfiguration Configuration => configuration.Value;
+
+        private static IConfiguration BuildConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            var config = builder.Build();
+            return config;
+        }
+
+        #endregion
+
+        internal static async Task<string> SendMatchRequest(String uri,
+            Dictionary<string, string> matchRequestParameter)
         {
             string json = JsonSerializer.Serialize(matchRequestParameter);
-            var response = await client.PostAsync(uri, 
+            var response = await client.PostAsync(uri,
                 new StringContent(json, Encoding.UTF8, "application/json"));
             return await response.Content.ReadAsStringAsync();
         }
 
-        private static string GetConnectionString()
+        public static async Task WriteDefaultPropertiesToDb()
         {
-            var builder = new ConfigurationBuilder()
-                                .SetBasePath(Directory.GetCurrentDirectory())
-                                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                                .AddEnvironmentVariables();
- 
-            return builder.Build().GetConnectionString("DbConnection");
+            Log.Information("Writing default properties to DB.");
+            var connectionString = Configuration.GetConnectionString("DbConnection");
+            var dbName = Configuration.GetSection("Parameter").GetSection("DbName").Value;
+            var dbCollectionName = Configuration.GetSection("Parameter").GetSection("DbCollectionName").Value;
+            var dbDocumentName = Configuration.GetSection("Parameter").GetSection("DbDocumentName").Value;
+
+            var repo = new AdventureDayPropertiesRepository(new AdventureDayDatabaseSettings() { ConnectionString = connectionString, CollectionName = dbCollectionName, DatabaseName = dbName});
+            await repo.CreateAsync(AdventureDayRunnerProperties.CreateDefault(dbDocumentName));
         }
 
-        private static Dictionary<string,string> GetParameters()
+
+        public static async Task<AdventureDayRunnerProperties> ReadPropertiesFromDb(CancellationToken token)
         {
-            var dict = new Dictionary<string, string>();
-            var builder = new ConfigurationBuilder()
-                                .SetBasePath(Directory.GetCurrentDirectory())
-                                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                                .AddEnvironmentVariables();
+            var connectionString = Configuration.GetConnectionString("DbConnection");
+            var dbName = Configuration.GetSection("Parameter").GetSection("DbName").Value;
+            var dbCollectionName = Configuration.GetSection("Parameter").GetSection("DbCollectionName").Value;
+            var dbDocumentName = Configuration.GetSection("Parameter").GetSection("DbDocumentName").Value;
+
+            var repo = new AdventureDayPropertiesRepository(new AdventureDayDatabaseSettings() { ConnectionString = connectionString, CollectionName = dbCollectionName, DatabaseName = dbName});
+
+            do
+            {
+                // TODO: Make doc configurable.
+                var document = repo.Get(dbDocumentName);
+                if (document == null)
+                {
+                    Log.Error($"Found no Properties in configured persistence: ${repo.Settings}");
+                    await Task.Delay(TimeSpan.FromSeconds(5), token);
+                }
+                else
+                {
+                    return document;
+                }
+            } while (!token.IsCancellationRequested);
             
-            var builtBuilder = builder.Build();
- 
-            dict.Add("DbName", builtBuilder.GetSection("Parameter").GetSection("DbName").Value);
-            dict.Add("DbCollectionName", builtBuilder.GetSection("Parameter").GetSection("DbCollectionName").Value); 
-            return dict;
-        }
-
-        public static Properties ReadPropertiesFromDb()
-        {
-            Logger.Info("Reading properties from DB");
-            var dict = GetParameters();
-            string connectionString = GetConnectionString();
-            MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
-            settings.SslSettings = new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
-            var mongoClient = new MongoClient(settings);
-            IMongoDatabase mongoDatabase = mongoClient.GetDatabase(dict.GetValueOrDefault("DbName", "agdrunnerdb"));
-            var mongoCollection = mongoDatabase.GetCollection<BsonDocument>(dict.GetValueOrDefault("DbCollectionName", "runnermeta"));
-            var projection = Builders<BsonDocument>.Projection.Exclude("_id");
-            var document = mongoCollection.Find(new BsonDocument()).Project(projection).FirstOrDefault();
-            return JsonSerializer.Deserialize<Properties>(document.ToJson());
+            throw new InvalidOperationException("Should never reach this line.");
         }
     }
+    
+    
 }

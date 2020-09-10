@@ -4,12 +4,12 @@ on:
   push:
     branches: [ master ]
     paths:
-      - RPSLSGameHub/GameEngine/WebApi/**
+      - TeamGameHub/GameEngine/WebApi/**
       - .github/workflows/build-push-gameengine.yml
    
 defaults:
   run:
-    working-directory: RPSLSGameHub/GameEngine/WebApi
+    working-directory: TeamGameHub/GameEngine/WebApi
 jobs:
   build:
 

@@ -78,3 +78,4 @@ mongoDb:
   dbConnect: ""
   dbName: ""
   dbCollectionName: ""
+  dbDocumentName: ""

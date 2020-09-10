@@ -11,7 +11,7 @@ on:
   push:
     branches: [ master ]
     paths: 
-        - RPSLSGameHub/GameEngine/blackbox_gameengine_deployment.yaml   
+        - TeamGameHub/GameEngine/blackbox_gameengine_deployment.yaml   
         - .github/workflows/deploy-gameengine.yaml
 
 
@@ -33,7 +33,7 @@ jobs:
       - uses: Azure/k8s-deploy@v1
         with:        
           manifests: |
-              RPSLSGameHub/GameEngine/blackbox_gameengine_deployment.yaml          
+              TeamGameHub/GameEngine/blackbox_gameengine_deployment.yaml          
           kubectl-version: 'latest'
 
           

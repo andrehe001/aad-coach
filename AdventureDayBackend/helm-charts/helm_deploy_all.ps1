@@ -24,4 +24,5 @@ Write-Verbose "=================================================================
 
 helm upgrade adventure-day-runner ./adventure-day-runner --install --namespace $Namespace -f ./adventure-day-runner.values.$($Environment).yaml --create-namespace
 helm upgrade adventure-day-runner-api ./adventure-day-runner-api --install --namespace $Namespace -f ./adventure-day-runner-api.values.$($Environment).yaml --create-namespace
+helm upgrade adventure-day-frontend ./adventure-day-frontend --install --namespace $Namespace -f ./adventure-day-frontend.values.$($Environment).yaml --create-namespace
 if ($LastExitCode -gt 0) { throw "helm error." }
