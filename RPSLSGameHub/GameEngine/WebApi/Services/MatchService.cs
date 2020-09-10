@@ -236,7 +236,7 @@ namespace RPSLSGameHub.GameEngine.WebApi.Services
             return JsonConvert.DeserializeObject<MoveDTO>(await res.Content.ReadAsStringAsync());
 
             // uncomment if you want to work without a backend
-            // return Move.Lizard;
+            // return Move.Scissors;
         }
 
         private Outcome CalculateResult(Move challengerMove, Move overlordMove)
@@ -248,19 +248,19 @@ namespace RPSLSGameHub.GameEngine.WebApi.Services
 
             return challengerMove switch
             {
-                Move.Rock => overlordMove == Move.Lizard || overlordMove == Move.Scissors
+                Move.Rock => overlordMove == Move.Metal || overlordMove == Move.Scissors
                     ? Outcome.ChallengerWins
                     : Outcome.OverlordWins,
-                Move.Paper => overlordMove == Move.Spock || overlordMove == Move.Rock
+                Move.Paper => overlordMove == Move.Snap || overlordMove == Move.Rock
                     ? Outcome.ChallengerWins
                     : Outcome.OverlordWins,
-                Move.Scissors => overlordMove == Move.Paper || overlordMove == Move.Lizard
+                Move.Scissors => overlordMove == Move.Paper || overlordMove == Move.Metal
                     ? Outcome.ChallengerWins
                     : Outcome.OverlordWins,
-                Move.Lizard => overlordMove == Move.Spock || overlordMove == Move.Paper
+                Move.Metal => overlordMove == Move.Snap || overlordMove == Move.Paper
                     ? Outcome.ChallengerWins
                     : Outcome.OverlordWins,
-                Move.Spock => overlordMove == Move.Scissors || overlordMove == Move.Rock
+                Move.Snap => overlordMove == Move.Scissors || overlordMove == Move.Rock
                     ? Outcome.ChallengerWins
                     : Outcome.OverlordWins,
                 _ => throw new NotImplementedException()

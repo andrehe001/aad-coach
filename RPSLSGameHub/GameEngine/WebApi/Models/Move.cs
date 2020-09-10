@@ -7,7 +7,7 @@ namespace RPSLSGameHub.GameEngine.WebApi.Models
         Rock,
         Paper,
         Scissors,
-        Lizard,
-        Spock
+        Metal,
+        Snap
     }
 }

@@ -2,8 +2,8 @@ const RPSLSChoices = [
     'rock',
     'paper',
     'scissors',
-    'lizard',
-    'spock',
+    'snap',
+    'metal',
 ];
 
 const RPSLSStrategies = {
@@ -12,8 +12,8 @@ const RPSLSStrategies = {
     ROCK: 'rock',
     PAPER: 'paper',
     SCISSORS: 'scissors',
-    LIZARD: 'lizard',
-    SPOCK: 'spock',
+    SNAP: 'snap',
+    METAL: 'metal',
 }
 
 module.exports = {

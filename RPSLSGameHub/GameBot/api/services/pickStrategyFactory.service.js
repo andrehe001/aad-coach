@@ -17,9 +17,9 @@ class PickStrategyFactory {
                 return new FixedStrategy(RPSLSChoices[1]);
             case RPSLSStrategies.SCISSORS:
                 return new FixedStrategy(RPSLSChoices[2]);
-            case RPSLSStrategies.LIZARD:
+            case RPSLSStrategies.SNAP:
                 return new FixedStrategy(RPSLSChoices[3]);
-            case RPSLSStrategies.SPOCK:
+            case RPSLSStrategies.METAL:
                 return new FixedStrategy(RPSLSChoices[4]);
             case RPSLSStrategies.ITERATIVE:
                 return new IterativeStrategy();

@@ -25,7 +25,7 @@ namespace AzureGameDay.Web
         {
             services.AddHealthChecks();
             services.AddControllers().AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
-            //services.AddSingleton<IOverlordStrategy, SpockLizardOverlordStrategy>();
+            
             services.AddTransient<MatchService>();
 
             services.AddDbContext<MatchDBContext>(opt =>
@@ -36,7 +36,7 @@ namespace AzureGameDay.Web
             );
             services.AddOpenApiDocument(s =>
             {
-                s.Title = "Azure Game Day - RPSLS API";
+                s.Title = "Azure Adventure Day - API";
             }); 
         }
 
