@@ -39,8 +39,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "team-console" */ '../views/TeamConsole.vue')
   },
   {
-    path: '/phase-guides',
-    name: 'Phase Guides',
+    path: '/phase-guides/:name?',
+    name: 'PhaseGuides',
     meta: { layout: 'main' },
     component: () => import(/* webpackChunkName: "phase-guides" */ '../views/PhaseGuides.vue')
   },
