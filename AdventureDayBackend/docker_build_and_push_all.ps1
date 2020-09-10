@@ -20,7 +20,7 @@ param
 )
 
 Write-Verbose "  ContainerRegistryName: $ContainerRegistryName"
-az acr build -r $ContainerRegistryName -f ./AdventureDayRunner/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-runner:$($Label)" .
-az acr build -r $ContainerRegistryName -f ./AdventureDayRunnerAPI/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-runner-api:$($Label)" .
+az acr build -r $ContainerRegistryName -f ./runner/AdventureDayRunner/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-runner:$($Label)" ./runner
+az acr build -r $ContainerRegistryName -f ./runner/AdventureDayRunnerAPI/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-runner-api:$($Label)" ./runner
 az acr build -r $ContainerRegistryName -f ./portal-frontend/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-portal-frontend:$($Label)" ./portal-frontend
-az acr build -r $ContainerRegistryName -f ./portal-api/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-portal-api:$($Label)" ./portal-api
+#az acr build -r $ContainerRegistryName -f ./portal-api/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-portal-api:$($Label)" ./portal-api

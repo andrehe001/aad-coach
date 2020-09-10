@@ -119,33 +119,34 @@ namespace team_management_api.Controllers
             return _context.Teams.Any(e => e.Name == teamName);
         }
 
-
-        [HttpGet(Name = "GetMembers")]
-        [Produces("application/json", Type = typeof(Member))]
-        async Task<ActionResult<IEnumerable<Member>>> ITeamManagement.GetMembers(string teamName)
+        public Task<ActionResult<IEnumerable<Member>>> GetTeamAccounts(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        [HttpGet(Name = "GetTeam")]
-        [Produces("application/json", Type = typeof(Team))]
-        async Task<ActionResult<Team>> ITeamManagement.GetTeam(string teamName)
+        public Task<ActionResult<Team>> UpdateTeamName(Guid id, string name)
         {
             throw new NotImplementedException();
         }
 
-        [HttpGet(Name = "GetTeam")]
-        [Produces("application/json", Type = typeof(Team))]
-        async Task<ActionResult<Team>> ITeamManagement.GetTeam(Guid id)
+        public Task<ActionResult<Team>> GetTeamStatsAndLogs(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        [HttpGet(Name = "GetTeam")]
-        [Produces("application/json", Type = typeof(Team))]
-        async Task<ActionResult<IEnumerable<Team>>> ITeamManagement.GetTeams()
+        public Task<ActionResult<IEnumerable<Team>>> GetStats()
         {
-            return await _context.Teams.ToListAsync();
+            throw new NotImplementedException();
+        }
+
+        public Task<ActionResult<Team>> UpdateTeamNameAdmin(Guid id, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ActionResult<IEnumerable<Member>>> GetTeamAccountsAdmin(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
