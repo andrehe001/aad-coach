@@ -13,6 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Azure.Cosmos;
 using team_management_api.Models;
+using team_management_api.Helpers;
+using team_management_data;
+using team_management_api.Data;
 
 namespace team_management_api
 {
@@ -28,13 +31,14 @@ namespace team_management_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors();
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddScoped<ITeamDataService, TeamManagementService>();
             services.AddControllers();
             services.AddDbContext<TeamManagementContext>(options =>
-                options.UseCosmos(Configuration["ConnectionStrings:cosmosdbAccountEndPoint"].ToString(),
-                Configuration["ConnectionStrings:cosmosdbAccountAccountKey"].ToString(),
-                Configuration["ConnectionStrings:cosmosdbAccountDatabaseName"].ToString())
+                options.UseSqlServer(AppSettings.GetConnectionString(this.Configuration))
             );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +53,13 @@ namespace team_management_api
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
