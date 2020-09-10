@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "adventure-day-runner.fullname" . }}
+  name: {{ include "adventure-day-frontend.fullname" . }}
   labels:
-    {{- include "adventure-day-runner.labels" . | nindent 4 }}
+    {{- include "adventure-day-frontend.labels" . | nindent 4 }}
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
 {{- end }}
   selector:
     matchLabels:
-      {{- include "adventure-day-runner.selectorLabels" . | nindent 6 }}
+      {{- include "adventure-day-frontend.selectorLabels" . | nindent 6 }}
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -18,39 +18,35 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "adventure-day-runner.selectorLabels" . | nindent 8 }}
+        {{- include "adventure-day-frontend.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "adventure-day-runner.serviceAccountName" . }}
+      serviceAccountName: {{ include "adventure-day-frontend.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          env:
-            - name: ConnectionStrings__DbConnection
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "adventure-day-runner.fullname" . }}
-                  key: dbConnection
-            - name: Parameter__DbName
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "adventure-day-runner.fullname" . }}
-                  key: dbName
-            - name: Parameter__DbCollectionName
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "adventure-day-runner.fullname" . }}
-                  key: dbCollectionName
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
