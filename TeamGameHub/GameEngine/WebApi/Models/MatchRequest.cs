@@ -1,6 +1,6 @@
 using System;
 
-namespace RPSLSGameHub.GameEngine.WebApi.Models
+namespace TeamGameHub.GameEngine.WebApi.Models
 {
     public class MatchRequest
     {

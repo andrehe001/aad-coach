@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace RPSLSGameHub.GameEngine.Sidecar
+namespace TeamGameHub.GameEngine.Sidecar
 {
     public class Program
     {

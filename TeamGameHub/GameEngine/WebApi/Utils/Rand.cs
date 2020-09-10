@@ -1,6 +1,6 @@
 using System;
 
-namespace RPSLSGameHub.GameEngine.WebApi.Utils
+namespace TeamGameHub.GameEngine.WebApi.Utils
 {
     public static class Rand
     {

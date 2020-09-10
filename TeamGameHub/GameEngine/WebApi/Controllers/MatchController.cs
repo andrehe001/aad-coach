@@ -2,10 +2,10 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using RPSLSGameHub.GameEngine.WebApi.Models;
-using RPSLSGameHub.GameEngine.WebApi.Services;
+using TeamGameHub.GameEngine.WebApi.Models;
+using TeamGameHub.GameEngine.WebApi.Services;
 
-namespace RPSLSGameHub.GameEngine.WebApi.Controllers
+namespace TeamGameHub.GameEngine.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace RPSLSGameHub.GameEngine.WebApi.Models
+namespace TeamGameHub.GameEngine.WebApi.Models
 {
     public class MatchDBContext : DbContext
     {

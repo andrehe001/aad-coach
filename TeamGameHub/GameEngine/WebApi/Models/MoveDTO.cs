@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RPSLSGameHub.GameEngine.WebApi.Models
+namespace TeamGameHub.GameEngine.WebApi.Models
 {
     /// <summary>
     /// This is what the bot returns

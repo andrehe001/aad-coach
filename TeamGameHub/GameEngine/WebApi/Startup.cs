@@ -6,8 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NJsonSchema;
-using RPSLSGameHub.GameEngine.WebApi.Models;
-using RPSLSGameHub.GameEngine.WebApi.Services;
+using TeamGameHub.GameEngine.WebApi.Models;
+using TeamGameHub.GameEngine.WebApi.Services;
 
 namespace AzureGameDay.Web
 {

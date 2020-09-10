@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["RPSLSGameHub.GameEngine.WebApi.csproj", "WebApi/"]
-RUN dotnet restore "WebApi/RPSLSGameHub.GameEngine.WebApi.csproj"
+COPY ["TeamGameHub.GameEngine.WebApi.csproj", "WebApi/"]
+RUN dotnet restore "WebApi/TeamGameHub.GameEngine.WebApi.csproj"
 COPY . WebApi/
 WORKDIR "/src/WebApi"
-RUN dotnet build "RPSLSGameHub.GameEngine.WebApi.csproj" -c Release -o /app/build
+RUN dotnet build "TeamGameHub.GameEngine.WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "RPSLSGameHub.GameEngine.WebApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "TeamGameHub.GameEngine.WebApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "RPSLSGameHub.GameEngine.WebApi.dll"]
+ENTRYPOINT ["dotnet", "TeamGameHub.GameEngine.WebApi.dll"]

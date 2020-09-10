@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["RPSLSGameHub.GameEngine.Sidecar.csproj", "Sidecar/"]
-RUN dotnet restore "Sidecar/RPSLSGameHub.GameEngine.Sidecar.csproj"
+COPY ["TeamGameHub.GameEngine.Sidecar.csproj", "Sidecar/"]
+RUN dotnet restore "Sidecar/TeamGameHub.GameEngine.Sidecar.csproj"
 COPY . Sidecar/
 WORKDIR "/src/Sidecar"
-RUN dotnet build "RPSLSGameHub.GameEngine.Sidecar.csproj" -c Release -o /app/build
+RUN dotnet build "TeamGameHub.GameEngine.Sidecar.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "RPSLSGameHub.GameEngine.Sidecar.csproj" -c Release -o /app/publish
+RUN dotnet publish "TeamGameHub.GameEngine.Sidecar.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "RPSLSGameHub.GameEngine.Sidecar.dll"]
+ENTRYPOINT ["dotnet", "TeamGameHub.GameEngine.Sidecar.dll"]

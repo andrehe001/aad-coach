@@ -1,9 +1,9 @@
-# RPSLS Game Hub - Game Engine
+# Team Game Hub - Game Engine
 ##
 * Blackbox, team has **NO** access to source code
 * Deployed into each team environment
 
-## RPSLSGameHub.GameEngine.Sidecar aka "istio-proxy"
+## TeamGameHub.GameEngine.Sidecar aka "istio-proxy"
 This is a bad sidecard, written by a hacker and was deployed with the help of social engineering.
 
 It provides an exploit and gives the following possibilties:

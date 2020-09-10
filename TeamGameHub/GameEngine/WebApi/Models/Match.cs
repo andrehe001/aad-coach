@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RPSLSGameHub.GameEngine.WebApi.Models
+namespace TeamGameHub.GameEngine.WebApi.Models
 {
     public class Match
     {

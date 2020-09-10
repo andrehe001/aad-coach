@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace RPSLSGameHub.GameEngine.WebApi.Models
+namespace TeamGameHub.GameEngine.WebApi.Models
 {
     public enum Move
     {

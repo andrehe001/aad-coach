@@ -10,11 +10,11 @@ using System.Security.Cryptography;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using RPSLSGameHub.GameEngine.WebApi.Models;
+using TeamGameHub.GameEngine.WebApi.Models;
 using System.IO;
 using Microsoft.Extensions.DependencyModel.Resolution;
 
-namespace RPSLSGameHub.GameEngine.WebApi.Services
+namespace TeamGameHub.GameEngine.WebApi.Services
 {
     public class MatchService
     {        

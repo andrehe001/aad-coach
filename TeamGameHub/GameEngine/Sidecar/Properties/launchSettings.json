@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "RPSLSGameHub.GameEngine.Sidecar": {
+    "TeamGameHub.GameEngine.Sidecar": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
