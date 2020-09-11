@@ -32,7 +32,7 @@ namespace team_management_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<AppSettings>(Configuration.GetSection("Authentication"));
             services.AddScoped<ITeamDataService, TeamManagementService>();
             services.AddControllers();
             services.AddDbContext<TeamManagementContext>(options =>

@@ -9,19 +9,29 @@ namespace team_management_data
 {
     public interface ITeamManagement
     {
-        // APIs require a valid jwt token
-        Task<ActionResult<IEnumerable<Member>>> GetTeamMembers(int id);
 
-        Task<ActionResult<Team>> UpdateTeamName(int id, string name);
+        Task<ActionResult<IEnumerable<Member>>> GetTeamMembers(int teamId);
 
-        Task<ActionResult<Team>> GetTeamStatsAndLogs(int id);
+        Task<ActionResult<Team>> UpdateTeamName(int teamId, string newName);
+
+        Task<ActionResult<Team>> GetTeamStatsAndLogs(int teamId);
+
+        Task<ActionResult<Team>> GetTeam(int teamId);
+        Task<ActionResult<Team>> GetTeamWithMembers(int teamId);
+        Task<ActionResult<IEnumerable<Team>>> GetAllTeams();
+        Task<ActionResult<IEnumerable<Team>>> GetAllTeamsWithMembers();
 
         Task<ActionResult<IEnumerable<Team>>> GetStats();
 
-        // APIs require a valid admin jwt token
-        Task<ActionResult<Team>> UpdateTeamNameAdmin(Guid id, string name);
+        Task<IActionResult> CreateTeam(Team newTeam);
 
-        Task<ActionResult<IEnumerable<Member>>> GetTeamAccountsAdmin(int id);
+        Task<IActionResult> DeleteTeam(int teamId);
+
+        Task<IActionResult> AddMemberToTeam(int teamId, Member newMember);
+
+        Task<IActionResult> RemoveMemberFromTeam(int teamId, int memberId);
+
+        Task<ActionResult<Member>> UpdateMemberName(int teamId, int memberId, string newName);
 
         IActionResult Authenticate(AuthenticateRequest model);
 

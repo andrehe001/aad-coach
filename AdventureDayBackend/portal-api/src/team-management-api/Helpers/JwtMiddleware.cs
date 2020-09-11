@@ -42,20 +42,22 @@ namespace team_management_api.Helpers
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
+                    ValidateIssuer = true,
+                    ValidIssuer = _appSettings.JwtIssuer,
                     ValidateAudience = false,
                     // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                var teamId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-
+                var teamId = int.Parse(jwtToken.Claims.First(x => x.Type == "teamId").Value);
+                var team = teamService.GetTeamById(teamId);
                 // attach user to context on successful jwt validation
-                context.Items["Team"] = teamService.GetTeamById(teamId);
+                context.Items["Team"] = team;
             }
-            catch
+            catch(Exception ex)
             {
+                Console.WriteLine(ex);
                 // do nothing if jwt validation fails
                 // user is not attached to context so request won't have access to secure routes
             }
