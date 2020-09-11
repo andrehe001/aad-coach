@@ -19,6 +19,7 @@ users get only their own team
 
 POST api/team/new
 --data '{"name":"admin1", "subscriptionId": "5abd8123-18f8-427f-a4ae-30bfb82617e5", "password":"AdminPassword"}'
+--data '{"name":"admin1", "subscriptionId": "5abd8123-18f8-427f-a4ae-30bfb82617e5", "teampassword":"AdminPassword"}'
 only if you are admin
 
 POST api/team/rename/2/newName43
