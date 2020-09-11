@@ -46,9 +46,56 @@ namespace team_management_api.Helpers
                     allowed = true;
                     break;
                 }
-
+                // attenion ugly code ahead ;)
                 if (t == AuthorizationType.OwnTeam)
                 {
+                    string url = context.HttpContext.Request.GetDisplayUrl();
+                    if (url.EndsWith("/api/allwithmembers") || url.EndsWith("/api/all"))
+                    {
+                        allowed = true;
+                        break;
+                    }
+                    var paths = url.Split("/");
+                    bool isController = false;
+                    bool isAction = false;
+                    bool isTeamId = false;
+                    int teamId = 0;
+                    foreach (var path in paths)
+                    {
+                        if (path.Equals("api"))
+                        {
+                            isController = true;
+                            continue;
+                        }
+                        if (isController)
+                        {
+                            isAction = true;
+                            isController = false;
+                            continue;
+                        }
+                        if (isAction)
+                        {
+                            isTeamId = true;
+                            isAction = false;
+                            continue;
+                        }
+                        if (isTeamId)
+                        {
+                            if (int.TryParse(path, out teamId)){
+                                break;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                    }
+
+                    if (teamId > 0 && teamId == team.Id)
+                    {
+                        allowed = true;
+                        break;
+                    }
                 }
             }
 
