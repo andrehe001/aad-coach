@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using team_management_api.Helpers;
 using team_management_data;
 
@@ -15,10 +16,12 @@ namespace team_management_api.Controllers
     public class TeamController : ControllerBase, ITeamManagement 
     {
         private ITeamDataService _teamservice;
+        private readonly AppSettings _appSettings;
 
-        public TeamController(ITeamDataService teamservice)
+        public TeamController(ITeamDataService teamservice, IOptions<AppSettings> appSettings)
         {
             _teamservice = teamservice;
+            _appSettings = appSettings.Value;
         }
 
         [HttpPost("rename/{teamId}/{newName}")]
@@ -174,7 +177,7 @@ namespace team_management_api.Controllers
         [TeamAuthorizeAttribute(AuthorizationType.Admin)]
         public async Task<IActionResult> CreateTeam([FromBody] Team newTeam)
         {
-            if (string.IsNullOrWhiteSpace(newTeam.Name) || newTeam.Name.Equals(AppSettings.AdminTeamName))
+            if (string.IsNullOrWhiteSpace(newTeam.Name) || newTeam.Name.Equals(AppSettings.AdminTeamName) || string.IsNullOrWhiteSpace(newTeam.TeamPassword))
                 return BadRequest();
 
             var nameFree = _teamservice.CheckTeamNameFree(0, newTeam.Name);
@@ -186,16 +189,13 @@ namespace team_management_api.Controllers
             var team = new Team();
             team.Name = newTeam.Name;
             team.SubscriptionId = newTeam.SubscriptionId;
-            team.TeamPassword = newTeam.TeamPassword;
-
-            if (string.IsNullOrWhiteSpace(team.TeamPassword)){
-                team.TeamPassword = Guid.NewGuid().ToString();
-            }
+            team.TeamPassword = AppSettings.HashString(_appSettings, newTeam.TeamPassword);
 
             var success =_teamservice.AddTeam(team);
             if (success)
             {
-                return Ok(team);
+                newTeam.Id = team.Id;
+                return Ok(newTeam);
             }
             else
             {
