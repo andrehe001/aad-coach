@@ -27,22 +27,22 @@ namespace team_management_api.Data
         public bool AddTeam(Team newTeam)
         {
             _context.Add(newTeam);
-            return this.SaveChanges();
+            return SaveChanges();
         }
 
         public bool RenameTeam(int teamId, string newName)
         {
-            var team = this.GetTeamById(teamId);
+            Team team = GetTeamById(teamId);
             team.Name = newName;
             _context.Update(team);
-            return this.SaveChanges();
+            return SaveChanges();
         }
 
         public bool UpdateTeam(Team team)
         {
             _context.Attach(team);
             _context.Update(team);
-            return this.SaveChanges();
+            return SaveChanges();
         }
 
         public bool CheckTeamNameFree(int teamId, string teamName)
@@ -52,9 +52,9 @@ namespace team_management_api.Data
 
         public bool DeleteTeam(int id)
         {
-            var team = this.GetTeamById(id);
+            Team team = GetTeamById(id);
             _context.Remove(team);
-            return this.SaveChanges();
+            return SaveChanges();
         }
 
         public IEnumerable<Team> GetAllTeams()
@@ -94,12 +94,12 @@ namespace team_management_api.Data
 
         public bool RenameMember(int teamId, int memberId, string newDisplayName)
         {
-            var member = this.GetMember(teamId, memberId);
+            Member member = GetMember(teamId, memberId);
             if (member != null)
             {
                 member.DisplayName = newDisplayName;
                 _context.Update(member);
-                return this.SaveChanges();
+                return SaveChanges();
             }
             else
             {
@@ -109,7 +109,7 @@ namespace team_management_api.Data
 
         public bool AddMemberToTeam(int teamId, Member member)
         {
-            var team = this.GetTeamByIdWithMembers(teamId);
+            Team team = GetTeamByIdWithMembers(teamId);
             if (team != null)
             {
                 if (team.Members == null)
@@ -118,7 +118,7 @@ namespace team_management_api.Data
                 }
                 team.Members.Add(member);
                 _context.Update(team);
-                return this.SaveChanges();
+                return SaveChanges();
             }
             else
             {
@@ -128,15 +128,15 @@ namespace team_management_api.Data
 
         public bool RemoveMemberFromTeam(int teamId, int memberId)
         {
-            var team = this.GetTeamByIdWithMembers(teamId);
+            Team team = GetTeamByIdWithMembers(teamId);
             if (team != null)
             {
-                var member = team.Members.FirstOrDefault(m => m.Id == memberId);
+                Member member = team.Members.FirstOrDefault(m => m.Id == memberId);
                 if (member != null)
                 {
                     team.Members.Remove(member);
                     _context.Update(team);
-                    return this.SaveChanges();
+                    return SaveChanges();
                 }
                 else
                 {
@@ -162,17 +162,22 @@ namespace team_management_api.Data
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
             if (model == null)
+            {
                 return null;
+            }
 
-            var hashedInput = AppSettings.HashString(_appSettings, model.Password);
+            string hashedInput = AppSettings.HashString(_appSettings, model.Password);
 
-            var team = _context.Teams.SingleOrDefault(x => x.Name == model.Teamname && x.TeamPassword == hashedInput);
+            Team team = _context.Teams.SingleOrDefault(x => x.Name == model.Teamname && x.TeamPassword == hashedInput);
 
             // return null if user not found
-            if (team == null) return null;
+            if (team == null)
+            {
+                return null;
+            }
 
             // authentication successful so generate jwt token
-            var token = generateJwtToken(team);
+            string token = generateJwtToken(team);
 
             return new AuthenticateResponse(team, token);
         }
@@ -180,25 +185,31 @@ namespace team_management_api.Data
         public AuthenticateResponse AuthenticateAdmin(AuthenticateRequest model)
         {
             if (model == null)
+            {
                 return null;
+            }
 
             if (model.Teamname.Equals("admin") && model.Password.Equals(_appSettings.AdminPassword))
             {
-                var token = generateJwtToken(AppSettings.GetAdminTeam(_appSettings));
-                var response = new AuthenticateResponse(AppSettings.GetAdminTeam(_appSettings), token);
-                response.IsAdmin = true;
+                string token = generateJwtToken(AppSettings.GetAdminTeam(_appSettings));
+                AuthenticateResponse response = new AuthenticateResponse(AppSettings.GetAdminTeam(_appSettings), token)
+                {
+                    IsAdmin = true
+                };
                 return response;
             }
             else
+            {
                 return null;
+            }
         }
 
         private string generateJwtToken(Team team)
         {
             // generate token that is valid for 7 days
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.JwtKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            byte[] key = Encoding.ASCII.GetBytes(_appSettings.JwtKey);
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
                     new Claim("teamId", team.Id.ToString()),
@@ -210,7 +221,7 @@ namespace team_management_api.Data
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 Issuer = _appSettings.JwtIssuer,
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
 
@@ -221,7 +232,7 @@ namespace team_management_api.Data
                 _context.SaveChanges();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
