@@ -22,9 +22,14 @@ namespace AdventureDayRunner.Players
             _httpTimeout = httpTimeout;
         }
 
+        /// <summary>
+        /// Returns the final match response. All internal play steps are handled by
+        /// the player's "AI" ;-)
+        /// </summary>
+        /// <param name="cancellationToken">Cancel.</param>
+        /// <returns>The final match response or null upon failure.</returns>
         public async Task<MatchResponse> Play(CancellationToken cancellationToken)
         {
-            var seq = 0;
             MatchResponse response;
             using var httpClient = new HttpClient() { Timeout = _httpTimeout };
 
@@ -33,7 +38,7 @@ namespace AdventureDayRunner.Players
                 var matchRequest = new InitialMatchRequest()
                 {
                     ChallengerId = _name,
-                    Move = GetNextMove(seq++)
+                    Move = GetFirstMove()
                 };
 
                 var result = await httpClient
@@ -50,7 +55,7 @@ namespace AdventureDayRunner.Players
                 while (response.MatchOutcome == null)
                 {
                     var continueMatchRequest = response.ToContinueMatchRequest();
-                    continueMatchRequest.Move = GetNextMove(seq++);
+                    continueMatchRequest.Move = GetNextMove(response);
                     var subSeqResult = await httpClient
                         .PostAsJsonAsync(_teamInformation.GameEngineUri, continueMatchRequest,
                             cancellationToken: cancellationToken);
@@ -83,6 +88,7 @@ namespace AdventureDayRunner.Players
             return response;
         }
  
-        protected abstract Move GetNextMove(int sequenceNumber);
+        protected abstract Move GetFirstMove();
+        protected abstract Move GetNextMove(MatchResponse lastMatchResponse);
     }
 }

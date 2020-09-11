@@ -21,7 +21,7 @@ namespace AdventureDayRunner
                 if (adventureDayRunnerProperties.AdventureDayRunnerStatus == AdventureDayRunnerStatus.Running)
                 {
                     Log.Information(
-                        $"Phase: {currentPhase.ToString()} Latency: {phaseConfiguration.RequestExecutorLatencyMillis}");
+                        $"--- New Wave --- Phase: {currentPhase.ToString()} Latency: {phaseConfiguration.RequestExecutorLatencyMillis}");
                     
                     // Fire forget match requests for all configured players.
                     foreach (var team in adventureDayRunnerProperties.Teams)
@@ -56,6 +56,7 @@ namespace AdventureDayRunner
             {
                 try
                 {
+                    Log.Information($"Team {teamInformation.Name} vs. Player {playerType.ToString()}");
                     PlayerBase player;
                     switch (playerType)
                     {
@@ -73,8 +74,8 @@ namespace AdventureDayRunner
                     var matchResponse = await player.Play(cancellationToken);
 
                     Log.Information(matchResponse == null
-                        ? $"Team {teamInformation.Name}: Failed."
-                        : $"Team {teamInformation.Name}: {matchResponse.MatchOutcome.ToString()}");
+                        ? $"Team {teamInformation.Name} vs. Player {playerType.ToString()} - Failed."
+                        : $"Team {teamInformation.Name} vs. Player {playerType.ToString()} - {matchResponse.MatchOutcome.ToString()}");
 
                     // TODO matchResponse = null --> Failure.
                     //      matchResponse -> statistics based on phase.

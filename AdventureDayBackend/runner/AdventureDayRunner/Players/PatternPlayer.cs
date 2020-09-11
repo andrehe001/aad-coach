@@ -10,9 +10,20 @@ namespace AdventureDayRunner.Players
         {
         }
 
-        protected override Move GetNextMove(int seq)
+        private Move GetPatternMove(int seq)
         {
-            return Move.Metal;
+            var values = Enum.GetValues(typeof(Move));
+            return (Move)values.GetValue(seq % values.Length);
+        }
+
+        protected override Move GetFirstMove()
+        {
+            return GetPatternMove(0);
+        }
+
+        protected override Move GetNextMove(MatchResponse lastMatchResponse)
+        {
+            return GetPatternMove(lastMatchResponse.Turn);
         }
     }
 }
