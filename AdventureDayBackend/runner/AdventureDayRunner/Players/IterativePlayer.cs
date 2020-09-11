@@ -4,30 +4,32 @@ using AdventureDayRunner.Shared;
 
 namespace AdventureDayRunner.Players
 {
-    public class PatternPlayer : PlayerBase
+    public class IterativePlayer : PlayerBase
     {
-        protected override string Name => "Libby";
+        private int _seq;
 
-        public PatternPlayer(AdventureDayTeamInformation teamInformation, TimeSpan httpTimeout)
+        protected override string Name => "Courtney";
+
+        public IterativePlayer(AdventureDayTeamInformation teamInformation, TimeSpan httpTimeout)
             : base(teamInformation, httpTimeout)
         {
-
+            _seq = 0;
         }
 
-        private Move GetPatternMove(int seq)
+        private Move GetNextTickMove()
         {
             var values = Enum.GetValues(typeof(Move));
-            return (Move)values.GetValue(seq % values.Length);
+            return (Move)values.GetValue(_seq++ % values.Length);
         }
 
         protected override Move GetFirstMove()
         {
-            return GetPatternMove(0);
+            return GetNextTickMove();
         }
 
         protected override Move GetNextMove(MatchResponse lastMatchResponse)
         {
-            return GetPatternMove(lastMatchResponse.Turn);
+            return GetNextTickMove();
         }
     }
 }

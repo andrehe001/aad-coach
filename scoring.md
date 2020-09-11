@@ -36,18 +36,27 @@
 
 # Logic
 
+## Players
+
+| Type | Name |
+| --- | --- |
+| RandomPlayer | Lachlan |
+| FixedPlayer | Kye |
+| IterativePlayer | Courtney |
+| PatternPlayer | Libby |
+
 ## Phase 1: Deployment
 * RandomPlayer tries to play with the team environment
-* FixedStrategyPlayer, see [FixedStrategy.cs](https://github.com/microsoft/RockPaperScissorsLizardSpock/blob/main/Source/Services/RPSLS.DotNetPlayer.Api/Strategies/FixedStrategy.cs)
+* FixedPlayer, see [FixedStrategy.cs](https://github.com/microsoft/RockPaperScissorsLizardSpock/blob/main/Source/Services/RPSLS.DotNetPlayer.Api/Strategies/FixedStrategy.cs)
 
 ## Phase 2: Change
 * RandomPlayer see above
-* FixedStrategyPlayer see above
+* FixedPlayer see above
 * BetPlayer will only play if bet if present, cancels it otherwise
 
 ## Phase 3: Monitoring
 * RandomPlayer see above
-* FixedStrategyPlayer see above
+* FixedPlayer see above
 * BetPlayer see above
 * MonitoringPlayer access Azure environment behind team environment, calculates costs and write it back
 
@@ -58,14 +67,14 @@
 
 ## Phase 4: Scale
 * RandomPlayer see above
-* FixedStrategyPlayer see above
+* FixedPlayer see above
 * BetPlayer see above
 * MonitoringPlayer see above
 * MassPlayer plays 10x as much as the other players (rps), in addition it triggers hidden functionality inside the GameEngine, which leads to wait times and 10x SQL calls
 
 ## Phase 5: Security
 * RandomPlayer see above
-* FixedStrategyPlayer see above
+* FixedPlayer see above
 * BetPlayer see above
 * MonitoringPlayer see above
 * MassPlayer will NOT run
@@ -73,10 +82,10 @@
 
 ## Phase 6: Intelligence
 * RandomPlayer see above
-* FixedStrategyPlayer see above
+* FixedPlayer see above
 * BetPlayer see above
 * MonitoringPlayer see above
 * MassPlayer will NOT run
 * HackPlayer see above
-* IterativePickStrategyPlayer, see [IterativePickStrategy.java](https://github.com/microsoft/RockPaperScissorsLizardSpock/blob/main/Source/Services/RPSLS.JavaPlayer.Api/src/main/java/RPSLS/JavaPlayer/Api/Strategy/IterativePickStrategy.java)
-* PatternStrategyPlayer, always uses a fixed answer to the played human match before
+* IterativePlayer, see [IterativePickStrategy.java](https://github.com/microsoft/RockPaperScissorsLizardSpock/blob/main/Source/Services/RPSLS.JavaPlayer.Api/src/main/java/RPSLS/JavaPlayer/Api/Strategy/IterativePickStrategy.java)
+* PatternPlayer, always uses a fixed answer to the played human match before

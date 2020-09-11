@@ -13,11 +13,9 @@ namespace AdventureDayRunner.Players
     {
         private readonly AdventureDayTeamInformation _teamInformation;
         private readonly TimeSpan _httpTimeout;
-        private readonly string _name;
         
         protected PlayerBase(AdventureDayTeamInformation teamInformation, TimeSpan httpTimeout)
         {
-            _name = Utils.GenerateName();
             _teamInformation = teamInformation;
             _httpTimeout = httpTimeout;
         }
@@ -37,7 +35,7 @@ namespace AdventureDayRunner.Players
             {
                 var matchRequest = new InitialMatchRequest()
                 {
-                    ChallengerId = _name,
+                    ChallengerId = Name,
                     Move = GetFirstMove()
                 };
 
@@ -87,7 +85,8 @@ namespace AdventureDayRunner.Players
 
             return response;
         }
- 
+        protected abstract string Name { get; }
+
         protected abstract Move GetFirstMove();
         protected abstract Move GetNextMove(MatchResponse lastMatchResponse);
     }

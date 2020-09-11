@@ -7,16 +7,19 @@ namespace AdventureDayRunner.Players
 {
     public class RandomPlayer : PlayerBase
     {
+        private readonly Random _random;
+
+        protected override string Name => "Lachlan";
+
         public RandomPlayer(AdventureDayTeamInformation teamInformation, TimeSpan httpTimeout) : base(teamInformation, httpTimeout)
         {
+            _random = new Random();
         }
 
         private Move GetRandomMove()
         {            
-            Array values = Enum.GetValues(typeof(Move));
-            Random random = new Random();
-            Move randomMove = (Move)values.GetValue(random.Next(values.Length));
-            return randomMove;
+            var values = Enum.GetValues(typeof(Move));
+            return (Move)values.GetValue(_random.Next(values.Length));
         }
 
         protected override Move GetFirstMove()
