@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace team_management_data
 {
-    public interface ITeamDataService: IAuthenticationService
+    public interface ITeamDataService : IAuthenticationService
     {
         bool AddTeam(Team newTeam);
         bool UpdateTeam(Team team);

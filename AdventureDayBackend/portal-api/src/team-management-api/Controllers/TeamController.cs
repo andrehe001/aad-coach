@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
 using team_management_api.Helpers;
 using team_management_data;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace team_management_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TeamController : ControllerBase, ITeamManagement 
+    public class TeamController : ControllerBase, ITeamManagement
     {
         private ITeamDataService _teamservice;
         private readonly AppSettings _appSettings;
@@ -27,7 +22,7 @@ namespace team_management_api.Controllers
 
         [HttpPost("rename/{teamId}/{newName}")]
         [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
-        public async Task<ActionResult<Team>> UpdateTeamName(int teamId, string newName)
+        public ActionResult<Team> UpdateTeamName(int teamId, string newName)
         {
             if (teamId == AppSettings.AdminTeamId || string.IsNullOrWhiteSpace(newName) || newName.Equals(AppSettings.AdminTeamName))
             {
@@ -41,7 +36,7 @@ namespace team_management_api.Controllers
             }
 
             var team = (Team)this.HttpContext.Items["Team"];
-            if (team != null && ( team.Id == teamId || team.Id == AppSettings.AdminTeamId))
+            if (team != null && (team.Id == teamId || team.Id == AppSettings.AdminTeamId))
             {
                 var success = _teamservice.RenameTeam(teamId, newName);
                 if (success)
@@ -61,9 +56,9 @@ namespace team_management_api.Controllers
 
         [HttpGet("statsandlogs/{teamId}")]
         [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
-        public async Task<ActionResult<Team>> GetTeamStatsAndLogs(int teamId)
+        public ActionResult<Team> GetTeamStatsAndLogs(int teamId)
         {
-            if (teamId == AppSettings.AdminTeamId )
+            if (teamId == AppSettings.AdminTeamId)
             {
                 return BadRequest();
             }
@@ -82,14 +77,14 @@ namespace team_management_api.Controllers
 
         [HttpGet("stats")]
         [TeamAuthorizeAttribute(AuthorizationType.AnyTeam)]
-        public async Task<ActionResult<IEnumerable<Team>>> GetStats()
+        public ActionResult<IEnumerable<Team>> GetStats()
         {
             throw new NotImplementedException();
         }
 
         [HttpGet("all")]
         [TeamAuthorizeAttribute(AuthorizationType.AnyTeam, AuthorizationType.OwnTeam, AuthorizationType.Admin)]
-        public async Task<ActionResult<IEnumerable<Team>>> GetAllTeams()
+        public ActionResult<IEnumerable<Team>> GetAllTeams()
         {
             var team = (Team)this.HttpContext.Items["Team"];
             if (team != null && team.Id != AppSettings.AdminTeamId)
@@ -106,7 +101,7 @@ namespace team_management_api.Controllers
 
         [HttpGet("allwithmembers")]
         [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
-        public async Task<ActionResult<IEnumerable<Team>>> GetAllTeamsWithMembers()
+        public ActionResult<IEnumerable<Team>> GetAllTeamsWithMembers()
         {
             var team = (Team)this.HttpContext.Items["Team"];
             if (team != null && team.Id != AppSettings.AdminTeamId)
@@ -123,7 +118,7 @@ namespace team_management_api.Controllers
 
         [HttpGet("byid/{teamId}")]
         [TeamAuthorizeAttribute(AuthorizationType.AnyTeam, AuthorizationType.OwnTeam, AuthorizationType.Admin)]
-        public async Task<ActionResult<Team>> GetTeam(int teamId)
+        public ActionResult<Team> GetTeam(int teamId)
         {
             var team = (Team)this.HttpContext.Items["Team"];
             if (team != null && (team.Id == teamId || team.Id == AppSettings.AdminTeamId))
@@ -139,13 +134,13 @@ namespace team_management_api.Controllers
 
         [HttpGet("byidwithmembers/{teamId}")]
         [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
-        public async Task<ActionResult<Team>> GetTeamWithMembers(int teamId)
+        public ActionResult<Team> GetTeamWithMembers(int teamId)
         {
             var team = (Team)this.HttpContext.Items["Team"];
             if (team != null && (team.Id == teamId || team.Id == AppSettings.AdminTeamId))
             {
                 var myTeam = _teamservice.GetTeamByIdWithMembers(teamId);
-                return Ok( myTeam );
+                return Ok(myTeam);
             }
             else
             {
@@ -156,7 +151,7 @@ namespace team_management_api.Controllers
 
         [HttpGet("members/{teamId}")]
         [TeamAuthorizeAttribute(AuthorizationType.AnyTeam)]
-        public async Task<ActionResult<IEnumerable<Member>>> GetTeamMembers(int teamId)
+        public ActionResult<IEnumerable<Member>> GetTeamMembers(int teamId)
         {
             if (teamId == AppSettings.AdminTeamId)
             {
@@ -176,7 +171,7 @@ namespace team_management_api.Controllers
 
         [HttpPost("new")]
         [TeamAuthorizeAttribute(AuthorizationType.Admin)]
-        public async Task<IActionResult> CreateTeam([FromBody] Team newTeam)
+        public IActionResult CreateTeam([FromBody] Team newTeam)
         {
             if (string.IsNullOrWhiteSpace(newTeam.Name) || newTeam.Name.Equals(AppSettings.AdminTeamName) || string.IsNullOrWhiteSpace(newTeam.TeamPassword))
                 return BadRequest();
@@ -192,7 +187,7 @@ namespace team_management_api.Controllers
             team.SubscriptionId = newTeam.SubscriptionId;
             team.TeamPassword = AppSettings.HashString(_appSettings, newTeam.TeamPassword);
 
-            var success =_teamservice.AddTeam(team);
+            var success = _teamservice.AddTeam(team);
             if (success)
             {
                 newTeam.Id = team.Id;
@@ -206,9 +201,9 @@ namespace team_management_api.Controllers
 
         [HttpPost("delete/{teamId}")]
         [TeamAuthorizeAttribute(AuthorizationType.Admin)]
-        public async Task<IActionResult> DeleteTeam(int teamId)
+        public IActionResult DeleteTeam(int teamId)
         {
-            if ( teamId < 1)
+            if (teamId < 1)
                 return BadRequest();
 
             var success = _teamservice.DeleteTeam(teamId);
@@ -224,7 +219,7 @@ namespace team_management_api.Controllers
 
         [HttpPost("renameMember/{memberId}/{newName}")]
         [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
-        public async Task<ActionResult<Member>> UpdateMemberName(int teamId, int memberId, string newName)
+        public ActionResult<Member> UpdateMemberName(int teamId, int memberId, string newName)
         {
             var team = (Team)this.HttpContext.Items["Team"];
             if (team != null && (team.Id == teamId || team.Id == AppSettings.AdminTeamId))
@@ -247,7 +242,7 @@ namespace team_management_api.Controllers
 
         [HttpPost("addmemberto/{teamId}")]
         [TeamAuthorizeAttribute(AuthorizationType.Admin)]
-        public async Task<IActionResult> AddMemberToTeam(int teamId, [FromBody] Member newMember)
+        public IActionResult AddMemberToTeam(int teamId, [FromBody] Member newMember)
         {
             if (teamId == AppSettings.AdminTeamId || string.IsNullOrWhiteSpace(newMember.Username) || string.IsNullOrWhiteSpace(newMember.DisplayName) || string.IsNullOrWhiteSpace(newMember.Password))
             {
@@ -267,7 +262,7 @@ namespace team_management_api.Controllers
 
         [HttpPost("removememberfrom/{teamId}/{memberId}")]
         [TeamAuthorizeAttribute(AuthorizationType.Admin)]
-        public async Task<IActionResult> RemoveMemberFromTeam(int teamId, int memberId)
+        public IActionResult RemoveMemberFromTeam(int teamId, int memberId)
         {
             if (teamId == AppSettings.AdminTeamId || teamId < 1 || memberId < 1)
             {
@@ -297,7 +292,7 @@ namespace team_management_api.Controllers
             {
                 response = _teamservice.Authenticate(model);
             }
-            
+
             if (response == null)
                 return BadRequest(new { message = "Teamname or password is incorrect" });
 

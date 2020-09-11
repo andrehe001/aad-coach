@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using team_management_data;
 
 namespace team_management_api.Helpers
@@ -39,7 +35,7 @@ namespace team_management_api.Helpers
             return hashed;
         }
 
-        private static Team adminTeam = null; 
+        private static Team adminTeam = null;
         public static Team GetAdminTeam(AppSettings settings)
         {
             if (adminTeam == null)

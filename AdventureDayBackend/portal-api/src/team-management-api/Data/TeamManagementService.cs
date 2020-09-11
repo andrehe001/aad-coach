@@ -1,16 +1,12 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using team_management_api.Helpers;
 using team_management_api.Models;
 using team_management_data;
@@ -204,7 +200,7 @@ namespace team_management_api.Data
             var key = Encoding.ASCII.GetBytes(_appSettings.JwtKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { 
+                Subject = new ClaimsIdentity(new[] {
                     new Claim("teamId", team.Id.ToString()),
                     new Claim("isAdmin", team.Name.Equals(AppSettings.AdminTeamName).ToString()),
                     new Claim("teamName",team.Name),

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using team_management_data;
 
 namespace team_management_api.Helpers
@@ -55,7 +54,7 @@ namespace team_management_api.Helpers
                 // attach user to context on successful jwt validation
                 context.Items["Team"] = team;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 // do nothing if jwt validation fails
