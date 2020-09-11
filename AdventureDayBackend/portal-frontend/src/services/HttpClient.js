@@ -2,7 +2,7 @@ import Axios from 'axios'
 
 /** Default config for axios instance */
 let config = {
-//   baseURL: 'http://localhost:3000/'
+  baseURL: '/api/'
 };
 
 /** Creating the instance for axios */

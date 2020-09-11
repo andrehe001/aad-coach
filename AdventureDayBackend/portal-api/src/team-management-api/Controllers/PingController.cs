@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace team_management_api.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PingController : ControllerBase
     {

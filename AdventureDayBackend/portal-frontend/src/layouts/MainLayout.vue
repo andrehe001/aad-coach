@@ -98,7 +98,7 @@ export default {
   methods: {
     updateLoginStatus() {
       let user = JSON.parse(localStorage.getItem('user'))
-      this.isAdmin = user.is_admin == 1;
+      this.isAdmin = user.isAdmin == 1;
 
       this.loggedIn = localStorage.getItem('jwt') != null;
     }
