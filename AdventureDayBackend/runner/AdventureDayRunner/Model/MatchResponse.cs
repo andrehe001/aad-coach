@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
-namespace AdventureDayRunner
+namespace AdventureDayRunner.Model
 {
-    public class MatchStatistic
+    public class MatchResponse
     {
         /// <summary>
         /// The ID of the played match.
         /// </summary>
-        public string MatchId { get; set; }
+        public Guid MatchId { get; set; }
         
         /// <summary>
         /// A sequence number for each match that was setup for the provided ChallengerId.
@@ -24,8 +25,8 @@ namespace AdventureDayRunner
         /// <summary>
         /// The moves
         /// </summary>
-        public List<string> TurnsPlayer1Values { get; set; }
-        public List<string> TurnsPlayer2Values { get; set; }
+        public List<Move> TurnsPlayer1Values { get; set; }
+        public List<Move> TurnsPlayer2Values { get; set; }
         
 
         /// <summary>
@@ -36,25 +37,34 @@ namespace AdventureDayRunner
         /// <summary>
         /// The timestamp of the match.
         /// </summary>
-        public string WhenUtc { get; set; }    
+        public DateTime WhenUtc { get; set; }    
 
         /// <summary>
         /// The bet of Player2, value of 1 means if player 2 wins, he gets 2x of the score - if he loose Player1 gets 2x of the score
         /// If null the Player2 does not support bets, value needs to be between 0 and 1.
-        // /// </summary>
-        public Decimal? Bet { get; set; }       
+        /// </summary>
+        public decimal? Bet { get; set; }       
         
         
         /// <summary>
         /// Outcome of last round
         /// </summary>
-        public string LastRoundOutcome { get; set; }
+        [JsonConverter(typeof(StringNullableEnumConverter<Outcome?>))]
+        public Outcome? LastRoundOutcome { get; set; }
 
         /// <summary>
         /// The outcome of the match.
         /// </summary>
-        public string MatchOutcome { get; set; }
+        [JsonConverter(typeof(StringNullableEnumConverter<Outcome?>))]
+        public Outcome? MatchOutcome { get; set; }
 
 
+        public ContinueMatchRequest ToContinueMatchRequest()
+        {
+            return new ContinueMatchRequest()
+            {
+                MatchId = MatchId
+            };
+        }
     }
 }

@@ -1,60 +1,88 @@
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using AdventureDayRunner.Model;
+using AdventureDayRunner.Shared;
 using Serilog;
 
 namespace AdventureDayRunner.Players
 {
     public abstract class PlayerBase
     {
-        protected PlayerBase(string uri)
+        private readonly AdventureDayTeamInformation _teamInformation;
+        private readonly TimeSpan _httpTimeout;
+        private readonly string _name;
+        
+        protected PlayerBase(AdventureDayTeamInformation teamInformation, TimeSpan httpTimeout)
         {
-            Name = Utils.GenerateName();
-            Id = System.Guid.NewGuid().ToString();
-            Uri = uri;
+            _name = Utils.GenerateName();
+            _teamInformation = teamInformation;
+            _httpTimeout = httpTimeout;
         }
 
-        public string Name { get; set; }
-        public string Id { get; set; }
-
-        private string Uri;
-
-        public async Task<MatchStatistic> Play(CancellationToken cancellationToken)
+        public async Task<MatchResponse> Play(CancellationToken cancellationToken)
         {
-            MatchStatistic statistic = new MatchStatistic();
-            do
+            var seq = 0;
+            MatchResponse response;
+            using var httpClient = new HttpClient() { Timeout = _httpTimeout };
+
+            try
             {
-                statistic = await SendMove(statistic);
-            } while (statistic.MatchOutcome == null);
-            return statistic;
+                var matchRequest = new InitialMatchRequest()
+                {
+                    ChallengerId = _name,
+                    Move = GetNextMove(seq++)
+                };
+
+                var result = await httpClient
+                    .PostAsJsonAsync(_teamInformation.GameEngineUri, matchRequest,
+                        cancellationToken: cancellationToken);
+
+                if (!result.IsSuccessStatusCode)
+                {
+                    Log.Error($"{_teamInformation.Name} - Status: {result.StatusCode}");
+                    return null;
+                }
+
+                response = await result.Content.ReadFromJsonAsync<MatchResponse>(cancellationToken: cancellationToken);
+                while (response.MatchOutcome == null)
+                {
+                    var continueMatchRequest = response.ToContinueMatchRequest();
+                    continueMatchRequest.Move = GetNextMove(seq++);
+                    var subSeqResult = await httpClient
+                        .PostAsJsonAsync(_teamInformation.GameEngineUri, continueMatchRequest,
+                            cancellationToken: cancellationToken);
+
+                    if (!subSeqResult.IsSuccessStatusCode)
+                    {
+                        return null;
+                    }
+
+                    response = await subSeqResult.Content.ReadFromJsonAsync<MatchResponse>(
+                        cancellationToken: cancellationToken);
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // If it wasn't our own cancellation -> http timer triggered.
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    Log.Error("HTTP Timeout.");
+                }
+
+                return null;
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex, "Error.");
+                return null;
+            }
+
+            return response;
         }
  
-        private async Task<MatchStatistic> SendMove(MatchStatistic statisticSoFar)
-        {
-            var matchRequestParameter = new Dictionary<string, string>
-            {
-                {"ChallengerId", Name},
-                {"Move", GetNextMove(statisticSoFar).ToString()}
-            };
-            
-            if (statisticSoFar.MatchId != null) {
-                matchRequestParameter.Add("MatchId", statisticSoFar.MatchId.ToString());
-            }
-            
-            Log.Information($"Player {Name} sends request against {Uri}");
-            String response = await Utils.SendMatchRequest(Uri, matchRequestParameter);
-            
-            var serializeOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            };
-            
-            MatchStatistic statistic = JsonSerializer.Deserialize<MatchStatistic>(response, serializeOptions);
-            return statistic;
-        }
-
-        protected abstract Move GetNextMove(MatchStatistic historicMatchStatistics);
+        protected abstract Move GetNextMove(int sequenceNumber);
     }
 }

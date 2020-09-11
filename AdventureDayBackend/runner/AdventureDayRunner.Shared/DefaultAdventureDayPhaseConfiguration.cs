@@ -11,7 +11,6 @@ namespace AdventureDayRunner.Shared
                 new AdventureDayPhaseConfiguration()
                 {
                     RequestExecutorLatencyMillis = 1000,
-                    NumberOfRequestExecutorsPerTeam = 1,
                     PlayerTypes = new [] { PlayerType.Random }
                 }
             },
@@ -20,7 +19,6 @@ namespace AdventureDayRunner.Shared
                 new AdventureDayPhaseConfiguration()
                 {
                     RequestExecutorLatencyMillis = 1000,
-                    NumberOfRequestExecutorsPerTeam = 1,
                     PlayerTypes = new [] { PlayerType.Random }
                 }
             },
@@ -29,7 +27,6 @@ namespace AdventureDayRunner.Shared
                 new AdventureDayPhaseConfiguration()
                 {
                     RequestExecutorLatencyMillis = 1000,
-                    NumberOfRequestExecutorsPerTeam = 1,
                     PlayerTypes = new [] { PlayerType.Random }
                 }
             },
@@ -38,7 +35,6 @@ namespace AdventureDayRunner.Shared
                 new AdventureDayPhaseConfiguration()
                 {
                     RequestExecutorLatencyMillis = 100,
-                    NumberOfRequestExecutorsPerTeam = 5,
                     PlayerTypes = new [] { PlayerType.Random }
                 }
             },
@@ -47,7 +43,6 @@ namespace AdventureDayRunner.Shared
                 new AdventureDayPhaseConfiguration()
                 {
                     RequestExecutorLatencyMillis = 500,
-                    NumberOfRequestExecutorsPerTeam = 2,
                     PlayerTypes = new [] { PlayerType.Random }
                 }
             },
@@ -56,7 +51,6 @@ namespace AdventureDayRunner.Shared
                 new AdventureDayPhaseConfiguration()
                 {
                     RequestExecutorLatencyMillis = 500,
-                    NumberOfRequestExecutorsPerTeam = 2,
                     PlayerTypes = new [] { PlayerType.Pattern }
                 }
             }
