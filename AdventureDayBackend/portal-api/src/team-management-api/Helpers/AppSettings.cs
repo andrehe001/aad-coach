@@ -28,15 +28,16 @@ namespace team_management_api.Helpers
             return connectionString;
         }
 
-        //public static string HashString(AppSettings settings, string input)
-        //{
-        //    string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-        //        password: input,
-        //        salt: settings.HashSalt,
-        //        prf: KeyDerivationPrf.HMACSHA1,
-        //        iterationCount: 10000,
-        //        numBytesRequested: 256 / 8));
-        //}
+        public static string HashString(AppSettings settings, string input)
+        {
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: input,
+                salt: Encoding.UTF8.GetBytes(settings.HashSalt),
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8));
+            return hashed;
+        }
 
         private static Team adminTeam = null; 
         public static Team GetAdminTeam(AppSettings settings)
