@@ -7,7 +7,7 @@
           <tr>
             <th scope="col" class="min rank">Rank</th>
             <th scope="col">Team</th>
-            <th scope="col" class="num">Score</th> <!-- Wins + Profit -->
+            <th scope="col" class="num">Score</th> <!-- Wins + Profit - Errors -->
             <th scope="col" class="num">Wins</th>
             <th scope="col" class="num">Loses</th>
             <th scope="col" class="num">Errors</th> <!-- Errors: Exceptions, Network, Timeouts, Hacker Attacks ... -->
@@ -23,10 +23,10 @@
             </td>
             <th scope="row">{{ team.Name }}</th>
             <td class="num highlight">{{ team.Score }}</td>
-            <td class="num">{{ team.Score }}</td>
-            <td class="num">{{ team.Score }}</td>
-            <td class="num">{{ team.Score }}</td>
-            <td class="num">{{ team.Score }}</td>
+            <td class="num">{{ team.Wins }}</td>
+            <td class="num">{{ team.Loses }}</td>
+            <td class="num">{{ team.Errors }}</td>
+            <td class="num">{{ team.Profit }}</td>
           </tr>
         </tbody>
       </table>
@@ -40,10 +40,10 @@ export default {
   data() {
     return {
       Teams: [
-        { Position: 1, Name: "Teddybären", Score: 1100 },
-        { Position: 2, Name: "Hackers", Score: 980 },
-        { Position: 3, Name: "Sharks", Score: 650 },
-        { Position: 4, Name: "Nerds", Score: 640 }
+        { Position: 1, Name: "Teddybären", Score: 1100, Wins: 840, Loses: 340, Errors: 5, Profit: '$ 500k' },
+        { Position: 2, Name: "Hackers"   , Score: 980 , Wins: 640, Loses: 240, Errors: 35, Profit: '$ 33k' },
+        { Position: 3, Name: "Sharks"    , Score: 650 , Wins: 440, Loses: 140, Errors: 55, Profit: '$ 20k' },
+        { Position: 4, Name: "Nerds"     , Score: 640 , Wins: 140, Loses: 40, Errors: 135, Profit: '$ 10k' }
       ]
     };
   },

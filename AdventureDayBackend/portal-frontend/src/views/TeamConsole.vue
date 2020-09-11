@@ -12,22 +12,33 @@
             <span>Score:</span>
             <span>1100</span>
           </p>
+          <br>
           <p class="status-text">
-            <span>Games per Second:</span>
-            <span>33</span>
+            <span>Wins:</span>
+            <span>840 (70,9%)</span>
           </p>
           <p class="status-text">
-            <span>Win Rate:</span>
-            <span>20%</span>
+            <span>Loses:</span>
+            <span>340 (28,6%)</span>
           </p>
           <p class="status-text">
-            <span>Error Rate:</span>
-            <span>0.4%</span>
+            <span>Errors:</span>
+            <span>5 (0.5%)</span>
           </p>
+          <br>
           <p class="status-text">
             <span>Profit:</span>
             <span>1000</span>
-          </p><br>
+          </p>
+          <p class="status-text">
+            <span>Income:</span>
+            <span>2000</span>
+          </p>
+          <p class="status-text">
+            <span>Costs:</span>
+            <span>1000</span>
+          </p>
+          <br>
           <p class="status-text">
             <span>Current<br/>Phase:</span>
             <span>2. Change Management</span>
