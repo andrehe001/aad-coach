@@ -33,8 +33,6 @@ namespace team_management_data
 
         Task<ActionResult<Member>> UpdateMemberName(int teamId, int memberId, string newName);
 
-        IActionResult Authenticate(AuthenticateRequest model);
-
-        IActionResult AuthenticateAdmin(AuthenticateRequest model);
+        IActionResult Login(AuthenticateRequest model);
     }
 }

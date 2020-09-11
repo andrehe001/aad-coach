@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using team_management_api.Helpers;
@@ -284,20 +285,19 @@ namespace team_management_api.Controllers
             }
         }
 
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest model)
+        [HttpPost("login")]
+        public IActionResult Login(AuthenticateRequest model)
         {
-            var response = _teamservice.Authenticate(model);
-            if (response == null)
-                return BadRequest(new { message = "Teamname or password is incorrect" });
-
-            return Ok(response);
-        }
-
-        [HttpPost("authenticateadmin")]
-        public IActionResult AuthenticateAdmin(AuthenticateRequest model)
-        {
-            var response = _teamservice.AuthenticateAdmin(model);
+            AuthenticateResponse response;
+            if (model.Teamname == "admin")
+            {
+                response = _teamservice.AuthenticateAdmin(model);
+            }
+            else
+            {
+                response = _teamservice.Authenticate(model);
+            }
+            
             if (response == null)
                 return BadRequest(new { message = "Teamname or password is incorrect" });
 
