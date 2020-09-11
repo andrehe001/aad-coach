@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using team_management_api.Helpers;
@@ -47,7 +49,6 @@ namespace team_management_api.Helpers
 
                 if (t == AuthorizationType.OwnTeam)
                 {
-                    Console.WriteLine(context.HttpContext.Request.Headers);
                 }
             }
 

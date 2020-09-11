@@ -168,7 +168,9 @@ namespace team_management_api.Data
             if (model == null)
                 return null;
 
-            var team = _context.Teams.SingleOrDefault(x => x.Name == model.Teamname && x.TeamPassword == model.Password);
+            var hashedInput = AppSettings.HashString(_appSettings, model.Password);
+
+            var team = _context.Teams.SingleOrDefault(x => x.Name == model.Teamname && x.TeamPassword == hashedInput);
 
             // return null if user not found
             if (team == null) return null;
