@@ -33,6 +33,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "leaderboard" */ '../views/Leaderboard.vue')
   },
   {
+    path: '/team-administration',
+    name: 'TeamAdmin',
+    meta: { layout: 'main' },
+    component: () => import(/* webpackChunkName: "team-administration" */ '../views/TeamAdministration.vue')
+  },
+  {
     path: '/team-console',
     name: 'Team Console',
     meta: { layout: 'main' },

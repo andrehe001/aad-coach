@@ -110,16 +110,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.btn-primary {
-  color: #fff;
-  background-color: #366aaf;
-  border-color: #fff;
-}
-.btn-primary:hover {
-  color: #fff;
-  background-color: #19304f;
-  border-color: #fff;
-}
-</style>

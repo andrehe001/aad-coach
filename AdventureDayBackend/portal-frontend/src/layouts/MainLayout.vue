@@ -35,6 +35,13 @@
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link to="/team-administration" v-slot="{ href, route, navigate, isActive, isExactActive }" >
+                    <a :href="href" @click="navigate" :class="['nav-link', isExactActive && 'active']" data-dismiss="modal">
+                      Team Administration
+                    </a>
+                </router-link>
+              </li>
+              <li class="nav-item">
                 <router-link to="/code-of-conduct" v-slot="{ href, route, navigate, isActive, isExactActive }" >
                     <a :href="href" @click="navigate" :class="['nav-link', isExactActive && 'active']" data-dismiss="modal">
                       Code of Conduct
