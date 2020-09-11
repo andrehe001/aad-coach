@@ -51,7 +51,7 @@ namespace team_management_api.Data
 
         public bool CheckTeamNameFree(int teamId, string teamName)
         {
-            return _context.Teams.Any(t => t.Name.Equals(teamName) && t.Id != teamId);
+            return !_context.Teams.Any(t => t.Name.Equals(teamName));
         }
 
         public bool DeleteTeam(int id)
