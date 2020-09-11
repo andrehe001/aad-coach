@@ -28,6 +28,7 @@ namespace AdventureDayRunner.Players
         /// <returns>The final match response or null upon failure.</returns>
         public async Task<MatchResponse> Play(CancellationToken cancellationToken)
         {
+            // TODO: wrap response in result object with detailed status
             MatchResponse response;
             using var httpClient = new HttpClient() { Timeout = _httpTimeout };
 
