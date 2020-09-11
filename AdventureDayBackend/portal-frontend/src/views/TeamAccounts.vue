@@ -1,20 +1,21 @@
 <template>
-  <div class="Leaderboard">
+  <div class="team-accounts">
     <h1>Team Accounts</h1>
     <div class="content overflow-auto">
-      <table class="leaderboard">
+      <p class="text">Distribute the following accounts across your team and use them to log into the <br><a href="https://portal.azure.com/">Azure Portal</a>.</p>
+      <table class="table table-hover">
         <thead>
           <tr>
-            <th class="lb-user">Username</th>
-            <th class="lb-user">Password</th>
+            <th scope="col">Username</th>
+            <th scope="col">Password</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="user in Users" v-bind:key="user.Username">
-            <td class="lb-user">
+            <th scope="row">
               {{ user.Username }}
-            </td>
-            <td class="lb-user">
+            </th>
+            <td>
               {{ user.Password }}
             </td>
           </tr>
@@ -30,10 +31,10 @@ export default {
   data() {
     return {
       Users: [
-        { Username: "Teddybären", Password: "Secret" },
-        { Username: "Hackers", Password: "Secret" },
-        { Username: "Sharks", Password: "Secret" },
-        { Username: "Nerds", Password: "Secret" }
+        { Username: "AADTeam1A1@asmw13.onmicrosoft.com", Password: "InitialPa55word" },
+        { Username: "AADTeam1A2@asmw13.onmicrosoft.com", Password: "InitialPa55word" },
+        { Username: "AADTeam1A3@asmw13.onmicrosoft.com", Password: "InitialPa55word" },
+        { Username: "AADTeam1A4@asmw13.onmicrosoft.com", Password: "InitialPa55word" }
       ]
     };
   }
@@ -41,5 +42,12 @@ export default {
 </script>
 
 <style>
-/* @import "../assets/css/leaderboard.css"; */
+.team-accounts p.text {
+  text-align: center;
+  margin: 20px 0 10px;
+}
+
+.team-accounts .table {
+  font-size: 1.2rem;
+}
 </style>

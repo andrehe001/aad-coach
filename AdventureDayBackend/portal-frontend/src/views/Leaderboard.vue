@@ -1,32 +1,32 @@
 <template>
-  <div class="Leaderboard">
+  <div class="leaderboard">
     <h1>The Leaderboard</h1>
     <div class="content overflow-auto">
-      <table class="leaderboard">
+      <table class="table table-hover">
         <thead>
           <tr>
-            <th class="lb-position">Rank</th>
-            <th class="lb-user">Team Name</th>
-            <th class="lb-points">Score</th>
-            <th class="lb-metrics">Games per Second</th>
-            <th class="lb-metrics">Win Rate</th>
-            <th class="lb-metrics">Error Rate</th>
-            <th class="lb-metrics">Profit</th>
+            <th scope="col" class="min rank">Rank</th>
+            <th scope="col">Team</th>
+            <th scope="col" class="num">Score</th> <!-- Wins + Profit -->
+            <th scope="col" class="num">Wins</th>
+            <th scope="col" class="num">Loses</th>
+            <th scope="col" class="num">Errors</th> <!-- Errors: Exceptions, Network, Timeouts, Hacker Attacks ... -->
+            <th scope="col" class="num">Profit</th> <!-- Profit = Income - Costs -->
+            <!-- Income : Won games -->
+            <!-- Costs = Lost Games + Azure Costs -->
           </tr>
         </thead>
         <tbody>
           <tr v-for="team in Teams" v-bind:key="team.Name">
-            <td class="lb-position">
+            <td class="min rank">
               <span>{{ team.Position | formatPosition }}</span>
             </td>
-            <td class="lb-user">
-              {{ team.Name }}
-            </td>
-            <td class="lb-points">{{ team.Score }}</td>
-            <td class="lb-metrics">{{ team.Score }}</td>
-            <td class="lb-metrics">{{ team.Score }}</td>
-            <td class="lb-metrics">{{ team.Score }}</td>
-            <td class="lb-metrics">{{ team.Score }}</td>
+            <th scope="row">{{ team.Name }}</th>
+            <td class="num highlight">{{ team.Score }}</td>
+            <td class="num">{{ team.Score }}</td>
+            <td class="num">{{ team.Score }}</td>
+            <td class="num">{{ team.Score }}</td>
+            <td class="num">{{ team.Score }}</td>
           </tr>
         </tbody>
       </table>
@@ -56,5 +56,4 @@ export default {
 </script>
 
 <style>
-/* @import "../assets/css/leaderboard.css"; */
 </style>

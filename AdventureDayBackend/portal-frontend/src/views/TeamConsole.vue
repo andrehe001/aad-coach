@@ -34,111 +34,69 @@
           </p>
         </div>
         <div id="team-logs" class="col overflow-auto">
-          <table class="leaderboard">
+          <table class="table table-hover">
             <thead>
               <tr>
-                <th class="lb-metrics">Timestamp</th>
-                <th class="lb-metrics">Response Time</th>
-                <th class="lb-metrics">Status</th>
-                <th class="lb-reason">Reason</th>
+                <th scope="col" class="min">Timestamp</th>
+                <th scope="col" class="min">Response Time</th>
+                <th scope="col" class="min">Status</th>
+                <th scope="col">Reason</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="lb-metrics">5ms ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">SUCCESS</td>
-                <td class="lb-reason"></td>
+                <td class="min">5ms ago</td>
+                <td class="min">7.3345</td>
+                <td class="min highlight">SUCCESS</td>
+                <td></td>
               </tr>
               <tr>
-                <td class="lb-metrics">10ms ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">FAILURE</td>
-                <td class="lb-reason">Lorem ipsum ...</td>
+                <td class="min">25ms ago</td>
+                <td class="min">3.3345</td>
+                <td class="min highlight">SUCCESS</td>
+                <td>Lorem ipsum ...</td>
               </tr>
               <tr>
-                <td class="lb-metrics">2s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">FAILURE</td>
-                <td class="lb-reason">Lorem ipsum ...</td>
+                <td class="min">10s ago</td>
+                <td class="min">207.3345</td>
+                <td class="min highlight">FAILED</td>
+                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
               </tr>
               <tr>
-                <td class="lb-metrics">20s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">SUCCESS</td>
-                <td class="lb-reason"></td>
+                <td class="min">10s ago</td>
+                <td class="min">207.3345</td>
+                <td class="min highlight">FAILED</td>
+                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
               </tr>
               <tr>
-                <td class="lb-metrics">30s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">SUCCESS</td>
-                <td class="lb-reason"></td>
+                <td class="min">10s ago</td>
+                <td class="min">207.3345</td>
+                <td class="min highlight">FAILED</td>
+                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
               </tr>
               <tr>
-                <td class="lb-metrics">31s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">FAILURE</td>
-                <td class="lb-reason">Lorem ipsum ...</td>
+                <td class="min">10s ago</td>
+                <td class="min">207.3345</td>
+                <td class="min highlight">FAILED</td>
+                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
               </tr>
               <tr>
-                <td class="lb-metrics">5ms ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">SUCCESS</td>
-                <td class="lb-reason"></td>
+                <td class="min">10s ago</td>
+                <td class="min">207.3345</td>
+                <td class="min highlight">FAILED</td>
+                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
               </tr>
               <tr>
-                <td class="lb-metrics">10ms ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">FAILURE</td>
-                <td class="lb-reason">Lorem ipsum ...</td>
+                <td class="min">10s ago</td>
+                <td class="min">207.3345</td>
+                <td class="min highlight">FAILED</td>
+                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
               </tr>
               <tr>
-                <td class="lb-metrics">2s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">FAILURE</td>
-                <td class="lb-reason">Lorem ipsum ...</td>
-              </tr>
-              <tr>
-                <td class="lb-metrics">20s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">SUCCESS</td>
-                <td class="lb-reason"></td>
-              </tr>
-              <tr>
-                <td class="lb-metrics">30s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">SUCCESS</td>
-                <td class="lb-reason"></td>
-              </tr>
-              <tr>
-                <td class="lb-metrics">31s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">FAILURE</td>
-                <td class="lb-reason">Lorem ipsum ...</td>
-              </tr>
-              <tr>
-                <td class="lb-metrics">2s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">FAILURE</td>
-                <td class="lb-reason">Lorem ipsum ...</td>
-              </tr>
-              <tr>
-                <td class="lb-metrics">20s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">SUCCESS</td>
-                <td class="lb-reason"></td>
-              </tr>
-              <tr>
-                <td class="lb-metrics">30s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">SUCCESS</td>
-                <td class="lb-reason"></td>
-              </tr>
-              <tr>
-                <td class="lb-metrics">31s ago</td>
-                <td class="lb-metrics">7.3345</td>
-                <td class="lb-metrics">FAILURE</td>
-                <td class="lb-reason">Lorem ipsum ...</td>
+                <td class="min">10s ago</td>
+                <td class="min">207.3345</td>
+                <td class="min highlight">FAILED</td>
+                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
               </tr>
             </tbody>
           </table>
@@ -167,10 +125,14 @@ export default {
     }
   }
 };
+
+
 </script>
 
 <style>
-/* @import "../assets/css/leaderboard.css"; */
+.team-console .table {
+  font-size: 1em;
+}
 
 #team-status {
   background: #19304F;
@@ -201,31 +163,12 @@ export default {
   padding-left: 0;
 }
 
-
 #team-logs {
   height: 100%;
-}
-
-#team-logs .leaderboard {
-  width: 100%;
-}
-
-#team-logs .leaderboard thead, #team-logs .leaderboard tbody {
-  display: table-header-group;
 }
 
 .row {
   margin: 0;
   height: 100%;
-}
-
-.leaderboard {
-  font-size: 1em;
-}
-
-.leaderboard tr .lb-metrics {
-  width: 100px;
-  text-align: center;
-  justify-self: center;
 }
 </style>

@@ -48,7 +48,7 @@ a:hover {
   padding: 20px 30px;
 }
 
-.content .text p {
+.content .text p, .content p.text {
   font-size: 1.2em;
   text-align: justify;
 }
@@ -136,123 +136,66 @@ p, ul {
   background: #fff;
 }
 
-/* Leaderboard */
+/* Table */
 
-.leaderboard {
-  margin-top: 20px;
-  font-weight: 500;
+.table {
   font-size: 1.5rem;
-  color: white;
-  border-spacing: 0;
-  height: calc(100% - 400px);
-  table-layout: fixed;
+  color: #FFF;
 }
 
-/* .leaderboard tbody {
-        overflow: auto;
-        height: calc(100% - 50px);
-    }
-
-        .leaderboard tbody::-webkit-scrollbar-track {
-            display: none;
-        }
-
-        .leaderboard tbody::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        .leaderboard tbody::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 6px;
-        }
-*/
-.leaderboard thead {
-  /* height: 50px; */
+.table td, .table th {
+    border-top: 1px solid #366aaf;
 }
 
-.leaderboard thead,
-.leaderboard tbody {
-  display: block;
-  padding: 0 10px;
+.table thead th {
+    border-bottom: 2px solid #366aaf;
+    border-top: none;
+    font-weight: 300;
+    text-transform: uppercase;
 }
 
-.leaderboard-powered p {
-  margin-top: 0;
+.table tbody th, .table tbody td.highlight {
+    font-weight: 500;
 }
 
-.leaderboard tr th {
-  line-height: 30px;
-  font-weight: 300;
-  border-bottom: #366aaf solid 2px;
-  padding-bottom: 10px;
-  text-transform: uppercase;
+.table-hover tbody tr:hover {
+  color: #FFF;
+  background-color: rgba(0,0,0,.05);
 }
 
-.leaderboard tr {
-  border-bottom: #366aaf solid 2px;
+.table th.min, .table td.min {
+  width: 1%;
+  white-space: nowrap;
 }
 
-.leaderboard tr td {
-  line-height: 60px;
-  height: 60px;
-  /* border-bottom: #366AAF solid 2px; */
+.table th.num, .table td.num {
+  text-align: center;
 }
 
-.leaderboard tr .lb-position {
+.table th .rank, .table tr .rank {
   text-align: center;
   justify-content: center;
-  width: 100px;
   align-items: center;
 }
 
-.leaderboard tbody tr .lb-position {
-  display: flex;
-}
-
-.leaderboard tr .lb-position > * {
+.table tr .rank > * {
   display: block;
   border-radius: 50%;
   width: 40px;
   height: 40px;
   line-height: 40px;
+  margin: 0 auto;
+  font-weight: 500;
 }
 
-.leaderboard tr:nth-child(1) td.lb-position > * {
+.table tr:nth-child(1) td.rank > * {
   background-color: #e68f2f;
 }
 
-.leaderboard tr:nth-child(2) td.lb-position > * {
+.table tr:nth-child(2) td.rank > * {
   background-color: #f2455e;
 }
 
-.leaderboard tr:nth-child(3) td.lb-position > * {
+.table tr:nth-child(3) td.rank > * {
   background-color: #6251a7;
-}
-
-.leaderboard tr .lb-user {
-  width: 300px;
-  text-align: left;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.leaderboard tr .lb-user > * {
-  padding: 0 10px;
-}
-
-.leaderboard tr .lb-points {
-  width: 200px;
-  text-align: center;
-  justify-self: center;
-}
-
-.leaderboard tr .lb-metrics {
-  width: 170px;
-  text-align: center;
-  justify-self: center;
-}
-.leaderboard tr .lb-metricsl {
-  width: 300px;
-  text-align: center;
-  justify-self: center;
 }
