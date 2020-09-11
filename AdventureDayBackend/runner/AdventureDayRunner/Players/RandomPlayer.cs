@@ -1,21 +1,32 @@
 using System;
+using AdventureDayRunner.Model;
+using AdventureDayRunner.Shared;
 using Serilog;
 
 namespace AdventureDayRunner.Players
 {
     public class RandomPlayer : PlayerBase
     {
-        public RandomPlayer(string uri) : base(uri)
-        {            
+        public RandomPlayer(AdventureDayTeamInformation teamInformation, TimeSpan httpTimeout) : base(teamInformation, httpTimeout)
+        {
         }
 
-        protected override Move GetNextMove(MatchStatistic historicMatchStatistics)
+        private Move GetRandomMove()
         {            
             Array values = Enum.GetValues(typeof(Move));
             Random random = new Random();
             Move randomMove = (Move)values.GetValue(random.Next(values.Length));
-            Log.Information("Generated next move based on randomize strategy: " + randomMove.ToString());
             return randomMove;
+        }
+
+        protected override Move GetFirstMove()
+        {
+            return GetRandomMove();
+        }
+
+        protected override Move GetNextMove(MatchResponse lastMatchResponse)
+        {
+            return GetRandomMove();
         }
     }
 }

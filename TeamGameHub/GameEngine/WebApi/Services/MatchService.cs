@@ -228,15 +228,17 @@ namespace TeamGameHub.GameEngine.WebApi.Services
         private async Task<MoveDTO> GetBotMoveAsync(Match gameInfoForBackend)
         {
             
+            /*
             string backendurl = _config.GetValue<string>("ARCADE_BACKENDURL");
 
             HttpClient cl = new HttpClient();
             var content = new StringContent(JsonConvert.SerializeObject(gameInfoForBackend), Encoding.UTF8, "application/json");
             var res = await cl.PostAsync(backendurl, content);
             return JsonConvert.DeserializeObject<MoveDTO>(await res.Content.ReadAsStringAsync());
+            */
 
             // uncomment if you want to work without a backend
-            // return Move.Scissors;
+            return new MoveDTO() { Move = Move.Rock };
         }
 
         private Outcome CalculateResult(Move challengerMove, Move overlordMove)

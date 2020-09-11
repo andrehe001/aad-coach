@@ -1,14 +1,29 @@
+using System;
+using AdventureDayRunner.Model;
+using AdventureDayRunner.Shared;
+
 namespace AdventureDayRunner.Players
 {
     public class PatternPlayer : PlayerBase
     {
-        public PatternPlayer(string uri) : base(uri)
+        public PatternPlayer(AdventureDayTeamInformation teamInformation, TimeSpan httpTimeout) : base(teamInformation, httpTimeout)
         {
         }
 
-        protected override Move GetNextMove(MatchStatistic historicMatchStatistics)
+        private Move GetPatternMove(int seq)
         {
-            return Move.Lizard;
+            var values = Enum.GetValues(typeof(Move));
+            return (Move)values.GetValue(seq % values.Length);
+        }
+
+        protected override Move GetFirstMove()
+        {
+            return GetPatternMove(0);
+        }
+
+        protected override Move GetNextMove(MatchResponse lastMatchResponse)
+        {
+            return GetPatternMove(lastMatchResponse.Turn);
         }
     }
 }
