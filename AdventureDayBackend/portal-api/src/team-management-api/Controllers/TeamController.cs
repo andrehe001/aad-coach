@@ -59,7 +59,7 @@ namespace team_management_api.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("statsandlogs/{teamId}")]
         [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
         public async Task<ActionResult<Team>> GetTeamStatsAndLogs(int teamId)
         {
@@ -80,7 +80,7 @@ namespace team_management_api.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("stats")]
         [TeamAuthorizeAttribute(AuthorizationType.AnyTeam)]
         public async Task<ActionResult<IEnumerable<Team>>> GetStats()
         {
