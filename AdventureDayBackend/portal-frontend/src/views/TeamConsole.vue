@@ -6,41 +6,46 @@
         <div id="team-status" class="col-3">
           <p class="status-text">
             <span>Rank:</span>
+            <!-- TODO -->
             <span>01</span>
           </p>
           <p class="status-text">
             <span>Score:</span>
-            <span>1100</span>
+            <span>{{ TeamStats.score }}</span>
           </p>
-          <br>
+          <br />
           <p class="status-text">
             <span>Wins:</span>
-            <span>840 (70,9%)</span>
+            <span>{{ TeamStats.wins }} ({{ winsShare }})</span>
           </p>
           <p class="status-text">
             <span>Loses:</span>
-            <span>340 (28,6%)</span>
+            <span>{{ TeamStats.loses }} ({{ losesShare }})</span>
           </p>
           <p class="status-text">
             <span>Errors:</span>
-            <span>5 (0.5%)</span>
+            <span>{{ TeamStats.errors }} ({{ errorsShare }})</span>
           </p>
-          <br>
+          <br />
           <p class="status-text">
             <span>Profit:</span>
-            <span>1000</span>
+            <span>{{ TeamStats.profit }}</span>
           </p>
           <p class="status-text">
             <span>Income:</span>
-            <span>2000</span>
+            <span>{{ TeamStats.income }}</span>
           </p>
           <p class="status-text">
             <span>Costs:</span>
-            <span>1000</span>
+            <span>{{ TeamStats.costs }}</span>
           </p>
-          <br>
+          <br />
           <p class="status-text">
-            <span>Current<br/>Phase:</span>
+            <span>
+              Current
+              <br />Phase:
+            </span>
+            <!-- TODO -->
             <span>2. Change Management</span>
           </p>
         </div>
@@ -55,59 +60,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="min">5ms ago</td>
-                <td class="min">7.3345</td>
-                <td class="min highlight">SUCCESS</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td class="min">25ms ago</td>
-                <td class="min">3.3345</td>
-                <td class="min highlight">SUCCESS</td>
-                <td>Lorem ipsum ...</td>
-              </tr>
-              <tr>
-                <td class="min">10s ago</td>
-                <td class="min">207.3345</td>
-                <td class="min highlight">FAILED</td>
-                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
-              </tr>
-              <tr>
-                <td class="min">10s ago</td>
-                <td class="min">207.3345</td>
-                <td class="min highlight">FAILED</td>
-                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
-              </tr>
-              <tr>
-                <td class="min">10s ago</td>
-                <td class="min">207.3345</td>
-                <td class="min highlight">FAILED</td>
-                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
-              </tr>
-              <tr>
-                <td class="min">10s ago</td>
-                <td class="min">207.3345</td>
-                <td class="min highlight">FAILED</td>
-                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
-              </tr>
-              <tr>
-                <td class="min">10s ago</td>
-                <td class="min">207.3345</td>
-                <td class="min highlight">FAILED</td>
-                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
-              </tr>
-              <tr>
-                <td class="min">10s ago</td>
-                <td class="min">207.3345</td>
-                <td class="min highlight">FAILED</td>
-                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
-              </tr>
-              <tr>
-                <td class="min">10s ago</td>
-                <td class="min">207.3345</td>
-                <td class="min highlight">FAILED</td>
-                <td class="cell-collapse"><span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span></td>
+              <tr v-for="logEntry in TeamLog" v-bind:key="logEntry.timestamp">
+                <td class="min">{{ logEntry.timestamp | formatTimestamp }}</td>
+                <td class="min">{{ logEntry.responeTimeMs }}</td>
+                <td class="min highlight">
+                  <span class="badge "
+                        v-bind:class="{ 'badge-success': logEntry.status == 'SUCCESS', 'badge-danger': logEntry.status != 'SUCCESS' }">
+                    {{ logEntry.status }}
+                  </span>
+                </td>
+                <td>{{ logEntry.reason }}</td>
               </tr>
             </tbody>
           </table>
@@ -122,22 +84,80 @@ export default {
   name: "TeamConsole",
   data() {
     return {
-      Teams: [
-        { Position: 1, Name: "Teddybären", Score: 1100 },
-        { Position: 2, Name: "Hackers", Score: 980 },
-        { Position: 3, Name: "Sharks", Score: 650 },
-        { Position: 4, Name: "Nerds", Score: 640 }
-      ]
+      timerTeamStats: "",
+      timerTeamLog: "",
+      TeamStats: null,
+      TeamLog: null
     };
   },
-  filters: {
-    formatPosition: function(value) {
-      return ("0" + value).slice(-2);
+  computed: {
+    winsShare: function () {
+      const total = this.TeamStats.wins + this.TeamStats.loses + this.TeamStats.errors;
+      return (this.TeamStats.wins / total * 100).toFixed(1) + "%";
+    },
+    losesShare: function () {
+      const total = this.TeamStats.wins + this.TeamStats.loses + this.TeamStats.errors;
+      return (this.TeamStats.loses / total * 100).toFixed(1) + "%";
+    },
+    errorsShare: function () {
+      const total = this.TeamStats.wins + this.TeamStats.loses + this.TeamStats.errors;
+      return (this.TeamStats.errors / total * 100).toFixed(1) + "%";
     }
-  }
+  },
+  created() {
+    const fetchIntervalMs = 10 * 1000;
+
+    this.fetchTeamStats();
+    this.fetchTeamLog();
+    this.timerTeamStats = setInterval(this.fetchTeamStats, fetchIntervalMs);
+    this.timerTeamLog = setInterval(this.fetchTeamLog, fetchIntervalMs);
+  },
+  methods: {
+    fetchTeamStats() {
+      this.$http
+        .get("Statistics/team/current/stats")
+        .then((response) => {
+          this.TeamStats = response.data;
+        })
+        .catch(function (error) {
+          console.error(error.response);
+        });
+    },
+    fetchTeamLog() {
+      this.$http
+        .get("Statistics/team/current/log")
+        .then((response) => {
+          this.TeamLog = response.data;
+        })
+        .catch(function (error) {
+          console.error(error.response);
+        });
+    }
+  },
+  beforeDestroy() {
+    clearInterval(this.timerTeamStats);
+    clearInterval(this.timerTeamLog);
+  },
+  filters: {
+    formatTimestamp: function (value) {
+      var timestamp = new Date(value);
+      var now = new Date();
+      var diffMs = now - timestamp;
+
+      if (diffMs < 1000) {
+        return diffMs + "ms ago";
+      } else if (diffMs < 60 * 1000) {
+        return Math.round(diffMs/1000)  + "s ago";
+      } else if (diffMs < 60 * 60 * 1000) {
+        return Math.round(diffMs/(60 * 1000)) + "min ago";
+      } else if (diffMs < 24 * 60 * 60 * 1000) {
+        return Math.round(diffMs/(60 * 60 * 1000)) + "hrs ago";
+      }
+
+      return Math.round(diffMs/(24 * 60 * 60 * 1000)) + "days ago";
+    },
+  },
 };
-
-
 </script>
 
 <style>
@@ -145,8 +165,13 @@ export default {
   font-size: 1em;
 }
 
+.team-console .badge {
+  font-size: 1em;
+  font-weight: 500;
+}
+
 #team-status {
-  background: #19304F;
+  background: #19304f;
   display: table;
   flex-direction: column;
   align-items: baseline;

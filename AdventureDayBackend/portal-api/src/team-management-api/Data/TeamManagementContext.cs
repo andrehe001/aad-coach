@@ -15,6 +15,9 @@ namespace team_management_api.Models
         {
             modelBuilder.Entity<TeamLogEntry>()
                 .HasKey(_ => new { _.TeamId, _.Id });
+
+            modelBuilder.Entity<TeamLogEntry>()
+                .HasIndex(_ => _.Timestamp);
         }
 
         public DbSet<Team> Teams { get; set; }
