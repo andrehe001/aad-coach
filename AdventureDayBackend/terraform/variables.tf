@@ -8,6 +8,12 @@ variable "location" {
   description = "Injected via tf.ps1. Resource location."
 }
 
+variable "aks_assign_acr_pull_role" {
+  type = bool
+  default = false
+  description = "Assign Pull Role to AKS. Requires Owner rights."
+}
+
 variable "aks_kubernetes_version_prefix" {
   type        = string
   default     = "1.17"
