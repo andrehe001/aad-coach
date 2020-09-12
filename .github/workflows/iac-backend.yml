@@ -1,3 +1,5 @@
+name: Backend-IaC
+
 on:
   workflow_dispatch:
     inputs:
@@ -5,6 +7,18 @@ on:
         description: 'Azure Secret Name containing the Service Principal Details'
         required: true
         default: 'AZURE'
+      environmentName:
+        description: 'The environment deployment name, e.g. dev, qa or prod'
+        required: true
+        default: 'dev'
+      prefix:
+        description: 'The deployment prefix used for all Azure artefacts.'
+        required: true
+        default: 'azure-adventure-day'
+      location:
+        description: 'The deployment location used for all Azure artefacts.'
+        required: true
+        default: 'northeurope'
 
 defaults:
   run:
@@ -19,8 +33,8 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets[github.event.inputs.azureSecretName] }}
-      - name: Execute Tests
-        run: ./tf.ps1 -Verbose -Force -Prefix az-adventure-day -Location NorthEurope -EnvironmentName qa -TargetPath . -Apply -Download
+      - name: Run Terraform Apply
+        run: ./tf.ps1 -Verbose -Force -Prefix ${{ github.event.inputs.prefix }} -Location ${{ github.event.inputs.location }} -EnvironmentName ${{ github.event.inputs.environmentName }} -TargetPath . -Apply -Download
         shell: pwsh
         env:
           AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
