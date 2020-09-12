@@ -7,26 +7,29 @@
           <tr>
             <th scope="col" class="min rank">Rank</th>
             <th scope="col">Team</th>
-            <th scope="col" class="num">Score</th> <!-- Wins + Profit - Errors -->
+            <th scope="col" class="num">Score</th>
+            <!-- Wins + Profit - Errors -->
             <th scope="col" class="num">Wins</th>
             <th scope="col" class="num">Loses</th>
-            <th scope="col" class="num">Errors</th> <!-- Errors: Exceptions, Network, Timeouts, Hacker Attacks ... -->
-            <th scope="col" class="num">Profit</th> <!-- Profit = Income - Costs -->
+            <th scope="col" class="num">Errors</th>
+            <!-- Errors: Exceptions, Network, Timeouts, Hacker Attacks ... -->
+            <th scope="col" class="num">Profit</th>
+            <!-- Profit = Income - Costs -->
             <!-- Income : Won games -->
             <!-- Costs = Lost Games + Azure Costs -->
           </tr>
         </thead>
         <tbody>
-          <tr v-for="team in Teams" v-bind:key="team.Name">
+          <tr v-for="(team, index) in TeamScores" v-bind:key="team.name">
             <td class="min rank">
-              <span>{{ team.Position | formatPosition }}</span>
+              <span>{{ index+1 | formatPosition }}</span>
             </td>
-            <th scope="row">{{ team.Name }}</th>
-            <td class="num highlight">{{ team.Score }}</td>
-            <td class="num">{{ team.Wins }}</td>
-            <td class="num">{{ team.Loses }}</td>
-            <td class="num">{{ team.Errors }}</td>
-            <td class="num">{{ team.Profit }}</td>
+            <th scope="row">{{ team.name }}</th>
+            <td class="num highlight">{{ team.score }}</td>
+            <td class="num">{{ team.wins }}</td>
+            <td class="num">{{ team.loses }}</td>
+            <td class="num">{{ team.errors }}</td>
+            <td class="num">{{ team.profit | formatProfit }}</td>
           </tr>
         </tbody>
       </table>
@@ -39,21 +42,38 @@ export default {
   name: "Leaderboard",
   data() {
     return {
-      Teams: [
-        { Position: 1, Name: "Teddybären", Score: 1100, Wins: 840, Loses: 340, Errors: 5, Profit: '$ 500k' },
-        { Position: 2, Name: "Hackers"   , Score: 980 , Wins: 640, Loses: 240, Errors: 35, Profit: '$ 33k' },
-        { Position: 3, Name: "Sharks"    , Score: 650 , Wins: 440, Loses: 140, Errors: 55, Profit: '$ 20k' },
-        { Position: 4, Name: "Nerds"     , Score: 640 , Wins: 140, Loses: 40, Errors: 135, Profit: '$ 10k' }
-      ]
+      timer: "",
+      TeamScores: null,
     };
   },
+  created() {
+    const fetchIntervalMs = 10 * 1000;
+
+    this.fetchLeaderboardStats();
+    this.timer = setInterval(this.fetchLeaderboardStats, fetchIntervalMs);
+  },
+  methods: {
+    fetchLeaderboardStats() {
+      this.$http
+        .get("Statistics/leaderboard")
+        .then((response) => {
+          this.TeamScores = response.data;
+        })
+        .catch(function (error) {
+          console.error(error.response);
+        });
+    },
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+  },
   filters: {
-    formatPosition: function(value) {
+    formatPosition: function (value) {
       return ("0" + value).slice(-2);
-    }
-  }
+    },
+    formatProfit: function (value) {
+      return "$ " + value;
+    },
+  },
 };
 </script>
-
-<style>
-</style>
