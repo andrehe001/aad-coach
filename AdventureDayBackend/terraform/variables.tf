@@ -10,7 +10,7 @@ variable "location" {
 
 variable "aks_assign_acr_pull_role" {
   type = bool
-  default = false
+  default = true
   description = "Assign Pull Role to AKS. Requires Owner rights."
 }
 

@@ -38,11 +38,3 @@ jobs:
         shell: pwsh
         env:
           AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
-      - name: Run Terraform Output
-        run: ./tf.ps1 -Verbose -Force -Prefix ${{ github.event.inputs.prefix }} -Location ${{ github.event.inputs.location }} -EnvironmentName ${{ github.event.inputs.environmentName }} -TargetPath . -Output -Download
-        shell: pwsh
-        env:
-          AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
-      - name: Run AKS ACR Link
-        run: ./tf_az_aks_update_acr.ps1 -TerraformOutputFile ./output.json
-        shell: pwsh
