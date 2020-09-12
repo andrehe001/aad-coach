@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using team_management_api.Data;
+using team_management_api.Data.Runner;
 using team_management_api.Helpers;
 using team_management_api.Models;
 using team_management_data;
@@ -30,7 +31,6 @@ namespace team_management_api
             services.AddDbContext<TeamManagementContext>(options =>
                 options.UseSqlServer(AppSettings.GetConnectionString(this.Configuration))
             );
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,10 +58,10 @@ namespace team_management_api
                 endpoints.MapControllers();
             });
 
-            using(var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetRequiredService<TeamManagementContext>();
-                context.Database.EnsureCreated();
+                var teamManagementContext = serviceScope.ServiceProvider.GetRequiredService<TeamManagementContext>();
+                teamManagementContext.Database.EnsureCreated();
             }
         }
     }

@@ -9,6 +9,8 @@ namespace team_management_data
         public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<Member> Members { get; set; }
+        
+        public string GameEngineUri { get; set; }
 
         public Guid SubscriptionId { get; set; }
         [JsonIgnore]
