@@ -1,0 +1,26 @@
+on:
+  workflow_dispatch:
+    inputs:
+      azureSecretName:
+        description: 'Azure Secret Name containing the Service Principal Details'
+        required: true
+        default: 'AZURE'
+
+defaults:
+  run:
+    working-directory: AdventureDayBackend/terraform
+jobs:
+  deploy:
+    name: Deploy Gameday Backend to Azure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets[github.event.inputs.azureSecretName] }}
+      - name: Execute Tests
+        run: ./tf.ps1 -Verbose -Force -Prefix az-adventure-day -Location NorthEurope -EnvironmentName qa -TargetPath . -Apply -Download
+        shell: pwsh
+        env:
+          AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
