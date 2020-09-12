@@ -13,6 +13,7 @@ namespace team_management_data
 
         bool RenameMember(int teamId, int memberId, string newDisplayName);
         bool AddMemberToTeam(int teamId, Member member);
+        bool AddMemberToTeam(string teamName, Member member);
         IEnumerable<Member> GetMembers(int teamId);
         Member GetMember(int teamId, int memberId);
         bool RemoveMemberFromTeam(int teamId, int memberId);

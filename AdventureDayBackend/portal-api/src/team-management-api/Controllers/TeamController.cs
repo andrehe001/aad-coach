@@ -260,6 +260,26 @@ namespace team_management_api.Controllers
             }
         }
 
+        [HttpPost("addmemberto/{teamName}")]
+        [TeamAuthorizeAttribute(AuthorizationType.Admin)]
+        public IActionResult AddMemberToTeam(string teamName, [FromBody] Member newMember)
+        {
+            if (teamName.Equals(AppSettings.AdminTeamName, StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(newMember.Username) || string.IsNullOrWhiteSpace(newMember.DisplayName) || string.IsNullOrWhiteSpace(newMember.Password))
+            {
+                return BadRequest();
+            }
+
+            var success = _teamservice.AddMemberToTeam(teamName, newMember);
+            if (success)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpPost("removememberfrom/{teamId}/{memberId}")]
         [TeamAuthorizeAttribute(AuthorizationType.Admin)]
         public IActionResult RemoveMemberFromTeam(int teamId, int memberId)
