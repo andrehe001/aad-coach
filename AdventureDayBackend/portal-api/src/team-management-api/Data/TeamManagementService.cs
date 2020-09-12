@@ -47,7 +47,7 @@ namespace team_management_api.Data
 
         public bool CheckTeamNameFree(int teamId, string teamName)
         {
-            return !_context.Teams.Any(t => t.Name.Equals(teamName));
+            return !_context.Teams.Any(t => t.Name.Equals(teamName, StringComparison.OrdinalIgnoreCase));
         }
 
         public bool DeleteTeam(int id)
@@ -89,7 +89,7 @@ namespace team_management_api.Data
 
         public Team GetTeamByName(string name)
         {
-            return _context.Teams.Where(team => team.Name == name).FirstOrDefault();
+            return _context.Teams.Where(team => team.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
         }
 
         public bool RenameMember(int teamId, int memberId, string newDisplayName)
@@ -110,6 +110,25 @@ namespace team_management_api.Data
         public bool AddMemberToTeam(int teamId, Member member)
         {
             Team team = GetTeamByIdWithMembers(teamId);
+            if (team != null)
+            {
+                if (team.Members == null)
+                {
+                    team.Members = new List<Member>();
+                }
+                team.Members.Add(member);
+                _context.Update(team);
+                return SaveChanges();
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool AddMemberToTeam(string teamName, Member member)
+        {
+            Team team = GetTeamByName(teamName);
             if (team != null)
             {
                 if (team.Members == null)
@@ -168,7 +187,7 @@ namespace team_management_api.Data
 
             string hashedInput = AppSettings.HashString(_appSettings, model.Password);
 
-            Team team = _context.Teams.SingleOrDefault(x => x.Name == model.Teamname && x.TeamPassword == hashedInput);
+            Team team = _context.Teams.SingleOrDefault(x => x.Name.Equals(model.Teamname, StringComparison.OrdinalIgnoreCase) && x.TeamPassword == hashedInput);
 
             // return null if user not found
             if (team == null)
@@ -189,7 +208,7 @@ namespace team_management_api.Data
                 return null;
             }
 
-            if (model.Teamname.Equals("admin") && model.Password.Equals(_appSettings.AdminPassword))
+            if (model.Teamname.Equals("admin", StringComparison.OrdinalIgnoreCase) && model.Password.Equals(_appSettings.AdminPassword))
             {
                 string token = generateJwtToken(AppSettings.GetAdminTeam(_appSettings));
                 AuthenticateResponse response = new AuthenticateResponse(AppSettings.GetAdminTeam(_appSettings), token)

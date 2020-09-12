@@ -22,6 +22,8 @@ namespace team_management_data
 
         IActionResult AddMemberToTeam(int teamId, Member newMember);
 
+        IActionResult AddMemberToTeam(string teamName, Member newMember);
+
         IActionResult RemoveMemberFromTeam(int teamId, int memberId);
 
         ActionResult<Member> UpdateMemberName(int teamId, int memberId, string newName);
