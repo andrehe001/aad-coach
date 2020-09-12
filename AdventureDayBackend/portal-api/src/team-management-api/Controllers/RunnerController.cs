@@ -9,9 +9,9 @@ namespace team_management_api.Controllers
     [ApiController]
     public class RunnerController : ControllerBase
     {
-        private readonly TeamManagementContext _dbContext;
+        private readonly AdventureDayBackendDbContext _dbContext;
 
-        public RunnerController(TeamManagementContext dbContext)
+        public RunnerController(AdventureDayBackendDbContext dbContext)
         {
             _dbContext = dbContext;
         }

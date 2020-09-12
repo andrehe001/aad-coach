@@ -12,9 +12,9 @@ namespace team_management_api.Controllers
     [ApiController]
     public class StatisticsController : ControllerBase
     {
-        private readonly TeamManagementContext _dbContext;
+        private readonly AdventureDayBackendDbContext _dbContext;
 
-        public StatisticsController(TeamManagementContext context)
+        public StatisticsController(AdventureDayBackendDbContext context)
         {
             _dbContext = context;
         }

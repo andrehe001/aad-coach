@@ -15,10 +15,10 @@ namespace team_management_api.Data
 {
     public class TeamManagementService : ITeamDataService
     {
-        private readonly TeamManagementContext _context;
+        private readonly AdventureDayBackendDbContext _context;
         private readonly AppSettings _appSettings;
 
-        public TeamManagementService(TeamManagementContext context, IOptions<AppSettings> appSettings)
+        public TeamManagementService(AdventureDayBackendDbContext context, IOptions<AppSettings> appSettings)
         {
             _context = context;
             _appSettings = appSettings.Value;

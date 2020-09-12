@@ -28,7 +28,7 @@ namespace team_management_api
             services.Configure<AppSettings>(Configuration.GetSection("Authentication"));
             services.AddScoped<ITeamDataService, TeamManagementService>();
             services.AddControllers();
-            services.AddDbContext<TeamManagementContext>(options =>
+            services.AddDbContext<AdventureDayBackendDbContext>(options =>
                 options.UseSqlServer(AppSettings.GetConnectionString(this.Configuration))
             );
         }
@@ -60,7 +60,7 @@ namespace team_management_api
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var teamManagementContext = serviceScope.ServiceProvider.GetRequiredService<TeamManagementContext>();
+                var teamManagementContext = serviceScope.ServiceProvider.GetRequiredService<AdventureDayBackendDbContext>();
                 teamManagementContext.Database.EnsureCreated();
             }
         }
