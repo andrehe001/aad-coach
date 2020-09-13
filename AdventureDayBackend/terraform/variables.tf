@@ -1,17 +1,51 @@
 variable "prefix" {
-  type = string
+  type        = string
   description = "Injected via tf.ps1. Resource prefix."
 }
 
 variable "location" {
-  type = string
+  type        = string
   description = "Injected via tf.ps1. Resource location."
+}
+
+variable "aks_assign_acr_pull_role" {
+  type = bool
+  default = true
+  description = "Assign Pull Role to AKS. Requires Owner rights."
 }
 
 variable "aks_kubernetes_version_prefix" {
   type        = string
   default     = "1.17"
   description = "The Kubernetes Version prefix (MAJOR.MINOR) to be used by the AKS cluster. The BUGFIX version is determined automatically (latest)."
+}
+
+variable "adventure_day_kubernetes_namespace" {
+  type    = string
+  default = "adventure-day"
+}
+
+variable "key_vault_users_object_ids" {
+  type        = list(string)
+  default     = []
+  description = "List of Object IDs having managing access to KeyVault."
+}
+
+variable "leave_sql_server_firewall_open" {
+  type    = bool
+  default = true
+}
+
+variable "tls_cert_base64" {
+  type = string
+  default = ""
+  description = "Default certificate for ingress controller."
+}
+
+variable "tls_key_base64" {
+  type = string
+  default = ""
+  description = "Default certificate for ingress controller."
 }
 
 variable "aks_default_node_pool" {
@@ -91,4 +125,3 @@ variable "aks_enable_diagnostics" {
   default     = false
   description = "Activate AKS Diagnostics Settings in Log Analytics"
 }
-

@@ -1,0 +1,40 @@
+name: Backend-IaC
+
+on:
+  workflow_dispatch:
+    inputs:
+      azureSecretName:
+        description: 'Azure Secret Name containing the Service Principal Details'
+        required: true
+        default: 'AZURE'
+      environmentName:
+        description: 'The environment deployment name, e.g. dev, qa or prod'
+        required: true
+        default: 'dev'
+      prefix:
+        description: 'The deployment prefix used for all Azure artefacts.'
+        required: true
+        default: 'azure-adventure-day'
+      location:
+        description: 'The deployment location used for all Azure artefacts.'
+        required: true
+        default: 'northeurope'
+
+defaults:
+  run:
+    working-directory: AdventureDayBackend/terraform
+jobs:
+  deploy:
+    name: Deploy Gameday Backend to Azure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets[github.event.inputs.azureSecretName] }}
+      - name: Run Terraform Apply
+        run: ./tf.ps1 -Verbose -Force -Prefix ${{ github.event.inputs.prefix }} -Location ${{ github.event.inputs.location }} -EnvironmentName ${{ github.event.inputs.environmentName }} -TargetPath . -Apply -Download
+        shell: pwsh
+        env:
+          AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}

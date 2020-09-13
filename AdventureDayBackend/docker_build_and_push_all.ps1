@@ -5,22 +5,22 @@ param
 (
     [Parameter(Mandatory = $true)]
     [ValidateLength(3,63)]
-    [ValidatePattern('^[^$()]+$', ErrorMessage = "{0} is not valid. Is it perhaps a non-set Azure DevOps Variable?")]
+    [ValidatePattern('^[^$()]+$', ErrorMessage = "{0} is not valid.")]
     [string]
     $ContainerRegistryName,
     
     [Parameter(Mandatory = $true)]
     [ValidateLength(1,255)]
-    [ValidatePattern('^[^$()]+$', ErrorMessage = "{0} is not valid. Is it perhaps a non-set Azure DevOps Variable?")]
+    [ValidatePattern('^[^$()]+$', ErrorMessage = "{0} is not valid.")]
     [string]
-    $Label
+    $Label,
+
+    [switch]
+    $Local
 )
 
-Write-Verbose "================================================================================"
-Write-Verbose "= Configuration                                                                ="
-Write-Verbose "================================================================================"
-Write-Verbose "  ContainerRegistryName:          $ContainerRegistryName"
-Write-Verbose "================================================================================"
-
-./docker_build_and_push.ps1 -ProjectName AdventureDayRunner -ContainerRegistryName $ContainerRegistryName -Label $Label
-./docker_build_and_push.ps1 -ProjectName AdventureDayRunnerAPI -ContainerRegistryName $ContainerRegistryName -Label $Label
+Write-Verbose "  ContainerRegistryName: $ContainerRegistryName"
+az acr build -r $ContainerRegistryName -f ./runner/AdventureDayRunner/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-runner:$($Label)" ./runner
+az acr build -r $ContainerRegistryName -f ./runner/AdventureDayRunnerAPI/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-runner-api:$($Label)" ./runner
+az acr build -r $ContainerRegistryName -f ./portal-frontend/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-portal-frontend:$($Label)" ./portal-frontend
+az acr build -r $ContainerRegistryName -f ./portal-api/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-portal-api:$($Label)" ./portal-api

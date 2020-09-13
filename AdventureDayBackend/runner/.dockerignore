@@ -1,0 +1,10 @@
+.idea/
+bin/
+obj/
+out/
+TestResults/
+terraform/
+helm-charts/
+node_modules/
+.vscode/
+dist/
