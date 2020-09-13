@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace team_management_api.Data.Runner
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public enum AdventureDayPhase
+    public enum RunnerPhase
     {
         Phase1_Deployment = 1,
         Phase2_Change = 2,

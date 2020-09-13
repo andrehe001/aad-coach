@@ -1,54 +1,52 @@
-using System.Collections.Generic;
-
 namespace team_management_api.Data.Runner
 {
-    public static class DefaultAdventureDayPhaseConfiguration
+    public static class DefaultRunnerPhasesConfiguration
     {
-        public static readonly AdventureDayPhaseConfiguration DefaultConfiguration = new AdventureDayPhaseConfiguration()
+        public static readonly RunnerPhasesConfiguration DefaultConfiguration = new RunnerPhasesConfiguration()
         {
             {
-                AdventureDayPhase.Phase1_Deployment, 
-                new AdventureDayPhaseConfigurationItem()
+                RunnerPhase.Phase1_Deployment, 
+                new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 1000,
                     PlayerTypes = new [] { PlayerType.Random }
                 }
             },
             {
-                AdventureDayPhase.Phase2_Change, 
-                new AdventureDayPhaseConfigurationItem()
+                RunnerPhase.Phase2_Change, 
+                new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 1000,
                     PlayerTypes = new [] { PlayerType.Random }
                 }
             },
             {
-                AdventureDayPhase.Phase3_Monitoring, 
-                new AdventureDayPhaseConfigurationItem()
+                RunnerPhase.Phase3_Monitoring, 
+                new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 1000,
                     PlayerTypes = new [] { PlayerType.Random }
                 }
             },
             {
-                AdventureDayPhase.Phase4_Scale, 
-                new AdventureDayPhaseConfigurationItem()
+                RunnerPhase.Phase4_Scale, 
+                new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 100,
                     PlayerTypes = new [] { PlayerType.Random }
                 }
             },
             {
-                AdventureDayPhase.Phase5_Security, 
-                new AdventureDayPhaseConfigurationItem()
+                RunnerPhase.Phase5_Security, 
+                new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 500,
                     PlayerTypes = new [] { PlayerType.Random }
                 }
             },
             {
-                AdventureDayPhase.Phase6_Intelligence, 
-                new AdventureDayPhaseConfigurationItem()
+                RunnerPhase.Phase6_Intelligence, 
+                new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 500,
                     PlayerTypes = new [] { PlayerType.Pattern }

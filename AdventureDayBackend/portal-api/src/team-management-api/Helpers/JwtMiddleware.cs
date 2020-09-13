@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using team_management_data;
+using team_management_api.Data;
 
 namespace team_management_api.Helpers
 {
