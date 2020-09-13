@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
-namespace team_management_data
+namespace team_management_api.Data
 {
     public class AuthenticateRequest
     {

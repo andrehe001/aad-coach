@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using team_management_data;
+using team_management_api.Data;
 
 namespace team_management_api.Helpers
 {

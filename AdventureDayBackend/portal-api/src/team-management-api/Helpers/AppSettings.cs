@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Text;
-using team_management_data;
+using team_management_api.Data;
 
 namespace team_management_api.Helpers
 {

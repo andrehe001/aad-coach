@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
-namespace team_management_data
+namespace team_management_api.Data
 {
     public interface ITeamManagement
     {

@@ -5,10 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using team_management_api.Data;
-using team_management_api.Data.Runner;
 using team_management_api.Helpers;
-using team_management_api.Models;
-using team_management_data;
 
 namespace team_management_api
 {
@@ -27,7 +24,7 @@ namespace team_management_api
             services.AddCors();
             services.Configure<AppSettings>(Configuration.GetSection("Authentication"));
             services.AddScoped<ITeamDataService, TeamManagementService>();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(); // Support Dictionaries!
             services.AddDbContext<AdventureDayBackendDbContext>(options =>
                 options.UseSqlServer(AppSettings.GetConnectionString(this.Configuration))
             );

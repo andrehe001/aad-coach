@@ -1,8 +1,8 @@
 namespace team_management_api.Data.Runner
 {
-    public enum AdventureDayRunnerStatus
+    public enum RunnerStatus
     {
-        Running = 0,
+        Started = 0,
         Stopped = 1
     }
 }

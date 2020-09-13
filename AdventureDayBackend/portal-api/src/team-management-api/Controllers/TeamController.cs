@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using team_management_api.Data;
 using team_management_api.Helpers;
-using team_management_data;
 
 namespace team_management_api.Controllers
 {

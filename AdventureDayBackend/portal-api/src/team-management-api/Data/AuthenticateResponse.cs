@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace team_management_data
+namespace team_management_api.Data
 {
     public class AuthenticateResponse
     {

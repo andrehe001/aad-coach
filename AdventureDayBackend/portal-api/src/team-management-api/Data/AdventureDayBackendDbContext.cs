@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using team_management_api.Data.Runner;
-using team_management_data;
 
-namespace team_management_api.Models
+namespace team_management_api.Data
 {
     public class AdventureDayBackendDbContext : DbContext
     {
@@ -21,18 +20,18 @@ namespace team_management_api.Models
             modelBuilder.Entity<TeamLogEntry>()
                 .HasIndex(_ => _.Timestamp);
             
-            var converter = new ValueConverter<AdventureDayPhaseConfiguration, string>(
+            var converter = new ValueConverter<RunnerPhasesConfiguration, string>(
                 v => v.ToJson(),
-                v => AdventureDayPhaseConfiguration.FromJson(v));
+                v => RunnerPhasesConfiguration.FromJson(v));
 
             modelBuilder
-                .Entity<AdventureDayRunnerProperties>()
+                .Entity<RunnerProperties>()
                 .Property(_ => _.PhaseConfigurations)
                 .HasConversion(converter)
                 .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity<AdventureDayRunnerProperties>()
-                .HasData(AdventureDayRunnerProperties.CreateDefault("default"));
+            modelBuilder.Entity<RunnerProperties>()
+                .HasData(team_management_api.Data.Runner.RunnerProperties.CreateDefault());
         }
 
         public DbSet<Team> Teams { get; set; }
@@ -43,6 +42,6 @@ namespace team_management_api.Models
 
         public DbSet<TeamLogEntry> TeamLogEntries { get; set; }
         
-        public DbSet<AdventureDayRunnerProperties> RunnerProperties { get; set; }
+        public DbSet<RunnerProperties> RunnerProperties { get; set; }
     }
 }

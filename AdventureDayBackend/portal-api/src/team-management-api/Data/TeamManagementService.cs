@@ -8,8 +8,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using team_management_api.Helpers;
-using team_management_api.Models;
-using team_management_data;
 
 namespace team_management_api.Data
 {
