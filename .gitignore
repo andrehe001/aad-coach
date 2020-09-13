@@ -2,6 +2,7 @@
 *.values.local.yaml
 *.values.local.yml
 *.Development.json
+.vscode/launch.json
 
 # Created by https://www.gitignore.io/api/csharp
 # Edit at https://www.gitignore.io/?templates=csharp
