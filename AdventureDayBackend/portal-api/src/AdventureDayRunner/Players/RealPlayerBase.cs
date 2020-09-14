@@ -28,7 +28,7 @@ namespace AdventureDayRunner.Players
         /// </summary>
         /// <param name="cancellationToken">Cancel.</param>
         /// <returns>The final match response or null upon failure.</returns>
-        public async Task<MatchScoreReport> Play(CancellationToken cancellationToken)
+        public async Task<MatchReport> Play(CancellationToken cancellationToken)
         {
             using var httpClient = new HttpClient() { Timeout = _httpTimeout };
 
@@ -66,7 +66,7 @@ namespace AdventureDayRunner.Players
                     cancellationToken: cancellationToken);
             }
 
-            return MatchScoreReport.FromMatchResponse(response);
+            return MatchReport.FromMatchResponse(response);
         }
         protected abstract Move GetFirstMove();
         protected abstract Move GetNextMove(MatchResponse lastMatchResponse);

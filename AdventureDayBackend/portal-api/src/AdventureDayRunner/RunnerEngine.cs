@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AdventureDayRunner.Model;
 using AdventureDayRunner.Players;
 using AdventureDayRunner.Players.PseudoPlayers;
 using AdventureDayRunner.Players.RealPlayers;
@@ -95,47 +96,47 @@ namespace AdventureDayRunner
             
             Task.Run(async () =>
             {
+                MatchReport report = null;
                 try
                 {
-                    Log.Information($"Team {team.Name} vs. Player {playerType.ToString()}");
+                    Log.Debug($"Team {team.Name} vs. Player {playerType.ToString()}");
                     var player = CreatePlayerFromType(playerType, team, httpTimeout);
 
-                    var matchOutcomeMetadata = await player.Play(cancellationToken);
-
-                    Log.Information(matchOutcomeMetadata == null
-                        ? $"Team {team.Name} vs. Player {playerType.ToString()} - Failed."
-                        : $"Team {team.Name} vs. Player {playerType.ToString()} - HasWon? {matchOutcomeMetadata.HasWon}");
-
-                    await using var lifetimeScope = _lifetimeScope.BeginLifetimeScope();
-                    var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
-                    
-                    await dbContext.TeamLogEntries.AddAsync(
-                        new TeamLogEntry() {Reason = "Test", ResponeTimeMs = 100, Status = "200", TeamId = team.Id},
-                        cancellationToken);
-                    await dbContext.SaveChangesAsync(cancellationToken);
-
-                    // TODO matchResponse = null --> Failure.
-                    //      matchResponse -> statistics based on phase.
+                    report = await player.Play(cancellationToken);
                 }
-                catch (TaskCanceledException)
+                catch (TaskCanceledException exception)
                 {
                     // TODO log reason.
                     if (!cancellationToken.IsCancellationRequested)
                     {
                         Log.Error("HTTP Timeout.");
+                        report = MatchReport.FromError("HTTP Timeout");
                     }
-    
+                    else
+                    {
+                        Log.Debug(exception: exception, "TaskCanceledException | No Http Timeout detected.");
+                    }
                 }
-                catch (MatchCancelledException)
+                catch (MatchCanceledException)
                 {
-                    // TODO log reason.
-                    Log.Information("Match was cancelled by AI player.");
+                    Log.Debug("Smoorghs cancelled the match.");
+                    report = MatchReport.FromCancellation("Smoorghs cancelled the match.");
                 }
                 catch (Exception exception)
                 {
+                    // Should rarely occur.
                     Log.Error(exception,
                         $"Issue in Fire and Forget for Team {team.Name} URI: {team.GameEngineUri}");
+                    report = MatchReport.FromError("HTTP Timeout");
                 }
+                
+                await using var lifetimeScope = _lifetimeScope.BeginLifetimeScope();
+                var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
+                await dbContext.TeamLogEntries.AddAsync(
+                    new TeamLogEntry() {Reason = "Test", ResponeTimeMs = 100, Status = "200", TeamId = team.Id},
+                    cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
+                 
             }, cancellationToken).Forget();
         }
         
