@@ -44,6 +44,7 @@
 | FixedPlayer | Kye |
 | IterativePlayer | Courtney |
 | PatternPlayer | Libby |
+| BetPlayer | William |
 
 ## Phase 1: Deployment
 * RandomPlayer tries to play with the team environment
