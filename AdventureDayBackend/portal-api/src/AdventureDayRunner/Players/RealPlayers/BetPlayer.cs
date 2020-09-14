@@ -1,5 +1,6 @@
 using System;
 using AdventureDayRunner.Model;
+using Microsoft.Extensions.Configuration;
 using team_management_api.Data;
 
 namespace AdventureDayRunner.Players.RealPlayers
@@ -10,7 +11,7 @@ namespace AdventureDayRunner.Players.RealPlayers
 
         public override string Name => "William";
 
-        public BetPlayer(Team team, TimeSpan httpTimeout) : base(team, httpTimeout)
+        public BetPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {
             _random = new Random();
         }

@@ -3,25 +3,43 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Configuration;
+using Serilog;
+using Serilog.Core;
 using team_management_api.Data;
 
 namespace AdventureDayRunner.Players.PseudoPlayers
 {
     public class SecurityHackPlayer : PseudoPlayerBase
     {
-        public SecurityHackPlayer(Team team, TimeSpan httpTimeout) : base(team, httpTimeout)
+        private readonly IConfiguration _configuration;
+
+        public SecurityHackPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {
+            _configuration = configuration;
         }
 
         public override string Name => "Kevin";
         
         protected override async Task<MatchReport> ExecuteAction(Team team, HttpClient httpClient, CancellationToken cancellationToken)
         {
-            var gameEngineSidecarUriBuilder = new UriBuilder(team.GameEngineUri);
-            gameEngineSidecarUriBuilder.Port = 81;
-            gameEngineSidecarUriBuilder.Path = "Exploit";
-
-            var gameEngineSidecarUri = gameEngineSidecarUriBuilder.Uri;
+            Uri gameEngineSidecarUri; 
+            // Develop Mode?
+            var localSideCarExploitUri = _configuration.GetValue("LocalSideCarExploitUri", string.Empty);
+            if (localSideCarExploitUri != string.Empty)
+            {
+                Log.Debug($"SecurityHackPlayer: Using LocalSideCarExploitUri {localSideCarExploitUri}");
+                gameEngineSidecarUri = new Uri(localSideCarExploitUri);                
+            } 
+            else
+            {
+                Log.Debug("SecurityHackPlayer: Using default side car URI.");
+                var gameEngineSidecarUriBuilder = new UriBuilder(team.GameEngineUri);
+                gameEngineSidecarUriBuilder.Port = 81;
+                gameEngineSidecarUriBuilder.Path = "Exploit";
+                gameEngineSidecarUri = gameEngineSidecarUriBuilder.Uri;
+            }
 
             try
             {
@@ -36,8 +54,9 @@ namespace AdventureDayRunner.Players.PseudoPlayers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Log.Error(exception, $"Error in Hacker.");
             }
 
             return MatchReport.FromHackerAttack(hasDefendedAttack: true);

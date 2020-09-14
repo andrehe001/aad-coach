@@ -10,6 +10,7 @@ using AdventureDayRunner.Utils;
 using Autofac;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using team_management_api.Data;
 using team_management_api.Data.Runner;
@@ -20,10 +21,12 @@ namespace AdventureDayRunner
     {
         private readonly int _refreshTimeoutInSeconds = 5;
         private readonly ILifetimeScope _lifetimeScope;
+        private readonly IConfiguration _configuration;
 
-        public RunnerEngine(ILifetimeScope lifetimeScope)
+        public RunnerEngine(ILifetimeScope lifetimeScope, IConfiguration configuration)
         {
             _lifetimeScope = lifetimeScope;
+            _configuration = configuration;
         }
 
         public async Task Run(CancellationToken cancellationToken)
@@ -151,39 +154,46 @@ namespace AdventureDayRunner
             {
                 await using (var lifetimeScope = _lifetimeScope.BeginLifetimeScope())
                 {
-                    var error = report.Status != MatchRating.Success ? 1 : 0;
+                    var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
+                    
+                    // Errors
+                    var error = report.Status != MatchRating.Success 
+                                || report.Status != MatchRating.Ignore ? 1 : 0;
+                    
                     var loss = report.HasLost ? 1 : 0;
                     var win = report.HasWon ? 1 : 0;
 
-                    var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
-                    int rowsAffected = await dbContext.TeamScores.Where(_ => _.TeamId == team.Id)
-                        .BatchUpdateAsync(_ =>
-                        new TeamScore()
-                        {
-                            Costs = _.Costs + report.Cost,
-                            Income = _.Income + report.Income,
-                            Errors = _.Errors + error,
-                            Loses = _.Loses + loss,
-                            Wins = _.Wins + win
-                        }, cancellationToken);
-
-                    if (rowsAffected != 1)
+                    if (report.Status != MatchRating.Ignore)
                     {
-                        // This code can run into concurrency issues.
-                        // That is at the beginning two or more threads might 
-                        // detect a non-existing score entry. This results in an
-                        // Update exception, that we will swallow.
-                        Log.Warning("Found no score record for team. Creating first one.");
-                        await dbContext.TeamScores.AddAsync(new TeamScore()
+                        int rowsAffected = await dbContext.TeamScores.Where(_ => _.TeamId == team.Id)
+                            .BatchUpdateAsync(_ =>
+                                new TeamScore()
+                                {
+                                    Costs = _.Costs + report.Cost,
+                                    Income = _.Income + report.Income,
+                                    Errors = _.Errors + error,
+                                    Loses = _.Loses + loss,
+                                    Wins = _.Wins + win
+                                }, cancellationToken);
+                        
+                        if (rowsAffected != 1)
                         {
-                            TeamId = team.Id,
-                            Costs = report.Cost,
-                            Income = report.Income,
-                            Errors = error,
-                            Loses = loss,
-                            Wins = win
-                        }, cancellationToken);
-                        await dbContext.SaveChangesAsync(cancellationToken);
+                            // This code can run into concurrency issues.
+                            // That is at the beginning two or more threads might 
+                            // detect a non-existing score entry. This results in an
+                            // Update exception, that we will swallow.
+                            Log.Warning("Found no score record for team. Creating first one.");
+                            await dbContext.TeamScores.AddAsync(new TeamScore()
+                            {
+                                TeamId = team.Id,
+                                Costs = report.Cost,
+                                Income = report.Income,
+                                Errors = error,
+                                Loses = loss,
+                                Wins = win
+                            }, cancellationToken);
+                            await dbContext.SaveChangesAsync(cancellationToken);
+                        }
                     }
 
                     if (report.HasLogEntry)
@@ -206,17 +216,17 @@ namespace AdventureDayRunner
             }
         }
         
-        private static IPlayer CreatePlayerFromType(PlayerType playerType, Team team, TimeSpan httpTimeout)
+        private IPlayer CreatePlayerFromType(PlayerType playerType, Team team, TimeSpan httpTimeout)
         {
             IPlayer player = playerType switch
             {
-                PlayerType.Pattern => new PatternPlayer(team, httpTimeout),
-                PlayerType.Random => new RandomPlayer(team, httpTimeout),
-                PlayerType.Fixed => new FixedPlayer(team, httpTimeout),
-                PlayerType.Iterative => new IterativePlayer(team, httpTimeout),
-                PlayerType.Bet => new BetPlayer(team, httpTimeout),
-                PlayerType.CostCalculator => new CostCalculatorPlayer(team, httpTimeout),
-                PlayerType.SecurityHack => new SecurityHackPlayer(team, httpTimeout),
+                PlayerType.Pattern => new PatternPlayer(_configuration, team, httpTimeout),
+                PlayerType.Random => new RandomPlayer(_configuration, team, httpTimeout),
+                PlayerType.Fixed => new FixedPlayer(_configuration, team, httpTimeout),
+                PlayerType.Iterative => new IterativePlayer(_configuration, team, httpTimeout),
+                PlayerType.Bet => new BetPlayer(_configuration, team, httpTimeout),
+                PlayerType.CostCalculator => new CostCalculatorPlayer(_configuration, team, httpTimeout),
+                PlayerType.SecurityHack => new SecurityHackPlayer(_configuration, team, httpTimeout),
                 _ => throw new InvalidOperationException("Unexpected enum value.")
             };
             

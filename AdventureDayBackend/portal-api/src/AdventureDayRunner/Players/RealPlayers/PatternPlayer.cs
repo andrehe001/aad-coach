@@ -1,5 +1,6 @@
 using System;
 using AdventureDayRunner.Model;
+using Microsoft.Extensions.Configuration;
 using team_management_api.Data;
 
 namespace AdventureDayRunner.Players.RealPlayers
@@ -8,8 +9,7 @@ namespace AdventureDayRunner.Players.RealPlayers
     {
         public override string Name => "Libby";
 
-        public PatternPlayer(Team team, TimeSpan httpTimeout)
-            : base(team, httpTimeout)
+        public PatternPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {
 
         }

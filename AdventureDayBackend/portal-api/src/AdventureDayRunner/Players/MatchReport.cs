@@ -27,7 +27,6 @@ namespace AdventureDayRunner.Players
             return new MatchReport()
             {
                 Status = MatchRating.Success,
-                Reason = $"Match played successfully. You have {(income > 0 ? "won" : "lost")}.",
                 Cost = income > 0 ? 0 : FixedMatchStake,
                 Income = income > 0 ? income : 0
             };
@@ -68,7 +67,7 @@ namespace AdventureDayRunner.Players
                 return new MatchReport()
                 {
                     Status = MatchRating.Failed,
-                    Reason = "Hacker attack succeeded, your team failed."
+                    Reason = "Hacker infiltration succeeded, your team is under attack."
                 };
             }
         }

@@ -4,6 +4,7 @@ using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using AdventureDayRunner.Model;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using team_management_api.Data;
 
@@ -11,11 +12,13 @@ namespace AdventureDayRunner.Players
 {
     public abstract class RealPlayerBase : IPlayer
     {
+        private readonly IConfiguration _configuration;
         private readonly Team _team;
         private readonly TimeSpan _httpTimeout;
         
-        protected RealPlayerBase(Team team, TimeSpan httpTimeout)
+        protected RealPlayerBase(IConfiguration configuration, Team team, TimeSpan httpTimeout)
         {
+            _configuration = configuration;
             _team = team;
             _httpTimeout = httpTimeout;
         }
