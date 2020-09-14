@@ -15,7 +15,8 @@ namespace AdventureDayRunner.Tests
         {
             // Arrange
             var team = new Team();
-            var player = new CostCalculatorPlayer(team, TimeSpan.FromSeconds(1));
+            // TODO: Load config
+            var player = new CostCalculatorPlayer(null, team, TimeSpan.FromSeconds(1));
 
             // Act
             var matchReport = await player.Play(CancellationToken.None);

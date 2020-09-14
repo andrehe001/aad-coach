@@ -14,8 +14,11 @@ namespace AdventureDayRunner.Players.PseudoPlayers
 {
     public class CostCalculatorPlayer : PseudoPlayerBase
     {
+        private readonly IConfiguration _configuration;
+
         public CostCalculatorPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {
+            _configuration = configuration;
         }
 
         public override string Name => "Dagobert";
@@ -24,10 +27,11 @@ namespace AdventureDayRunner.Players.PseudoPlayers
         {
             var azureCredentials = new AzureCredentials(new ServicePrincipalLoginInformation
             {
-                ClientId = "b9415f6c-a502-4cae-b1f2c81",
-                ClientSecret = "HF6kR8_a7xH7MdQ.kf0UU3sVjeZ"
-            }, "72f988bf-86f1-41af-91ab-2d7cd011db47", AzureEnvironment.AzureGlobalCloud);
+                ClientId = _configuration.GetValue<string>("AzureSPClientId"),
+                ClientSecret = _configuration.GetValue<string>("AzureSPClientSecret")
+            }, _configuration.GetValue<string>("AzureSPTenantId"), AzureEnvironment.AzureGlobalCloud);
 
+            // TODO save Subscription ID inside Team table
             var azure = Azure
                 .Configure()
                 .Authenticate(azureCredentials)
