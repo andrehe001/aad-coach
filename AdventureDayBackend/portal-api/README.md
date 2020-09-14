@@ -7,7 +7,7 @@ curl -X GET http://$MANAGEMENT_IP/ping
 curl --header "Content-Type: application/json" \
   --request POST \
   --data '{"teamname":"xyz","password":"xyz"}' \
-  http://$MANAGEMENT_IP/api/team/authenticateadmin
+  http://$MANAGEMENT_IP/api/team/login
 
 
 GET api/team/members/1337

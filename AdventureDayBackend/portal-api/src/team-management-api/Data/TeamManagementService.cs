@@ -45,7 +45,7 @@ namespace team_management_api.Data
 
         public bool CheckTeamNameFree(int teamId, string teamName)
         {
-            return !_context.Teams.Any(t => t.Name.Equals(teamName, StringComparison.OrdinalIgnoreCase));
+            return !_context.Teams.Any(t => t.Name.ToLower() == teamName.ToLower());
         }
 
         public bool DeleteTeam(int id)
@@ -87,7 +87,7 @@ namespace team_management_api.Data
 
         public Team GetTeamByName(string name)
         {
-            return _context.Teams.Where(team => team.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            return _context.Teams.Where(team => team.Name.ToLower() == name.ToLower()).FirstOrDefault();
         }
 
         public bool RenameMember(int teamId, int memberId, string newDisplayName)
@@ -185,7 +185,7 @@ namespace team_management_api.Data
 
             string hashedInput = AppSettings.HashString(_appSettings, model.Password);
 
-            Team team = _context.Teams.SingleOrDefault(x => x.Name.Equals(model.Teamname, StringComparison.OrdinalIgnoreCase) && x.TeamPassword == hashedInput);
+            Team team = _context.Teams.SingleOrDefault(x => x.Name.ToLower() == model.Teamname.ToLower() && x.TeamPassword == hashedInput);
 
             // return null if user not found
             if (team == null)

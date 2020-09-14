@@ -1,9 +1,10 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 using team_management_api.Data;
 using team_management_api.Data.Runner;
+using team_management_api.Helpers;
 
 namespace team_management_api.Controllers
 {
@@ -18,11 +19,11 @@ namespace team_management_api.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet]
-        [Route("properties")]
+        [HttpGet("properties")]
+        [TeamAuthorize(AuthorizationType.Admin)]
         public async Task<IActionResult> GetDefaultRunnerProperties()
         {
-            var result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
+            RunnerProperties result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
                 _.Name == RunnerProperties.DefaultRunnerPropertiesName);
 
             if (result == null)
@@ -32,46 +33,46 @@ namespace team_management_api.Controllers
 
             return Ok(result);
         }
-        
-        [HttpGet]
-        [Route("status")]
+
+        [HttpGet("status")]
+        [TeamAuthorize(AuthorizationType.Admin)]
         public async Task<IActionResult> GetDefaultRunnerStatus()
         {
-            var result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
+            RunnerProperties result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
                 _.Name == RunnerProperties.DefaultRunnerPropertiesName);
-       
+
             if (result == null)
             {
                 return NotFound();
             }
-       
+
             return Ok(result.RunnerStatus.ToString());
         }
-        
-        [HttpPost]
-        [Route("start")]
+
+        [HttpPost("start")]
+        [TeamAuthorize(AuthorizationType.Admin)]
         public async Task<IActionResult> DefaultRunnerStart()
         {
-            var result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
+            RunnerProperties result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
                 _.Name == RunnerProperties.DefaultRunnerPropertiesName);
-        
+
             if (result == null)
             {
                 return NotFound();
             }
-        
+
             result.RunnerStatus = RunnerStatus.Started;
             await _dbContext.SaveChangesAsync();
             return Ok();
         }
-        
-        [HttpPost]
-        [Route("stop")]
+
+        [HttpPost("stop")]
+        [TeamAuthorize(AuthorizationType.Admin)]
         public async Task<IActionResult> DefaultRunnerStop()
         {
-            var result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
+            RunnerProperties result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
                 _.Name == RunnerProperties.DefaultRunnerPropertiesName);
-         
+
             if (result == null)
             {
                 return NotFound();
@@ -81,47 +82,47 @@ namespace team_management_api.Controllers
             await _dbContext.SaveChangesAsync();
             return Ok();
         }
-        
-        [HttpGet]
-        [Route("phase")]
+
+        [HttpGet("phase")]
+        [TeamAuthorize(AuthorizationType.AnyTeam)]
         public async Task<IActionResult> DefaultRunnerGetPhase()
         {
-            var result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
+            RunnerProperties result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
                 _.Name == RunnerProperties.DefaultRunnerPropertiesName);
-                          
+
             if (result == null)
             {
                 return NotFound();
             }
-                     
-            return Ok(result.CurrentPhase.ToString());
+
+            return Ok((int)result.CurrentPhase);
         }
-        
-        [HttpGet]
-        [Route("available-phases")]
+
+        [HttpGet("available-phases")]
+        [TeamAuthorize(AuthorizationType.Admin)]
         public IActionResult DefaultRunnerGetAvailablePhases()
         {
             return Ok(Enum.GetNames(typeof(RunnerPhase)));
         }
-        
-        [HttpPost]
-        [Route("phase")]
+
+        [HttpPost("phase")]
+        [TeamAuthorize(AuthorizationType.Admin)]
         public async Task<IActionResult> DefaultRunnerSetPhase([FromBody] RunnerSetPhaseRequest request)
         {
-            var result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
+            RunnerProperties result = await _dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
                 _.Name == RunnerProperties.DefaultRunnerPropertiesName);
-                 
+
             if (result == null)
             {
                 return NotFound();
             }
-            
-            var parsePhaseSuccess = Enum.TryParse<RunnerPhase>(request.PhaseName, out var phase);
+
+            bool parsePhaseSuccess = Enum.TryParse<RunnerPhase>(request.PhaseName, out RunnerPhase phase);
             if (!parsePhaseSuccess)
             {
                 return BadRequest("Unknown phase.");
             }
-                
+
             result.CurrentPhase = phase;
             await _dbContext.SaveChangesAsync();
             return Ok(result);

@@ -6,19 +6,19 @@
         <li class="nav-item">
           <router-link class="nav-link" :to="{ name: 'PhaseGuides', params: { name: '1-Deployment' }}">Phase 1</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="currentPhase >= 2">
           <router-link class="nav-link" :to="{ name: 'PhaseGuides', params: { name: '2-Change' }}">Phase 2</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="currentPhase >= 3">
           <router-link class="nav-link" :to="{ name: 'PhaseGuides', params: { name: '3-Monitoring' }}">Phase 3</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="currentPhase >= 4">
           <router-link class="nav-link" :to="{ name: 'PhaseGuides', params: { name: '4-Scale' }}">Phase 4</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="currentPhase >= 5">
           <router-link class="nav-link" :to="{ name: 'PhaseGuides', params: { name: '5-Security' }}">Phase 5</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="currentPhase >= 6">
           <router-link class="nav-link" :to="{ name: 'PhaseGuides', params: { name: '6-AI' }}">Phase 6</router-link>
         </li>
       </ul>
@@ -41,22 +41,36 @@ export default {
   name: "PhaseGuides",
   data() {
     return {
+      timer: "",
+      currentPhase : 1,
       currentPhaseGuide: null,
     };
   },
   created() {
-    this.setPhaseGuide();
+    const fetchIntervalMs = 10 * 1000;
+
+    this.fetchCurrentPhase()
+      .then(() => this.setPhaseGuideBasedOnRoute());
+    this.timer = setInterval(this.fetchCurrentPhase, fetchIntervalMs);
   },
   watch: {
-    $route: "setPhaseGuide",
+    $route: "setPhaseGuideBasedOnRoute",
   },
   methods: {
-    async setPhaseGuide() {
+    fetchCurrentPhase() {
+      return this.$http
+        .get("Runner/phase")
+        .then((response) => {
+          this.currentPhase = response.data;
+        })
+        .catch(function (error) {
+          console.error(error.response);
+        });
+    },
+    async setPhaseGuideBasedOnRoute() {
       const requestedPhaseGuide = this.$route.params.name;
-      // TODO: get current phase, route to current if name is empty and mark current phase on UI
-      // TODO: hide phases in the future
-
-      if (availablePhaseGuides.indexOf(requestedPhaseGuide) != -1) {
+      if (availablePhaseGuides.indexOf(requestedPhaseGuide) != -1 && 
+          requestedPhaseGuide.charAt(0) <= this.currentPhase) {
         this.currentPhaseGuide = () =>
           import("@/components/phases/" + requestedPhaseGuide + ".vue");
       } else {
@@ -64,6 +78,9 @@ export default {
           import("@/components/phases/1-Deployment.vue");
       }
     },
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
 };
 </script>
