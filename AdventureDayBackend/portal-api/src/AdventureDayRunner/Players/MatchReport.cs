@@ -5,21 +5,21 @@ namespace AdventureDayRunner.Players
 {
     public class MatchReport
     {
-        private const decimal FixedMatchCosts = 1.0m;
+        private const int FixedMatchStake = 1;
 
         private MatchReport()
         {
         }
 
-        public static MatchReport FromCostCalculator(decimal monitoredCosts, decimal maximumAllowedCost)
+        #region Creation Helpers
+        public static MatchReport FromCostCalculator(int monitoredCosts, int maximumAllowedCost)
         {
             // TODO: what is the  
             if (monitoredCosts <= maximumAllowedCost)
             {
                 return new MatchReport()
                 {
-                    Status = MatchRating.Success,
-                    Reason = $"You are within your Azure Budget limit.",
+                    Status = MatchRating.Ignore,
                     Cost = monitoredCosts
                 };
             }
@@ -28,8 +28,7 @@ namespace AdventureDayRunner.Players
 
                 return new MatchReport()
                 {
-                    Status = MatchRating.Failed,
-                    Reason = $"You surpassed your Azure Budget limit.",
+                    Status = MatchRating.Ignore,
                     Cost = monitoredCosts
                 };
             }
@@ -42,8 +41,8 @@ namespace AdventureDayRunner.Players
             {
                 Status = MatchRating.Success,
                 Reason = $"Match played successfully. You have {(income > 0 ? "won" : "lost")}.",
-                Cost = FixedMatchCosts,
-                Income = income
+                Cost = income > 0 ? 0 : FixedMatchStake,
+                Income = income > 0 ? income : 0
             };
         }
 
@@ -53,7 +52,7 @@ namespace AdventureDayRunner.Players
             {
                 Status = MatchRating.Failed,
                 Reason = error,
-                Cost = FixedMatchCosts
+                Cost = FixedMatchStake
             };
         }
         
@@ -63,10 +62,9 @@ namespace AdventureDayRunner.Players
             {
                 Status = MatchRating.Canceled,
                 Reason = reason,
-                Cost = FixedMatchCosts
+                Cost = FixedMatchStake
             };
         }
-
 
         public static MatchReport FromHackerAttack(bool hasDefendedAttack)
         {
@@ -75,63 +73,69 @@ namespace AdventureDayRunner.Players
             {
                 return new MatchReport()
                 {
-                    Status = MatchRating.Success, Reason = "Hacker attack successfully defended."
+                    Status = MatchRating.Ignore
                 };
             }
             else
             {
                 return new MatchReport()
                 {
-                    Status = MatchRating.Failed, Reason = "Hacker attack succeeded, your team failed."
+                    Status = MatchRating.Failed,
+                    Reason = "Hacker attack succeeded, your team failed."
                 };
             }
         }
+        #endregion
 
         public MatchRating Status
         {
             get;
-            protected set;
+            private set;
         }
 
         public string Reason
         {
             get;
-            protected set;
+            private set;
         }
 
         public bool HasWon => Income > 0;
 
         public bool HasLost => !HasWon;
 
-        public decimal Income
+        public bool HasLogEntry => Reason != null;
+        
+        public int Income
         {
             get;
-            protected set;
+            private set;
         }
 
-        public decimal Cost
+        public int Cost
         {
             get;
-            protected set;
+            private set;
         }
         
-        private static decimal CalculateIncome(MatchResponse matchResponse)
+        private static int CalculateIncome(MatchResponse matchResponse)
         {
+            var potentialIncome = FixedMatchStake;
+            if (matchResponse.Bet.HasValue)
+            {
+                potentialIncome += (int)Math.Floor(matchResponse.Bet.Value);
+            }
+            
             if (matchResponse.MatchOutcome.HasValue)
             {
                 return matchResponse.MatchOutcome.Value switch
                 {
                     Outcome.ChallengerWins => 0,
-                    Outcome.OverlordWins => FixedMatchCosts * 2 * matchResponse.Bet ?? FixedMatchCosts * 2,
-                    Outcome.Tie => FixedMatchCosts,
-                    _ => throw new ArgumentOutOfRangeException()
+                    Outcome.OverlordWins => potentialIncome,
+                    _ => throw new ArgumentOutOfRangeException("matchResponse", $"Unexpected match outcome: {matchResponse.MatchOutcome.Value}")
                 };
             }
-            else
-            {
-                return 1;
-            }
-        }
 
+            return 0;
+        }
     }
 }
