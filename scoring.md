@@ -42,9 +42,10 @@
 | --- | --- |
 | RandomPlayer | Lachlan |
 | FixedPlayer | Kye |
+| BetPlayer | William |
 | IterativePlayer | Courtney |
 | PatternPlayer | Libby |
-| BetPlayer | William |
+| HackPlayer | Kevin |
 
 ## Phase 1: Deployment
 * RandomPlayer tries to play with the team environment
