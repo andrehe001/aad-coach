@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using AdventureDayRunner.Utils;
@@ -8,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using team_management_api.Data;
-using IContainer = Autofac.IContainer;
 
 namespace AdventureDayRunner
 {
@@ -16,15 +16,18 @@ namespace AdventureDayRunner
     {
         public static async Task<int> Main(string[] args)
         {
+            var runnerConfiguration = new RunnerConfiguration();
+            
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
+                .ReadFrom.Configuration(runnerConfiguration.Configuration)
+                .WriteTo.Console() // Always write to console!
                 .CreateLogger();
             
-            await RunLoop();
+            await RunLoop(runnerConfiguration.Configuration);
             return 0;
         }
 
-        private static async Task RunLoop()
+        private static async Task RunLoop(IConfiguration configuration)
         {
             using var cancellationTokenSource = new CancellationTokenSource();
             Console.CancelKeyPress += (sender, args) =>
@@ -36,8 +39,7 @@ namespace AdventureDayRunner
                 cancellationTokenSource.Cancel();
             };
 
-            var runnerConfiguration = new RunnerConfiguration();
-            var container = ConfigureContainer(runnerConfiguration.Configuration);
+            var container = ConfigureContainer(configuration);
             
             var engine = container.Resolve<RunnerEngine>();
 
@@ -51,7 +53,7 @@ namespace AdventureDayRunner
             }
         }
 
-        private static IContainer ConfigureContainer(IConfiguration configuration)
+        private static Autofac.IContainer ConfigureContainer(IConfiguration configuration)
         {
             var builder = new ContainerBuilder();
  

@@ -2,25 +2,29 @@ using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using team_management_api.Data;
 
 namespace AdventureDayRunner.Players
 {
     public abstract class PseudoPlayerBase : IPlayer
     {
+        private readonly IConfiguration _configuration;
         private readonly Team _team;
         private readonly TimeSpan _httpTimeout;
 
-        protected PseudoPlayerBase(Team team, TimeSpan httpTimeout)
+        protected PseudoPlayerBase(IConfiguration configuration, Team team, TimeSpan httpTimeout)
         {
+            _configuration = configuration;
             _team = team;
             _httpTimeout = httpTimeout;
         }
 
-        public Task<MatchReport> Play(CancellationToken cancellationToken)
+        public async Task<MatchReport> Play(CancellationToken cancellationToken)
         {
             using var httpClient = new HttpClient() { Timeout = _httpTimeout };
-            return ExecuteAction(_team, httpClient, cancellationToken);
+            var result = await ExecuteAction(_team, httpClient, cancellationToken);
+            return result;
         }
 
         public abstract string Name { get; }
