@@ -4,6 +4,9 @@
     <div class="container-fluid content overflow-auto">
       <ul class="nav nav-dark justify-content-center">
         <li class="nav-item">
+          <router-link class="nav-link" :to="{ name: 'PhaseGuides'}">Intro</router-link>
+        </li>
+        <li class="nav-item">
           <router-link class="nav-link" :to="{ name: 'PhaseGuides', params: { name: '1-Deployment' }}">Phase 1</router-link>
         </li>
         <li class="nav-item" v-if="currentPhase >= 2">
@@ -75,7 +78,7 @@ export default {
           import("@/components/phases/" + requestedPhaseGuide + ".vue");
       } else {
         this.currentPhaseGuide = () =>
-          import("@/components/phases/1-Deployment.vue");
+          import("@/components/phases/0-Intro.vue");
       }
     },
   },
@@ -105,6 +108,12 @@ export default {
 
 .tablet img {
   border: 20px solid #000;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.full-image img {
+  border: 1px solid #000;
   border-radius: 10px;
   width: 100%;
 }
