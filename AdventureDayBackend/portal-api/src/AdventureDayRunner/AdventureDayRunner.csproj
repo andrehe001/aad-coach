@@ -19,12 +19,4 @@
     <ProjectReference Include="..\team-management-api\team-management-api.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="appsettings.Development.json">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>

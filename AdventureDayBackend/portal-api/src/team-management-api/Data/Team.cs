@@ -13,7 +13,6 @@ namespace team_management_api.Data
         public string GameEngineUri { get; set; }
 
         public Guid SubscriptionId { get; set; }
-        [JsonIgnore]
         public string TeamPassword { get; set; }
     }
 }
