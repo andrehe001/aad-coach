@@ -6,5 +6,8 @@ namespace team_management_api.Data.Runner
         Pattern,
         Iterative,
         Fixed,
+        Bet,
+        CostCalculator,
+        SecurityHack
     }
 }

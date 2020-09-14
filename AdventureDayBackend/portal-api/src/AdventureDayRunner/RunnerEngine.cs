@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AdventureDayRunner.Players;
+using AdventureDayRunner.Players.PseudoPlayers;
+using AdventureDayRunner.Players.RealPlayers;
 using AdventureDayRunner.Utils;
 using Autofac;
-using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using team_management_api.Data;
@@ -89,8 +90,9 @@ namespace AdventureDayRunner
             Team team,
             CancellationToken cancellationToken)
         {
-            // TODO configurable.
+            // TODO make http timeout configurable.
             var httpTimeout = TimeSpan.FromSeconds(5);
+            
             Task.Run(async () =>
             {
                 try
@@ -98,19 +100,36 @@ namespace AdventureDayRunner
                     Log.Information($"Team {team.Name} vs. Player {playerType.ToString()}");
                     var player = CreatePlayerFromType(playerType, team, httpTimeout);
 
-                    var matchResponse = await player.Play(cancellationToken);
+                    var matchOutcomeMetadata = await player.Play(cancellationToken);
 
-                    Log.Information(matchResponse == null
+                    Log.Information(matchOutcomeMetadata == null
                         ? $"Team {team.Name} vs. Player {playerType.ToString()} - Failed."
-                        : $"Team {team.Name} vs. Player {playerType.ToString()} - {matchResponse.MatchOutcome.ToString()}");
+                        : $"Team {team.Name} vs. Player {playerType.ToString()} - HasWon? {matchOutcomeMetadata.HasWon}");
 
                     await using var lifetimeScope = _lifetimeScope.BeginLifetimeScope();
                     var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
-                    await dbContext.TeamLogEntries.AddAsync(new TeamLogEntry() { Reason = "Test", ResponeTimeMs = 100, Status = "200", TeamId = team.Id}, cancellationToken);
+                    
+                    await dbContext.TeamLogEntries.AddAsync(
+                        new TeamLogEntry() {Reason = "Test", ResponeTimeMs = 100, Status = "200", TeamId = team.Id},
+                        cancellationToken);
                     await dbContext.SaveChangesAsync(cancellationToken);
 
                     // TODO matchResponse = null --> Failure.
                     //      matchResponse -> statistics based on phase.
+                }
+                catch (TaskCanceledException)
+                {
+                    // TODO log reason.
+                    if (!cancellationToken.IsCancellationRequested)
+                    {
+                        Log.Error("HTTP Timeout.");
+                    }
+    
+                }
+                catch (MatchCancelledException)
+                {
+                    // TODO log reason.
+                    Log.Information("Match was cancelled by AI player.");
                 }
                 catch (Exception exception)
                 {
@@ -119,17 +138,21 @@ namespace AdventureDayRunner
                 }
             }, cancellationToken).Forget();
         }
-
-        private static PlayerBase CreatePlayerFromType(PlayerType playerType, Team team, TimeSpan httpTimeout)
+        
+        private static IPlayer CreatePlayerFromType(PlayerType playerType, Team team, TimeSpan httpTimeout)
         {
-            PlayerBase player = playerType switch
+            IPlayer player = playerType switch
             {
                 PlayerType.Pattern => new PatternPlayer(team, httpTimeout),
                 PlayerType.Random => new RandomPlayer(team, httpTimeout),
                 PlayerType.Fixed => new FixedPlayer(team, httpTimeout),
                 PlayerType.Iterative => new IterativePlayer(team, httpTimeout),
+                PlayerType.Bet => new BetPlayer(team, httpTimeout),
+                PlayerType.CostCalculator => new CostCalculatorPlayer(team, httpTimeout),
+                PlayerType.SecurityHack => new SecurityHackPlayer(team, httpTimeout),
                 _ => throw new InvalidOperationException("Unexpected enum value.")
             };
+            
             return player;
         }
     }

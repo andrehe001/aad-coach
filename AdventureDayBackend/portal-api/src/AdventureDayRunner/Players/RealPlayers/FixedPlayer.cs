@@ -2,14 +2,14 @@ using System;
 using AdventureDayRunner.Model;
 using team_management_api.Data;
 
-namespace AdventureDayRunner.Players
+namespace AdventureDayRunner.Players.RealPlayers
 {
-    public class FixedPlayer : PlayerBase
+    public class FixedPlayer : RealPlayerBase
     {
         private readonly Random _random;
         private Move _fixedMoved;
 
-        protected override string Name => "Kye";
+        public override string Name => "Kye";
 
         public FixedPlayer(Team team, TimeSpan httpTimeout) : base(team, httpTimeout)
         {

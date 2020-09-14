@@ -55,7 +55,6 @@ namespace AdventureDayRunner
         {
             var builder = new ContainerBuilder();
  
-            builder.RegisterType<RandomNameGenerator>().SingleInstance();
             builder.RegisterInstance(configuration).As<IConfiguration>();
             
             // DB Context per Lifetime Scope (multithreading!)

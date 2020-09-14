@@ -2,11 +2,11 @@ using System;
 using AdventureDayRunner.Model;
 using team_management_api.Data;
 
-namespace AdventureDayRunner.Players
+namespace AdventureDayRunner.Players.RealPlayers
 {
-    public class PatternPlayer : PlayerBase
+    public class PatternPlayer : RealPlayerBase
     {
-        protected override string Name => "Libby";
+        public override string Name => "Libby";
 
         public PatternPlayer(Team team, TimeSpan httpTimeout)
             : base(team, httpTimeout)

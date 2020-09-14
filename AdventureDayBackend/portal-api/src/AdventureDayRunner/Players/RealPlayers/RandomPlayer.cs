@@ -2,13 +2,13 @@ using System;
 using AdventureDayRunner.Model;
 using team_management_api.Data;
 
-namespace AdventureDayRunner.Players
+namespace AdventureDayRunner.Players.RealPlayers
 {
-    public class RandomPlayer : PlayerBase
+    public class RandomPlayer : RealPlayerBase
     {
         private readonly Random _random;
 
-        protected override string Name => "Lachlan";
+        public override string Name => "Lachlan";
 
         public RandomPlayer(Team team, TimeSpan httpTimeout) : base(team, httpTimeout)
         {

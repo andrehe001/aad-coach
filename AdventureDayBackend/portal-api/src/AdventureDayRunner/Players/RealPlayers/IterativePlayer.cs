@@ -2,13 +2,13 @@ using System;
 using AdventureDayRunner.Model;
 using team_management_api.Data;
 
-namespace AdventureDayRunner.Players
+namespace AdventureDayRunner.Players.RealPlayers
 {
-    public class IterativePlayer : PlayerBase
+    public class IterativePlayer : RealPlayerBase
     {
         private int _seq;
 
-        protected override string Name => "Courtney";
+        public override string Name => "Courtney";
 
         public IterativePlayer(Team team, TimeSpan httpTimeout)
             : base(team, httpTimeout)
