@@ -14,9 +14,9 @@ namespace AdventureDayRunner.Players.PseudoPlayers
         
         public override string Name => "Dagobert";
         
-        protected override Task<MatchScoreReport> ExecuteAction(Team team, HttpClient httpClient, CancellationToken cancellationToken)
+        protected override Task<MatchReport> ExecuteAction(Team team, HttpClient httpClient, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(MatchReport.FromCostCalculator(0.1m, 1.0m));
         }
     }
 }

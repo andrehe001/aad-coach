@@ -17,7 +17,7 @@ namespace AdventureDayRunner.Players
             _httpTimeout = httpTimeout;
         }
 
-        public Task<MatchScoreReport> Play(CancellationToken cancellationToken)
+        public Task<MatchReport> Play(CancellationToken cancellationToken)
         {
             using var httpClient = new HttpClient() { Timeout = _httpTimeout };
             return ExecuteAction(_team, httpClient, cancellationToken);
@@ -25,7 +25,7 @@ namespace AdventureDayRunner.Players
 
         public abstract string Name { get; }
 
-        protected abstract Task<MatchScoreReport> ExecuteAction(
+        protected abstract Task<MatchReport> ExecuteAction(
             Team team,
             HttpClient httpClient,
             CancellationToken cancellationToken);

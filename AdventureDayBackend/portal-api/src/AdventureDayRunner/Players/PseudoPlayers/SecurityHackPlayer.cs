@@ -14,11 +14,10 @@ namespace AdventureDayRunner.Players.PseudoPlayers
 
         public override string Name => "Kevin";
         
-        protected override Task<MatchScoreReport> ExecuteAction(Team team, HttpClient httpClient, CancellationToken cancellationToken)
+        protected override Task<MatchReport> ExecuteAction(Team team, HttpClient httpClient, CancellationToken cancellationToken)
         {
             // Run a nasty HTTP Call to the GameEngine Exploit...
-            var report = new MatchScoreReport();
-            return Task.FromResult(report);
+            return Task.FromResult(MatchReport.FromHackerAttack(hasDefendedAttack: false));
         }
     }
 }

@@ -11,7 +11,7 @@ namespace AdventureDayRunner.Players
         /// </summary>
         /// <param name="cancellationToken">Cancel.</param>
         /// <returns>The final match response or null upon failure.</returns>
-        Task<MatchScoreReport> Play(CancellationToken cancellationToken);
+        Task<MatchReport> Play(CancellationToken cancellationToken);
         
         /// <summary>
         /// Name of the Player.
