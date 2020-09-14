@@ -16,7 +16,7 @@ namespace AdventureDayRunner.Players.PseudoPlayers
         
         protected override Task<MatchReport> ExecuteAction(Team team, HttpClient httpClient, CancellationToken cancellationToken)
         {
-            return Task.FromResult(MatchReport.FromCostCalculator(0.1m, 1.0m));
+            return Task.FromResult(MatchReport.FromCostCalculator(0, 1));
         }
     }
 }
