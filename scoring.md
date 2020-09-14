@@ -46,6 +46,7 @@
 | IterativePlayer | Courtney |
 | PatternPlayer | Libby |
 | HackPlayer | Kevin |
+| MassPlayer | Gloria |
 
 ## Phase 1: Deployment
 * RandomPlayer tries to play with the team environment
