@@ -179,7 +179,7 @@ namespace team_management_api.Controllers
             var nameFree = _teamservice.CheckTeamNameFree(0, newTeam.Name);
             if (!nameFree)
             {
-                return Conflict("Name " + newTeam.Name + " already taken");
+                return Conflict(newTeam);
             }
 
             var team = new Team();
@@ -260,23 +260,23 @@ namespace team_management_api.Controllers
             }
         }
 
-        [HttpPost("addmemberto/{teamName}")]
+        [HttpPost("addmembertoteamname/{teamName}")]
         [TeamAuthorizeAttribute(AuthorizationType.Admin)]
         public IActionResult AddMemberToTeam(string teamName, [FromBody] Member newMember)
         {
             if (teamName.Equals(AppSettings.AdminTeamName, StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(newMember.Username) || string.IsNullOrWhiteSpace(newMember.DisplayName) || string.IsNullOrWhiteSpace(newMember.Password))
             {
-                return BadRequest();
+                return BadRequest(newMember);
             }
 
             var success = _teamservice.AddMemberToTeam(teamName, newMember);
             if (success)
             {
-                return Ok();
+                return Ok(newMember);
             }
             else
             {
-                return NotFound();
+                return NotFound(newMember);
             }
         }
 
@@ -286,17 +286,17 @@ namespace team_management_api.Controllers
         {
             if (teamId == AppSettings.AdminTeamId || teamId < 1 || memberId < 1)
             {
-                return BadRequest();
+                return BadRequest(memberId);
             }
 
             var success = _teamservice.RemoveMemberFromTeam(teamId, memberId);
             if (success)
             {
-                return Ok();
+                return Ok(memberId);
             }
             else
             {
-                return NotFound();
+                return NotFound(memberId);
             }
         }
 
@@ -304,7 +304,7 @@ namespace team_management_api.Controllers
         public IActionResult Login(AuthenticateRequest model)
         {
             AuthenticateResponse response;
-            if (model.Teamname == "admin")
+            if (model.Teamname.Equals(AppSettings.AdminTeamName))
             {
                 response = _teamservice.AuthenticateAdmin(model);
             }
