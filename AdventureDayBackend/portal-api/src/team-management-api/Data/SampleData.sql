@@ -1,7 +1,7 @@
-﻿--DROP TABLE TeamScores
---DROP TABLE TeamLogEntries
---DROP TABLE Members
---DROP TABLE Teams
+﻿DROP TABLE TeamScores
+DROP TABLE TeamLogEntries
+DROP TABLE Members
+DROP TABLE Teams
 
 
 -- [TeamPassword] = 'Team' (hashed)
