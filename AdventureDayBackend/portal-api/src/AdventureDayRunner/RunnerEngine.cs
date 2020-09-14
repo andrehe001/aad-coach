@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureDayRunner.Model;
 using AdventureDayRunner.Players;
 using AdventureDayRunner.Players.PseudoPlayers;
 using AdventureDayRunner.Players.RealPlayers;
 using AdventureDayRunner.Utils;
 using Autofac;
+using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using team_management_api.Data;
 using team_management_api.Data.Runner;
-using Z.EntityFramework.Plus;
 
 namespace AdventureDayRunner
 {
@@ -35,7 +34,7 @@ namespace AdventureDayRunner
             
             (lastRefresh, teams, properties) = await RefreshConfiguration(cancellationToken);
             
-            do
+            do // until we cancel completely externally
             {
                 DateTime now = DateTime.UtcNow;
                 TimeSpan refreshDelta = now - lastRefresh;
@@ -43,37 +42,47 @@ namespace AdventureDayRunner
                 var currentPhase = properties.CurrentPhase;
                 var phaseConfiguration = properties.PhaseConfigurations[currentPhase];
                 
-                if (properties.RunnerStatus == RunnerStatus.Started)
+                switch (properties.RunnerStatus)
                 {
-                    Log.Information(
-                        $"--- New Wave --- Phase: {currentPhase.ToString()}"
-                        + $" Latency: {phaseConfiguration.RequestExecutorLatencyMillis}" 
-                        + $" (Config Refresh: {refreshDelta.Seconds} sec ago.)");
-                    
-                    // Fire forget match requests for all configured players.
-                    foreach (var team in teams)
-                    {
-                        foreach (var playerType in phaseConfiguration.PlayerTypes)
-                        {
-                            InvokePlayerWithFireAndForget(playerType, team, cancellationToken);
-                        }
-                    }
-                    
-                    // Delay the next wave of requests.
-                    await Task.Delay(phaseConfiguration.RequestExecutorLatencyMillis, cancellationToken);
+                    case RunnerStatus.Started:
+                        Log.Information(
+                            $"--- New Wave --- Phase: {currentPhase.ToString()}"
+                            + $" Latency: {phaseConfiguration.RequestExecutorLatencyMillis}"
+                            + $" (Config Refresh: {refreshDelta.Seconds} sec ago.)");
+                        await RunInnerLoop(phaseConfiguration, teams, cancellationToken);
+                        break;
+                    case RunnerStatus.Stopped:
+                        Log.Information(
+                            $"Status: {properties.RunnerStatus.ToString()} (retry in 5secs)");
+                        await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                        break;
+                    default:
+                        throw new InvalidOperationException($"Unexpected RunnerStatus: {properties.RunnerStatus.ToString()}");
                 }
-                else
-                {
-                    Log.Information($"Status: {properties.RunnerStatus.ToString()} (retry in 5secs)");
-                    await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
-                }
-
 
                 if (refreshDelta.Seconds > _refreshTimeoutInSeconds)
                 {
                     (lastRefresh, teams, properties) = await RefreshConfiguration(cancellationToken);
                 }
             } while (!cancellationToken.IsCancellationRequested);
+        }
+
+        private async Task RunInnerLoop(
+            RunnerPhaseConfigurationItem phaseConfiguration, 
+            List<Team> teams, 
+            CancellationToken cancellationToken)
+        {
+            // Fire forget match requests for all configured players.
+            foreach (var team in teams)
+            {
+                foreach (var playerType in phaseConfiguration.PlayerTypes)
+                {
+                    InvokePlayerWithFireAndForget(playerType, team, cancellationToken);
+                }
+            }
+
+            // Delay the next wave of requests.
+            await Task.Delay(phaseConfiguration.RequestExecutorLatencyMillis, cancellationToken);
         }
 
         private async Task<(DateTime, List<Team>, RunnerProperties)> RefreshConfiguration(CancellationToken cancellationToken)
@@ -109,7 +118,6 @@ namespace AdventureDayRunner
                 }
                 catch (TaskCanceledException exception)
                 {
-                    // TODO log reason.
                     if (!cancellationToken.IsCancellationRequested)
                     {
                         Log.Error("HTTP Timeout.");
@@ -139,34 +147,17 @@ namespace AdventureDayRunner
 
         private async Task PersistStatistics(TimeSpan responseTime, Team team, MatchReport report, CancellationToken cancellationToken)
         {
-            await using (var lifetimeScope = _lifetimeScope.BeginLifetimeScope())
+            try
             {
-                var error = report.Status != MatchRating.Success ? 1 : 0;
-                var loss = report.HasLost ? 1 : 0;
-                var win = report.HasWon ? 1 : 0;
-                 
-                var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
+                await using (var lifetimeScope = _lifetimeScope.BeginLifetimeScope())
+                {
+                    var error = report.Status != MatchRating.Success ? 1 : 0;
+                    var loss = report.HasLost ? 1 : 0;
+                    var win = report.HasWon ? 1 : 0;
 
-                var scores = await dbContext.TeamScores.FirstOrDefaultAsync(
-                    _ => _.TeamId == team.Id,
-                    cancellationToken: cancellationToken);
-                 
-                if (scores == null)
-                {
-                    Log.Warning("Found no score record for team. Creating first one.");
-                    await dbContext.TeamScores.AddAsync(new TeamScore()
-                    {
-                        TeamId = team.Id, 
-                        Costs = report.Cost,
-                        Income = report.Income,
-                        Errors = error,
-                        Loses = loss,
-                        Wins = win
-                    }, cancellationToken);
-                }
-                else
-                {
-                    await dbContext.TeamScores.Where(_ => _.TeamId == team.Id).UpdateAsync(_ =>
+                    var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
+                    int rowsAffected = await dbContext.TeamScores.Where(_ => _.TeamId == team.Id)
+                        .BatchUpdateAsync(_ =>
                         new TeamScore()
                         {
                             Costs = _.Costs + report.Cost,
@@ -175,23 +166,44 @@ namespace AdventureDayRunner
                             Loses = _.Loses + loss,
                             Wins = _.Wins + win
                         }, cancellationToken);
-                }
 
-                if (report.HasLogEntry)
-                {
-                    await dbContext.TeamLogEntries.AddAsync(new TeamLogEntry()
+                    if (rowsAffected != 1)
                     {
-                        TeamId = team.Id,
-                        Reason = report.Reason,
-                        Status = report.Status.ToString(),
-                        Timestamp = DateTime.UtcNow,
-                        ResponeTimeMs = responseTime.Milliseconds
-                    }, cancellationToken);
+                        // This code can run into concurrency issues.
+                        // That is at the beginning two or more threads might 
+                        // detect a non-existing score entry. This results in an
+                        // Update exception, that we will swallow.
+                        Log.Warning("Found no score record for team. Creating first one.");
+                        await dbContext.TeamScores.AddAsync(new TeamScore()
+                        {
+                            TeamId = team.Id,
+                            Costs = report.Cost,
+                            Income = report.Income,
+                            Errors = error,
+                            Loses = loss,
+                            Wins = win
+                        }, cancellationToken);
+                        await dbContext.SaveChangesAsync(cancellationToken);
+                    }
+
+                    if (report.HasLogEntry)
+                    {
+                        await dbContext.TeamLogEntries.AddAsync(new TeamLogEntry()
+                        {
+                            TeamId = team.Id,
+                            Reason = report.Reason,
+                            Status = report.Status.ToString(),
+                            Timestamp = DateTime.UtcNow,
+                            ResponeTimeMs = responseTime.Milliseconds
+                        }, cancellationToken);
+                        await dbContext.SaveChangesAsync(cancellationToken);
+                    }
                 }
-                 
-                await dbContext.SaveChangesAsync(cancellationToken);
             }
-         
+            catch (Exception exception)
+            {
+                Log.Error(exception, $"Failed to log entries for Team {team.Name} (ID: {team.Id})");
+            }
         }
         
         private static IPlayer CreatePlayerFromType(PlayerType playerType, Team team, TimeSpan httpTimeout)

@@ -12,26 +12,13 @@ namespace AdventureDayRunner.Players
         }
 
         #region Creation Helpers
-        public static MatchReport FromCostCalculator(int monitoredCosts, int maximumAllowedCost)
+        public static MatchReport FromCostCalculator(int cost)
         {
-            // TODO: what is the  
-            if (monitoredCosts <= maximumAllowedCost)
+            return new MatchReport()
             {
-                return new MatchReport()
-                {
-                    Status = MatchRating.Ignore,
-                    Cost = monitoredCosts
-                };
-            }
-            else
-            {
-
-                return new MatchReport()
-                {
-                    Status = MatchRating.Ignore,
-                    Cost = monitoredCosts
-                };
-            }
+                Status = MatchRating.Ignore,
+                Cost = cost
+            };
         }
 
         public static MatchReport FromMatchResponse(MatchResponse matchResponse)
