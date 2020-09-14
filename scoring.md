@@ -45,8 +45,9 @@
 | BetPlayer | William |
 | IterativePlayer | Courtney |
 | PatternPlayer | Libby |
-| HackPlayer | Kevin |
 | MassPlayer | Gloria |
+| HackPlayer | Kevin |
+| CostCalculatorPlayer | Dagobert |
 
 ## Phase 1: Deployment
 * RandomPlayer tries to play with the team environment
@@ -61,7 +62,7 @@
 * RandomPlayer see above
 * FixedPlayer see above
 * BetPlayer see above
-* MonitoringPlayer access Azure environment behind team environment, calculates costs and write it back
+* CostCalculatorPlayer access Azure environment behind team environment, calculates costs and write it back
 
 ### Azure costs
 * look into AKS node pool SKU and node count
@@ -72,14 +73,14 @@
 * RandomPlayer see above
 * FixedPlayer see above
 * BetPlayer see above
-* MonitoringPlayer see above
+* CostCalculatorPlayer see above
 * MassPlayer plays 10x as much as the other players (rps), in addition it triggers hidden functionality inside the GameEngine, which leads to wait times and 10x SQL calls
 
 ## Phase 5: Security
 * RandomPlayer see above
 * FixedPlayer see above
 * BetPlayer see above
-* MonitoringPlayer see above
+* CostCalculatorPlayer see above
 * MassPlayer will NOT run
 * HackPlayer tries to use the vulnerability endpoint to check if he still has access, logs successful attempts as HackerAttack
 
@@ -87,7 +88,7 @@
 * RandomPlayer see above
 * FixedPlayer see above
 * BetPlayer see above
-* MonitoringPlayer see above
+* CostCalculatorPlayer see above
 * MassPlayer will NOT run
 * HackPlayer see above
 * IterativePlayer, see [IterativePickStrategy.java](https://github.com/microsoft/RockPaperScissorsLizardSpock/blob/main/Source/Services/RPSLS.JavaPlayer.Api/src/main/java/RPSLS/JavaPlayer/Api/Strategy/IterativePickStrategy.java)

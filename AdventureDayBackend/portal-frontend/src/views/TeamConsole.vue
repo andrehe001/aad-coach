@@ -140,6 +140,7 @@ export default {
   },
   filters: {
     formatTimestamp: function (value) {
+      // TODO: from UTC
       var timestamp = new Date(value);
       var now = new Date();
       var diffMs = now - timestamp;
