@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AdventureDayRunner.Players;
 using AdventureDayRunner.Utils;
 using Autofac;
+using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using team_management_api.Data;
@@ -95,19 +96,7 @@ namespace AdventureDayRunner
                 try
                 {
                     Log.Information($"Team {team.Name} vs. Player {playerType.ToString()}");
-                    PlayerBase player;
-                    switch (playerType)
-                    {
-                        case PlayerType.Pattern:
-                            player = new PatternPlayer(team, httpTimeout);
-                            break;
-                        case PlayerType.Random:
-                            player = new RandomPlayer(team, httpTimeout);
-                            break;
-                        
-                        default:
-                            throw new InvalidOperationException("Unexpected enum value.");
-                    }
+                    var player = CreatePlayerFromType(playerType, team, httpTimeout);
 
                     var matchResponse = await player.Play(cancellationToken);
 
@@ -129,6 +118,19 @@ namespace AdventureDayRunner
                         $"Issue in Fire and Forget for Team {team.Name} URI: {team.GameEngineUri}");
                 }
             }, cancellationToken).Forget();
+        }
+
+        private static PlayerBase CreatePlayerFromType(PlayerType playerType, Team team, TimeSpan httpTimeout)
+        {
+            PlayerBase player = playerType switch
+            {
+                PlayerType.Pattern => new PatternPlayer(team, httpTimeout),
+                PlayerType.Random => new RandomPlayer(team, httpTimeout),
+                PlayerType.Fixed => new FixedPlayer(team, httpTimeout),
+                PlayerType.Iterative => new IterativePlayer(team, httpTimeout),
+                _ => throw new InvalidOperationException("Unexpected enum value.")
+            };
+            return player;
         }
     }
 }
