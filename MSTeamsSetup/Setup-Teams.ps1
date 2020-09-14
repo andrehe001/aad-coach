@@ -20,15 +20,25 @@ New-TeamChannel -GroupId $team.GroupId `
                  -DisplayName "CoachesInternal" `
                  -MembershipType Private      
 
+$coaches = Import-Csv -Path .\coaches.csv -Delimiter ';'
 For ($i=1; $i -le 12; $i++) {
+    $teamName = "Team $('{0:d2}' -f $i)"
     New-TeamChannel -GroupId $team.GroupId `
-                    -DisplayName "Team $('{0:d2}' -f $i)" `
-                    -MembershipType Private      
+                    -DisplayName $teamName `
+                    -MembershipType Private
+    
+    foreach($coach in $coaches) {
+        Write-Output "Adding coach $($coach.Mail) to Team and to Channel '$($teamName)'"
+    
+        Add-TeamChannelUser -GroupId $team.GroupId `
+                            -DisplayName $teamName `
+                            -User $coach.Mail
+    }
 }               
 
 $attendees = Import-Csv -Path .\sample.csv -Delimiter ';'
 foreach($attendee in $attendees) {
-    Write-Output "Adding $($attendee.Mail) to Team and to Channel '$($attendee.TeamName)'"
+    Write-Output "Adding attendee $($attendee.Mail) to Team and to Channel '$($attendee.TeamName)'"
 
     Add-TeamUser -GroupId $team.GroupId `
                  -User $attendee.Mail
