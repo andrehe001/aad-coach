@@ -36,7 +36,7 @@ For ($i=1; $i -le 12; $i++) {
     }
 }               
 
-$attendees = Import-Csv -Path .\sample.csv -Delimiter ';'
+$attendees = Import-Csv -Path .\attendees.csv -Delimiter ';'
 foreach($attendee in $attendees) {
     Write-Output "Adding attendee $($attendee.Mail) to Team and to Channel '$($attendee.TeamName)'"
 
