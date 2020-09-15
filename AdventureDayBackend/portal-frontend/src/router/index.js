@@ -27,6 +27,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "code-of-conduct" */ '../views/CodeOfConduct.vue')
   },
   {
+    path: '/social-sharing',
+    name: 'SocialSharing',
+    meta: { layout: 'main' },
+    component: () => import(/* webpackChunkName: "social-sharing" */ '../views/SocialSharing.vue')
+  },
+  {
     path: '/leaderboard',
     name: 'Leaderboard',
     meta: { layout: 'main' },
