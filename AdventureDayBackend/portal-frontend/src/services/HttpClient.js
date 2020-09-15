@@ -19,7 +19,6 @@ const authInterceptor = config => {
 
 /** logger interceptors */
 const loggerInterceptor = config => {
-  /** TODO */
   return config;
 }
 
@@ -30,11 +29,9 @@ httpClient.interceptors.request.use(loggerInterceptor);
 /** Adding the response interceptors */
 httpClient.interceptors.response.use(
   response => {
-    /** TODO: Add any response interceptors */
     return response;
   },
   error => {
-    /** TODO: Do something with response error */
     return Promise.reject(error);
   }
 );

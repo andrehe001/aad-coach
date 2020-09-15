@@ -4,11 +4,11 @@
     <div class="container-fluid content">
       <div class="row">
         <div id="team-status" class="col-3">
+          <!-- TODO:
           <p class="status-text">
             <span>Rank:</span>
-            <!-- TODO -->
             <span>01</span>
-          </p>
+          </p> -->
           <p class="status-text">
             <span>Score:</span>
             <span>{{ TeamStats.score }}</span>
@@ -45,8 +45,7 @@
               Current
               <br />Phase:
             </span>
-            <!-- TODO -->
-            <span>2. Change Management</span>
+            <span>{{ currentPhase | formatPhase }}</span>
           </p>
         </div>
         <div id="team-logs" class="col overflow-auto">
@@ -80,14 +79,25 @@
 </template>
 
 <script>
+const phaseStrings = [
+  "1 - Deployment",
+  "2 - Change",
+  "3 - Monitoring",
+  "4 - Scale",
+  "5 - Security",
+  "6 - Intelligence",
+];
+
 export default {
   name: "TeamConsole",
   data() {
     return {
       timerTeamStats: "",
       timerTeamLog: "",
+      timerPhase: "",
       TeamStats: null,
-      TeamLog: null
+      TeamLog: null,
+      currentPhase : 1,
     };
   },
   computed: {
@@ -109,8 +119,10 @@ export default {
 
     this.fetchTeamStats();
     this.fetchTeamLog();
+    this.fetchCurrentPhase();
     this.timerTeamStats = setInterval(this.fetchTeamStats, fetchIntervalMs);
     this.timerTeamLog = setInterval(this.fetchTeamLog, fetchIntervalMs);
+    this.timerPhase = setInterval(this.fetchCurrentPhase, fetchIntervalMs);
   },
   methods: {
     fetchTeamStats() {
@@ -132,16 +144,26 @@ export default {
         .catch(function (error) {
           console.error(error.response);
         });
+    },
+    fetchCurrentPhase() {
+      return this.$http
+        .get("Runner/phase")
+        .then((response) => {
+          this.currentPhase = response.data;
+        })
+        .catch(function (error) {
+          console.error(error.response);
+        });
     }
   },
   beforeDestroy() {
     clearInterval(this.timerTeamStats);
     clearInterval(this.timerTeamLog);
+    clearInterval(this.timerPhase);
   },
   filters: {
-    formatTimestamp: function (value) {
-      // TODO: from UTC
-      var timestamp = new Date(value);
+    formatTimestamp: function (utcValue) {
+      var timestamp = new Date(utcValue + 'Z');
       var now = new Date();
       var diffMs = now - timestamp;
 
@@ -156,6 +178,9 @@ export default {
       }
 
       return Math.round(diffMs/(24 * 60 * 60 * 1000)) + "days ago";
+    },
+    formatPhase: function (value) {
+      return phaseStrings[value-1];
     },
   },
 };

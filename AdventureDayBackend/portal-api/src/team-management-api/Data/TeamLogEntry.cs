@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace team_management_api.Data
 {
@@ -16,6 +20,7 @@ namespace team_management_api.Data
 
         public int ResponeTimeMs { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public LogEntryStatus Status { get; set; }
 
         public string Reason { get; set; }
