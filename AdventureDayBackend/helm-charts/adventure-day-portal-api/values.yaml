@@ -43,7 +43,7 @@ ingress:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: az-adventure-day-prod-080f2a.northeurope.cloudapp.azure.com
+    - host: az-adventure-day-prod-6d0b53.northeurope.cloudapp.azure.com
       paths: ["/api/"]
   tls: []
   #  - secretName: chart-example-tls

@@ -22,7 +22,9 @@ resource "azurerm_mssql_database" "sql_db" {
   collation      = "SQL_Latin1_General_CP1_CI_AS"
   max_size_gb    = 64
   read_scale     = false
-  sku_name       = "GP_S_Gen5_4"
+  auto_pause_delay_in_minutes = 90
+  min_capacity                = 1.0
+  sku_name                    = "GP_S_Gen5_4"
   zone_redundant = false
 }
 
