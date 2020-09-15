@@ -90,21 +90,6 @@ namespace team_management_api.Data
             return _context.Teams.Where(team => team.Name.ToLower() == name.ToLower()).FirstOrDefault();
         }
 
-        public bool RenameMember(int teamId, int memberId, string newDisplayName)
-        {
-            Member member = GetMember(teamId, memberId);
-            if (member != null)
-            {
-                member.DisplayName = newDisplayName;
-                _context.Update(member);
-                return SaveChanges();
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public bool AddMemberToTeam(int teamId, Member member)
         {
             Team team = GetTeamByIdWithMembers(teamId);

@@ -23,22 +23,22 @@ echo "received auth token $TOKEN"
 OLDIFS=$IFS
 IFS=','
 [ ! -f $file ] && { echo "$file file not found"; exit 99; }
-while read teamname displayname username password
+while read teamname username password
 do
-    echo "importing $displayname to $teamname with $username and $password..."
+    echo "importing $username to $teamname with $password..."
 
     MEMBERID=$(curl -sL --header "Content-Type: application/json" \
       --header "Authorization: Bearer $TOKEN" \
       --request POST \
-      --data "{'displayname': '$displayname', 'username': '$username', 'password': '$password'}" \
+      --data "{'username': '$username', 'password': '$password'}" \
       $url/api/team/addmembertoteamname/$teamname | jq '.id' -r)
     
     echo "new memberid for $teamname is $MEMBERID"
 
     if [ $MEMBERID -eq 0 ]; then
-      echo "failed to import $member $displayname"
+      echo "failed to import $member $username"
     else
-      echo "$displayname successfully imported with id $MEMBERID"
+      echo "$username successfully imported with id $MEMBERID"
     fi
     
 done < $file

@@ -23,14 +23,14 @@ echo "received auth token $TOKEN"
 OLDIFS=$IFS
 IFS=','
 [ ! -f $file ] && { echo "$file file not found"; exit 99; }
-while read teamname region subscriptionid teampassword gameengineuri
+while read teamname tenantid subscriptionid teampassword
 do
-    echo "importing $teamname with $teampassword to $region in $subscriptionid for $gameengineuri..."
+    echo "importing $teamname with $teampassword to $tenantid in $subscriptionid..."
 
     TEAMID=$(curl -sL --header "Content-Type: application/json" \
       --header "Authorization: Bearer $TOKEN" \
       --request POST \
-      --data "{'name': '$teamname', 'subscriptionId': '$subscriptionid', 'teampassword': '$teampassword', 'gameengineuri': '$gameengineuri'}" \
+      --data "{'name': '$teamname', 'tenantid': '$tenantid', 'subscriptionId': '$subscriptionid', 'teampassword': '$teampassword'}" \
       $url/api/team/new | jq '.id' -r)
     
     echo "new teamid for $teamname is $TEAMID"

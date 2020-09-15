@@ -11,6 +11,7 @@ namespace team_management_api.Data
         public ICollection<Member> Members { get; set; }
         
         public string GameEngineUri { get; set; }
+        public Guid TenantId { get; set; }
 
         public Guid SubscriptionId { get; set; }
         public string TeamPassword { get; set; }

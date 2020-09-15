@@ -186,6 +186,7 @@ namespace team_management_api.Controllers
             team.Name = newTeam.Name;
             team.SubscriptionId = newTeam.SubscriptionId;
             team.TeamPassword = AppSettings.HashString(_appSettings, newTeam.TeamPassword);
+            team.TenantId = newTeam.TenantId;
 
             var success = _teamservice.AddTeam(team);
             if (success)
@@ -217,34 +218,11 @@ namespace team_management_api.Controllers
             }
         }
 
-        [HttpPost("renameMember/{memberId}/{newName}")]
-        [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
-        public ActionResult<Member> UpdateMemberName(int teamId, int memberId, string newName)
-        {
-            var team = (Team)this.HttpContext.Items["Team"];
-            if (team != null && (team.Id == teamId || team.Id == AppSettings.AdminTeamId))
-            {
-                var success = _teamservice.RenameMember(teamId, memberId, newName);
-                if (success)
-                {
-                    return Ok(_teamservice.GetTeamById(teamId));
-                }
-                else
-                {
-                    return BadRequest("Failed to rename " + teamId);
-                }
-            }
-            else
-            {
-                return NotFound(teamId);
-            }
-        }
-
         [HttpPost("addmemberto/{teamId}")]
         [TeamAuthorizeAttribute(AuthorizationType.Admin)]
         public IActionResult AddMemberToTeam(int teamId, [FromBody] Member newMember)
         {
-            if (teamId == AppSettings.AdminTeamId || string.IsNullOrWhiteSpace(newMember.Username) || string.IsNullOrWhiteSpace(newMember.DisplayName) || string.IsNullOrWhiteSpace(newMember.Password))
+            if (teamId == AppSettings.AdminTeamId || string.IsNullOrWhiteSpace(newMember.Username) || string.IsNullOrWhiteSpace(newMember.Password))
             {
                 return BadRequest();
             }
@@ -264,7 +242,7 @@ namespace team_management_api.Controllers
         [TeamAuthorizeAttribute(AuthorizationType.Admin)]
         public IActionResult AddMemberToTeam(string teamName, [FromBody] Member newMember)
         {
-            if (teamName.Equals(AppSettings.AdminTeamName, StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(newMember.Username) || string.IsNullOrWhiteSpace(newMember.DisplayName) || string.IsNullOrWhiteSpace(newMember.Password))
+            if (teamName.Equals(AppSettings.AdminTeamName, StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(newMember.Username) || string.IsNullOrWhiteSpace(newMember.Password))
             {
                 return BadRequest(newMember);
             }

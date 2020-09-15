@@ -26,8 +26,6 @@ namespace team_management_api.Data
 
         IActionResult RemoveMemberFromTeam(int teamId, int memberId);
 
-        ActionResult<Member> UpdateMemberName(int teamId, int memberId, string newName);
-
         IActionResult Login(AuthenticateRequest model);
     }
 }

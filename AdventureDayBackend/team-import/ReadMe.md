@@ -5,7 +5,7 @@ A team can be imported from csv file by running the `import-teams.sh` script wit
 
 ```
 TEAMFILE=`pwd`/teams.csv
-APIURL=http://localhost:8000 # required, make sure the name dns compatible - lowercase, no special characters, only letters and numbers
+APIURL=http://localhost:8000
 ADMIN_USERNAME=admin
 ADMIN_PASSWORT=AdminPassword
 ./import-teams.sh $TEAMFILE $APIURL $ADMIN_USERNAME $ADMIN_PASSWORT
@@ -14,7 +14,7 @@ ADMIN_PASSWORT=AdminPassword
 Structure of the csv file
 
 ```
-teamname,datacenter,subscriptionid,teampassword,gameengineuri
+teamname,tenantid,subscriptionid,teampassword,gameengineuri
 ```
 
 ## Team member import
@@ -23,7 +23,7 @@ A list of team members can be imported from csv file by running the `import-memb
 
 ```
 TEAMFILE=`pwd`/team-members.csv
-APIURL=http://localhost:8000 # required, make sure the name dns compatible - lowercase, no special characters, only letters and numbers
+APIURL=http://localhost:8000
 ADMIN_USERNAME=admin
 ADMIN_PASSWORT=AdminPassword
 ./import-members.sh $TEAMFILE $APIURL $ADMIN_USERNAME $ADMIN_PASSWORT
@@ -32,5 +32,5 @@ ADMIN_PASSWORT=AdminPassword
 Structure of the csv file
 
 ```
-teamname,displayname,username,password
+teamname,username,password
 ```

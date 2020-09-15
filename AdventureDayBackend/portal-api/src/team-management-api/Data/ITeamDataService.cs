@@ -10,8 +10,6 @@ namespace team_management_api.Data
         bool DeleteTeam(int teamId);
 
         bool RenameTeam(int teamId, string newName);
-
-        bool RenameMember(int teamId, int memberId, string newDisplayName);
         bool AddMemberToTeam(int teamId, Member member);
         bool AddMemberToTeam(string teamName, Member member);
         IEnumerable<Member> GetMembers(int teamId);

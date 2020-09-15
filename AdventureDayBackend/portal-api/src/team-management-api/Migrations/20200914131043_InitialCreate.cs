@@ -32,6 +32,7 @@ namespace team_management_api.Migrations
                     Name = table.Column<string>(nullable: true),
                     GameEngineUri = table.Column<string>(nullable: true),
                     SubscriptionId = table.Column<Guid>(nullable: false),
+                    TenantId = table.Column<Guid>(nullable: false),
                     TeamPassword = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -45,7 +46,6 @@ namespace team_management_api.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DisplayName = table.Column<string>(nullable: true),
                     Username = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     TeamId = table.Column<int>(nullable: true)
