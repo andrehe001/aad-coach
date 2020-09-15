@@ -36,6 +36,14 @@ namespace team_management_api.Data
             return SaveChanges();
         }
 
+        public bool UpdateGameEngineUri(int teamId, string newUri)
+        {
+            Team team = GetTeamById(teamId);
+            team.GameEngineUri = newUri;
+            _context.Update(team);
+            return SaveChanges();
+        }
+
         public bool UpdateTeam(Team team)
         {
             _context.Attach(team);

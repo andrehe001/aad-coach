@@ -54,6 +54,34 @@ namespace team_management_api.Controllers
             }
         }
 
+        [HttpPost("updateuri/{teamId}/{newUri}")]
+        [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
+        public ActionResult<Team> UpdateGameEngineUri(int teamId, string newUri)
+        {
+            if (teamId == AppSettings.AdminTeamId || string.IsNullOrWhiteSpace(newUri))
+            {
+                return BadRequest();
+            }
+
+            var team = (Team)this.HttpContext.Items["Team"];
+            if (team != null && (team.Id == teamId || team.Id == AppSettings.AdminTeamId))
+            {
+                var success = _teamservice.UpdateGameEngineUri(teamId, newUri);
+                if (success)
+                {
+                    return Ok(_teamservice.GetTeamById(teamId));
+                }
+                else
+                {
+                    return BadRequest("Failed to update game engine uri " + teamId);
+                }
+            }
+            else
+            {
+                return NotFound(teamId);
+            }
+        }
+
         [HttpGet("statsandlogs/{teamId}")]
         [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
         public ActionResult<Team> GetTeamStatsAndLogs(int teamId)
