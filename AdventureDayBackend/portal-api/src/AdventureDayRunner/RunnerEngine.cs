@@ -12,6 +12,7 @@ using Autofac;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Prometheus;
 using Serilog;
 using team_management_api.Data;
 using team_management_api.Data.Runner;
@@ -20,6 +21,9 @@ namespace AdventureDayRunner
 {
     public class RunnerEngine
     {
+        private static readonly Counter PlayerInvocationsMetric = Metrics
+            .CreateCounter("player_invocations", "Number of player invocations.");
+        
         private readonly int _refreshTimeoutInSeconds = 5;
         private readonly ILifetimeScope _lifetimeScope;
         private readonly IConfiguration _configuration;
@@ -105,6 +109,8 @@ namespace AdventureDayRunner
             Team team,
             CancellationToken cancellationToken)
         {
+            PlayerInvocationsMetric.Inc();
+            
             var httpTimeout = TimeSpan.FromSeconds(5);
             
             Task.Run(async () =>

@@ -7,6 +7,7 @@ using AdventureDayRunner.Utils;
 using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Prometheus;
 using Serilog;
 using team_management_api.Data;
 
@@ -17,6 +18,9 @@ namespace AdventureDayRunner
         public static async Task<int> Main(string[] args)
         {
             var runnerConfiguration = new RunnerConfiguration();
+            
+            var server = new MetricServer(hostname: "localhost", port: runnerConfiguration.Configuration.GetValue<int>("PrometheusPort", 8080));
+            server.Start();
             
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(runnerConfiguration.Configuration)
