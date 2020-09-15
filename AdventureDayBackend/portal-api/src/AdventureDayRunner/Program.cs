@@ -15,15 +15,18 @@ namespace AdventureDayRunner
 {
     public static class Program
     {
+        public static IConfiguration Configuration { get; private set; }
+        
         public static async Task<int> Main(string[] args)
         {
             var runnerConfiguration = new RunnerConfiguration();
+            Configuration = runnerConfiguration.Configuration;
             
-            var server = new MetricServer(hostname: "localhost", port: runnerConfiguration.Configuration.GetValue<int>("PrometheusPort", 9090));
+            var server = new MetricServer(hostname: "localhost", port: Configuration.GetValue<int>("PrometheusPort", 9090));
             server.Start();
             
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(runnerConfiguration.Configuration)
+                .ReadFrom.Configuration(Configuration)
                 .WriteTo.Console() // Always write to console!
                 .CreateLogger();
             

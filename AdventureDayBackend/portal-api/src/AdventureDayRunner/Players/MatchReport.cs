@@ -1,12 +1,15 @@
 using System;
+using System.Configuration;
 using AdventureDayRunner.Model;
+using Microsoft.Extensions.Configuration;
 using team_management_api.Data;
 
 namespace AdventureDayRunner.Players
 {
     public class MatchReport
     {
-        private const int FixedMatchStake = 10;
+        // TODO: Refactor to some more intelligent approach... (=> avoid static ref here)
+        private static readonly int FixedMatchStake = Program.Configuration.GetValue("FixedMatchStake", 10);
 
         private MatchReport()
         {
@@ -139,7 +142,7 @@ namespace AdventureDayRunner.Players
             var outcome = FixedMatchStake;
             if (matchResponse.Bet.HasValue)
             {
-                outcome = (int)Math.Floor((1 + matchResponse.Bet.Value) * FixedMatchStake);
+                outcome = (int)Math.Ceiling((1 + matchResponse.Bet.Value) * FixedMatchStake);
             }
             
             if (matchResponse.MatchOutcome.HasValue)

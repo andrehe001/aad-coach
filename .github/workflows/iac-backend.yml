@@ -6,11 +6,11 @@ on:
       azureSecretName:
         description: 'Azure Secret Name containing the Service Principal Details'
         required: true
-        default: 'AZURE'
+        default: 'AZURE_PROD'
       environmentName:
         description: 'The environment deployment name, e.g. dev, qa or prod'
         required: true
-        default: 'dev'
+        default: 'prod'
       prefix:
         description: 'The deployment prefix used for all Azure artefacts.'
         required: true

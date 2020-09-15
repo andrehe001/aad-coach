@@ -11,15 +11,19 @@ resource "azurerm_sql_server" "sql_server" {
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
   version                      = "12.0"
+  
   administrator_login          = "azureuser"
   administrator_login_password = random_string.password.result
 }
 
-resource "azurerm_sql_database" "sql_db" {
-  name                = local.prefix_kebab
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  server_name         = azurerm_sql_server.sql_server.name
+resource "azurerm_mssql_database" "sql_db" {
+  name           = "AzureAdventureDay"
+  server_id      = azurerm_sql_server.sql_server.id
+  collation      = "SQL_Latin1_General_CP1_CI_AS"
+  max_size_gb    = 64
+  read_scale     = false
+  sku_name       = "GP_S_Gen5_4"
+  zone_redundant = false
 }
 
 resource "azurerm_sql_virtual_network_rule" "aks_sql_server_vnet_rule" {
@@ -62,7 +66,7 @@ resource "azurerm_key_vault_secret" "kv_secret_sql_administrator_login_password"
 
 resource "azurerm_key_vault_secret" "kv_secret_sql_administrator_connection_string" {
   name         = "sql-server-connection-string"
-  value        = "Server=tcp:${azurerm_sql_server.sql_server.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_database.sql_db.name};Persist Security Info=False;User ID=${azurerm_sql_server.sql_server.administrator_login};Password=${azurerm_sql_server.sql_server.administrator_login_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  value        = "Server=tcp:${azurerm_sql_server.sql_server.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_mssql_database.sql_db.name};Persist Security Info=False;User ID=${azurerm_sql_server.sql_server.administrator_login};Password=${azurerm_sql_server.sql_server.administrator_login_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   key_vault_id = azurerm_key_vault.kv.id
   depends_on = [azurerm_key_vault_access_policy.policy_service_principal]
 }

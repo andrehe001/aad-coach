@@ -64,8 +64,8 @@ variable "aks_default_node_pool" {
 
   default = {
     name                           = "default",
-    node_count                     = 1,
-    vm_size                        = "Standard_DS2_v2"
+    node_count                     = 3,
+    vm_size                        = "Standard_D2s_v3"
     availability_zones             = [],
     node_labels                    = {},
     node_taints                    = [],
