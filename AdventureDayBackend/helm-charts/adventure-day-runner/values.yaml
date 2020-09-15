@@ -24,6 +24,7 @@ serviceAccount:
 
 podAnnotations:
   prometheus.io/scrape: "true"
+  prometheus.io/port: "9090"
 
 podSecurityContext:
   runAsUser: 1000
@@ -57,5 +58,4 @@ tolerations: []
 
 affinity: {}
 
-db: 
-  dbConnection: ""
+sqlServerSecretName: "sql-server-secret" 

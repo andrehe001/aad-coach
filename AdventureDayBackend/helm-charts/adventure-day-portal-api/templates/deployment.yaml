@@ -40,8 +40,8 @@ spec:
           - name: Authentication__SqlConnectionString
             valueFrom:
               secretKeyRef:
-                name: {{ include "adventure-day-portal-api.fullname" . }}
-                key: dbConnection
+                name: {{ .Values.sqlServerSecretName }}
+                key: "connection_string"
           ports:
             - name: http
               containerPort: 8080

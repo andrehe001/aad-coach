@@ -4,16 +4,34 @@
 param 
 (
     [ValidateLength(1,255)]
-    [ValidatePattern('^[^$()]+$', ErrorMessage = "{0} is not valid. Is it perhaps a non-set Azure DevOps Variable?")]
+    [ValidateNotNull()]
     [string]
-    $Environment = "local",
+    $Environment = "prod",
 
     [ValidateLength(1,255)]
-    [ValidatePattern('^[^$()]+$', ErrorMessage = "{0} is not valid. Is it perhaps a non-set Azure DevOps Variable?")]
+    [ValidateNotNull()]
     [string]
-    $Namespace = "adventure-day"
+    $Namespace = "adventure-day",
+
+    [Parameter(Mandatory = $true)]
+    [ValidateLength(1,255)]
+    [ValidateNotNull()]
+    [string]
+    $RegistryName,
+
+    [Parameter(Mandatory = $true)]
+    [ValidateLength(1,255)]
+    [ValidateNotNull()]
+    [string]
+    $Tag 
 )
 
-helm upgrade adventure-day-runner ./adventure-day-runner --install --namespace $Namespace -f ./adventure-day-runner.values.$($Environment).yaml --create-namespace
-helm upgrade adventure-day-portal-frontend ./adventure-day-portal-frontend --install --namespace $Namespace -f ./adventure-day-portal-frontend.values.$($Environment).yaml --create-namespace
-helm upgrade adventure-day-portal-api ./adventure-day-portal-api --install --namespace $Namespace -f ./adventure-day-portal-api.values.$($Environment).yaml --create-namespace
+Set-StrictMode -Version latest
+$ErrorActionPreference = "Stop"
+
+Write-Host "RegistryName: $RegistryName"
+Write-Host "Tag: $Tag"
+
+&helm upgrade adventure-day-runner ./adventure-day-runner --install --namespace $Namespace --set "`"image.repository=$($RegistryName).azurecr.io/adventure-day-runner`"" --set "`"image.tag=$($Tag)`"" --create-namespace
+&helm upgrade adventure-day-portal-frontend ./adventure-day-portal-frontend --install --namespace $Namespace --set "`"image.repository=$($RegistryName).azurecr.io/adventure-day-portal-frontend`"" --set "`"image.tag=$($Tag)`"" --create-namespace
+&helm upgrade adventure-day-portal-api ./adventure-day-portal-api --install --namespace $Namespace --set "`"image.repository=$($RegistryName).azurecr.io/adventure-day-portal-api`"" --set "`"image.tag=$($Tag)`"" --create-namespace
