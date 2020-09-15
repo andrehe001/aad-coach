@@ -31,11 +31,10 @@ namespace AdventureDayRunner.Players.PseudoPlayers
                 ClientSecret = _configuration.GetValue<string>("AzureSPClientSecret")
             }, _configuration.GetValue<string>("AzureSPTenantId"), AzureEnvironment.AzureGlobalCloud);
 
-            // TODO save Subscription ID inside Team table
             var azure = Azure
                 .Configure()
                 .Authenticate(azureCredentials)
-                .WithSubscription("73119864-58f7-4cb3-b1e5-98300bcc2557");
+                .WithSubscription(team.SubscriptionId.ToString());
 
             long aksCosts = await GetAksCostAsync(azure);
             long sqlCosts = await GetSqlCostAsync(azure);
@@ -51,9 +50,7 @@ namespace AdventureDayRunner.Players.PseudoPlayers
             {
                 foreach (var database in await sqlServer.Databases.ListAsync())
                 {
-                    // TODO: Only allow GeneralPurpose
-                    //var test1 = database.Edition == DatabaseEdition.GeneralPurpose;
-
+                    // Azure Policy ensure only GeneralPurpose is allowed
                     var serviceLevel = database.ServiceLevelObjective.ToString(); // GP_S_Gen5_1 etc.
                     if (serviceLevel.StartsWith("GP_S_Gen5"))
                     {

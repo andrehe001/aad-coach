@@ -13,7 +13,7 @@
              "not": {
                 "anyOf": [
                    {
-                      "field": "Microsoft.SQL/servers/databases/requestedServiceObjectiveName",
+                      "field": "Microsoft.SQL/servers/databases/sku.tier",
                       "in": "[parameters('listOfSKUName')]"
                    }
                 ]
