@@ -1,4 +1,4 @@
-name: Backend-IaC
+name: AdventureDay-Backend-Build-Deploy
 
 on:
   workflow_dispatch:

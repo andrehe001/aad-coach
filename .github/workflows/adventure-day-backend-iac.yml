@@ -1,4 +1,4 @@
-name: Backend-IaC
+name: AdventureDay-Backend-IaC
 
 on:
   workflow_dispatch:
