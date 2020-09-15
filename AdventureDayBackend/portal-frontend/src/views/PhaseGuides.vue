@@ -95,6 +95,10 @@ export default {
   padding-right: 20px;
 }
 
+.phase-guides button.btn {
+  margin-left: 5px;
+}
+
 .tablet {
   width:50%;
   border: 1px solid silver;
