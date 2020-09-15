@@ -14,11 +14,15 @@ namespace TeamGameHub.GameEngine.WebApi.Models
         /// A sequence number for each match that was setup for the provided ChallengerId.
         /// </summary>
         public long MatchSequenceNumber { get; set; }
-     
+
         /// <summary>
-        /// The challenger's identifier.
+        /// Smoorgh
         /// </summary>
         public string Player1Name { get; set; }
+
+        /// <summary>
+        /// Team / Human
+        /// </summary>
         public string Player2Name { get; set; }
 
         /// <summary>
@@ -62,8 +66,8 @@ namespace TeamGameHub.GameEngine.WebApi.Models
             return new Match()
             {
                 MatchId = Guid.NewGuid(),
-                Player1Name = matchRequest.ChallengerId.ToString(),
-                Player2Name = "bot",
+                Player1Name = matchRequest.ChallengerId,
+                Player2Name = "HumansBot",
                 Turn = 0,
                 TurnsPlayer1Values = new List<Move>(),
                 TurnsPlayer2Values = new List<Move>(),

@@ -16,11 +16,15 @@ namespace AdventureDayRunner.Model
         /// A sequence number for each match that was setup for the provided ChallengerId.
         /// </summary>
         public long MatchSequenceNumber { get; set; }
-     
+
         /// <summary>
-        /// The challenger's identifier.
+        /// Smoorgh
         /// </summary>
         public string Player1Name { get; set; }
+
+        /// <summary>
+        /// Team / Human
+        /// </summary>
         public string Player2Name { get; set; }
 
         /// <summary>

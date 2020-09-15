@@ -2,8 +2,8 @@ namespace TeamGameHub.GameEngine.WebApi.Models
 {
     public enum Outcome
     {
-        ChallengerWins,
-        OverlordWins,
+        SmoorghWins,
+        HumanBotWins,
         Tie
     }
 }

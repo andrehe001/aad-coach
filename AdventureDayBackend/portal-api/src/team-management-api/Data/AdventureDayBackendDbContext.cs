@@ -19,7 +19,13 @@ namespace team_management_api.Data
 
             modelBuilder.Entity<TeamLogEntry>()
                 .HasIndex(_ => _.Timestamp);
-            
+
+            var enumConverter = new EnumToStringConverter<LogEntryStatus>();
+            modelBuilder
+                .Entity<TeamLogEntry>()
+                .Property(_ => _.Status)
+                .HasConversion(enumConverter);
+           
             var converter = new ValueConverter<RunnerPhasesConfiguration, string>(
                 v => v.ToJson(),
                 v => RunnerPhasesConfiguration.FromJson(v));

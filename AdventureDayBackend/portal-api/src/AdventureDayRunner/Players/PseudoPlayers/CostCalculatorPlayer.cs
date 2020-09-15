@@ -99,13 +99,15 @@ namespace AdventureDayRunner.Players.PseudoPlayers
             long aksCosts = 0;
             foreach (var kubernetesCluster in await azure.KubernetesClusters.ListAsync())
             {
+                var computeSkus = azure.ComputeSkus
+                        .ListbyRegionAndResourceType(kubernetesCluster.Region, ComputeResourceType.VirtualMachines);
+
                 foreach (var agentPool in kubernetesCluster.AgentPools)
                 {
                     var vmCount = agentPool.Value.Count;
                     var vmSize = agentPool.Value.VMSize;
 
-                    var computeSkusCosts = azure.ComputeSkus
-                        .ListbyRegionAndResourceType(kubernetesCluster.Region, ComputeResourceType.VirtualMachines)
+                    var computeSkusCosts = computeSkus
                         .Single(_ => _.VirtualMachineSizeType.ToString() == vmSize.ToString())
                         .Costs;
 

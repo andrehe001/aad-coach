@@ -133,7 +133,7 @@ namespace AdventureDayRunner
                     if (!cancellationToken.IsCancellationRequested)
                     {
                         Log.Error($"{errorId} HTTP Timeout.");
-                        report = MatchReport.FromError($"HTTP Timeout - no answer within {httpTimeout.Seconds} seconds.");
+                        report = MatchReport.FromError($"Smoorghs are unable to play - no answer within {httpTimeout.Seconds} seconds (HTTP Timeout)");
                     }
                     else
                     {
@@ -150,7 +150,7 @@ namespace AdventureDayRunner
                     if (exception.Message.Contains("An invalid request URI was provided."))
                     {
                         Log.Error($"No backend URI for team {team.Name} (ID: {team.Id}) found.");
-                        report = MatchReport.FromError($"Your backend URI is not configured.");
+                        report = MatchReport.FromError($"Smoorghs are unable to play - your backend URI is not configured");
                     }
                     else
                     {
@@ -182,7 +182,7 @@ namespace AdventureDayRunner
                     var loss = report.HasLost ? 1 : 0;
                     var win = report.HasWon ? 1 : 0;
 
-                    if (report.Status != MatchRating.Ignore)
+                    if (report.MatchRatingStatus != MatchRating.Ignore)
                     {
                         int rowsAffected = await dbContext.TeamScores.Where(_ => _.TeamId == team.Id)
                             .BatchUpdateAsync(_ =>
@@ -221,7 +221,7 @@ namespace AdventureDayRunner
                         {
                             TeamId = team.Id,
                             Reason = report.Reason,
-                            Status = report.Status.ToString(),
+                            Status = report.LogEntryStatus,
                             Timestamp = DateTime.UtcNow,
                             ResponeTimeMs = responseTime.Milliseconds
                         }, cancellationToken);

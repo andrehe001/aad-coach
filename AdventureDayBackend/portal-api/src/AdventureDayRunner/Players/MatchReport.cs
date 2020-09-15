@@ -1,11 +1,12 @@
 using System;
 using AdventureDayRunner.Model;
+using team_management_api.Data;
 
 namespace AdventureDayRunner.Players
 {
     public class MatchReport
     {
-        private const int FixedMatchStake = 1;
+        private const int FixedMatchStake = 10;
 
         private MatchReport()
         {
@@ -16,7 +17,7 @@ namespace AdventureDayRunner.Players
         {
             return new MatchReport()
             {
-                Status = MatchRating.Ignore,
+                MatchRatingStatus = MatchRating.Ignore,
                 Income = 0,
                 Cost = cost
             };
@@ -24,12 +25,19 @@ namespace AdventureDayRunner.Players
 
         public static MatchReport FromMatchResponse(MatchResponse matchResponse)
         {
-            var income = CalculateIncome(matchResponse);
+            var outcome = CalculateHumanTeamMoneyOutcome(matchResponse);
+
+            var reason = outcome > 0
+                ? $"Human has won ${outcome}"
+                : $"Smoorgh has won ${outcome}";
+
             return new MatchReport()
             {
-                Status = MatchRating.PlayedMatchSuccessfully,
-                Income = income > 0 ? income : 0,
-                Cost = income > 0 ? 0 : FixedMatchStake
+                MatchRatingStatus = MatchRating.PlayedMatchSuccessfully,
+                LogEntryStatus = LogEntryStatus.SUCCESS,
+                Reason = reason,
+                Income = outcome > 0 ? outcome : 0,
+                Cost =   outcome > 0 ? 0 : outcome
             };
         }
 
@@ -37,7 +45,8 @@ namespace AdventureDayRunner.Players
         {
             return new MatchReport()
             {
-                Status = MatchRating.Error,
+                MatchRatingStatus = MatchRating.Error,
+                LogEntryStatus = LogEntryStatus.FAILED,
                 Reason = error,
                 Income = 0,
                 Cost = 0
@@ -48,62 +57,68 @@ namespace AdventureDayRunner.Players
         {
             return new MatchReport()
             {
-                Status = MatchRating.Error,
+                MatchRatingStatus = MatchRating.Error,
+                LogEntryStatus = LogEntryStatus.CANCELED,
                 Reason = reason,
                 Income = 0,
                 Cost = 0
             };
         }
 
-        public static MatchReport FromHackerAttack(bool hasDefendedAttack)
+        public static MatchReport FromHackerAttackSuccessful(string reason)
         {
-            if (hasDefendedAttack)
+            return new MatchReport()
             {
-                return new MatchReport()
-                {
-                    Status = MatchRating.Ignore,
-                    Income = 0,
-                    Cost = 0
-                };
-            }
-            else
+                MatchRatingStatus = MatchRating.Error,
+                LogEntryStatus = LogEntryStatus.ATTACKED,
+                Reason = reason,
+                Income = 0,
+                Cost = 0
+            };
+        }
+
+        public static MatchReport FromHackerAttackDefended()
+        {
+            return new MatchReport()
             {
-                return new MatchReport()
-                {
-                    Status = MatchRating.Error,
-                    Reason = "Hacker infiltration - your team is under attack.",
-                    Income = 0,
-                    Cost = 0
-                };
-            }
+                MatchRatingStatus = MatchRating.Ignore,
+                Income = 0,
+                Cost = 0
+            };
         }
         #endregion
 
-        public MatchRating Status
+        public MatchRating MatchRatingStatus
         {
             get;
             private set;
         }
 
+        public LogEntryStatus LogEntryStatus
+        {
+            get;
+            private set;
+        }
+        
         public string Reason
         {
             get;
             private set;
         }
 
-        public bool HasError => Status == MatchRating.Error;
+        public bool HasError => MatchRatingStatus == MatchRating.Error;
         
         /// <summary>
         /// Win or loose only possible if the match was actually
         /// played successfully.
         /// </summary>
-        public bool HasWon => Status == MatchRating.PlayedMatchSuccessfully && Income > 0;
+        public bool HasWon => MatchRatingStatus == MatchRating.PlayedMatchSuccessfully && Income > 0;
 
         /// <summary>
         /// Win or loose only possible if the match was actually
         /// played successfully.
         /// </summary>
-        public bool HasLost => Status == MatchRating.PlayedMatchSuccessfully && !HasWon;
+        public bool HasLost => MatchRatingStatus == MatchRating.PlayedMatchSuccessfully && !HasWon;
 
         public bool HasLogEntry => Reason != null;
         
@@ -119,20 +134,20 @@ namespace AdventureDayRunner.Players
             private set;
         }
         
-        private static int CalculateIncome(MatchResponse matchResponse)
+        private static int CalculateHumanTeamMoneyOutcome(MatchResponse matchResponse)
         {
-            var potentialIncome = FixedMatchStake;
+            var outcome = FixedMatchStake;
             if (matchResponse.Bet.HasValue)
             {
-                potentialIncome += (int)Math.Floor(matchResponse.Bet.Value);
+                outcome = (int)Math.Floor((1 + matchResponse.Bet.Value) * FixedMatchStake);
             }
             
             if (matchResponse.MatchOutcome.HasValue)
             {
                 return matchResponse.MatchOutcome.Value switch
                 {
-                    Outcome.ChallengerWins => 0,
-                    Outcome.OverlordWins => potentialIncome,
+                    Outcome.SmoorghWins => -1 * outcome,
+                    Outcome.HumanBotWins => outcome,
                     _ => throw new ArgumentOutOfRangeException("matchResponse", $"Unexpected match outcome: {matchResponse.MatchOutcome.Value}")
                 };
             }

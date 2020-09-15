@@ -1,12 +1,10 @@
-using System;
-using System.ComponentModel;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using System;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using team_management_api.Data;
 
 namespace AdventureDayRunner.Players.PseudoPlayers
@@ -55,9 +53,19 @@ namespace AdventureDayRunner.Players.PseudoPlayers
                     var response = await result.Content.ReadFromJsonAsync<SecurityHackResponse>(
                         cancellationToken: cancellationToken);
 
-                    if (response.MeshconfigExploited || response.PodListExploited)
+                    if (response.MeshconfigExploited && response.PodListExploited)
                     {
-                        return MatchReport.FromHackerAttack(hasDefendedAttack: false);
+                        return MatchReport.FromHackerAttackSuccessful("Hacker infiltration into all systems - your team is under attack.");
+                    }
+
+                    if (response.MeshconfigExploited)
+                    {
+                        return MatchReport.FromHackerAttackSuccessful("Hacker was still able to get full access to the Azure environment!");
+                    }
+
+                    if (response.PodListExploited)
+                    {
+                        return MatchReport.FromHackerAttackSuccessful("Hacker was still able to get full access to Kubernetes!");
                     }
                 }
             }
@@ -66,7 +74,7 @@ namespace AdventureDayRunner.Players.PseudoPlayers
                 Log.Error(exception, $"Error in in reaching exploit endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
             }
 
-            return MatchReport.FromHackerAttack(hasDefendedAttack: true);
+            return MatchReport.FromHackerAttackDefended();
         }
     }
 }

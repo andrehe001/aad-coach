@@ -125,11 +125,11 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             {
                 switch (CalculateResult(item, currentMatch.TurnsPlayer2Values[turnsCounter++]))
                 {
-                    case Outcome.ChallengerWins:
+                    case Outcome.SmoorghWins:
                         turnsWonByPlayer1++;
                         break;
 
-                    case Outcome.OverlordWins:
+                    case Outcome.HumanBotWins:
                         turnsWonByPlayer2++;
                         break;
                     default: // Tie
@@ -144,18 +144,18 @@ namespace TeamGameHub.GameEngine.WebApi.Services
 
             if (turnsCounter == 3) // three rounds, there must be a winner
             {
-                return (turnsWonByPlayer1 > turnsWonByPlayer2) ? Outcome.ChallengerWins : Outcome.OverlordWins;
+                return (turnsWonByPlayer1 > turnsWonByPlayer2) ? Outcome.SmoorghWins : Outcome.HumanBotWins;
             }
             if (turnsCounter == 2) // two rounds have been played, there might be a winner
             {
                 if (turnsWonByPlayer1 == 2)
                 {
-                    return Outcome.ChallengerWins;
+                    return Outcome.SmoorghWins;
                 }
 
                 if (turnsWonByPlayer2 == 2)
                 {
-                    return Outcome.OverlordWins;
+                    return Outcome.HumanBotWins;
                 }
             }
             // only one round has been played, there can't be a winner
@@ -269,30 +269,30 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             return JsonConvert.DeserializeObject<MoveDTO>(await res.Content.ReadAsStringAsync());
         }
 
-        private Outcome CalculateResult(Move challengerMove, Move overlordMove)
+        private Outcome CalculateResult(Move smoorghMove, Move humanBotMove)
         {
-            if (challengerMove == overlordMove)
+            if (smoorghMove == humanBotMove)
             {
                 return Outcome.Tie;
             }
 
-            return challengerMove switch
+            return smoorghMove switch
             {
-                Move.Rock => overlordMove == Move.Metal || overlordMove == Move.Scissors
-                    ? Outcome.ChallengerWins
-                    : Outcome.OverlordWins,
-                Move.Paper => overlordMove == Move.Snap || overlordMove == Move.Rock
-                    ? Outcome.ChallengerWins
-                    : Outcome.OverlordWins,
-                Move.Scissors => overlordMove == Move.Paper || overlordMove == Move.Metal
-                    ? Outcome.ChallengerWins
-                    : Outcome.OverlordWins,
-                Move.Metal => overlordMove == Move.Snap || overlordMove == Move.Paper
-                    ? Outcome.ChallengerWins
-                    : Outcome.OverlordWins,
-                Move.Snap => overlordMove == Move.Scissors || overlordMove == Move.Rock
-                    ? Outcome.ChallengerWins
-                    : Outcome.OverlordWins,
+                Move.Rock => humanBotMove == Move.Metal || humanBotMove == Move.Scissors
+                    ? Outcome.SmoorghWins
+                    : Outcome.HumanBotWins,
+                Move.Paper => humanBotMove == Move.Snap || humanBotMove == Move.Rock
+                    ? Outcome.SmoorghWins
+                    : Outcome.HumanBotWins,
+                Move.Scissors => humanBotMove == Move.Paper || humanBotMove == Move.Metal
+                    ? Outcome.SmoorghWins
+                    : Outcome.HumanBotWins,
+                Move.Metal => humanBotMove == Move.Snap || humanBotMove == Move.Paper
+                    ? Outcome.SmoorghWins
+                    : Outcome.HumanBotWins,
+                Move.Snap => humanBotMove == Move.Scissors || humanBotMove == Move.Rock
+                    ? Outcome.SmoorghWins
+                    : Outcome.HumanBotWins,
                 _ => throw new NotImplementedException()
             };
         }
