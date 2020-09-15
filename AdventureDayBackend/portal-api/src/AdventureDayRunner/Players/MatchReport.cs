@@ -17,6 +17,7 @@ namespace AdventureDayRunner.Players
             return new MatchReport()
             {
                 Status = MatchRating.Ignore,
+                Income = 0,
                 Cost = cost
             };
         }
@@ -27,8 +28,8 @@ namespace AdventureDayRunner.Players
             return new MatchReport()
             {
                 Status = MatchRating.PlayedMatchSuccessfully,
-                Cost = income > 0 ? 0 : FixedMatchStake,
-                Income = income > 0 ? income : 0
+                Income = income > 0 ? income : 0,
+                Cost = income > 0 ? 0 : FixedMatchStake
             };
         }
 
@@ -38,7 +39,8 @@ namespace AdventureDayRunner.Players
             {
                 Status = MatchRating.Error,
                 Reason = error,
-                Cost = FixedMatchStake
+                Income = 0,
+                Cost = 0
             };
         }
         
@@ -48,18 +50,20 @@ namespace AdventureDayRunner.Players
             {
                 Status = MatchRating.Error,
                 Reason = reason,
-                Cost = FixedMatchStake
+                Income = 0,
+                Cost = 0
             };
         }
 
         public static MatchReport FromHackerAttack(bool hasDefendedAttack)
         {
-            // A hacker attack neither yields income nor costs?
             if (hasDefendedAttack)
             {
                 return new MatchReport()
                 {
-                    Status = MatchRating.Ignore
+                    Status = MatchRating.Ignore,
+                    Income = 0,
+                    Cost = 0
                 };
             }
             else
@@ -67,7 +71,9 @@ namespace AdventureDayRunner.Players
                 return new MatchReport()
                 {
                     Status = MatchRating.Error,
-                    Reason = "Hacker infiltration succeeded, your team is under attack."
+                    Reason = "Hacker infiltration - your team is under attack.",
+                    Income = 0,
+                    Cost = 0
                 };
             }
         }

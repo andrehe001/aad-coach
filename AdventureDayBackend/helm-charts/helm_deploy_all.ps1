@@ -15,6 +15,5 @@ param
 )
 
 helm upgrade adventure-day-runner ./adventure-day-runner --install --namespace $Namespace -f ./adventure-day-runner.values.$($Environment).yaml --create-namespace
-helm upgrade adventure-day-runner-api ./adventure-day-runner-api --install --namespace $Namespace -f ./adventure-day-runner-api.values.$($Environment).yaml --create-namespace
-helm upgrade adventure-day-portal-frontend ./adventure-day-portal-frontend --install --namespace $Namespace -f ./adventure-day-portal-frontend.values.$($Environment).yaml --create-namespace
-helm upgrade adventure-day-portal-api ./adventure-day-portal-api --install --namespace $Namespace -f ./adventure-day-portal-api.values.$($Environment).yaml --create-namespace
+#helm upgrade adventure-day-portal-frontend ./adventure-day-portal-frontend --install --namespace $Namespace -f ./adventure-day-portal-frontend.values.$($Environment).yaml --create-namespace
+#helm upgrade adventure-day-portal-api ./adventure-day-portal-api --install --namespace $Namespace -f ./adventure-day-portal-api.values.$($Environment).yaml --create-namespace

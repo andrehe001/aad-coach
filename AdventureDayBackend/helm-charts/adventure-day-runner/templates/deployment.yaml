@@ -41,16 +41,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "adventure-day-runner.fullname" . }}
                   key: dbConnection
-            - name: Parameter__DbName
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "adventure-day-runner.fullname" . }}
-                  key: dbName
-            - name: Parameter__DbCollectionName
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "adventure-day-runner.fullname" . }}
-                  key: dbCollectionName
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -19,7 +19,7 @@ namespace AdventureDayRunner
         {
             var runnerConfiguration = new RunnerConfiguration();
             
-            var server = new MetricServer(hostname: "localhost", port: runnerConfiguration.Configuration.GetValue<int>("PrometheusPort", 8080));
+            var server = new MetricServer(hostname: "localhost", port: runnerConfiguration.Configuration.GetValue<int>("PrometheusPort", 9090));
             server.Start();
             
             Log.Logger = new LoggerConfiguration()

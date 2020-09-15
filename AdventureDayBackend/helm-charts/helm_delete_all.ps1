@@ -15,6 +15,5 @@ param
 )
 
 helm delete adventure-day-runner --namespace $Namespace
-helm delete adventure-day-runner-api --namespace $Namespace
 helm delete adventure-day-portal-frontend --namespace $Namespace
 helm delete adventure-day-portal-api --namespace $Namespace
