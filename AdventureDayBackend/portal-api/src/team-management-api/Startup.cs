@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
+using Serilog;
 using team_management_api.Data;
 using team_management_api.Helpers;
 
@@ -15,6 +16,10 @@ namespace team_management_api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Log.Logger = new LoggerConfiguration()
+           .ReadFrom.Configuration(Configuration.GetSection("Logging"))
+           .WriteTo.Console() // Always write to console!
+           .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
