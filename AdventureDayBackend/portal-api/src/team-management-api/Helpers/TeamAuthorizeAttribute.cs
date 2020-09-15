@@ -80,10 +80,8 @@ namespace team_management_api.Helpers
                             {
                                 break;
                             }
-                            else
-                            {
-                                continue;
-                            }
+                            isTeamId = false;
+                            break;
                         }
                     }
 

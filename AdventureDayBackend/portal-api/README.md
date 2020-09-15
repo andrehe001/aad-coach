@@ -24,6 +24,9 @@ only if you are admin
 POST api/team/rename/2/newName43
 only if you are admin or part of team 2
 
+POST api/team/updateuri/2/newuri
+only if you are admin or part of team 2
+
 POST api/team/renameMember/{memberId}/{newName}
 
 POST api/team/addmemberto/{teamId}

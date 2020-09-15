@@ -36,6 +36,14 @@ namespace team_management_api.Data
             return SaveChanges();
         }
 
+        public bool UpdateGameEngineUri(int teamId, string newUri)
+        {
+            Team team = GetTeamById(teamId);
+            team.GameEngineUri = newUri;
+            _context.Update(team);
+            return SaveChanges();
+        }
+
         public bool UpdateTeam(Team team)
         {
             _context.Attach(team);
@@ -88,21 +96,6 @@ namespace team_management_api.Data
         public Team GetTeamByName(string name)
         {
             return _context.Teams.Where(team => team.Name.ToLower() == name.ToLower()).FirstOrDefault();
-        }
-
-        public bool RenameMember(int teamId, int memberId, string newDisplayName)
-        {
-            Member member = GetMember(teamId, memberId);
-            if (member != null)
-            {
-                member.DisplayName = newDisplayName;
-                _context.Update(member);
-                return SaveChanges();
-            }
-            else
-            {
-                return false;
-            }
         }
 
         public bool AddMemberToTeam(int teamId, Member member)
