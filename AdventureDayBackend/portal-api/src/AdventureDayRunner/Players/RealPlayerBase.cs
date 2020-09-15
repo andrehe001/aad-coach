@@ -48,7 +48,7 @@ namespace AdventureDayRunner.Players
             if (!result.IsSuccessStatusCode)
             {
                 Log.Error($"{_team.Name} - Status: {result.StatusCode}");
-                return null;
+                return MatchReport.FromError($"Status: {result.StatusCode}");
             }
 
             var response = await result.Content.ReadFromJsonAsync<MatchResponse>(cancellationToken: cancellationToken);
@@ -62,7 +62,7 @@ namespace AdventureDayRunner.Players
 
                 if (!subSeqResult.IsSuccessStatusCode)
                 {
-                    return null;
+                    return MatchReport.FromError($"Status: {result.StatusCode}");
                 }
 
                 response = await subSeqResult.Content.ReadFromJsonAsync<MatchResponse>(

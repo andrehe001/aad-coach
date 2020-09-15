@@ -11,28 +11,36 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using TeamGameHub.GameEngine.WebApi.Models;
 
 namespace TeamGameHub.GameEngine.WebApi.Services
 {
     public class MatchService
     {
+        private readonly ILogger<MatchService> _logger;
+        private readonly IConfiguration _configuration;
         private readonly IDistributedCache _cache;
         private readonly MatchDBContext _dbContext;
         private readonly IConfiguration _config;
+        private readonly Lazy<bool> _useMockBot;
 
         private readonly Dictionary<Guid, List<Match>> _matches = new Dictionary<Guid, List<Match>>();
 
         // EncryptionKey
         public static string _eKey { get; private set; }
 
-        public MatchService(IDistributedCache cache, MatchDBContext dbContext, IConfiguration config)
+        public MatchService(ILogger<MatchService> logger, IConfiguration configuration, IDistributedCache cache, MatchDBContext dbContext, IConfiguration config)
 
         {
             _eKey = "asdfbaasdfjknasere456789";
+            _logger = logger;
+            _configuration = configuration;
             _cache = cache;
             _dbContext = dbContext;
             _config = config;
+            
+            _useMockBot = new Lazy<bool>(() => _configuration.GetValue<bool>("UseMockBot", false));
         }
 
         public Task<IEnumerable<Match>> GetChallengerMatches(Guid challengerId)
@@ -246,15 +254,19 @@ namespace TeamGameHub.GameEngine.WebApi.Services
 
         private async Task<MoveDTO> GetBotMoveAsync(Match gameInfoForBackend)
         {
+            if (_useMockBot.Value)
+            {
+                _logger.LogInformation("Using mock bot.");
+                return new MoveDTO() { Move = Move.Rock };
+            }
+
             string backendurl = _config.GetValue<string>("ARCADE_BACKENDURL");
 
             HttpClient cl = new HttpClient();
-            StringContent content = new StringContent(JsonConvert.SerializeObject(gameInfoForBackend), Encoding.UTF8, "application/json");
+            StringContent content = new StringContent(JsonConvert.SerializeObject(gameInfoForBackend),
+                Encoding.UTF8, "application/json");
             HttpResponseMessage res = await cl.PostAsync(backendurl, content);
             return JsonConvert.DeserializeObject<MoveDTO>(await res.Content.ReadAsStringAsync());
-
-            // uncomment if you want to work without a backend
-            //return new MoveDTO() { Move = Move.Rock };
         }
 
         private Outcome CalculateResult(Move challengerMove, Move overlordMove)

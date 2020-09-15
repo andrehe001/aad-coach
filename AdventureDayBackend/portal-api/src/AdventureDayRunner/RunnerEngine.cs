@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AdventureDayRunner.Model;
 using AdventureDayRunner.Players;
 using AdventureDayRunner.Players.PseudoPlayers;
 using AdventureDayRunner.Players.RealPlayers;
@@ -52,7 +53,8 @@ namespace AdventureDayRunner
                             $"--- New Wave --- Phase: {currentPhase.ToString()}"
                             + $" Latency: {phaseConfiguration.RequestExecutorLatencyMillis}"
                             + $" (Config Refresh: {refreshDelta.Seconds} sec ago.)");
-                        await RunInnerLoop(phaseConfiguration, teams, cancellationToken);
+                        FireAndForgetForAllTeamsAndPlayers(phaseConfiguration, teams, cancellationToken);
+                        await Task.Delay(phaseConfiguration.RequestExecutorLatencyMillis + 20000, cancellationToken);
                         break;
                     case RunnerStatus.Stopped:
                         Log.Information(
@@ -70,7 +72,7 @@ namespace AdventureDayRunner
             } while (!cancellationToken.IsCancellationRequested);
         }
 
-        private async Task RunInnerLoop(
+        private void FireAndForgetForAllTeamsAndPlayers(
             RunnerPhaseConfigurationItem phaseConfiguration, 
             List<Team> teams, 
             CancellationToken cancellationToken)
@@ -83,9 +85,6 @@ namespace AdventureDayRunner
                     InvokePlayerWithFireAndForget(playerType, team, cancellationToken);
                 }
             }
-
-            // Delay the next wave of requests.
-            await Task.Delay(phaseConfiguration.RequestExecutorLatencyMillis, cancellationToken);
         }
 
         private async Task<(DateTime, List<Team>, RunnerProperties)> RefreshConfiguration(CancellationToken cancellationToken)
@@ -121,14 +120,19 @@ namespace AdventureDayRunner
                 }
                 catch (TaskCanceledException exception)
                 {
+                    var errorId = Guid.NewGuid();
+                    
+                    // If our cancellation token was not set, the
+                    // HTTP timeout has triggered.
                     if (!cancellationToken.IsCancellationRequested)
                     {
-                        Log.Error("HTTP Timeout.");
-                        report = MatchReport.FromError("HTTP Timeout");
+                        Log.Error($"{errorId} HTTP Timeout.");
+                        report = MatchReport.FromError($"HTTP Timeout - no answer within {httpTimeout.Seconds} seconds.");
                     }
                     else
                     {
-                        Log.Debug(exception: exception, "TaskCanceledException | No Http Timeout detected.");
+                        report = MatchReport.FromError($"General error. Reference: {errorId}");
+                        Log.Error(exception: exception, $"{errorId} TaskCanceledException | No HTTP Timeout detected.");
                     }
                 }
                 catch (MatchCanceledException ex)
@@ -137,10 +141,17 @@ namespace AdventureDayRunner
                 }
                 catch (Exception exception)
                 {
-                    // Should rarely occur.
-                    Log.Error(exception,
-                        $"Issue in Fire and Forget for Team {team.Name} URI: {team.GameEngineUri}");
-                    report = MatchReport.FromError("HTTP Timeout");
+                    if (exception.Message.Contains("An invalid request URI was provided."))
+                    {
+                        Log.Error($"No backend URI for team {team.Name} (ID: {team.Id}) found.");
+                        report = MatchReport.FromError($"Your backend URI is not configured.");
+                    }
+                    else
+                    {
+                        var errorId = Guid.NewGuid();
+                        Log.Error(exception, $"{errorId} Team {team.Name} (ID: {team.Id})");
+                        report = MatchReport.FromError($"General error. Reference: {errorId}");
+                    }
                 }
 
                 await PersistStatistics(DateTime.UtcNow - startTimestamp, team, report, cancellationToken);
@@ -150,6 +161,10 @@ namespace AdventureDayRunner
 
         private async Task PersistStatistics(TimeSpan responseTime, Team team, MatchReport report, CancellationToken cancellationToken)
         {
+            if (team == null) { throw new ArgumentNullException(nameof(team)); }
+            if (report == null) { throw new ArgumentNullException(nameof(report)); }
+            if (cancellationToken == null) { throw new ArgumentNullException(nameof(cancellationToken)); }
+            
             try
             {
                 await using (var lifetimeScope = _lifetimeScope.BeginLifetimeScope())
@@ -157,9 +172,7 @@ namespace AdventureDayRunner
                     var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
                     
                     // Errors
-                    var error = report.Status != MatchRating.Success 
-                                || report.Status != MatchRating.Ignore ? 1 : 0;
-                    
+                    var error = report.HasError ? 1 : 0;
                     var loss = report.HasLost ? 1 : 0;
                     var win = report.HasWon ? 1 : 0;
 

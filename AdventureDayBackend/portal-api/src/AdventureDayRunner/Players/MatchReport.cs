@@ -26,7 +26,7 @@ namespace AdventureDayRunner.Players
             var income = CalculateIncome(matchResponse);
             return new MatchReport()
             {
-                Status = MatchRating.Success,
+                Status = MatchRating.PlayedMatchSuccessfully,
                 Cost = income > 0 ? 0 : FixedMatchStake,
                 Income = income > 0 ? income : 0
             };
@@ -36,7 +36,7 @@ namespace AdventureDayRunner.Players
         {
             return new MatchReport()
             {
-                Status = MatchRating.Failed,
+                Status = MatchRating.Error,
                 Reason = error,
                 Cost = FixedMatchStake
             };
@@ -46,7 +46,7 @@ namespace AdventureDayRunner.Players
         {
             return new MatchReport()
             {
-                Status = MatchRating.Canceled,
+                Status = MatchRating.Error,
                 Reason = reason,
                 Cost = FixedMatchStake
             };
@@ -66,7 +66,7 @@ namespace AdventureDayRunner.Players
             {
                 return new MatchReport()
                 {
-                    Status = MatchRating.Failed,
+                    Status = MatchRating.Error,
                     Reason = "Hacker infiltration succeeded, your team is under attack."
                 };
             }
@@ -85,9 +85,19 @@ namespace AdventureDayRunner.Players
             private set;
         }
 
-        public bool HasWon => Income > 0;
+        public bool HasError => Status == MatchRating.Error;
+        
+        /// <summary>
+        /// Win or loose only possible if the match was actually
+        /// played successfully.
+        /// </summary>
+        public bool HasWon => Status == MatchRating.PlayedMatchSuccessfully && Income > 0;
 
-        public bool HasLost => !HasWon;
+        /// <summary>
+        /// Win or loose only possible if the match was actually
+        /// played successfully.
+        /// </summary>
+        public bool HasLost => Status == MatchRating.PlayedMatchSuccessfully && !HasWon;
 
         public bool HasLogEntry => Reason != null;
         
