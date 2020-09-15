@@ -36,7 +36,7 @@ namespace team_management_api.Controllers
 
         [HttpPost("current")]
         [TeamAuthorizeAttribute(AuthorizationType.AnyTeam)]
-        public ActionResult<Team> UpdateCurrentTeam(TeamUpdate teamUpdate)
+        public ActionResult<Team> UpdateCurrentTeam(TeamUpdateRequest teamUpdate)
         {
             var team = (Team)HttpContext.Items["Team"];
             if (team == null)

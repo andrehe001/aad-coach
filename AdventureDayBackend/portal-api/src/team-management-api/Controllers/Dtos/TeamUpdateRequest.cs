@@ -1,6 +1,6 @@
 ﻿namespace team_management_api.Controllers.Dtos
 {
-    public class TeamUpdate
+    public class TeamUpdateRequest
     {
         public string NewName { get; set; }
 
