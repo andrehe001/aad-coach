@@ -6,7 +6,7 @@ namespace team_management_api.Data
     {
         bool AddTeam(Team newTeam);
         bool UpdateTeam(Team team);
-        bool CheckTeamNameFree(int teamId, string teamName);
+        bool CheckTeamNameFree(string teamName);
         bool DeleteTeam(int teamId);
 
         bool RenameTeam(int teamId, string newName);

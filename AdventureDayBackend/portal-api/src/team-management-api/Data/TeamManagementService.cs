@@ -51,7 +51,7 @@ namespace team_management_api.Data
             return SaveChanges();
         }
 
-        public bool CheckTeamNameFree(int teamId, string teamName)
+        public bool CheckTeamNameFree(string teamName)
         {
             return !_context.Teams.Any(t => t.Name.ToLower() == teamName.ToLower());
         }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using team_management_api.Controllers.Dtos;
 using team_management_api.Data;
 using team_management_api.Helpers;
 
@@ -20,94 +21,62 @@ namespace team_management_api.Controllers
             _appSettings = appSettings.Value;
         }
 
-        [HttpPost("rename/{teamId}/{newName}")]
-        [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
-        public ActionResult<Team> UpdateTeamName(int teamId, string newName)
-        {
-            if (teamId == AppSettings.AdminTeamId || string.IsNullOrWhiteSpace(newName) || newName.Equals(AppSettings.AdminTeamName))
-            {
-                return BadRequest();
-            }
-
-            var nameFree = _teamservice.CheckTeamNameFree(teamId, newName);
-            if (!nameFree)
-            {
-                return Conflict("Name " + newName + " already taken");
-            }
-
-            var team = (Team)this.HttpContext.Items["Team"];
-            if (team != null && (team.Id == teamId || team.Id == AppSettings.AdminTeamId))
-            {
-                var success = _teamservice.RenameTeam(teamId, newName);
-                if (success)
-                {
-                    return Ok(_teamservice.GetTeamById(teamId));
-                }
-                else
-                {
-                    return BadRequest("Failed to rename " + teamId);
-                }
-            }
-            else
-            {
-                return NotFound(teamId);
-            }
-        }
-
-        [HttpPost("updateuri/{teamId}/{newUri}")]
-        [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
-        public ActionResult<Team> UpdateGameEngineUri(int teamId, string newUri)
-        {
-            if (teamId == AppSettings.AdminTeamId || string.IsNullOrWhiteSpace(newUri))
-            {
-                return BadRequest();
-            }
-
-            var team = (Team)this.HttpContext.Items["Team"];
-            if (team != null && (team.Id == teamId || team.Id == AppSettings.AdminTeamId))
-            {
-                var success = _teamservice.UpdateGameEngineUri(teamId, newUri);
-                if (success)
-                {
-                    return Ok(_teamservice.GetTeamById(teamId));
-                }
-                else
-                {
-                    return BadRequest("Failed to update game engine uri " + teamId);
-                }
-            }
-            else
-            {
-                return NotFound(teamId);
-            }
-        }
-
-        [HttpGet("statsandlogs/{teamId}")]
-        [TeamAuthorizeAttribute(AuthorizationType.OwnTeam, AuthorizationType.Admin)]
-        public ActionResult<Team> GetTeamStatsAndLogs(int teamId)
-        {
-            if (teamId == AppSettings.AdminTeamId)
-            {
-                return BadRequest();
-            }
-
-            var team = (Team)this.HttpContext.Items["Team"];
-            if (team != null && (team.Id == teamId || team.Id == AppSettings.AdminTeamId))
-            {
-                Console.WriteLine(team);
-                return Ok(team);
-            }
-            else
-            {
-                return NotFound(teamId);
-            }
-        }
-
-        [HttpGet("stats")]
+        [HttpGet("current")]
         [TeamAuthorizeAttribute(AuthorizationType.AnyTeam)]
-        public ActionResult<IEnumerable<Team>> GetStats()
+        public ActionResult<Team> GetCurrentTeam()
         {
-            throw new NotImplementedException();
+            var team = (Team)HttpContext.Items["Team"];
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new { team.Name, team.GameEngineUri });
+        }
+
+        [HttpPost("current")]
+        [TeamAuthorizeAttribute(AuthorizationType.AnyTeam)]
+        public ActionResult<Team> UpdateCurrentTeam(TeamUpdate teamUpdate)
+        {
+            var team = (Team)HttpContext.Items["Team"];
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            var teamId = team.Id;
+            var successName = true;
+            var successUri = true;
+
+            if (team.Name != teamUpdate.NewName)
+            {
+                if (string.IsNullOrWhiteSpace(teamUpdate.NewName) || teamUpdate.NewName == AppSettings.AdminTeamName
+                || !team.Name.StartsWith("Team"))
+                {
+                    return BadRequest();
+                }
+
+                var nameFree = _teamservice.CheckTeamNameFree(teamUpdate.NewName);
+                if (!nameFree)
+                {
+                    return Conflict("Name " + teamUpdate.NewName + " already taken");
+                }
+
+                successName = _teamservice.RenameTeam(teamId, teamUpdate.NewName);
+            }
+            if (team.GameEngineUri != teamUpdate.NewGameEngineUri)
+            {
+                successUri = _teamservice.UpdateGameEngineUri(teamId, teamUpdate.NewGameEngineUri);
+            }
+
+            if (successName && successUri)
+            {
+                return Ok(_teamservice.GetTeamById(teamId));
+            } else if (successName)
+            {
+                return BadRequest("Failed to update game engine uri " + teamId);
+            }
+            return BadRequest("Failed to rename " + teamId);
         }
 
         [HttpGet("all")]
@@ -204,7 +173,7 @@ namespace team_management_api.Controllers
             if (string.IsNullOrWhiteSpace(newTeam.Name) || newTeam.Name.Equals(AppSettings.AdminTeamName) || string.IsNullOrWhiteSpace(newTeam.TeamPassword))
                 return BadRequest();
 
-            var nameFree = _teamservice.CheckTeamNameFree(0, newTeam.Name);
+            var nameFree = _teamservice.CheckTeamNameFree(newTeam.Name);
             if (!nameFree)
             {
                 return Conflict(newTeam);

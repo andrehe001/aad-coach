@@ -5,16 +5,12 @@ namespace team_management_api.Data
 {
     public interface ITeamManagement
     {
-        ActionResult<Team> UpdateTeamName(int teamId, string newName);
-
-        ActionResult<Team> GetTeamStatsAndLogs(int teamId);
 
         ActionResult<Team> GetTeam(int teamId);
         ActionResult<Team> GetTeamWithMembers(int teamId);
         ActionResult<IEnumerable<Team>> GetAllTeams();
         ActionResult<IEnumerable<Team>> GetAllTeamsWithMembers();
 
-        ActionResult<IEnumerable<Team>> GetStats();
 
         IActionResult CreateTeam(Team newTeam);
 
