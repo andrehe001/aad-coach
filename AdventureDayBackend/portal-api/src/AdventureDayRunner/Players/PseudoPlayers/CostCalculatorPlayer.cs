@@ -15,10 +15,12 @@ namespace AdventureDayRunner.Players.PseudoPlayers
     public class CostCalculatorPlayer : PseudoPlayerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly double _azureCostScaleFactor;
 
         public CostCalculatorPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {
             _configuration = configuration;
+           _azureCostScaleFactor = _configuration.GetValue("AzureCostScaleFactor", 1000.0); 
         }
 
         public override string Name => "Dagobert";
@@ -77,16 +79,19 @@ namespace AdventureDayRunner.Players.PseudoPlayers
                             .Total;
 
                         // COMPUTE COST / VCORE / SECOND: 0.000134 EUR
-                        // *1000 just for having bigger numbers
-                        sqlCost += (int)Math.Round((decimal)(0.000134 * lastMinuteAppCPUBilled * 10000), MidpointRounding.AwayFromZero);
+                        // scaleFactor just for having bigger numbers
+                        if (lastMinuteAppCPUBilled != null)
+                            sqlCost += (int) Math.Round(
+                                0.000134 * lastMinuteAppCPUBilled.Value * _azureCostScaleFactor,
+                                MidpointRounding.AwayFromZero);
                     }
                     else if (serviceLevel.StartsWith("GP_Gen5"))
                     {
                         var vCoreCount = int.Parse(serviceLevel.Replace("GP_Gen5_", ""));
 
                         // Cost per vCore (in EUR, month) 167.77
-                        // *1000 just for having bigger numbers
-                        sqlCost += (int)Math.Round(vCoreCount * 167.77 / 31 / 24 / 60 * 10000, MidpointRounding.AwayFromZero);
+                        // * scaleFactor just for having bigger numbers
+                        sqlCost += (int)Math.Round(vCoreCount * 167.77 / 31 / 24 / 60 * _azureCostScaleFactor, MidpointRounding.AwayFromZero);
                     }
                 }
             }
