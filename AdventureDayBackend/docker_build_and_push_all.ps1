@@ -4,25 +4,25 @@
 param 
 (
     [Parameter(Mandatory = $true)]
-    [ValidateLength(3,63)]
-    [ValidatePattern('^[^$()]+$', ErrorMessage = "{0} is not valid.")]
+    [ValidateLength(1,255)]
+    [ValidateNotNull()]
     [string]
-    $ContainerRegistryName,
-    
+    $RegistryName,
+
     [Parameter(Mandatory = $true)]
     [ValidateLength(1,255)]
-    [ValidatePattern('^[^$()]+$', ErrorMessage = "{0} is not valid.")]
+    [ValidateNotNull()]
     [string]
-    $Label,
+    $Tag,
 
     [switch]
     $Local
 )
 
-Write-Verbose "  ContainerRegistryName: $ContainerRegistryName"
+Write-Verbose "  RegistryName: $RegistryName"
 Write-Verbose "Building AdventureDayRunner"
-az acr build -r $ContainerRegistryName -f ./portal-api/src/AdventureDayRunner/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-runner:$($Label)" ./portal-api/src
+az acr build -r $RegistryName -f ./portal-api/src/AdventureDayRunner/Dockerfile -t "$($RegistryName).azurecr.io/adventure-day-runner:$($Tag)" ./portal-api/src
 Write-Verbose "Building AdventureDayPortalApi"
-az acr build -r $ContainerRegistryName -f ./portal-api/src/team-management-api/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-portal-api:$($Label)" ./portal-api/src
+az acr build -r $RegistryName -f ./portal-api/src/team-management-api/Dockerfile -t "$($RegistryName).azurecr.io/adventure-day-portal-api:$($Tag)" ./portal-api/src
 Write-Verbose "Building AdventureDayPortal"
-az acr build -r $ContainerRegistryName -f ./portal-frontend/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-portal-frontend:$($Label)" ./portal-frontend
+az acr build -r $RegistryName -f ./portal-frontend/Dockerfile -t "$($RegistryName).azurecr.io/adventure-day-portal-frontend:$($Tag)" ./portal-frontend
