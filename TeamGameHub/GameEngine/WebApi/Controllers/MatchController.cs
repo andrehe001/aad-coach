@@ -43,9 +43,6 @@ namespace TeamGameHub.GameEngine.WebApi.Controllers
             {
                 return Ok(match);
             }
-
-
         }
-
     }
 }

@@ -20,6 +20,9 @@ param
 )
 
 Write-Verbose "  ContainerRegistryName: $ContainerRegistryName"
+Write-Verbose "Building AdventureDayRunner"
 az acr build -r $ContainerRegistryName -f ./portal-api/src/AdventureDayRunner/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-runner:$($Label)" ./portal-api/src
+Write-Verbose "Building AdventureDayPortalApi"
 az acr build -r $ContainerRegistryName -f ./portal-api/src/team-management-api/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-portal-api:$($Label)" ./portal-api/src
+Write-Verbose "Building AdventureDayPortal"
 az acr build -r $ContainerRegistryName -f ./portal-frontend/Dockerfile -t "$($ContainerRegistryName).azurecr.io/adventure-day-portal-frontend:$($Label)" ./portal-frontend

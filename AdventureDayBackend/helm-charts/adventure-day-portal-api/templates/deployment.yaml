@@ -15,6 +15,7 @@ spec:
     metadata:
     {{- with .Values.podAnnotations }}
       annotations:
+        prometheus.io/port: '8080'
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
@@ -33,17 +34,25 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: ASPNETCORE_URLS
+            value: "http://+:8080"
+          - name: Authentication__SqlConnectionString
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "adventure-day-portal-api.fullname" . }}
+                key: dbConnection
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /api/ping
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /api/ping
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

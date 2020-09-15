@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Prometheus;
 using team_management_api.Data;
 using team_management_api.Helpers;
 
@@ -38,7 +39,8 @@ namespace team_management_api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // Redirection handled via Ingress.
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -53,6 +55,7 @@ namespace team_management_api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapMetrics();
             });
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())

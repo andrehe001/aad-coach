@@ -2,6 +2,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /app
 
 # Improve Docker build performance by caching dependencies in separate layer.
+COPY ./*.sln ./
 COPY */*.csproj ./
 RUN for file in $(ls *.csproj); do mkdir -p ${file%.*} && mv $file ${file%.*}; done
 RUN dotnet restore
@@ -19,4 +20,5 @@ COPY --from=build-env /app/out .
 RUN chown -R www-data:www-data /app
 USER www-data
 
+ENV ASPNETCORE_URLS http://+:8080
 ENTRYPOINT ["dotnet", "team-management-api.dll"]
