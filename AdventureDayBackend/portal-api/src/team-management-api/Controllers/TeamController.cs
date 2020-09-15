@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using team_management_api.Controllers.Dtos;
@@ -44,6 +45,7 @@ namespace team_management_api.Controllers
                 return NotFound();
             }
 
+            Log.Information("Updating team {teamId}", team.Id);
             var teamId = team.Id;
             var successName = true;
             var successUri = true;
@@ -71,9 +73,11 @@ namespace team_management_api.Controllers
 
             if (successName && successUri)
             {
+                Log.Information("Updates team {teamId}", team.Id);
                 return Ok(_teamservice.GetTeamById(teamId));
             } else if (successName)
             {
+                Log.Error("Failed to update {teamId}", team.Id);
                 return BadRequest("Failed to update game engine uri " + teamId);
             }
             return BadRequest("Failed to rename " + teamId);
@@ -176,6 +180,7 @@ namespace team_management_api.Controllers
             var nameFree = _teamservice.CheckTeamNameFree(newTeam.Name);
             if (!nameFree)
             {
+                Log.Warning("Failed to create team {teamId} due to conflict", newTeam.Name);
                 return Conflict(newTeam);
             }
 
@@ -189,10 +194,12 @@ namespace team_management_api.Controllers
             if (success)
             {
                 newTeam.Id = team.Id;
+                Log.Information("Successfully created team {teamId} with {id}", newTeam.Name, newTeam.Id);
                 return Ok(newTeam);
             }
             else
             {
+                Log.Error("Failed to create team {teamId} due to error", newTeam.Name);
                 return NotFound(newTeam);
             }
         }
@@ -207,10 +214,12 @@ namespace team_management_api.Controllers
             var success = _teamservice.DeleteTeam(teamId);
             if (success)
             {
+                Log.Information("Successfully deleted team {teamId}", teamId);
                 return Ok(teamId);
             }
             else
             {
+                Log.Error("Failed to delete team {teamId} due to error", teamId);
                 return NotFound(teamId);
             }
         }
@@ -227,10 +236,12 @@ namespace team_management_api.Controllers
             var success = _teamservice.AddMemberToTeam(teamId, newMember);
             if (success)
             {
+                Log.Information("Successfully added member {member} to team {teamId}", newMember.Username, teamId);
                 return Ok();
             }
             else
             {
+                Log.Error("Failed to add member {member} to team {teamId} due to error", newMember.Username, teamId);
                 return NotFound();
             }
         }
@@ -247,10 +258,12 @@ namespace team_management_api.Controllers
             var success = _teamservice.AddMemberToTeam(teamName, newMember);
             if (success)
             {
+                Log.Information("Successfully added {0} to team {1}", newMember.Username, teamName);
                 return Ok(newMember);
             }
             else
             {
+                Log.Error("Failed to add {0} to team {1}", newMember.Username, teamName);
                 return NotFound(newMember);
             }
         }
@@ -267,10 +280,12 @@ namespace team_management_api.Controllers
             var success = _teamservice.RemoveMemberFromTeam(teamId, memberId);
             if (success)
             {
+                Log.Information("Successfully added {0} to team {1}", memberId, teamId);
                 return Ok(memberId);
             }
             else
             {
+                Log.Error("Failed to remove {0} from team {1}", memberId, teamId);
                 return NotFound(memberId);
             }
         }
@@ -289,7 +304,10 @@ namespace team_management_api.Controllers
             }
 
             if (response == null)
+            {
+                Log.Warning("Failed to authenticate {teamName}", model.Teamname);
                 return BadRequest(new { message = "Teamname or password is incorrect" });
+            }
 
             return Ok(response);
         }
