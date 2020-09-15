@@ -55,7 +55,7 @@ Jede Challenge wird unabhängig von einander bewertet
 #### 4. Phase: Scaling
 * Narrative: A bunch of tweets are hitting up right after going online again - alle your fans in the world are trying to access the side again. 
 * Tech: Scale pod and node count automatically
-* Tech: Scale SQL Database | or Redis before SQL Database
+* Tech: Scale SQL Database
 * Tech: Backend fährt hoch und runter die Requests pro Sekunde
 Background: Limit Sessions per Pod (based on memory)
 

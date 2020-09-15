@@ -67,7 +67,6 @@
 ### Azure costs
 * look into AKS node pool SKU and node count
 * look into Azure SQL Database SKU
-* look into Redis Cache SKU
 
 ## Phase 4: Scale
 * RandomPlayer see above

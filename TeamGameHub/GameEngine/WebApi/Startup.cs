@@ -31,9 +31,13 @@ namespace AzureGameDay.Web
             services.AddDbContext<MatchDBContext>(opt =>
                opt.UseSqlServer(Configuration.GetConnectionString("GameEngineDB")));
 
-            services.AddDistributedRedisCache(opt =>
-                opt.Configuration = Configuration.GetConnectionString("GameEngineRedis")
-            );
+            services.AddDistributedSqlServerCache(opt =>
+            {
+                opt.ConnectionString = Configuration.GetConnectionString("GameEngineDB");
+                opt.SchemaName = "dbo";
+                opt.TableName = "MatchCache";
+            });
+
             services.AddOpenApiDocument(s =>
             {
                 s.Title = "Azure Adventure Day - API";

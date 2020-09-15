@@ -15,6 +15,11 @@
     <ul>
       <li>
         <a
+          href="https://docs.microsoft.com/en-us/azure/azure-sql/database/serverless-tier-overview"
+        >Azure SQL Database serverless tier and autoscaling</a>
+      </li>
+      <li>
+        <a
           href="https://docs.microsoft.com/en-us/azure/aks/concepts-scale"
         >Scaling options for applications in Azure Kubernetes Service (AKS)</a>
       </li>
@@ -22,11 +27,6 @@
         <a
           href="https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-scale#autoscale-pods"
         >Scale applications in Azure Kubernetes Service (AKS)</a>
-      </li>
-      <li>
-        <a
-          href="https://docs.microsoft.com/en-us/azure/azure-sql/database/serverless-tier-overview"
-        >Azure SQL Database serverless tier and autoscaling</a>
       </li>
     </ul>
   </div>

@@ -28,11 +28,6 @@
           href="https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-scale"
         >Azure SQL Database Scaling</a>
       </li>
-      <li>
-        <a
-          href="https://docs.microsoft.com/en-us/azure/azure-cache-for-redis/cache-how-to-scale"
-        >How to Scale Azure Cache for Redis</a>
-      </li>
     </ul>
   </div>
 </template>
