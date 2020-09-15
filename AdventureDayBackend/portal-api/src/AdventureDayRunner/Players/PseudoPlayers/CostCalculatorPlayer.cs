@@ -31,7 +31,7 @@ namespace AdventureDayRunner.Players.PseudoPlayers
             {
                 ClientId = _configuration.GetValue<string>("AzureSPClientId"),
                 ClientSecret = _configuration.GetValue<string>("AzureSPClientSecret")
-            }, _configuration.GetValue<string>("AzureSPTenantId"), AzureEnvironment.AzureGlobalCloud);
+            }, team.TenantId.ToString(), AzureEnvironment.AzureGlobalCloud);
 
             var azure = Azure
                 .Configure()
