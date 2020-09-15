@@ -19,13 +19,20 @@ on:
         description: 'The deployment location used for all Azure artefacts.'
         required: true
         default: 'northeurope'
-
+      tag:
+        description: 'The container image tag to apply'
+        required: true
+        default: '1'
+      registryName:
+        description: 'The Azure Container Registry name'
+        required: true
+        default: 'azureadventuredayprod6d0b53'
 defaults:
   run:
-    working-directory: AdventureDayBackend/terraform
+    working-directory: AdventureDayBackend/
 jobs:
   deploy:
-    name: Deploy Gameday Backend to Azure
+    name: Deploy Helm Charts to Adventure Day Backend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -33,8 +40,14 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets[github.event.inputs.azureSecretName] }}
-      - name: Run Terraform Apply
-        run: ./tf.ps1 -Verbose -Force -Prefix ${{ github.event.inputs.prefix }} -Location ${{ github.event.inputs.location }} -EnvironmentName ${{ github.event.inputs.environmentName }} -TargetPath . -Apply -Download
+      - name: Docker Build and Push All
+        run: ./docker_build_and_push_all.ps1 -RegistryName  "${{ github.event.inputs.registryName }}" -Tag "${{ github.event.inputs.tag }}"
+        shell: pwsh
+        env:
+          AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
+      - name: Run Helm Deploy
+        working-directory: AdventureDayBackend/helm-charts
+        run: ./helm_deploy_all.ps1 -RegistryName "${{ github.event.inputs.registryName }}" -Tag "${{ github.event.inputs.tag }}"
         shell: pwsh
         env:
           AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
