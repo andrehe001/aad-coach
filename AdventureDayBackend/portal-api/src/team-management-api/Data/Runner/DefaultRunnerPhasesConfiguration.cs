@@ -53,7 +53,7 @@ namespace team_management_api.Data.Runner
                         PlayerType.Random, 
                         PlayerType.Fixed, 
                         PlayerType.Bet, 
-                        PlayerType.CostCalculator, 
+                        // PlayerType.CostCalculator,  # TODO: Cost calculation API does not like "hammer mode"
                         PlayerType.Mass
                     }
                 }
