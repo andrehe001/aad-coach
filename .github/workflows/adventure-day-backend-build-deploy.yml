@@ -1,0 +1,65 @@
+name: AdventureDay-Backend-Build-Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      azureSecretName:
+        description: 'Azure Secret Name containing the Service Principal Details'
+        required: true
+        default: 'AZURE_PROD'
+      prefix:
+        description: 'The deployment prefix used for all Azure artefacts.'
+        required: true
+        default: 'azure-adventure-day'
+      location:
+        description: 'The deployment location used for all Azure artefacts.'
+        required: true
+        default: 'northeurope'
+      tag:
+        description: 'The container image tag to apply'
+        required: true
+        default: '1'
+      registryName:
+        description: 'The Azure Container Registry name'
+        required: true
+        default: 'azureadventuredayprod6d0b53'
+      aksRgName:
+        description: 'AKS RG Name'
+        required: true
+        default: 'azure_adventure_day_prod_rg'
+      aksName:
+        description: 'AKS Cluster Name'
+        required: true
+        default: 'azure-adventure-day-prod'
+      runDockerBuild:
+        description: 'Run the ACR Docker Build process'
+        required: true
+        default: 'yes'
+defaults:
+  run:
+    working-directory: AdventureDayBackend/
+jobs:
+  deploy:
+    name: Deploy Helm Charts to Adventure Day Backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets[github.event.inputs.azureSecretName] }}
+      - name: AZ AKS Login
+        run: az aks get-credentials --resource-group ${{ github.event.inputs.aksRgName }} --name ${{ github.event.inputs.aksName }} --overwrite-existing --admin
+        shell: bash
+      - name: Docker Build and Push All
+        if: github.event.inputs.runDockerBuild == 'yes'
+        run: ./docker_build_and_push_all.ps1 -RegistryName  "${{ github.event.inputs.registryName }}" -Tag "${{ github.event.inputs.tag }}"
+        shell: pwsh
+        env:
+          AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
+      - name: Run Helm Deploy
+        working-directory: AdventureDayBackend/helm-charts
+        run: ./helm_deploy_all.ps1 -RegistryName "${{ github.event.inputs.registryName }}" -Tag "${{ github.event.inputs.tag }}"
+        shell: pwsh
+        env:
+          AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}

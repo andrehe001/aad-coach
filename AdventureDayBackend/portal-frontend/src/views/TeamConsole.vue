@@ -4,11 +4,10 @@
     <div class="container-fluid content">
       <div class="row">
         <div id="team-status" class="col-3">
-          <!-- TODO:
           <p class="status-text">
             <span>Rank:</span>
-            <span>01</span>
-          </p> -->
+            <span>{{currentRank}}</span>
+          </p>
           <p class="status-text">
             <span>Score:</span>
             <span>{{ TeamStats.score }}</span>
@@ -92,11 +91,13 @@ export default {
   name: "TeamConsole",
   data() {
     return {
+      timerTeamRank: "",
       timerTeamStats: "",
       timerTeamLog: "",
       timerPhase: "",
       TeamStats: null,
       TeamLog: null,
+      currentRank : null,
       currentPhase : 1,
     };
   },
@@ -117,14 +118,26 @@ export default {
   created() {
     const fetchIntervalMs = 10 * 1000;
 
+    this.fetchTeamRank();
     this.fetchTeamStats();
     this.fetchTeamLog();
     this.fetchCurrentPhase();
+    this.timerTeamRank = setInterval(this.fetchTeamRank, fetchIntervalMs);
     this.timerTeamStats = setInterval(this.fetchTeamStats, fetchIntervalMs);
     this.timerTeamLog = setInterval(this.fetchTeamLog, fetchIntervalMs);
     this.timerPhase = setInterval(this.fetchCurrentPhase, fetchIntervalMs);
   },
   methods: {
+    fetchTeamRank() {
+      this.$http
+        .get("Statistics/team/current/rank")
+        .then((response) => {
+          this.currentRank = response.data;
+        })
+        .catch(function (error) {
+          console.error(error.response);
+        });
+    },
     fetchTeamStats() {
       this.$http
         .get("Statistics/team/current/stats")
@@ -157,6 +170,7 @@ export default {
     }
   },
   beforeDestroy() {
+    clearInterval(this.timerTeamRank);
     clearInterval(this.timerTeamStats);
     clearInterval(this.timerTeamLog);
     clearInterval(this.timerPhase);

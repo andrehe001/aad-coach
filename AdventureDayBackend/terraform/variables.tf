@@ -64,8 +64,8 @@ variable "aks_default_node_pool" {
 
   default = {
     name                           = "default",
-    node_count                     = 1,
-    vm_size                        = "Standard_DS2_v2"
+    node_count                     = 3,
+    vm_size                        = "Standard_D2s_v3"
     availability_zones             = [],
     node_labels                    = {},
     node_taints                    = [],
@@ -116,7 +116,7 @@ variable "aks_api_server_authorized_ip_ranges" {
 
 variable "aks_admin_group_object_ids" {
   type        = list(string)
-  default     = []
+  default     = ["dbb9a1a4-e439-420c-8756-9d7179c795b5"] // TODO: Remove hard-coded group from defaults.
   description = "The cluster-admins for the Kubernetes cluster."
 }
 

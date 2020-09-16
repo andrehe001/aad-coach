@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,37 @@ namespace team_management_api.Controllers
         {
             var leaderboard = _dbContext.TeamScores
                 .Select(_ => new { _.Team.Name, _.Score, _.Wins, _.Loses, _.Errors, _.Profit })
-                .ToList();
+                .ToList()
+                .OrderByDescending(_ => _.Score); // Score is not in the DB as column!
 
             return Ok(leaderboard);
+        }
+
+        [HttpGet("team/current/rank")]
+        [TeamAuthorizeAttribute(AuthorizationType.AnyTeam)]
+        public ActionResult<Team> GetTeamRank()
+        {
+            var team = (Team)HttpContext.Items["Team"];
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            var allTeamScores = _dbContext.TeamScores
+                .Select(_ => new { _.TeamId, _.Score })
+                .ToList()
+                .OrderByDescending(_ => _.Score);  // Score is not in the DB as column!
+
+            var teamScore = allTeamScores
+                .Select((team, index) => new { team, index })
+                .SingleOrDefault(_ => _.team.TeamId == team.Id);
+
+            if (teamScore == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(teamScore.index + 1);
         }
 
         [HttpGet("team/current/stats")]
