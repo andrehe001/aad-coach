@@ -68,7 +68,7 @@
                <li class="nav-item">
                 <router-link v-if="loggedIn" to="/logout" v-slot="{ href, route, navigate, isActive, isExactActive }" >
                     <a :href="href" @click="navigate" :class="['nav-link', isExactActive && 'active']" data-dismiss="modal">
-                      [Logout]
+                      [Logout {{username}}]
                     </a>
                 </router-link>
               </li>
@@ -96,7 +96,8 @@ export default {
   data() {
       return {
           loggedIn : false,
-          isAdmin : false
+          isAdmin : false,
+          username: null
       }
   },
   created() {
@@ -106,7 +107,7 @@ export default {
     updateLoginStatus() {
       let user = JSON.parse(localStorage.getItem('user'))
       this.isAdmin = user.isAdmin == 1;
-
+      this.username = user.teamname;
       this.loggedIn = localStorage.getItem('jwt') != null;
     }
   },

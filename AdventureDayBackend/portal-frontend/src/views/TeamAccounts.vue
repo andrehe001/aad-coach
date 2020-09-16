@@ -11,12 +11,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in Users" v-bind:key="user.Username">
+          <tr v-for="user in users" v-bind:key="user.Username">
             <th scope="row">
-              {{ user.Username }}
+              {{ user.username }}
             </th>
             <td>
-              {{ user.Password }}
+              {{ user.password }}
             </td>
           </tr>
         </tbody>
@@ -30,13 +30,23 @@ export default {
   name: "TeamAccounts",
   data() {
     return {
-      Users: [
-        { Username: "AADTeam1A1@asmw13.onmicrosoft.com", Password: "InitialPa55word" },
-        { Username: "AADTeam1A2@asmw13.onmicrosoft.com", Password: "InitialPa55word" },
-        { Username: "AADTeam1A3@asmw13.onmicrosoft.com", Password: "InitialPa55word" },
-        { Username: "AADTeam1A4@asmw13.onmicrosoft.com", Password: "InitialPa55word" }
-      ]
+      users: []
     };
+  },
+  created() {
+    this.fetchTeamAccounts();
+  },
+  methods: {
+    fetchTeamAccounts() {
+      this.$http
+        .get("Team/members/current")
+        .then((response) => {
+          this.users = response.data;
+        })
+        .catch(function (error) {
+          console.error(error.response);
+        });
+    }
   }
 };
 </script>

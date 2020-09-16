@@ -149,6 +149,18 @@ namespace team_management_api.Controllers
             }
         }
 
+        [HttpGet("members/current")]
+        [TeamAuthorizeAttribute(AuthorizationType.AnyTeam)]
+        public ActionResult<IEnumerable<Member>> GetTeamMembersForCurrentTeam()
+        {
+            var team = (Team)this.HttpContext.Items["Team"];
+            if (team == null || team.Id == AppSettings.AdminTeamId)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_teamservice.GetMembers(team.Id));
+        }
 
         [HttpGet("members/{teamId}")]
         [TeamAuthorizeAttribute(AuthorizationType.AnyTeam)]
