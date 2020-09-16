@@ -523,3 +523,5 @@ override.tf.json
 
 # End of https://www.toptal.com/developers/gitignore/api/terraform
 /AdventureDayBackend/terraform/output.json
+AdventureDayBackend/team-import/teams_real.csv
+AdventureDayBackend/team-import/teams-members_real.csv
