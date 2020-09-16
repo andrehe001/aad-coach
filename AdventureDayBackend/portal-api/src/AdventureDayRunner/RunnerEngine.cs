@@ -94,7 +94,7 @@ namespace AdventureDayRunner
                             + $" Latency: {phaseConfiguration.RequestExecutorLatencyMillis}"
                             + $" (Config Refresh: {refreshDelta.Seconds} sec ago.)");
                         FireAndForgetForAllTeamsAndPlayers(phaseConfiguration, teams, cancellationToken);
-                        await Task.Delay(phaseConfiguration.RequestExecutorLatencyMillis + 20000, cancellationToken);
+                        await Task.Delay(phaseConfiguration.RequestExecutorLatencyMillis, cancellationToken);
                         break;
                     case RunnerStatus.Stopped:
                         Log.Information(
