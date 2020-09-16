@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using TeamGameHub.GameEngine.WebApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace TeamGameHub.GameEngine.WebApi.Services
 {
@@ -58,6 +59,7 @@ namespace TeamGameHub.GameEngine.WebApi.Services
                 //_dbContext.MatchResults
                 //    .Take(300)
                 //    .ToList();
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY MatchSequenceNumber");
 
                 // Waste CPU
                 Stopwatch start = Stopwatch.StartNew();
