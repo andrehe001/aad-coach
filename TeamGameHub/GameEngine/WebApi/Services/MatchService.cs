@@ -59,21 +59,29 @@ namespace TeamGameHub.GameEngine.WebApi.Services
                 //_dbContext.MatchResults
                 //    .Take(300)
                 //    .ToList();
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
 
                 // Waste CPU
-                var end = DateTime.Now + TimeSpan.FromSeconds(3);
+                var end = DateTime.Now + TimeSpan.FromSeconds(2);
                 var result = 0;
                 while (DateTime.Now < end)
                 {
                     result += 1;
                     result -= 1;
+                    result += 400;
+                    result *= 500;
+                    result /= 500;
                 }
+                Console.WriteLine(result.ToString());
             }
 
             Match currentMatch = (matchRequest.MatchId != Guid.Empty)
@@ -115,7 +123,7 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             currentMatch.MatchOutcome = matchwinner;
 
             // save current match state in cache
-            SaveMatchToCache(currentMatch);
+            await SaveMatchToCache(currentMatch);
 
             // if game over store to db
             if (currentMatch.MatchOutcome != null)
@@ -203,12 +211,11 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             _dbContext.SaveChanges();
         }
 
-        private void SaveMatchToCache(Match m)
+        private async Task SaveMatchToCache(Match m)
         {
             string serializedMatch = JsonConvert.SerializeObject(m);
             string encryptedString = Encrypt(serializedMatch);
-            _cache.SetStringAsync(m.MatchId.ToString(), encryptedString);
-
+            await _cache.SetStringAsync(m.MatchId.ToString(), encryptedString);
         }
 
         private async Task<Match> GetMatchFromCacheAsync(Guid matchId)
