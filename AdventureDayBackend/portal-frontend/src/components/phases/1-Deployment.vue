@@ -7,16 +7,7 @@
     <p>The Smoorghs love the game "Rock, Paper, Scissors, Metal, Snap" - so we should get it ready as soon as possible in order to buy our resources back.</p>
     <p>Goal: Get the game ready as soon as possible to earn virtual money from the Smoorghs!</p>
     <h3>Hints</h3>
-    <p>
-      <a
-        data-toggle="collapse"
-        data-target="#collapseHints"
-        aria-expanded="false"
-        aria-controls="collapseHints"
-        href="#"
-      >Toggle Hints (free for now...)</a>
-    </p>
-    <ul class="collapse" id="collapseHints">
+    <ul>
       <li>
         World Game Fedaration has provided the source code to start with at:
         <a href="https://github.com/RicardoNiepel/azure-adventure-day-team">azure-adventure-day-team</a>
@@ -27,6 +18,18 @@
           href="https://docs.github.com/en/github/importing-your-projects-to-github/importing-a-repository-with-github-importer"
         >GitHub Importer</a> into your own public repository
       </li>
+    </ul>
+    <h3>Other Hints</h3>
+    <p>
+      <a
+        data-toggle="collapse"
+        data-target="#collapseHints"
+        aria-expanded="false"
+        aria-controls="collapseHints"
+        href="#"
+      >Toggle Hints (free for now...)</a>
+    </p>
+    <ul class="collapse" id="collapseHints">
       <li>Take a close look into the existing sources, it may contain all necessary information regarding infrastructure and application deployment</li>
     </ul>
     <h3>Helpful Resources</h3>
