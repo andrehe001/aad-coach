@@ -88,10 +88,11 @@ namespace TeamGameHub.GameEngine.WebApi.Services
                 }
                 currentMatch.Bet = botMove.Bet;
             }
-            else if (currentMatch.Bet != botMove.Bet)
-            {
-                throw new Exception("The bet can only be set at the beginning and not changed afterwards.");
-            }
+            // TODO: activate this again but the Bot needs to differentiate between first Pick and the other 1-2 picks
+            //else if (currentMatch.Bet != botMove.Bet)
+            //{
+            //    // throw new Exception("The bet can only be set at the beginning and not changed afterwards.");
+            //}
 
             currentMatch.TurnsPlayer1Values.Add(matchRequest.Move);
             currentMatch.TurnsPlayer2Values.Add(botMove.Move);
