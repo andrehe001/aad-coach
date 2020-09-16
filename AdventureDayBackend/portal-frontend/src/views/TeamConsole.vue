@@ -4,41 +4,43 @@
     <div class="container-fluid content">
       <div class="row">
         <div id="team-status" class="col-3">
-          <p class="status-text">
-            <span>Rank:</span>
-            <span>{{currentRank}}</span>
-          </p>
-          <p class="status-text">
-            <span>Score:</span>
-            <span>{{ TeamStats.score }}</span>
-          </p>
-          <br />
-          <p class="status-text">
-            <span>Wins:</span>
-            <span>{{ TeamStats.wins }} ({{ winsShare }})</span>
-          </p>
-          <p class="status-text">
-            <span>Loses:</span>
-            <span>{{ TeamStats.loses }} ({{ losesShare }})</span>
-          </p>
-          <p class="status-text">
-            <span>Errors:</span>
-            <span>{{ TeamStats.errors }} ({{ errorsShare }})</span>
-          </p>
-          <br />
-          <p class="status-text">
-            <span>Profit:</span>
-            <span>{{ TeamStats.profit }}</span>
-          </p>
-          <p class="status-text">
-            <span>Income:</span>
-            <span>{{ TeamStats.income }}</span>
-          </p>
-          <p class="status-text">
-            <span>Costs:</span>
-            <span>{{ TeamStats.costs }}</span>
-          </p>
-          <br />
+          <div v-if="TeamStats">
+            <p class="status-text">
+              <span>Rank:</span>
+              <span>{{currentRank}}</span>
+            </p>
+            <p class="status-text">
+              <span>Score:</span>
+              <span>{{ TeamStats.score }}</span>
+            </p>
+            <br />
+            <p class="status-text">
+              <span>Wins:</span>
+              <span>{{ TeamStats.wins }} ({{ winsShare }})</span>
+            </p>
+            <p class="status-text">
+              <span>Loses:</span>
+              <span>{{ TeamStats.loses }} ({{ losesShare }})</span>
+            </p>
+            <p class="status-text">
+              <span>Errors:</span>
+              <span>{{ TeamStats.errors }} ({{ errorsShare }})</span>
+            </p>
+            <br />
+            <p class="status-text">
+              <span>Profit:</span>
+              <span>{{ TeamStats.profit }}</span>
+            </p>
+            <p class="status-text">
+              <span>Income:</span>
+              <span>{{ TeamStats.income }}</span>
+            </p>
+            <p class="status-text">
+              <span>Costs:</span>
+              <span>{{ TeamStats.costs }}</span>
+            </p>
+            <br />
+          </div>
           <p class="status-text">
             <span>
               Current
@@ -62,10 +64,10 @@
                 <td class="min">{{ logEntry.timestamp | formatTimestamp }}</td>
                 <td class="min">{{ logEntry.responeTimeMs }}</td>
                 <td class="min highlight">
-                  <span class="badge "
-                        v-bind:class="{ 'badge-success': logEntry.status == 'SUCCESS', 'badge-danger': logEntry.status != 'SUCCESS' }">
-                    {{ logEntry.status }}
-                  </span>
+                  <span
+                    class="badge"
+                    v-bind:class="{ 'badge-success': logEntry.status == 'SUCCESS', 'badge-danger': logEntry.status != 'SUCCESS' }"
+                  >{{ logEntry.status }}</span>
                 </td>
                 <td>{{ logEntry.reason }}</td>
               </tr>
@@ -97,23 +99,26 @@ export default {
       timerPhase: "",
       TeamStats: null,
       TeamLog: null,
-      currentRank : null,
-      currentPhase : 1,
+      currentRank: null,
+      currentPhase: 1,
     };
   },
   computed: {
     winsShare: function () {
-      const total = this.TeamStats.wins + this.TeamStats.loses + this.TeamStats.errors;
-      return (this.TeamStats.wins / total * 100).toFixed(1) + "%";
+      const total =
+        this.TeamStats.wins + this.TeamStats.loses + this.TeamStats.errors;
+      return ((this.TeamStats.wins / total) * 100).toFixed(1) + "%";
     },
     losesShare: function () {
-      const total = this.TeamStats.wins + this.TeamStats.loses + this.TeamStats.errors;
-      return (this.TeamStats.loses / total * 100).toFixed(1) + "%";
+      const total =
+        this.TeamStats.wins + this.TeamStats.loses + this.TeamStats.errors;
+      return ((this.TeamStats.loses / total) * 100).toFixed(1) + "%";
     },
     errorsShare: function () {
-      const total = this.TeamStats.wins + this.TeamStats.loses + this.TeamStats.errors;
-      return (this.TeamStats.errors / total * 100).toFixed(1) + "%";
-    }
+      const total =
+        this.TeamStats.wins + this.TeamStats.loses + this.TeamStats.errors;
+      return ((this.TeamStats.errors / total) * 100).toFixed(1) + "%";
+    },
   },
   created() {
     const fetchIntervalMs = 10 * 1000;
@@ -167,7 +172,7 @@ export default {
         .catch(function (error) {
           console.error(error.response);
         });
-    }
+    },
   },
   beforeDestroy() {
     clearInterval(this.timerTeamRank);
@@ -177,24 +182,24 @@ export default {
   },
   filters: {
     formatTimestamp: function (utcValue) {
-      var timestamp = new Date(utcValue + 'Z');
+      var timestamp = new Date(utcValue + "Z");
       var now = new Date();
       var diffMs = now - timestamp;
 
       if (diffMs < 1000) {
         return diffMs + "ms ago";
       } else if (diffMs < 60 * 1000) {
-        return Math.round(diffMs/1000)  + "s ago";
+        return Math.round(diffMs / 1000) + "s ago";
       } else if (diffMs < 60 * 60 * 1000) {
-        return Math.round(diffMs/(60 * 1000)) + "min ago";
+        return Math.round(diffMs / (60 * 1000)) + "min ago";
       } else if (diffMs < 24 * 60 * 60 * 1000) {
-        return Math.round(diffMs/(60 * 60 * 1000)) + "hrs ago";
+        return Math.round(diffMs / (60 * 60 * 1000)) + "hrs ago";
       }
 
-      return Math.round(diffMs/(24 * 60 * 60 * 1000)) + "days ago";
+      return Math.round(diffMs / (24 * 60 * 60 * 1000)) + "days ago";
     },
     formatPhase: function (value) {
-      return phaseStrings[value-1];
+      return phaseStrings[value - 1];
     },
   },
 };

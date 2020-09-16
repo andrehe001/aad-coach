@@ -21,7 +21,7 @@
                 <small id="emailHelp" class="form-text text-muted">This can only be changed once!</small>
               </div>
               <div class="form-group">
-                <label for="inputEnvUrl">Environment URL</label>
+                <label for="inputEnvUrl">GameEngine URL</label>
                 <input
                   type="text"
                   class="form-control"

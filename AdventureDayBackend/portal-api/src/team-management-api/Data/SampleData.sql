@@ -51,3 +51,10 @@ VALUES
 	( 1, '2020-09-12T08:55:47.1234567', 10, 'FAILED', 'Network Exception received'),
 	( 1, '2020-09-12T08:56:47.1234567', 10, 'ATTACKED', 'Hacker was able to get access into the system'),
 	( 1, '2020-09-12T08:57:47.1234567', 10, 'CANCELED','Smoorgh has canceled the game, because the stakes from humans are too low')
+
+
+INSERT INTO [Members]
+    ([TeamId], [Username], [Password])
+VALUES
+    ( 1, 'fromsample_1@asmw13.onmicrosoft.com', 'SuperSecret A' ),
+    ( 1, 'fromsample_2@asmw13.onmicrosoft.com', 'SuperSecret B' )
