@@ -28,7 +28,7 @@
                   required
                 />
               </div>
-              <p class="warn" v-if="errorMessage">{{errorMessage}}</p>
+              <div v-if="errorMessage" class="alert alert-danger" role="alert">{{errorMessage}}</div>
               <button type="submit" class="btn btn-primary" @click="handleSubmit">Login</button>
             </form>
           </div>
@@ -92,10 +92,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.login .warn {
-  color: red;
-  text-align: center;
-}
-</style>

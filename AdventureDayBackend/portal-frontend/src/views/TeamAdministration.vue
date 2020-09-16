@@ -34,6 +34,8 @@
                   class="form-text text-muted"
                 >Public endpoint of your environment, where the requests are send to.</small>
               </div>
+              <div v-if="saved" class="alert alert-success" role="alert">Saved!</div>
+              <div v-if="errorMessage" class="alert alert-danger" role="alert">{{errorMessage}}</div>
               <button type="submit" class="btn btn-primary" @click="handleSubmit">Save</button>
             </form>
           </div>
@@ -51,17 +53,19 @@ export default {
       teamName: "",
       environmentUrl: "",
       enableTeamChange: true,
+      saved: false,
+      errorMessage: null,
     };
   },
   mounted() {
     this.$http
       .get("Team/current")
-      .then(response => {
+      .then((response) => {
         this.enableTeamChange = response.data.name.startsWith("Team");
         this.teamName = response.data.name;
         this.environmentUrl = response.data.gameEngineUri;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error.response);
       });
   },
@@ -69,18 +73,26 @@ export default {
     handleSubmit(e) {
       e.preventDefault();
       if (this.teamName.length > 0) {
-        this.$http.post('Team/current', {
+        this.$http
+          .post("Team/current", {
             newName: this.teamName,
-            newGameEngineUri: this.environmentUrl
-        })
-        .then(response => {
-          this.enableTeamChange = response.data.name.startsWith("Team");
-          this.teamName = response.data.name;
-          this.environmentUrl = response.data.gameEngineUri;
-        })
-        .catch(function (error) {
-            console.error(error.response);
-        });
+            newGameEngineUri: this.environmentUrl,
+          })
+          .then((response) => {
+            this.enableTeamChange = response.data.name.startsWith("Team");
+            this.teamName = response.data.name;
+            this.environmentUrl = response.data.gameEngineUri;
+            this.saved = true;
+          })
+          .catch(function (error) {
+            if (error.response.status == 400 && error.response.data.message) {
+              this.errorMessage = error.response.data.message;
+            } else {
+              this.errorMessage =
+                "Internal error occured - please contact admin.";
+              console.error(error.response);
+            }
+          });
       }
     },
   },
