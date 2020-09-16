@@ -21,7 +21,7 @@ TOKEN=$(curl -sL --header "Content-Type: application/json" \
 echo "received auth token $TOKEN"
 
 OLDIFS=$IFS
-IFS=','
+IFS=';'
 [ ! -f $file ] && { echo "$file file not found"; exit 99; }
 while read teamname username password
 do
