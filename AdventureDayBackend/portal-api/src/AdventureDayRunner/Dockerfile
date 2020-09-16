@@ -5,6 +5,7 @@ WORKDIR /app
 COPY ./*.sln ./
 COPY */*.csproj ./
 RUN for file in $(ls *.csproj); do mkdir -p ${file%.*} && mv $file ${file%.*}; done
+COPY AdventureDayRunner/appsettings.json .
 RUN dotnet restore
 
 # Copy the actual projects
