@@ -76,7 +76,8 @@ namespace AdventureDayRunner.Players.PseudoPlayers
             }
             catch (Exception exception)
             {
-                Log.Error(exception, $"Error in in reaching exploit endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
+                Log.Information($"{nameof(SecurityHackPlayer)}: Error in in reaching exploit endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
+                Log.Debug(exception, $"{nameof(SecurityHackPlayer)}: Error in in reaching exploit endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
             }
 
             return MatchReport.FromHackerAttackDefended();
