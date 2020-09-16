@@ -41,17 +41,21 @@ namespace team_management_api.Controllers
                 return NotFound();
             }
 
-            var allTeams = _dbContext.TeamScores
+            var allTeamScores = _dbContext.TeamScores
                 .Select(_ => new { _.TeamId, _.Score })
                 .ToList()
                 .OrderByDescending(_ => _.Score);  // Score is not in the DB as column!
 
-            var rank = allTeams
+            var teamScore = allTeamScores
                 .Select((team, index) => new { team, index })
-                .Single(_ => _.team.TeamId == team.Id)
-                .index + 1;
+                .SingleOrDefault(_ => _.team.TeamId == team.Id);
 
-            return Ok(rank);
+            if (teamScore == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(teamScore.index + 1);
         }
 
         [HttpGet("team/current/stats")]
