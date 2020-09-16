@@ -47,6 +47,7 @@ namespace AdventureDayRunner.Players
 
             if (!result.IsSuccessStatusCode)
             {
+                // TODO: Differentiate between 500s and others (bet error)
                 Log.Error($"{_team.Name} - Status: {result.StatusCode}");
                 return MatchReport.FromError($"Smoorghs are receiving the HTTP status code of {result.StatusCode}");
             }
@@ -62,7 +63,9 @@ namespace AdventureDayRunner.Players
 
                 if (!subSeqResult.IsSuccessStatusCode)
                 {
-                    return MatchReport.FromError($"Smoorghs are receiving the HTTP status code of {result.StatusCode}");
+                    // TODO: Differentiate between 500s and others (bet error)
+                    Log.Error($"{_team.Name} - Status: {subSeqResult.StatusCode}");
+                    return MatchReport.FromError($"Smoorghs are receiving the HTTP status code of {subSeqResult.StatusCode}");
                 }
 
                 response = await subSeqResult.Content.ReadFromJsonAsync<MatchResponse>(
