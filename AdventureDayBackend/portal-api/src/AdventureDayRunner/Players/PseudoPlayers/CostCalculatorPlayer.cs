@@ -1,4 +1,3 @@
-using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
@@ -20,7 +19,7 @@ namespace AdventureDayRunner.Players.PseudoPlayers
         public CostCalculatorPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {
             _configuration = configuration;
-           _azureCostScaleFactor = _configuration.GetValue("AzureCostScaleFactor", 1000.0); 
+           _azureCostScaleFactor = _configuration.GetValue("AzureCostScaleFactor", 1); 
         }
 
         public override string Name => "Dagobert";
@@ -38,15 +37,18 @@ namespace AdventureDayRunner.Players.PseudoPlayers
                 .Authenticate(azureCredentials)
                 .WithSubscription(team.SubscriptionId.ToString());
 
-            long aksCosts = await GetAksCostAsync(azure);
+            // TODO: Take a look why costs is empty
+            //long aksCosts = await GetAksCostAsync(azure);
             long sqlCosts = await GetSqlCostAsync(azure);
 
-            return MatchReport.FromCostCalculator((int)(aksCosts + sqlCosts));
+            var totalCost = (int)Math.Round(sqlCosts * _azureCostScaleFactor, MidpointRounding.AwayFromZero);
+            return MatchReport.FromCostCalculator(totalCost);
         }
 
         private async Task<long> GetSqlCostAsync(IAzure azure)
         {
             long sqlCost = 0;
+            var sqlCostScaleFactor = 265;
 
             foreach (var sqlServer in await azure.SqlServers.ListAsync())
             {
@@ -78,20 +80,36 @@ namespace AdventureDayRunner.Players.PseudoPlayers
                             .First()
                             .Total;
 
+                        var test = metricCollection.Metrics
+                            .Single()
+                            .Timeseries
+                            .SelectMany(_ => _.Data)
+                            .OrderByDescending(_ => _.TimeStamp)
+                            .ToList();
+
                         // COMPUTE COST / VCORE / SECOND: 0.000134 EUR
-                        // scaleFactor just for having bigger numbers
-                        if (lastMinuteAppCPUBilled != null)
-                            sqlCost += (int) Math.Round(
-                                0.000134 * lastMinuteAppCPUBilled.Value * _azureCostScaleFactor,
-                                MidpointRounding.AwayFromZero);
+                        var costPerVCorePerSecond = 0.000134;
+                        var usedVCoreSecondsInLastMinute = lastMinuteAppCPUBilled.GetValueOrDefault(); // max 60 * vCoreCount
+
+                        // 1 VCore ganze Minute
+                        //var cost = costPerVCorePerSecond * 60 * 265;
+                        //2,1306
+                        sqlCost += (int)Math.Round(costPerVCorePerSecond * usedVCoreSecondsInLastMinute * sqlCostScaleFactor, MidpointRounding.AwayFromZero);
                     }
                     else if (serviceLevel.StartsWith("GP_Gen5"))
                     {
                         var vCoreCount = int.Parse(serviceLevel.Replace("GP_Gen5_", ""));
 
                         // Cost per vCore (in EUR, month) 167.77
+                        var costPerVCorePerSecond = 0.000063;
+                        var usedVCoreSecondsInLastMinute = 60 * vCoreCount;
+
+                        // 1 VCore ganze Minute
+                        //var cost = costPerVCorePerSecond * 60 * 265;
+                        //1,0017
+
                         // * scaleFactor just for having bigger numbers
-                        sqlCost += (int)Math.Round(vCoreCount * 167.77 / 31 / 24 / 60 * _azureCostScaleFactor, MidpointRounding.AwayFromZero);
+                        sqlCost += (int)Math.Round(costPerVCorePerSecond * usedVCoreSecondsInLastMinute * sqlCostScaleFactor, MidpointRounding.AwayFromZero);
                     }
                 }
             }
@@ -99,31 +117,31 @@ namespace AdventureDayRunner.Players.PseudoPlayers
             return sqlCost;
         }
 
-        private static async Task<long> GetAksCostAsync(IAzure azure)
-        {
-            long aksCosts = 0;
-            foreach (var kubernetesCluster in await azure.KubernetesClusters.ListAsync())
-            {
-                var computeSkus = azure.ComputeSkus
-                        .ListbyRegionAndResourceType(kubernetesCluster.Region, ComputeResourceType.VirtualMachines);
+        //private static async Task<long> GetAksCostAsync(IAzure azure)
+        //{
+        //    long aksCosts = 0;
+        //    foreach (var kubernetesCluster in await azure.KubernetesClusters.ListAsync())
+        //    {
+        //        var computeSkus = azure.ComputeSkus
+        //                .ListbyRegionAndResourceType(kubernetesCluster.Region, ComputeResourceType.VirtualMachines);
 
-                foreach (var agentPool in kubernetesCluster.AgentPools)
-                {
-                    var vmCount = agentPool.Value.Count;
-                    var vmSize = agentPool.Value.VMSize;
+        //        foreach (var agentPool in kubernetesCluster.AgentPools)
+        //        {
+        //            var vmCount = agentPool.Value.Count;
+        //            var vmSize = agentPool.Value.VMSize;
 
-                    var computeSkusCosts = computeSkus
-                        .Single(_ => _.VirtualMachineSizeType.ToString() == vmSize.ToString())
-                        .Costs;
+        //            var computeSkusCosts = computeSkus
+        //                .Single(_ => _.VirtualMachineSizeType.ToString() == vmSize.ToString())
+        //                .Costs;
 
-                    var vmCost = computeSkusCosts
-                        .Sum(_ => _.Quantity.GetValueOrDefault());
+        //            var vmCost = computeSkusCosts
+        //                .Sum(_ => _.Quantity.GetValueOrDefault());
 
-                    aksCosts += vmCount * vmCost;
-                }
-            }
+        //            aksCosts += vmCount * vmCost;
+        //        }
+        //    }
 
-            return aksCosts;
-        }
+        //    return aksCosts;
+        //}
     }
 }
