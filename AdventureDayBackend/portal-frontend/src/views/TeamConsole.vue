@@ -6,6 +6,10 @@
         <div id="team-status" class="col-3">
           <div v-if="TeamStats">
             <p class="status-text">
+              <span>Team:</span>
+              <span>{{teamName}}</span>
+            </p>
+            <p class="status-text">
               <span>Rank:</span>
               <span>{{currentRank}}</span>
             </p>
@@ -99,6 +103,7 @@ export default {
       timerPhase: "",
       TeamStats: null,
       TeamLog: null,
+      teamName: null,
       currentRank: null,
       currentPhase: 1,
     };
@@ -137,7 +142,8 @@ export default {
       this.$http
         .get("Statistics/team/current/rank")
         .then((response) => {
-          this.currentRank = response.data;
+          this.teamName = response.data.team
+          this.currentRank = response.data.rank;
         })
         .catch(function (error) {
           console.error(error.response);

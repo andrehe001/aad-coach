@@ -55,7 +55,7 @@ namespace team_management_api.Controllers
                 return NotFound();
             }
 
-            return Ok(teamScore.index + 1);
+            return Ok(new { team = team.Name, rank = teamScore.index + 1 });
         }
 
         [HttpGet("team/current/stats")]
