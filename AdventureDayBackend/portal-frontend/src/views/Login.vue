@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="login">
     <h1>Login</h1>
     <div class="content overflow-auto">
       <div class="container-fluid">
@@ -28,6 +28,7 @@
                   required
                 />
               </div>
+              <p class="warn" v-if="errorMessage">{{errorMessage}}</p>
               <button type="submit" class="btn btn-primary" @click="handleSubmit">Login</button>
             </form>
           </div>
@@ -44,42 +45,57 @@ export default {
     return {
       username: "",
       password: "",
+      errorMessage: null,
     };
   },
   methods: {
     handleSubmit(e) {
+      this.errorMessage = "";
       e.preventDefault();
-      if (this.password.length > 0) {
+      this.$http.post('team/login', {
+          teamname: this.username,
+          Password: this.password
+      })
+      .then(response => {
+          let is_admin = response.data.isAdmin
+          localStorage.setItem('user',JSON.stringify(response.data))
+          localStorage.setItem('jwt',response.data.token)
 
-        this.$http.post('team/login', {
-            teamname: this.username,
-            Password: this.password
-        })
-        .then(response => {
-            let is_admin = response.data.isAdmin
-            localStorage.setItem('user',JSON.stringify(response.data))
-            localStorage.setItem('jwt',response.data.token)
-
-            if (localStorage.getItem('jwt') != null){
-                this.$emit('loggedIn')
-                if(this.$route.params.nextUrl != null){
-                    this.$router.push(this.$route.params.nextUrl)
-                }
-                else {
-                    if(is_admin== 1){
-                        this.$router.push('administration')
-                    }
-                    else {
-                        this.$router.push('leaderboard')
-                    }
-                }
-            }
-        })
-        .catch(function (error) {
-            console.error(error.response);
-        });
-      }
+          if (localStorage.getItem('jwt') != null){
+              this.$emit('loggedIn')
+              if(this.$route.params.nextUrl != null){
+                  this.$router.push(this.$route.params.nextUrl)
+              }
+              else {
+                  if(is_admin== 1){
+                      this.$router.push('administration')
+                  }
+                  else {
+                      this.$router.push('leaderboard')
+                  }
+              }
+          }
+      })
+      .catch(error => {
+        if (error.response.status == 400) {
+          if (error.response.data.message) {
+            this.errorMessage = error.response.data.message;
+          } else {
+            this.errorMessage = "Please enter Username and Password";
+          }
+        } else {
+          this.errorMessage = "Internal error occured - please contact admin.";
+          console.error(error.response);
+        }
+      });
     },
   },
 };
 </script>
+
+<style scoped>
+.login .warn {
+  color: red;
+  text-align: center;
+}
+</style>

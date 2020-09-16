@@ -306,7 +306,7 @@ namespace team_management_api.Controllers
             if (response == null)
             {
                 Log.Warning("Failed to authenticate {teamName}", model.Teamname);
-                return BadRequest(new { message = "Teamname or password is incorrect" });
+                return BadRequest(new { message = "Username or Password is incorrect" });
             }
 
             return Ok(response);
