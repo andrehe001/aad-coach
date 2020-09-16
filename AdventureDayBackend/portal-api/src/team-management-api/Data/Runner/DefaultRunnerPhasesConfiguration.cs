@@ -9,7 +9,11 @@ namespace team_management_api.Data.Runner
                 new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 1000,
-                    PlayerTypes = new [] { PlayerType.Random }
+                    PlayerTypes = new []
+                    {
+                        PlayerType.Random, 
+                        PlayerType.Fixed
+                    }
                 }
             },
             {
@@ -17,7 +21,12 @@ namespace team_management_api.Data.Runner
                 new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 1000,
-                    PlayerTypes = new [] { PlayerType.Random }
+                    PlayerTypes = new []
+                    {
+                        PlayerType.Random, 
+                        PlayerType.Fixed, 
+                        PlayerType.Bet
+                    }
                 }
             },
             {
@@ -25,7 +34,13 @@ namespace team_management_api.Data.Runner
                 new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 1000,
-                    PlayerTypes = new [] { PlayerType.Random }
+                    PlayerTypes = new []
+                    {
+                        PlayerType.Random, 
+                        PlayerType.Fixed, 
+                        PlayerType.Bet, 
+                        PlayerType.CostCalculator
+                    }
                 }
             },
             {
@@ -33,7 +48,14 @@ namespace team_management_api.Data.Runner
                 new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 100,
-                    PlayerTypes = new [] { PlayerType.Random }
+                    PlayerTypes = new []
+                    {
+                        PlayerType.Random, 
+                        PlayerType.Fixed, 
+                        PlayerType.Bet, 
+                        PlayerType.CostCalculator, 
+                        PlayerType.Mass
+                    }
                 }
             },
             {
@@ -41,7 +63,14 @@ namespace team_management_api.Data.Runner
                 new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 500,
-                    PlayerTypes = new [] { PlayerType.Random }
+                    PlayerTypes = new []
+                    {
+                        PlayerType.Random,
+                        PlayerType.Fixed, 
+                        PlayerType.Bet, 
+                        PlayerType.CostCalculator,
+                        PlayerType.SecurityHack
+                    }
                 }
             },
             {
@@ -49,7 +78,15 @@ namespace team_management_api.Data.Runner
                 new RunnerPhaseConfigurationItem()
                 {
                     RequestExecutorLatencyMillis = 500,
-                    PlayerTypes = new [] { PlayerType.Pattern }
+                    PlayerTypes = new [] {
+                        PlayerType.Random,
+                        PlayerType.Fixed,
+                        PlayerType.Bet,
+                        PlayerType.CostCalculator,
+                        PlayerType.SecurityHack,
+                        PlayerType.Iterative,
+                        PlayerType.Pattern
+                    }
                 }
             }
         };

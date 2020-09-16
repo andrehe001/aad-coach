@@ -246,6 +246,7 @@ namespace AdventureDayRunner
                 PlayerType.Bet => new BetPlayer(_configuration, team, httpTimeout),
                 PlayerType.CostCalculator => new CostCalculatorPlayer(_configuration, team, httpTimeout),
                 PlayerType.SecurityHack => new SecurityHackPlayer(_configuration, team, httpTimeout),
+                PlayerType.Mass => new MassPlayer(_configuration, team, httpTimeout),
                 _ => throw new InvalidOperationException("Unexpected enum value.")
             };
             

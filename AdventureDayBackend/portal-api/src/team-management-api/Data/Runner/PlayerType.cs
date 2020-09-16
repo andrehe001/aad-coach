@@ -8,6 +8,7 @@ namespace team_management_api.Data.Runner
         Fixed,
         Bet,
         CostCalculator,
-        SecurityHack
+        SecurityHack,
+        Mass
     }
 }
