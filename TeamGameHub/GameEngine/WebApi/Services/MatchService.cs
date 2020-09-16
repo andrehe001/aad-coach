@@ -56,7 +56,6 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             {
                 // Waste SQL
                 _dbContext.MatchResults
-                    .GroupBy(_ => _.Player2Name)
                     .Take(300)
                     .ToList();
 
