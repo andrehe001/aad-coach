@@ -1,4 +1,4 @@
-# Quick Setup for Team enviornments (GameEngine & Bot)
+#Quick Setup for Team enviornments (GameEngine & Bot)
 Log into Cloudshell for team and run these lines there. Be aware there are manual steps after terraform deployment.
 
 ```
