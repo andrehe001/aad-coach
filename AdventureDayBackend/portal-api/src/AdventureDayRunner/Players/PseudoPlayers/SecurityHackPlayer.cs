@@ -38,6 +38,11 @@ namespace AdventureDayRunner.Players.PseudoPlayers
             } 
             else
             {
+                if (team.GameEngineUri == null)
+                {
+                    return MatchReport.FromError("No configured GameEngineURL.");
+                }
+                
                 Log.Debug("SecurityHackPlayer: Using default side car URI.");
                 var gameEngineSidecarUriBuilder = new UriBuilder(team.GameEngineUri);
                 gameEngineSidecarUriBuilder.Port = 81;
