@@ -9,7 +9,7 @@ namespace AdventureDayRunner.Players
     public class MatchReport
     {
         // TODO: Refactor to some more intelligent approach... (=> avoid static ref here)
-        private static readonly int FixedMatchStake = Program.Configuration.GetValue("FixedMatchStake", 10);
+        private static readonly int FixedMatchStake = Program.Configuration.GetValue("FixedMatchStake", 1);
 
         private MatchReport()
         {
