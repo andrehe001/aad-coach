@@ -12,7 +12,7 @@ git clone https://github.com/azure-adventure-day/aad-team.git
 cd aad-team
 cd terraform/
 chmod +x ./deploy-team.sh
-./deploy-team.sh team12 northeurope $SUBSCRIPTION_ID
+./deploy-team.sh $TEAM northeurope $SUBSCRIPTION_ID
 
 
 ## Manual Steps
