@@ -54,10 +54,10 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             // If MassPlayer
             if (matchRequest.ChallengerId == "Gloria")
             {
-                // Waste SQL
-                _dbContext.MatchResults
-                    .Take(300)
-                    .ToList();
+                // Waste SQL: TODO find schema issue.
+                //_dbContext.MatchResults
+                //    .Take(300)
+                //    .ToList();
 
                 // Waste CPU
                 Stopwatch start = Stopwatch.StartNew();
