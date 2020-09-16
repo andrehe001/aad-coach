@@ -21,12 +21,12 @@ TOKEN=$(curl -sL --header "Content-Type: application/json" \
 echo "received auth token $TOKEN"
 
 OLDIFS=$IFS
-IFS=','
+IFS=';'
 [ ! -f $file ] && { echo "$file file not found"; exit 99; }
-while read teamname tenantid subscriptionid teampassword
+while read teamname region subscriptionid tenantid teampassword comment
 do
     echo "importing $teamname with $teampassword to $tenantid in $subscriptionid..."
-
+    echo "comment $comment"
     TEAMID=$(curl -sL --header "Content-Type: application/json" \
       --header "Authorization: Bearer $TOKEN" \
       --request POST \
