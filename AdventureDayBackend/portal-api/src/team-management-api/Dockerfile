@@ -5,11 +5,11 @@ WORKDIR /app
 COPY ./*.sln ./
 COPY */*.csproj ./
 RUN for file in $(ls *.csproj); do mkdir -p ${file%.*} && mv $file ${file%.*}; done
-COPY team-management-api/appsettings.json .
 RUN dotnet restore
 
 # Copy the actual projects
 COPY . ./
+COPY team-management-api/appsettings.json .
 RUN dotnet publish team-management-api -c Release -o out
 
 # Build Runtime Image
