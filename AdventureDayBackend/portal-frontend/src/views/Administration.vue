@@ -24,11 +24,30 @@
           <a class="nav-link disabled" v-if="currentRunnerStatus == 'Stopped'" href="#">Stopped</a>
         </li>
       </ul>
-      <h2>Logs</h2>
+      <h2>Access Admin Logs</h2>
       <p>
-        tincidunt quis, accumsan porttitor, facilisis luctus, metus
-        <a href="#">Test</a>
+        To access the dashboard run the following commands:
       </p>
+      <pre>
+        EXPORT COACH_ID="02"
+        EXPORT COACH_PASSWORD=""
+        EXPORT COACH_SUBSCRIPTION_ID=""
+
+        az login -u coach${COACH_ID}@asmw13.onmicrosoft.com -p "${COACH_PASSWORD}"
+        az account set -s ${COACH_SUBSCRIPTION_ID}
+        
+        az aks get-credentials --resource-group azure_adventure_day_prod_rg --name azure-adventure-day-prod --overwrite-existing --admin
+        kubectl port-forward deployment/po-grafana 3000 3000 -n monitoring
+      </pre>
+      <p>After that navigate to <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> and use the following credentials:</p>
+      <pre>
+        UserName: admin
+        Password: prom-operator
+      </pre>
+      <p>If this is the initial login to Grafana after the cluster has been created, you need to configure a Loki connector:</p>
+      <pre>
+        URL: http://loki:3100
+      </pre>
     </div>
   </div>
 </template>
@@ -147,5 +166,9 @@ export default {
 .administration .nav-pills .nav-link.disabled {
   background-color: #366aaf;
   text-decoration: none;
+}
+
+pre {
+  color: #FFF;
 }
 </style>
