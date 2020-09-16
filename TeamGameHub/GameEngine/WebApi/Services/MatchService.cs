@@ -62,12 +62,17 @@ namespace TeamGameHub.GameEngine.WebApi.Services
                 _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
                 _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
                 _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 300 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
 
                 // Waste CPU
-                Stopwatch start = Stopwatch.StartNew();
-                while (start.ElapsedMilliseconds < 2500)
+                var end = DateTime.Now + TimeSpan.FromSeconds(3);
+                var result = 0;
+                while (DateTime.Now < end)
                 {
-                    Thread.SpinWait(1000);
+                    result += 1;
+                    result -= 1;
                 }
             }
 
