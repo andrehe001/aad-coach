@@ -32,7 +32,7 @@ namespace AdventureDayRunner.Players
 
             var reason = outcome > 0
                 ? $"Human has won ${outcome}"
-                : $"Smoorgh has won ${outcome}";
+                : $"Smoorgh has won ${Math.Abs(outcome)}";
 
             return new MatchReport()
             {
@@ -40,7 +40,7 @@ namespace AdventureDayRunner.Players
                 LogEntryStatus = LogEntryStatus.SUCCESS,
                 Reason = reason,
                 Income = outcome > 0 ? outcome : 0,
-                Cost =   outcome > 0 ? 0 : outcome
+                Cost =   Math.Abs(outcome > 0 ? 0 : outcome)
             };
         }
 
