@@ -116,7 +116,7 @@ variable "aks_api_server_authorized_ip_ranges" {
 
 variable "aks_admin_group_object_ids" {
   type        = list(string)
-  default     = []
+  default     = ["dbb9a1a4-e439-420c-8756-9d7179c795b5"] // TODO: Remove hard-coded group from defaults.
   description = "The cluster-admins for the Kubernetes cluster."
 }
 
