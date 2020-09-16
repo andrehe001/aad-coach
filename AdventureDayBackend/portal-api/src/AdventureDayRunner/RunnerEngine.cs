@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureDayRunner.Model;
 using AdventureDayRunner.Players;
 using AdventureDayRunner.Players.PseudoPlayers;
 using AdventureDayRunner.Players.RealPlayers;
@@ -168,13 +167,13 @@ namespace AdventureDayRunner
                     // HTTP timeout has triggered.
                     if (!cancellationToken.IsCancellationRequested)
                     {
-                        Log.Error($"{errorId} HTTP Timeout.");
+                        Log.Information($"{errorId} HTTP Timeout | {team.Name} (ID: {team.Id}).");
                         report = MatchReport.FromError($"Smoorghs are unable to play - no answer within {httpTimeout.Seconds} seconds (HTTP Timeout)");
                     }
                     else
                     {
+                        Log.Error(exception: exception, $"{errorId} TaskCanceledException | No HTTP Timeout detected. | {team.Name} (ID: {team.Id})");
                         report = MatchReport.FromError($"General error. Reference: {errorId}");
-                        Log.Error(exception: exception, $"{errorId} TaskCanceledException | No HTTP Timeout detected.");
                     }
                 }
                 catch (MatchCanceledException ex)
@@ -185,7 +184,7 @@ namespace AdventureDayRunner
                 {
                     if (exception.Message.Contains("An invalid request URI was provided."))
                     {
-                        Log.Error($"No backend URI for team {team.Name} (ID: {team.Id}) found.");
+                        Log.Information($"No backend URI for team {team.Name} (ID: {team.Id}) found.");
                         report = MatchReport.FromError($"Smoorghs are unable to play - your backend URI is not configured");
                     }
                     else
@@ -237,7 +236,7 @@ namespace AdventureDayRunner
                             // That is at the beginning two or more threads might 
                             // detect a non-existing score entry. This results in an
                             // Update exception, that we will swallow.
-                            Log.Warning("Found no score record for team. Creating first one.");
+                            Log.Warning($"Found no score record for team {team.Name} ({team.Id}). Creating first one.");
                             await dbContext.TeamScores.AddAsync(new TeamScore()
                             {
                                 TeamId = team.Id,
