@@ -55,8 +55,10 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             if (matchRequest.ChallengerId == "Gloria")
             {
                 // Waste SQL
-                _dbContext.MatchResults.Take(100).ToList();
-                _dbContext.Turns.Take(100).ToList();
+                _dbContext.MatchResults
+                    .GroupBy(_ => _.Player2Name)
+                    .Take(300)
+                    .ToList();
 
                 // Waste CPU
                 Stopwatch start = Stopwatch.StartNew();
