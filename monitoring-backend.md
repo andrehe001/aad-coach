@@ -7,9 +7,9 @@ All information can be accessed via the [Grafana](https://grafana.com/) Dashbaor
 To access the dashboard run the following commands:
 
 ```sh
-EXPORT COACH_ID="02"
-EXPORT COACH_PASSWORD=""
-EXPORT COACH_SUBSCRIPTION_ID=""
+export COACH_ID="02"
+export COACH_PASSWORD=""
+export COACH_SUBSCRIPTION_ID=""
 
 az login -u coach${COACH_ID}@asmw13.onmicrosoft.com -p "${COACH_PASSWORD}"
 az account set -s ${COACH_SUBSCRIPTION_ID}
