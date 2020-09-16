@@ -172,7 +172,7 @@ namespace AdventureDayRunner
                     }
                     else
                     {
-                        Log.Error(exception: exception, $"{errorId} TaskCanceledException | No HTTP Timeout detected. | {team.Name} (ID: {team.Id})");
+                        Log.Error(exception: exception, $"{errorId} Team {team.Name} (ID: {team.Id}) TaskCanceledException | No HTTP Timeout detected.");
                         report = MatchReport.FromError($"General error. Reference: {errorId}");
                     }
                 }
