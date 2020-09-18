@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "team-management-api", "team-management-api\team-management-api.csproj", "{A994C6E5-52C2-4C1A-B709-98481934EEFF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureDayRunner", "AdventureDayRunner\AdventureDayRunner.csproj", "{863DF469-F911-41CA-AC43-B99FE9861864}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventureDay.Runner", "AdventureDay.Runner\AdventureDay.Runner.csproj", "{863DF469-F911-41CA-AC43-B99FE9861864}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureDayRunner.Tests", "AdventureDayRunner.Tests\AdventureDayRunner.Tests.csproj", "{731754EB-C6DD-4024-AD3C-8031F7365BD6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureDay.Runner.Tests", "AdventureDay.Runner.Tests\AdventureDay.Runner.Tests.csproj", "{731754EB-C6DD-4024-AD3C-8031F7365BD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
