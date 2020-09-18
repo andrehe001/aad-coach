@@ -1,7 +1,7 @@
 using System;
 using AdventureDay.Runner.Model;
 using Microsoft.Extensions.Configuration;
-using team_management_api.Data;
+using AdventureDay.ManagementApi.Data;
 
 namespace AdventureDay.Runner.Players.RealPlayers
 {

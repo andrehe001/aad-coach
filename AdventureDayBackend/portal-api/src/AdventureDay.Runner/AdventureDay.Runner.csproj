@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\team-management-api\team-management-api.csproj" />
+    <ProjectReference Include="..\AdventureDay.ManagementApi\AdventureDay.ManagementApi.csproj" />
   </ItemGroup>
 
 </Project>

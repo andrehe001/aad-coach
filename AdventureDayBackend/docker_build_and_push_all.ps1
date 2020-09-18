@@ -23,6 +23,6 @@ Write-Verbose "  RegistryName: $RegistryName"
 Write-Verbose "Building AdventureDay.Runner"
 az acr build -r $RegistryName -f ./portal-api/src/AdventureDay.Runner/Dockerfile -t "$($RegistryName).azurecr.io/adventure-day-runner:$($Tag)" ./portal-api/src
 Write-Verbose "Building AdventureDayPortalApi"
-az acr build -r $RegistryName -f ./portal-api/src/team-management-api/Dockerfile -t "$($RegistryName).azurecr.io/adventure-day-portal-api:$($Tag)" ./portal-api/src
+az acr build -r $RegistryName -f ./portal-api/src/AdventureDay.ManagementApi/Dockerfile -t "$($RegistryName).azurecr.io/adventure-day-portal-api:$($Tag)" ./portal-api/src
 Write-Verbose "Building AdventureDayPortal"
 az acr build -r $RegistryName -f ./portal-frontend/Dockerfile -t "$($RegistryName).azurecr.io/adventure-day-portal-frontend:$($Tag)" ./portal-frontend

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AdventureDay.Runner.Model;
 using Microsoft.Extensions.Configuration;
 using Serilog;
-using team_management_api.Data;
+using AdventureDay.ManagementApi.Data;
 
 namespace AdventureDay.Runner.Players
 {

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Prometheus;
 using Serilog;
-using team_management_api.Data;
+using AdventureDay.ManagementApi.Data;
 
 namespace AdventureDay.Runner
 {

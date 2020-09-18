@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Prometheus;
 using Serilog;
-using team_management_api.Data;
-using team_management_api.Data.Runner;
+using AdventureDay.ManagementApi.Data;
+using AdventureDay.ManagementApi.Data.Runner;
 
 namespace AdventureDay.Runner
 {

@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using team_management_api.Data;
+using AdventureDay.ManagementApi.Data;
 
 namespace AdventureDay.Runner.Players.PseudoPlayers
 {
