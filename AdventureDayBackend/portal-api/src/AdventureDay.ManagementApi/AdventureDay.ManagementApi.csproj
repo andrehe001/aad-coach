@@ -27,5 +27,9 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AdventureDay.DataModel\AdventureDay.DataModel.csproj" />
+  </ItemGroup>
+
 
 </Project>
