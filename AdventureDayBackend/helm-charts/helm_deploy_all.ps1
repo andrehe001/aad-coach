@@ -29,9 +29,16 @@ param
 Set-StrictMode -Version latest
 $ErrorActionPreference = "Stop"
 
-Write-Host "RegistryName: $RegistryName"
-Write-Host "Tag: $Tag"
+Write-Host "Environment:      $Environment"
+Write-Host "Namespace:        $Namespace"
+Write-Host "RegistryName:     $RegistryName"
+Write-Host "Tag:              $Tag"
 
 &helm upgrade adventure-day-runner ./adventure-day-runner --install --namespace $Namespace --set "`"image.repository=$($RegistryName).azurecr.io/adventure-day-runner`"" --set "`"image.tag=$($Tag)`"" --create-namespace
+if ($LastExitCode -gt 0) { throw "helm deploy error" }
+
 &helm upgrade adventure-day-portal-frontend ./adventure-day-portal-frontend --install --namespace $Namespace --set "`"image.repository=$($RegistryName).azurecr.io/adventure-day-portal-frontend`"" --set "`"image.tag=$($Tag)`"" --create-namespace
+if ($LastExitCode -gt 0) { throw "helm deploy error" }
+
 &helm upgrade adventure-day-portal-api ./adventure-day-portal-api --install --namespace $Namespace --set "`"image.repository=$($RegistryName).azurecr.io/adventure-day-portal-api`"" --set "`"image.tag=$($Tag)`"" --create-namespace
+if ($LastExitCode -gt 0) { throw "helm deploy error" }
