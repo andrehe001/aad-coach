@@ -19,11 +19,11 @@ param
     [string]
     $RegistryName,
 
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $false)]
     [ValidateLength(1,255)]
     [ValidateNotNull()]
     [string]
-    $Tag 
+    $Tag = "latest"
 )
 
 Set-StrictMode -Version latest
