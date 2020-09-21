@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AdventureDay.DataModel;
+using AdventureDay.DataModel.Runner;
 using AdventureDay.Runner.Players;
 using AdventureDay.Runner.Players.PseudoPlayers;
 using AdventureDay.Runner.Players.RealPlayers;
@@ -14,7 +16,6 @@ using Microsoft.Extensions.Configuration;
 using Prometheus;
 using Serilog;
 using AdventureDay.ManagementApi.Data;
-using AdventureDay.ManagementApi.Data.Runner;
 
 namespace AdventureDay.Runner
 {

@@ -1,4 +1,5 @@
-﻿using AdventureDay.ManagementApi.Data.Runner;
+﻿using AdventureDay.DataModel;
+using AdventureDay.DataModel.Runner;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -37,7 +38,7 @@ namespace AdventureDay.ManagementApi.Data
                 .HasColumnType("nvarchar(max)");
 
             modelBuilder.Entity<RunnerProperties>()
-                .HasData(Runner.RunnerProperties.CreateDefault());
+                .HasData(DataModel.Runner.RunnerProperties.CreateDefault());
         }
 
         public DbSet<Team> Teams { get; set; }

@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace AdventureDay.ManagementApi.Data.Runner
+namespace AdventureDay.DataModel.Runner
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum RunnerPhase

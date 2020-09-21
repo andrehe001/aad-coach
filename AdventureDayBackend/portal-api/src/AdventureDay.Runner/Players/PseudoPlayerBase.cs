@@ -2,6 +2,7 @@ using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using AdventureDay.DataModel;
 using Microsoft.Extensions.Configuration;
 using AdventureDay.ManagementApi.Data;
 

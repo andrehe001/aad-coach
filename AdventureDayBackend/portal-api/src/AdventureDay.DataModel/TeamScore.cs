@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using AdventureDay.ManagementApi.Data;
 
-namespace AdventureDay.ManagementApi.Data
+namespace AdventureDay.DataModel
 {
     public class TeamScore
     {

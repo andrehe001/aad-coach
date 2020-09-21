@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using AdventureDay.DataModel.Runner;
 using AdventureDay.ManagementApi.Data;
 using AdventureDay.ManagementApi.Data.Runner;
 using AdventureDay.ManagementApi.Helpers;

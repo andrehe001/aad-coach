@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using AdventureDay.ManagementApi.Data;
 
-namespace AdventureDay.ManagementApi.Data
+namespace AdventureDay.DataModel
 {
     public class Team
     {

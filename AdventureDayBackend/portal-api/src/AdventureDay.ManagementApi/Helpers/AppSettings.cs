@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Text;
+using AdventureDay.DataModel;
 using AdventureDay.ManagementApi.Data;
 
 namespace AdventureDay.ManagementApi.Helpers

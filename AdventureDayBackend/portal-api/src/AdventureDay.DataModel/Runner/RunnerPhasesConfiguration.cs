@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace AdventureDay.ManagementApi.Data.Runner
+namespace AdventureDay.DataModel.Runner
 {
     public class RunnerPhasesConfiguration : Dictionary<RunnerPhase, RunnerPhaseConfigurationItem>
     {

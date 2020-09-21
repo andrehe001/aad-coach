@@ -1,4 +1,4 @@
-﻿namespace AdventureDay.ManagementApi.Data
+﻿namespace AdventureDay.DataModel
 {
     public enum LogEntryStatus
     {

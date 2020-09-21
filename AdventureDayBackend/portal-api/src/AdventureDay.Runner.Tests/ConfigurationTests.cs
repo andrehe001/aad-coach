@@ -1,5 +1,5 @@
+using AdventureDay.DataModel.Runner;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AdventureDay.ManagementApi.Data.Runner;
 
 namespace AdventureDay.Runner.Tests
 {

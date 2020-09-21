@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using AdventureDay.DataModel;
+using AdventureDay.ManagementApi.Data;
 
-namespace AdventureDay.ManagementApi.Data
+namespace AdventureDay.ManagementApi.Services
 {
     public interface ITeamDataService : IAuthenticationService
     {

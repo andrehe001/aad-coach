@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using AdventureDay.DataModel;
+using AdventureDay.ManagementApi.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdventureDay.ManagementApi.Data
+namespace AdventureDay.ManagementApi.Services
 {
     public interface ITeamManagement
     {

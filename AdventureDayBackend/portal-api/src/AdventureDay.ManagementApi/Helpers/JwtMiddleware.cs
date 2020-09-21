@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AdventureDay.ManagementApi.Data;
+using AdventureDay.ManagementApi.Services;
 
 namespace AdventureDay.ManagementApi.Helpers
 {

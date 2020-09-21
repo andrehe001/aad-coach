@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using AdventureDay.ManagementApi.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
-
-namespace AdventureDay.ManagementApi.Data
+namespace AdventureDay.DataModel
 {
     public class TeamLogEntry
     {

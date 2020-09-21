@@ -1,4 +1,4 @@
-namespace AdventureDay.ManagementApi.Data.Runner
+namespace AdventureDay.DataModel.Runner
 {
     public static class DefaultRunnerPhasesConfiguration
     {

@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using AdventureDay.DataModel;
 using AdventureDay.Runner.Model;
 using Microsoft.Extensions.Configuration;
 using AdventureDay.ManagementApi.Data;

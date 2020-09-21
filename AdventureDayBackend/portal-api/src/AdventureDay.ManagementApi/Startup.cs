@@ -1,5 +1,6 @@
 using AdventureDay.ManagementApi.Data;
 using AdventureDay.ManagementApi.Helpers;
+using AdventureDay.ManagementApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

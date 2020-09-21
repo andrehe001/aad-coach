@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AdventureDay.ManagementApi.Data.Runner
+namespace AdventureDay.DataModel.Runner
 {
     [Table("RunnerProperties")]
     public class RunnerProperties

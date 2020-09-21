@@ -3,9 +3,11 @@ using Microsoft.Extensions.Options;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using AdventureDay.DataModel;
 using AdventureDay.ManagementApi.Controllers.Dtos;
 using AdventureDay.ManagementApi.Data;
 using AdventureDay.ManagementApi.Helpers;
+using AdventureDay.ManagementApi.Services;
 
 namespace AdventureDay.ManagementApi.Controllers
 {
