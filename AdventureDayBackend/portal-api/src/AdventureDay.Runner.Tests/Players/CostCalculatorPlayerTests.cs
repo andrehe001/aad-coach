@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AdventureDay.DataModel;
-using AdventureDay.ManagementApi.Data;
 
 namespace AdventureDay.Runner.Tests
 {

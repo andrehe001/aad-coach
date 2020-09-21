@@ -3,9 +3,9 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Text;
 using AdventureDay.DataModel;
-using AdventureDay.ManagementApi.Data;
+using AdventureDay.PortalApi.Data;
 
-namespace AdventureDay.ManagementApi.Helpers
+namespace AdventureDay.PortalApi.Helpers
 {
     public class AppSettings
     {

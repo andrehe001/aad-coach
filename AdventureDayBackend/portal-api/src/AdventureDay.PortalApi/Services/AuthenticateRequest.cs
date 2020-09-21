@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace AdventureDay.ManagementApi.Services
+namespace AdventureDay.PortalApi.Services
 {
     public class AuthenticateRequest
     {

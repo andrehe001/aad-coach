@@ -7,7 +7,6 @@ using AdventureDay.DataModel;
 using AdventureDay.Runner.Model;
 using Microsoft.Extensions.Configuration;
 using Serilog;
-using AdventureDay.ManagementApi.Data;
 
 namespace AdventureDay.Runner.Players
 {

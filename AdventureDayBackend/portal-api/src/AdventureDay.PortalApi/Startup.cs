@@ -1,6 +1,6 @@
-using AdventureDay.ManagementApi.Data;
-using AdventureDay.ManagementApi.Helpers;
-using AdventureDay.ManagementApi.Services;
+using AdventureDay.DataModel;
+using AdventureDay.PortalApi.Helpers;
+using AdventureDay.PortalApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Prometheus;
 using Serilog;
 
-namespace AdventureDay.ManagementApi
+namespace AdventureDay.PortalApi
 {
     public class Startup
     {

@@ -3,13 +3,13 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using AdventureDay.DataModel;
 using AdventureDay.Runner.Utils;
 using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Prometheus;
 using Serilog;
-using AdventureDay.ManagementApi.Data;
 
 namespace AdventureDay.Runner
 {

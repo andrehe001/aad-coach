@@ -1,8 +1,8 @@
 ﻿using System;
 using AdventureDay.DataModel;
-using AdventureDay.ManagementApi.Data;
+using AdventureDay.PortalApi.Data;
 
-namespace AdventureDay.ManagementApi.Services
+namespace AdventureDay.PortalApi.Services
 {
     public class AuthenticateResponse
     {

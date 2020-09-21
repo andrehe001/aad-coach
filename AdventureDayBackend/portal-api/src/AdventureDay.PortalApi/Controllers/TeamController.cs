@@ -4,12 +4,12 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using AdventureDay.DataModel;
-using AdventureDay.ManagementApi.Controllers.Dtos;
-using AdventureDay.ManagementApi.Data;
-using AdventureDay.ManagementApi.Helpers;
-using AdventureDay.ManagementApi.Services;
+using AdventureDay.PortalApi.Data;
+using AdventureDay.PortalApi.Controllers.Dtos;
+using AdventureDay.PortalApi.Helpers;
+using AdventureDay.PortalApi.Services;
 
-namespace AdventureDay.ManagementApi.Controllers
+namespace AdventureDay.PortalApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

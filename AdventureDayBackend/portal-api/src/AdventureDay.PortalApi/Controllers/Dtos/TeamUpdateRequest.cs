@@ -1,4 +1,4 @@
-﻿namespace AdventureDay.ManagementApi.Controllers.Dtos
+﻿namespace AdventureDay.PortalApi.Controllers.Dtos
 {
     public class TeamUpdateRequest
     {

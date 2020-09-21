@@ -5,13 +5,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using AdventureDay.DataModel;
-using AdventureDay.ManagementApi.Data;
-using AdventureDay.ManagementApi.Helpers;
+using AdventureDay.PortalApi.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace AdventureDay.ManagementApi.Services
+namespace AdventureDay.PortalApi.Services
 {
     public class TeamManagementService : ITeamDataService
     {

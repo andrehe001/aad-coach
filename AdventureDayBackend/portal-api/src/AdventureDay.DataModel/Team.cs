@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using AdventureDay.ManagementApi.Data;
 
 namespace AdventureDay.DataModel
 {

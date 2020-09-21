@@ -1,4 +1,4 @@
-﻿namespace AdventureDay.ManagementApi.Helpers
+﻿namespace AdventureDay.PortalApi.Helpers
 {
     public enum AuthorizationType
     {

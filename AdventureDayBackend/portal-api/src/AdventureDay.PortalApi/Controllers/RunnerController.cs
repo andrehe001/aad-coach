@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using AdventureDay.DataModel;
 using AdventureDay.DataModel.Runner;
-using AdventureDay.ManagementApi.Data;
-using AdventureDay.ManagementApi.Data.Runner;
-using AdventureDay.ManagementApi.Helpers;
+using AdventureDay.PortalApi.Data;
+using AdventureDay.PortalApi.Data.Runner;
+using AdventureDay.PortalApi.Helpers;
 
-namespace AdventureDay.ManagementApi.Controllers
+namespace AdventureDay.PortalApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

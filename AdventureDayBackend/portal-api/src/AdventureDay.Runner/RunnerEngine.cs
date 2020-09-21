@@ -15,7 +15,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Prometheus;
 using Serilog;
-using AdventureDay.ManagementApi.Data;
 
 namespace AdventureDay.Runner
 {

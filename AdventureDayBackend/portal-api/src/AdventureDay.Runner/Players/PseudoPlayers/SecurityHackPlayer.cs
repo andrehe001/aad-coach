@@ -6,7 +6,6 @@ using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using AdventureDay.DataModel;
-using AdventureDay.ManagementApi.Data;
 
 namespace AdventureDay.Runner.Players.PseudoPlayers
 {

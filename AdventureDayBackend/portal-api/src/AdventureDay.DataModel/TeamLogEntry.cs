@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using AdventureDay.ManagementApi.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

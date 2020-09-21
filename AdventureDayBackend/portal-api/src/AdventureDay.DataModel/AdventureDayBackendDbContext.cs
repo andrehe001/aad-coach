@@ -1,9 +1,8 @@
-﻿using AdventureDay.DataModel;
-using AdventureDay.DataModel.Runner;
+﻿using AdventureDay.DataModel.Runner;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AdventureDay.ManagementApi.Data
+namespace AdventureDay.DataModel
 {
     public class AdventureDayBackendDbContext : DbContext
     {

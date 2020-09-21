@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace AdventureDay.ManagementApi
+namespace AdventureDay.PortalApi
 {
     public class Program
     {

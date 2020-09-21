@@ -6,10 +6,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AdventureDay.ManagementApi.Data;
-using AdventureDay.ManagementApi.Services;
+using AdventureDay.PortalApi.Data;
+using AdventureDay.PortalApi.Services;
 
-namespace AdventureDay.ManagementApi.Helpers
+namespace AdventureDay.PortalApi.Helpers
 {
     public class JwtMiddleware
     {

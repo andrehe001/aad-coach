@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using AdventureDay.DataModel;
-using AdventureDay.ManagementApi.Data;
+using AdventureDay.PortalApi.Data;
 
-namespace AdventureDay.ManagementApi.Helpers
+namespace AdventureDay.PortalApi.Helpers
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class TeamAuthorizeAttribute : Attribute, IAuthorizationFilter

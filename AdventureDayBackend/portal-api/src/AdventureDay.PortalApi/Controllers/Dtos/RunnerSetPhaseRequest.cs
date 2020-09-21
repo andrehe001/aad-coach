@@ -1,4 +1,4 @@
-namespace AdventureDay.ManagementApi.Data.Runner
+namespace AdventureDay.PortalApi.Data.Runner
 {
     public class RunnerSetPhaseRequest
     {

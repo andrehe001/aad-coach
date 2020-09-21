@@ -4,10 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AdventureDay.DataModel;
-using AdventureDay.ManagementApi.Data;
-using AdventureDay.ManagementApi.Helpers;
+using AdventureDay.PortalApi.Data;
+using AdventureDay.PortalApi.Helpers;
 
-namespace AdventureDay.ManagementApi.Controllers
+namespace AdventureDay.PortalApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

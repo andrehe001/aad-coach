@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace AdventureDay.ManagementApi.Controllers
+namespace AdventureDay.PortalApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

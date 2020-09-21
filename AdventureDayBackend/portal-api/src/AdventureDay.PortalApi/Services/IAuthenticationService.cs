@@ -1,4 +1,4 @@
-﻿namespace AdventureDay.ManagementApi.Services
+﻿namespace AdventureDay.PortalApi.Services
 {
     public interface IAuthenticationService
     {
