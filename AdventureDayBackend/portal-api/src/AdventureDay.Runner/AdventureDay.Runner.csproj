@@ -13,6 +13,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.NewtonsoftJson" Version="3.1.8" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.7.1" />
     <PackageReference Include="prometheus-net" Version="3.6.0" />
     <PackageReference Include="Serilog" Version="2.10.0" />
@@ -22,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AdventureDay.ManagementApi\AdventureDay.ManagementApi.csproj" />
+    <ProjectReference Include="..\AdventureDay.DataModel\AdventureDay.DataModel.csproj" />
   </ItemGroup>
 
 </Project>
