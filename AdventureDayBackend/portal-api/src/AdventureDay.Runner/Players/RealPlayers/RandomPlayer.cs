@@ -1,7 +1,9 @@
 using System;
+using Microsoft.Extensions.Configuration;
+using System.Security.Cryptography;
+
 using AdventureDay.DataModel;
 using AdventureDay.Runner.Model;
-using Microsoft.Extensions.Configuration;
 
 namespace AdventureDay.Runner.Players.RealPlayers
 {
@@ -11,15 +13,26 @@ namespace AdventureDay.Runner.Players.RealPlayers
 
         public override string Name => "Lachlan";
 
-        public RandomPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
-        {
-            _random = new Random();
-        }
-
         private Move GetRandomMove()
-        {            
-            var values = Enum.GetValues(typeof(Move));
-            return (Move)values.GetValue(_random.Next(values.Length));
+        {
+            int length = Enum.GetValues(typeof(Move)).Length;
+            byte[] _uint32Buffer = new byte[4];
+            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+            {                
+                rng.GetBytes(_uint32Buffer);
+                UInt32 rand = BitConverter.ToUInt32(_uint32Buffer, 0);
+
+                Int64 max = (1 + (Int64)UInt32.MaxValue);
+                Int64 remainder = max % length;
+                if (rand < max - remainder)
+                {
+                    return (Move)(rand % length);
+                }
+                else
+                {
+                    return (Move)new Random().Next(length);
+                }
+            }            
         }
 
         protected override Move GetFirstMove()
