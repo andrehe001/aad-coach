@@ -18,9 +18,9 @@ namespace AdventureDay.PortalApi
         {
             Configuration = configuration;
             Log.Logger = new LoggerConfiguration()
-           .ReadFrom.Configuration(Configuration.GetSection("Logging"))
-           .WriteTo.Console() // Always write to console!
-           .CreateLogger();
+               .ReadFrom.Configuration(Configuration.GetSection("Logging"))
+               .WriteTo.Console() // Always write to console!
+               .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }

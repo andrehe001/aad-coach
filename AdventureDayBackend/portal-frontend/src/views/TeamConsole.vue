@@ -17,8 +17,7 @@
               <span>Score:</span>
               <span>{{ TeamStats.score }}</span>
             </p>
-            <br />
-            <p class="status-text">
+            <p class="status-text del">
               <span>Wins:</span>
               <span>{{ TeamStats.wins }} ({{ winsShare }})</span>
             </p>
@@ -30,8 +29,7 @@
               <span>Errors:</span>
               <span>{{ TeamStats.errors }} ({{ errorsShare }})</span>
             </p>
-            <br />
-            <p class="status-text">
+            <p class="status-text del">
               <span>Profit:</span>
               <span>{{ TeamStats.profit }}</span>
             </p>
@@ -43,15 +41,14 @@
               <span>Costs:</span>
               <span>{{ TeamStats.costs }}</span>
             </p>
-            <br />
+            <p class="status-text del">
+              <span>
+                Current
+                <br />Phase:
+              </span>
+              <span>{{ currentPhase | formatPhase }}</span>
+            </p>
           </div>
-          <p class="status-text">
-            <span>
-              Current
-              <br />Phase:
-            </span>
-            <span>{{ currentPhase | formatPhase }}</span>
-          </p>
         </div>
         <div id="team-logs" class="col overflow-auto">
           <table class="table table-hover">
@@ -242,6 +239,10 @@ export default {
   padding-top: 20px;
   font-weight: 500;
   vertical-align: bottom;
+}
+
+.status-text.del span {
+  padding-top: 50px;
 }
 
 .status-text span:first-child {
