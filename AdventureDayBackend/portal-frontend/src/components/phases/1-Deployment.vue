@@ -27,7 +27,7 @@
         aria-expanded="false"
         aria-controls="collapseHints"
         href="#"
-      >Toggle Hints (free for now...)</a>
+      >Toggle Hints</a>
     </p>
     <ul class="collapse" id="collapseHints">
       <li>Take a close look into the existing sources, it may contain all necessary information regarding infrastructure and application deployment</li>
@@ -40,7 +40,7 @@
         aria-expanded="false"
         aria-controls="collapseResources"
         href="#"
-      >Toggle Resources (maybe you're strong enough without?)</a>
+      >Toggle Resources</a>
     </p>
     <ul class="collapse" id="collapseResources">
       <li>

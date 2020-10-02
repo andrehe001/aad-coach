@@ -14,7 +14,7 @@
         aria-expanded="false"
         aria-controls="collapseHints"
         href="#"
-      >Toggle Hints (not everything is always free!)</a>
+      >Toggle Hints</a>
     </p>
     <ul class="collapse" id="collapseHints">
       <li>Always check if some functionality is not already implemented</li>
@@ -28,7 +28,7 @@
         aria-expanded="false"
         aria-controls="collapseResources"
         href="#"
-      >Toggle Resources (we see what you do...)</a>
+      >Toggle Resources</a>
     </p>
     <ul class="collapse" id="collapseResources">
       <li>
