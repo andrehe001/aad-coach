@@ -22,6 +22,7 @@ namespace AdventureDayRunner.Players.RealPlayers
 
         protected override Move GetFirstMove()
         {
+            // TODO: Should be random to be different from IterativePlayer
             return GetPatternMove(0);
         }
 
