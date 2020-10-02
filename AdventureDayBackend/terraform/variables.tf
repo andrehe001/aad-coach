@@ -16,7 +16,7 @@ variable "aks_assign_acr_pull_role" {
 
 variable "aks_kubernetes_version_prefix" {
   type        = string
-  default     = "1.17"
+  default     = "1.18"
   description = "The Kubernetes Version prefix (MAJOR.MINOR) to be used by the AKS cluster. The BUGFIX version is determined automatically (latest)."
 }
 

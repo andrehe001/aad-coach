@@ -1,5 +1,6 @@
 resource "azurerm_key_vault" "kv" {
-  name                        = local.prefix_kebab
+  // ${substr(local.prefix_flat, 0, min(18, length(local.prefix_flat)))}${local.hash_suffix}
+  name                        = substr("${local.prefix_kebab}-${local.hash_suffix}", 0, min(24, length("${local.prefix_kebab}-${local.hash_suffix}")))
   location                    = azurerm_resource_group.rg.location
   resource_group_name         = azurerm_resource_group.rg.name
   enabled_for_disk_encryption = true
