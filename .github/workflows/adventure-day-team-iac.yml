@@ -16,9 +16,6 @@ on:
         required: true
         default: 'northeurope'
 
-defaults:
-  run:
-    working-directory: AdventureDayBackend/terraform
 jobs:
   deploy:
     name: Deploy Adventure Day Backend to Azure
@@ -31,8 +28,6 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets[github.event.inputs.azureSecretName] }}
-      - name: Debug
-        run: echo "hello" && pwd && ls -lah         
       - name: Run Terraform
         run: cd $GITHUB_WORKSPACE/aad-team/terraform && ./deploy-team.sh ${{ github.event.inputs.prefix }} ${{ github.event.inputs.location }}
         env:
