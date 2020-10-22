@@ -31,8 +31,11 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets[github.event.inputs.azureSecretName] }}
+      - name: Debug
+        run: pwd && ls -lah 
+        shell: bash 
       - name: Run Terraform
-        run: cd terraform && ./deploy-team.sh ${{ github.event.inputs.prefix }} ${{ github.event.inputs.location }}
+        run: cd $GITHUB_WORKSPACE/aad-team/terraform && ./deploy-team.sh ${{ github.event.inputs.prefix }} ${{ github.event.inputs.location }}
         shell: bash
         env:
           AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
