@@ -33,6 +33,6 @@ jobs:
           creds: ${{ secrets[github.event.inputs.azureSecretName] }}
       - name: Run Terraform
         run: cd terraform && ./deploy-team.sh ${{ github.event.inputs.prefix }} ${{ github.event.inputs.location }}
-        shell: pwsh
+        shell: bash
         env:
           AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
