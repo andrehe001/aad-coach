@@ -29,6 +29,6 @@ jobs:
         with:
           creds: ${{ secrets[github.event.inputs.azureSecretName] }}
       - name: Run Terraform
-        run: cd $GITHUB_WORKSPACE/aad-team/terraform && ./deploy-team.sh ${{ github.event.inputs.prefix }} ${{ github.event.inputs.location }}
+        run: cd $GITHUB_WORKSPACE/terraform && ./deploy-team.sh ${{ github.event.inputs.prefix }} ${{ github.event.inputs.location }}
         env:
           AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
