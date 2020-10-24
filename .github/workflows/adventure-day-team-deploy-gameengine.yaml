@@ -3,7 +3,7 @@
 # 2. Provide the right name for your cluster and RG
 # 3. Adjust the yaml file to reflect your connection strings
 
-name: Deploy GameEngine to AKS
+name: AdventureDay-Team-Deploy-GameEngine
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch

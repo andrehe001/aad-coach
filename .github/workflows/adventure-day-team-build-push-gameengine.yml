@@ -1,15 +1,15 @@
-name: Build and Push Sidecar
+name: AdventureDay-Team-Build-Push-Game-Engine
 
 on:
   push:
     branches: [ master ]
     paths:
-      - TeamGameHub/GameEngine/Sidecar/**
-      - .github/workflows/build-push-gamesidecar.yml
+      - TeamGameHub/GameEngine/WebApi/**
+      - .github/workflows/build-push-gameengine.yml
    
 defaults:
   run:
-    working-directory: TeamGameHub/GameEngine/Sidecar
+    working-directory: TeamGameHub/GameEngine/WebApi
 jobs:
   build:
 
@@ -22,8 +22,8 @@ jobs:
       run: |        
   
         docker login -u ricardoniepel -p ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }} ghcr.io
-        docker build -t ghcr.io/ricardoniepel/azure-adventure-day-coach/gamedayengine-sidecar:latest .
-        docker push ghcr.io/ricardoniepel/azure-adventure-day-coach/gamedayengine-sidecar:latest
+        docker build -t ghcr.io/ricardoniepel/azure-adventure-day-coach/gamedayengine-web:latest .
+        docker push ghcr.io/ricardoniepel/azure-adventure-day-coach/gamedayengine-web:latest
         
         
         
