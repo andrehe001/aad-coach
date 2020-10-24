@@ -4,38 +4,31 @@
 # 3. Adjust the yaml file to reflect your connection strings
 
 name: AdventureDay-Team-Deploy-GameEngine
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
-  push:
-    branches: [ master ]
-    paths: 
-        - TeamGameHub/GameEngine/blackbox_gameengine_deployment.yaml   
-        - .github/workflows/deploy-gameengine.yaml
-
+  workflow_dispatch:
+    inputs:
+      azureSecretName:
+        description: 'Azure Secret Name containing the Service Principal Details'
+        required: true
+        default: 'AZURE_PROD'
+      prefix:
+        description: 'The deployment prefix used for all Azure artefacts.'
+        required: true
+        default: 'team1'
 
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  deploy:
+    name: Deploy Adventure Day Backend to Azure
     runs-on: ubuntu-latest
-
-    
     steps:
-      - uses: azure/aks-set-context@v1
+      - uses: actions/checkout@v2
         with:
-            creds: '${{ secrets.AZURE_ADVENTURE_DAY_COACH_CREDENTIALS }}' 
-            resourceGroupName: 'teamred'
-            clusterName: 'teamred'
-        id: login
-        
-      - uses: Azure/k8s-deploy@v1
-        with:        
-          manifests: |
-              TeamGameHub/GameEngine/blackbox_gameengine_deployment.yaml          
-          kubectl-version: 'latest'
-
-          
-          
-      
+          repository: azure-adventure-day/aad-team
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets[github.event.inputs.azureSecretName] }}
+      - name: Login to K8s
+        run: az aks get-crendentials --admin --name "${{ github.event.inputs.prefix }}" --resource-group-name "${{ github.event.inputs.prefix }}"
+      - name: Run Deployment
+        run: kubectl apply -f ./GameEngine/blackbox_gameengine_deployment.yaml
