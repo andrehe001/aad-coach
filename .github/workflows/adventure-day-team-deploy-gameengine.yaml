@@ -29,6 +29,6 @@ jobs:
         with:
           creds: ${{ secrets[github.event.inputs.azureSecretName] }}
       - name: Login to K8s
-        run: az aks get-crendentials --admin --name "${{ github.event.inputs.prefix }}" --resource-group-name "${{ github.event.inputs.prefix }}"
+        run: az aks get-credentials --admin --name "${{ github.event.inputs.prefix }}" --resource-group-name "${{ github.event.inputs.prefix }}"
       - name: Run Deployment
         run: kubectl apply -f ./GameEngine/blackbox_gameengine_deployment.yaml
