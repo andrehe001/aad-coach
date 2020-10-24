@@ -48,15 +48,16 @@ namespace AdventureDay.Runner
 
             var container = ConfigureContainer(configuration);
             var engine = container.Resolve<RunnerEngine>();
-
-            await using (var scope = container.BeginLifetimeScope())
-            {
-                var dbContext = scope.Resolve<AdventureDayBackendDbContext>();
-                await dbContext.Database.EnsureCreatedAsync(cancellationTokenSource.Token);
-            }
-
+            
             try
             {
+                // Make sure DB is actually initialized, before starting the loop.
+                await using (var scope = container.BeginLifetimeScope())
+                {
+                    var dbContext = scope.Resolve<AdventureDayBackendDbContext>();
+                    await dbContext.Database.EnsureCreatedAsync(cancellationTokenSource.Token);
+                }
+
                 await engine.Run(cancellationTokenSource.Token);
             }
             catch (TaskCanceledException)
