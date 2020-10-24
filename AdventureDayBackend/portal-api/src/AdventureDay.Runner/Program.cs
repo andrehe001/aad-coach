@@ -41,14 +41,19 @@ namespace AdventureDay.Runner
             {
                 args.Cancel = true;
                 Console.WriteLine("Running - Press CTRL+C to stop");
-                
+
                 // ReSharper disable once AccessToDisposedClosure | endless loop follows.
                 cancellationTokenSource.Cancel();
             };
 
             var container = ConfigureContainer(configuration);
-            
             var engine = container.Resolve<RunnerEngine>();
+
+            await using (var scope = container.BeginLifetimeScope())
+            {
+                var dbContext = scope.Resolve<AdventureDayBackendDbContext>();
+                await dbContext.Database.EnsureCreatedAsync(cancellationTokenSource.Token);
+            }
 
             try
             {
@@ -67,8 +72,9 @@ namespace AdventureDay.Runner
             builder.RegisterInstance(configuration).As<IConfiguration>();
             
             // DB Context per Lifetime Scope (multithreading!)
+            var connectionString = configuration.GetConnectionString("DbConnection");
             var optionsBuilder = new DbContextOptionsBuilder<AdventureDayBackendDbContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DbConnection"));
+            optionsBuilder.UseSqlServer(connectionString);
             builder.RegisterInstance(optionsBuilder.Options).As<DbContextOptions<AdventureDayBackendDbContext>>();
             builder.RegisterType<AdventureDayBackendDbContext>().InstancePerLifetimeScope();
             builder.RegisterType<RunnerEngine>();
