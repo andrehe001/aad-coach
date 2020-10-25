@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace AdventureDay.DataModel.Runner
 {
     public static class DefaultRunnerPhasesConfiguration
@@ -8,11 +10,10 @@ namespace AdventureDay.DataModel.Runner
                 RunnerPhase.Phase1_Deployment, 
                 new RunnerPhaseConfigurationItem()
                 {
-                    RequestExecutorLatencyMillis = 1000,
-                    PlayerTypes = new []
+                    PlayerTypes = new Dictionary<PlayerType, int>()
                     {
-                        PlayerType.Random, 
-                        PlayerType.Fixed
+                        { PlayerType.Random, 1000},
+                        { PlayerType.Fixed, 1000},
                     }
                 }
             },
@@ -20,12 +21,11 @@ namespace AdventureDay.DataModel.Runner
                 RunnerPhase.Phase2_Change, 
                 new RunnerPhaseConfigurationItem()
                 {
-                    RequestExecutorLatencyMillis = 1000,
-                    PlayerTypes = new []
+                    PlayerTypes = new Dictionary<PlayerType, int>()
                     {
-                        PlayerType.Random, 
-                        PlayerType.Fixed, 
-                        PlayerType.Bet
+                        { PlayerType.Random, 1000},
+                        { PlayerType.Fixed, 1000},
+                        { PlayerType.Bet, 1000},
                     }
                 }
             },
@@ -33,13 +33,12 @@ namespace AdventureDay.DataModel.Runner
                 RunnerPhase.Phase3_Monitoring, 
                 new RunnerPhaseConfigurationItem()
                 {
-                    RequestExecutorLatencyMillis = 1000,
-                    PlayerTypes = new []
+                    PlayerTypes = new Dictionary<PlayerType, int>()
                     {
-                        PlayerType.Random, 
-                        PlayerType.Fixed, 
-                        PlayerType.Bet, 
-                        PlayerType.CostCalculator
+                        { PlayerType.Random, 1000},
+                        { PlayerType.Fixed, 1000},
+                        { PlayerType.Bet, 1000},
+                        { PlayerType.CostCalculator, 30 * 1000},
                     }
                 }
             },
@@ -47,14 +46,13 @@ namespace AdventureDay.DataModel.Runner
                 RunnerPhase.Phase4_Scale, 
                 new RunnerPhaseConfigurationItem()
                 {
-                    RequestExecutorLatencyMillis = 100,
-                    PlayerTypes = new []
+                    PlayerTypes = new Dictionary<PlayerType, int>()
                     {
-                        PlayerType.Random, 
-                        PlayerType.Fixed, 
-                        PlayerType.Bet, 
-                        // PlayerType.CostCalculator,  # TODO: Cost calculation API does not like "hammer mode"
-                        PlayerType.Mass
+                        
+                        { PlayerType.Random, 100},
+                        { PlayerType.Fixed, 100},
+                        { PlayerType.Bet, 100},
+                        { PlayerType.CostCalculator, 30 * 1000},
                     }
                 }
             },
@@ -62,14 +60,13 @@ namespace AdventureDay.DataModel.Runner
                 RunnerPhase.Phase5_Security, 
                 new RunnerPhaseConfigurationItem()
                 {
-                    RequestExecutorLatencyMillis = 500,
-                    PlayerTypes = new []
+                    PlayerTypes = new Dictionary<PlayerType, int>()
                     {
-                        PlayerType.Random,
-                        PlayerType.Fixed, 
-                        PlayerType.Bet, 
-                        PlayerType.CostCalculator,
-                        PlayerType.SecurityHack
+                        { PlayerType.Random, 1000},
+                        { PlayerType.Fixed, 1000},
+                        { PlayerType.Bet, 1000},
+                        { PlayerType.CostCalculator, 30 * 1000},
+                        { PlayerType.SecurityHack, 1000},
                     }
                 }
             },
@@ -77,15 +74,15 @@ namespace AdventureDay.DataModel.Runner
                 RunnerPhase.Phase6_Intelligence, 
                 new RunnerPhaseConfigurationItem()
                 {
-                    RequestExecutorLatencyMillis = 500,
-                    PlayerTypes = new [] {
-                        PlayerType.Random,
-                        PlayerType.Fixed,
-                        PlayerType.Bet,
-                        PlayerType.CostCalculator,
-                        PlayerType.SecurityHack,
-                        PlayerType.Iterative,
-                        PlayerType.Pattern
+                    PlayerTypes = new Dictionary<PlayerType, int>()
+                    {
+                        { PlayerType.Random, 1000},
+                        { PlayerType.Fixed, 1000},
+                        { PlayerType.Bet, 1000},
+                        { PlayerType.CostCalculator, 30 * 1000},
+                        { PlayerType.SecurityHack, 1000},
+                        { PlayerType.Iterative, 1000},
+                        { PlayerType.Pattern, 1000},
                     }
                 }
             }
