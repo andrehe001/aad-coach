@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Text.RegularExpressions;
 using AdventureDay.DataModel;
 using AdventureDay.Runner.Model;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +10,7 @@ namespace AdventureDay.Runner.Players
     public class MatchReport
     {
         // TODO: Refactor to some more intelligent approach... (=> avoid static ref here)
-        private static readonly int FixedMatchStake = Program.Configuration.GetValue("FixedMatchStake", 1);
+        private static readonly int FixedMatchStake = Program.Configuration?.GetValue("FixedMatchStake", 1) ?? 1;
 
         private MatchReport()
         {
@@ -142,7 +143,19 @@ namespace AdventureDay.Runner.Players
             var outcome = FixedMatchStake;
             if (matchResponse.Bet.HasValue)
             {
-                outcome = (int)Math.Ceiling((1 + matchResponse.Bet.Value) * FixedMatchStake);
+                // Bet: Value between 0 and 1.
+                if (matchResponse.Bet < 0.0m)
+                {
+                    matchResponse.Bet = 0.0m;
+                }
+
+                if (matchResponse.Bet > 1.0m)
+                {
+                    matchResponse.Bet = 1.0m;
+                }
+                
+                var additionalBetOutcome = (int)Math.Round((1 + matchResponse.Bet.Value) * FixedMatchStake);
+                outcome = FixedMatchStake + additionalBetOutcome;
             }
             
             if (matchResponse.MatchOutcome.HasValue)
