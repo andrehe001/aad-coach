@@ -60,6 +60,8 @@ namespace TeamGameHub.GameEngine.WebApi.Services
 
         public async Task<Match> PlayMatch(MatchRequest matchRequest)
         {
+            _logger.LogInformation("Match request received from ${matchRequest.ChallengerId}");
+
             // If MassPlayer
             if (matchRequest.ChallengerId == "Gloria")
             {
