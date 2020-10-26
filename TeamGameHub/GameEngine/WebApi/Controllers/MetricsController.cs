@@ -41,17 +41,17 @@ namespace TeamGameHub.GameEngine.WebApi.Controllers
         /// <summary>
         /// Calculates the price for an compute instance
         /// </summary>
-        private double CalculatePrice(string instanceType, int memory, int cores)
+        private long CalculatePrice(string instanceType, int memory, int cores)
         {
             // https://github.com/kubecost/cost-model/blob/develop/configs/azure.json
             // "CPU": "0.03900",
             // "spotCPU": "0.007764", 
             // "RAM": "0.001917", 
             // "spotRAM": "0.000382",
-            double corePerMinute = 0.03900 / 60;
-            double gigPerMinute = 0.001917 / 60000;
+            double corePerMinute = 0.3;
+            double gigPerMinute = 0.00035;
 
-            return memory*gigPerMinute + cores*corePerMinute;
+            return (long)(memory*gigPerMinute + cores*corePerMinute);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace TeamGameHub.GameEngine.WebApi.Models
         /// <summary>
         /// The total price.
         /// </summary>
-        public double Price { get; set; }
+        public long Price { get; set; }
 
         /// <summary>
         /// The amount of available memory.
