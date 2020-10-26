@@ -163,9 +163,9 @@ namespace AdventureDay.Runner
                 var startTimestamp = DateTime.UtcNow;
                 MatchReport report = null;
                 try
-                {
-                    Log.Debug($"Team {team.Name} vs. Player {playerType.ToString()} (Latency: {delay})");
+                {                    
                     var player = CreatePlayerFromType(playerType, team, httpTimeout);
+                    Log.Debug($"Team {team.Name} vs. {player.Name} (Latency: {delay})");
 
                     report = await player.Play(cancellationToken);
                 }

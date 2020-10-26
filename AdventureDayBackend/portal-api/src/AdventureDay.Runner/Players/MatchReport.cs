@@ -32,8 +32,8 @@ namespace AdventureDay.Runner.Players
             var outcome = CalculateHumanTeamMoneyOutcome(matchResponse);
 
             var reason = outcome > 0
-                ? $"Human has won ${outcome}"
-                : $"Smoorgh has won ${Math.Abs(outcome)}";
+                ? $"Human has won ${outcome} against ${matchResponse.Player1Name}"
+                : $"Smoorgh (${matchResponse.Player1Name}) has won ${Math.Abs(outcome)}";
 
             return new MatchReport()
             {
