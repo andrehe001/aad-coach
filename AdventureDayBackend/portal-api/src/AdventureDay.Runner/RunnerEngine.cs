@@ -194,8 +194,17 @@ namespace AdventureDay.Runner
                 {
                     if (exception.Message.Contains("An invalid request URI was provided."))
                     {
-                        Log.Information($"No backend URI for team {team.Name} (ID: {team.Id}) found.");
-                        report = MatchReport.FromError($"Smoorghs are unable to play - your backend URI is not configured");
+                        if (_runnerProperties.CurrentPhase > RunnerPhase.Phase1_Deployment)
+                        {
+                            Log.Information($"No backend URI for team {team.Name} (ID: {team.Id}) found.");
+                            report = MatchReport.FromError(
+                                $"Smoorghs are unable to play - your backend URI is not configured");
+                        }
+                        else
+                        {
+                            Log.Information($"No backend URI for team {team.Name} (ID: {team.Id}) found (IGNORED - phase 1).");
+                            report = MatchReport.FromBackendUriMissing("Smoorghs are unable to play - your backend URI is not configured");
+                        }
                     }
                     else
                     {
