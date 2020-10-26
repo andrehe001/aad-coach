@@ -73,7 +73,6 @@ namespace AdventureDay.Runner
         public async Task Run(CancellationToken cancellationToken)
         {
             await CreateEmptyScoring(cancellationToken);
-            CancellationTokenSource innerCancellationTokenSource = null;
             DateTime lastRefresh;
             
             lastRefresh = await RefreshConfiguration(cancellationToken);
