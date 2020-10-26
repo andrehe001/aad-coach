@@ -38,7 +38,7 @@ namespace AdventureDay.DataModel.Runner
                         { PlayerType.Random, 1000},
                         { PlayerType.Fixed, 1000},
                         { PlayerType.Bet, 1000},
-                        { PlayerType.CostCalculator, 30 * 1000},
+                        { PlayerType.CostCalculator, 60 * 1000},
                     }
                 }
             },
@@ -52,7 +52,7 @@ namespace AdventureDay.DataModel.Runner
                         { PlayerType.Random, 100},
                         { PlayerType.Fixed, 100},
                         { PlayerType.Bet, 100},
-                        { PlayerType.CostCalculator, 30 * 1000},
+                        { PlayerType.CostCalculator, 60 * 1000},
                     }
                 }
             },
@@ -65,7 +65,7 @@ namespace AdventureDay.DataModel.Runner
                         { PlayerType.Random, 1000},
                         { PlayerType.Fixed, 1000},
                         { PlayerType.Bet, 1000},
-                        { PlayerType.CostCalculator, 30 * 1000},
+                        { PlayerType.CostCalculator, 60 * 1000},
                         { PlayerType.SecurityHack, 1000},
                     }
                 }
@@ -79,7 +79,7 @@ namespace AdventureDay.DataModel.Runner
                         { PlayerType.Random, 1000},
                         { PlayerType.Fixed, 1000},
                         { PlayerType.Bet, 1000},
-                        { PlayerType.CostCalculator, 30 * 1000},
+                        { PlayerType.CostCalculator, 60 * 1000},
                         { PlayerType.SecurityHack, 1000},
                         { PlayerType.Iterative, 1000},
                         { PlayerType.Pattern, 1000},
