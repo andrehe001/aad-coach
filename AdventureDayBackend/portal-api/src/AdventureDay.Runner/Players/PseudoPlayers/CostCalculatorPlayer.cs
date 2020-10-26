@@ -1,9 +1,11 @@
 using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
+using Serilog;
 using System;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using AdventureDay.DataModel;
@@ -13,6 +15,28 @@ namespace AdventureDay.Runner.Players.PseudoPlayers
 {
     public class CostCalculatorPlayer : PseudoPlayerBase
     {
+
+        public class MetricsResponse
+        {
+            public bool MetricsError { get; set; }
+            public long Price { get; set; }
+            public int TotalMemory { get; set; }
+
+            public int TotalCores { get; set; }
+
+            public Node[] Nodes { get; set; }
+        }
+
+        public class Node
+        {
+            public long Price { get; set; }
+            public int AvailableMemory { get; set; }
+            public int AvailableCores { get; set; }
+            public int UsedMemory { get; set; }
+            public int UsedCores { get; set; }
+            public string Type { get; set; }
+        }
+
         private readonly IConfiguration _configuration;
         private readonly double _azureCostScaleFactor;
 
@@ -38,10 +62,10 @@ namespace AdventureDay.Runner.Players.PseudoPlayers
                 .WithSubscription(team.SubscriptionId.ToString());
 
             // TODO: Take a look why costs is empty
-            //long aksCosts = await GetAksCostAsync(azure);
+            long aksCosts = 0; //await GetAksCostAsync(team, httpClient, cancellationToken);
             long sqlCosts = await GetSqlCostAsync(azure);
 
-            var totalCost = (int)Math.Round(sqlCosts * _azureCostScaleFactor, MidpointRounding.AwayFromZero);
+            var totalCost = (int)Math.Round(sqlCosts * _azureCostScaleFactor + aksCosts * _azureCostScaleFactor, MidpointRounding.AwayFromZero);
             return MatchReport.FromCostCalculator(totalCost);
         }
 
@@ -117,31 +141,38 @@ namespace AdventureDay.Runner.Players.PseudoPlayers
             return sqlCost;
         }
 
-        //private static async Task<long> GetAksCostAsync(IAzure azure)
-        //{
-        //    long aksCosts = 0;
-        //    foreach (var kubernetesCluster in await azure.KubernetesClusters.ListAsync())
-        //    {
-        //        var computeSkus = azure.ComputeSkus
-        //                .ListbyRegionAndResourceType(kubernetesCluster.Region, ComputeResourceType.VirtualMachines);
+        // private static async Task<long> GetAksCostAsync(Team team, HttpClient httpClient, CancellationToken cancellationToken)
+        // {
+        //     long aksCosts = 50; // default penalty for unavailable costs
 
-        //        foreach (var agentPool in kubernetesCluster.AgentPools)
-        //        {
-        //            var vmCount = agentPool.Value.Count;
-        //            var vmSize = agentPool.Value.VMSize;
+        //     if (!string.IsNullOrWhiteSpace(team.GameEngineUri)){
+        //         Uri gameEngineSidecarUri; 
 
-        //            var computeSkusCosts = computeSkus
-        //                .Single(_ => _.VirtualMachineSizeType.ToString() == vmSize.ToString())
-        //                .Costs;
+        //         Log.Debug("Costplayer: Using default game uri");
+        //         var gameEngineSidecarUriBuilder = new UriBuilder(team.GameEngineUri);
+        //         gameEngineSidecarUriBuilder.Port = 80;
+        //         gameEngineSidecarUriBuilder.Path = "Metrics";
+        //         gameEngineSidecarUri = gameEngineSidecarUriBuilder.Uri;
 
-        //            var vmCost = computeSkusCosts
-        //                .Sum(_ => _.Quantity.GetValueOrDefault());
+        //         try
+        //         {
+        //             var result = await httpClient.GetAsync(gameEngineSidecarUri, cancellationToken: cancellationToken);
+        //             if (result.IsSuccessStatusCode)
+        //             {
+        //                 var response = await result.Content.ReadFromJsonAsync<MetricsResponse>(
+        //                     cancellationToken: cancellationToken);
 
-        //            aksCosts += vmCount * vmCost;
-        //        }
-        //    }
+        //                 aksCosts = response.Price;
+        //             }
+        //         }
+        //         catch (Exception exception)
+        //         {
+        //             Log.Information($"{nameof(CostCalculatorPlayer)}: Error in in reaching cost endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
+        //             Log.Debug(exception, $"{nameof(CostCalculatorPlayer)}: Error in in reaching cost endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
+        //         }
+        //     }
 
-        //    return aksCosts;
-        //}
+        //     return aksCosts;
+        // }
     }
 }
