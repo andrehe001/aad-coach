@@ -80,7 +80,7 @@ namespace AdventureDay.Runner.Players
                 Cost = 0
             };
         }
-
+        
         public static MatchReport FromHackerAttackDefended()
         {
             return new MatchReport()
@@ -90,6 +90,18 @@ namespace AdventureDay.Runner.Players
                 Cost = 0
             };
         }
+        public static MatchReport FromBackendUriMissing(string reason)
+        {
+            return new MatchReport()
+            {
+                MatchRatingStatus = MatchRating.Ignore,
+                LogEntryStatus = LogEntryStatus.CANCELED,
+                Reason = reason,
+                Income = 0,
+                Cost = 0
+            };
+        }
+
         #endregion
 
         public MatchRating MatchRatingStatus
