@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     paths:
       - TeamGameHub/GameEngine/WebApi/**
-      - .github/workflows/adventure-day-team-build-push-gameengine2.yaml.yml
+      - .github/workflows/adventure-day-team-build-push-gameengine2.yml
    
 defaults:
   run:
