@@ -27,6 +27,9 @@ namespace AdventureDay.Runner
         private readonly ILifetimeScope _lifetimeScope;
         private readonly IConfiguration _configuration;
 
+        private RunnerProperties _runnerProperties = RunnerProperties.CreateDefault();
+        private List<Team> _teams = new List<Team>();
+
         public RunnerEngine(ILifetimeScope lifetimeScope, IConfiguration configuration)
         {
             _lifetimeScope = lifetimeScope;
@@ -39,11 +42,11 @@ namespace AdventureDay.Runner
             try
             {
                 // TODO: This is a bit lazy ass and relies on the PRIM KEY Constraint.
-                var (lastRefresh, teams, properties) = await RefreshConfiguration(cancellationToken);
+                var lastRefresh = await RefreshConfiguration(cancellationToken);
                 await using (var lifetimeScope = _lifetimeScope.BeginLifetimeScope())
                 {
                     var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
-                    foreach (var team in teams)
+                    foreach (var team in _teams)
                     {
                         Log.Warning("Found no score record for team. Creating first one.");
                         await dbContext.TeamScores.AddAsync(new TeamScore()
@@ -70,78 +73,77 @@ namespace AdventureDay.Runner
         public async Task Run(CancellationToken cancellationToken)
         {
             await CreateEmptyScoring(cancellationToken);
-            
             DateTime lastRefresh;
-            List<Team> teams;
-            RunnerProperties properties;
             
-            (lastRefresh, teams, properties) = await RefreshConfiguration(cancellationToken);
-            
+            lastRefresh = await RefreshConfiguration(cancellationToken);
+            var loopStarted = false;
             do // until we cancel completely externally
             {
                 DateTime now = DateTime.UtcNow;
                 TimeSpan refreshDelta = now - lastRefresh;
                 
-                var currentPhase = properties.CurrentPhase;
-                var phaseConfiguration = properties.PhaseConfigurations[currentPhase];
-                
-                switch (properties.RunnerStatus)
+                Log.Information($"Runner Status: {_runnerProperties.RunnerStatus.ToString()}");
+                switch (_runnerProperties.RunnerStatus)
                 {
                     case RunnerStatus.Started:
-                        Log.Information(
-                            $"--- New Wave --- Phase: {currentPhase.ToString()}"
-                            + $" Latency: {phaseConfiguration.RequestExecutorLatencyMillis}"
-                            + $" (Config Refresh: {refreshDelta.Seconds} sec ago.)");
-                        FireAndForgetForAllTeamsAndPlayers(phaseConfiguration, teams, cancellationToken);
-                        await Task.Delay(phaseConfiguration.RequestExecutorLatencyMillis, cancellationToken);
+                        if (!loopStarted)
+                        {
+                            loopStarted = true;
+                            FireAndForgetForAllTeamsAndPlayers(cancellationToken);
+                        }
                         break;
                     case RunnerStatus.Stopped:
-                        Log.Information(
-                            $"Status: {properties.RunnerStatus.ToString()} (retry in 5secs)");
-                        await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                        loopStarted = false;
                         break;
                     default:
-                        throw new InvalidOperationException($"Unexpected RunnerStatus: {properties.RunnerStatus.ToString()}");
+                        throw new InvalidOperationException($"Unexpected RunnerStatus: {_runnerProperties.RunnerStatus.ToString()}");
                 }
 
+                // W8 for 5secs, before updating from config.
+                await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                
                 if (refreshDelta.Seconds > _refreshTimeoutInSeconds)
                 {
-                    (lastRefresh, teams, properties) = await RefreshConfiguration(cancellationToken);
+                    lastRefresh = await RefreshConfiguration(cancellationToken);
                 }
             } while (!cancellationToken.IsCancellationRequested);
         }
 
-        private void FireAndForgetForAllTeamsAndPlayers(
-            RunnerPhaseConfigurationItem phaseConfiguration, 
-            List<Team> teams, 
-            CancellationToken cancellationToken)
+        private void FireAndForgetForAllTeamsAndPlayers(CancellationToken cancellationToken)
         {
-            // Fire forget match requests for all configured players.
-            foreach (var team in teams)
+            foreach (var teamId in _teams.Select(_ => _.Id).ToList())
             {
-                foreach (var playerType in phaseConfiguration.PlayerTypes)
+                foreach (var playerType in _runnerProperties.PhaseConfigurations[_runnerProperties.CurrentPhase].PlayerTypes.ToList())
                 {
-                    InvokePlayerWithFireAndForget(playerType, team, cancellationToken);
+                    Task.Run(async () =>
+                    {
+                        while (_runnerProperties.RunnerStatus == RunnerStatus.Started && !cancellationToken.IsCancellationRequested)
+                        {
+                            InvokePlayerWithFireAndForget(playerType.Key, teamId, playerType.Value, cancellationToken);
+                            await Task.Delay(playerType.Value);
+                        }
+                    }).Forget();
                 }
             }
         }
 
-        private async Task<(DateTime, List<Team>, RunnerProperties)> RefreshConfiguration(CancellationToken cancellationToken)
+        private async Task<DateTime> RefreshConfiguration(CancellationToken cancellationToken)
         {
             Log.Information("Refreshing Configuration...");
             await using (var lifetimeScope = _lifetimeScope.BeginLifetimeScope())
             {
                 var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
-                var properties = await dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
+                _runnerProperties = await dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
                     _.Name == RunnerProperties.DefaultRunnerPropertiesName, cancellationToken);
-                var teams = await dbContext.Teams.ToListAsync(cancellationToken);
-                return (DateTime.UtcNow, teams, properties);
+                _teams = await dbContext.Teams.ToListAsync(cancellationToken);
+                return DateTime.UtcNow;
             }
         }
         
         private void InvokePlayerWithFireAndForget(
             PlayerType playerType,
-            Team team,
+            int teamId,
+            int delay,
             CancellationToken cancellationToken)
         {
             PlayerInvocationsMetric.Inc();
@@ -150,12 +152,19 @@ namespace AdventureDay.Runner
             
             Task.Run(async () =>
             {
+                var team = _teams.FirstOrDefault(_ => _.Id == teamId);
+                if (team == null)
+                {
+                    Log.Warning($"Team configuration not found TeamId: {teamId}.");
+                    return;
+                }
+                
                 var startTimestamp = DateTime.UtcNow;
                 MatchReport report = null;
                 try
-                {
-                    Log.Debug($"Team {team.Name} vs. Player {playerType.ToString()}");
+                {                    
                     var player = CreatePlayerFromType(playerType, team, httpTimeout);
+                    Log.Debug($"Team {team.Name} vs. {player.Name} (Latency: {delay})");
 
                     report = await player.Play(cancellationToken);
                 }
@@ -184,8 +193,17 @@ namespace AdventureDay.Runner
                 {
                     if (exception.Message.Contains("An invalid request URI was provided."))
                     {
-                        Log.Information($"No backend URI for team {team.Name} (ID: {team.Id}) found.");
-                        report = MatchReport.FromError($"Smoorghs are unable to play - your backend URI is not configured");
+                        if (_runnerProperties.CurrentPhase > RunnerPhase.Phase1_Deployment)
+                        {
+                            Log.Information($"No backend URI for team {team.Name} (ID: {team.Id}) found.");
+                            report = MatchReport.FromError(
+                                $"Smoorghs are unable to play - your backend URI is not configured");
+                        }
+                        else
+                        {
+                            Log.Information($"No backend URI for team {team.Name} (ID: {team.Id}) found (IGNORED - phase 1).");
+                            report = MatchReport.FromBackendUriMissing("Smoorghs are unable to play - your backend URI is not configured");
+                        }
                     }
                     else
                     {

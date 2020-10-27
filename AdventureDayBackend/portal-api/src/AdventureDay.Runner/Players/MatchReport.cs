@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Text.RegularExpressions;
 using AdventureDay.DataModel;
 using AdventureDay.Runner.Model;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +10,7 @@ namespace AdventureDay.Runner.Players
     public class MatchReport
     {
         // TODO: Refactor to some more intelligent approach... (=> avoid static ref here)
-        private static readonly int FixedMatchStake = Program.Configuration.GetValue("FixedMatchStake", 1);
+        private static readonly int FixedMatchStake = Program.Configuration?.GetValue("FixedMatchStake", 1) ?? 1;
 
         private MatchReport()
         {
@@ -31,8 +32,8 @@ namespace AdventureDay.Runner.Players
             var outcome = CalculateHumanTeamMoneyOutcome(matchResponse);
 
             var reason = outcome > 0
-                ? $"Human has won ${outcome}"
-                : $"Smoorgh has won ${Math.Abs(outcome)}";
+                ? $"Human has won ${outcome} against ${matchResponse.Player1Name}"
+                : $"Smoorgh (${matchResponse.Player1Name}) has won ${Math.Abs(outcome)}";
 
             return new MatchReport()
             {
@@ -79,7 +80,7 @@ namespace AdventureDay.Runner.Players
                 Cost = 0
             };
         }
-
+        
         public static MatchReport FromHackerAttackDefended()
         {
             return new MatchReport()
@@ -89,6 +90,18 @@ namespace AdventureDay.Runner.Players
                 Cost = 0
             };
         }
+        public static MatchReport FromBackendUriMissing(string reason)
+        {
+            return new MatchReport()
+            {
+                MatchRatingStatus = MatchRating.Ignore,
+                LogEntryStatus = LogEntryStatus.CANCELED,
+                Reason = reason,
+                Income = 0,
+                Cost = 0
+            };
+        }
+
         #endregion
 
         public MatchRating MatchRatingStatus
@@ -142,7 +155,19 @@ namespace AdventureDay.Runner.Players
             var outcome = FixedMatchStake;
             if (matchResponse.Bet.HasValue)
             {
-                outcome = (int)Math.Ceiling((1 + matchResponse.Bet.Value) * FixedMatchStake);
+                // Bet: Value between 0 and 1.
+                if (matchResponse.Bet < 0.0m)
+                {
+                    matchResponse.Bet = 0.0m;
+                }
+
+                if (matchResponse.Bet > 1.0m)
+                {
+                    matchResponse.Bet = 1.0m;
+                }
+                
+                var additionalBetOutcome = (int)Math.Round((1 + matchResponse.Bet.Value) * FixedMatchStake);
+                outcome = FixedMatchStake + additionalBetOutcome;
             }
             
             if (matchResponse.MatchOutcome.HasValue)

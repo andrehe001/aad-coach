@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,6 +13,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using TeamGameHub.GameEngine.WebApi.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace TeamGameHub.GameEngine.WebApi.Services
 {
@@ -25,7 +26,7 @@ namespace TeamGameHub.GameEngine.WebApi.Services
         private readonly MatchDBContext _dbContext;
         private readonly IConfiguration _config;
         private readonly Lazy<bool> _useMockBot;
-
+        private readonly JsonSerializerOptions _stringEnumConverterOptions;
         private readonly Dictionary<Guid, List<Match>> _matches = new Dictionary<Guid, List<Match>>();
 
         // EncryptionKey
@@ -40,8 +41,15 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             _cache = cache;
             _dbContext = dbContext;
             _config = config;
-            
+
             _useMockBot = new Lazy<bool>(() => _configuration.GetValue<bool>("UseMockBot", false));
+
+            _stringEnumConverterOptions = new JsonSerializerOptions
+            {
+                Converters ={
+                        new JsonStringEnumConverter()
+                 }
+            };
         }
 
         public Task<IEnumerable<Match>> GetChallengerMatches(Guid challengerId)
@@ -52,6 +60,8 @@ namespace TeamGameHub.GameEngine.WebApi.Services
 
         public async Task<Match> PlayMatch(MatchRequest matchRequest)
         {
+            _logger.LogInformation("Match request received from ${matchRequest.ChallengerId}");
+
             // If MassPlayer
             if (matchRequest.ChallengerId == "Gloria")
             {
@@ -213,7 +223,7 @@ namespace TeamGameHub.GameEngine.WebApi.Services
 
         private async Task SaveMatchToCache(Match m)
         {
-            string serializedMatch = JsonConvert.SerializeObject(m);
+            string serializedMatch = JsonSerializer.Serialize(m);
             string encryptedString = Encrypt(serializedMatch);
             await _cache.SetStringAsync(m.MatchId.ToString(), encryptedString);
         }
@@ -222,7 +232,7 @@ namespace TeamGameHub.GameEngine.WebApi.Services
         {
             string o = await _cache.GetStringAsync(matchId.ToString());
             string decryptedString = Decrypt(o);
-            Match item = JsonConvert.DeserializeObject<Match>(decryptedString);
+            Match item = JsonSerializer.Deserialize<Match>(decryptedString);
             return item;
         }
 
@@ -281,10 +291,10 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             string backendurl = _config.GetValue<string>("ARCADE_BACKENDURL");
 
             HttpClient cl = new HttpClient();
-            StringContent content = new StringContent(JsonConvert.SerializeObject(gameInfoForBackend),
+            StringContent content = new StringContent(System.Text.Json.JsonSerializer.Serialize(gameInfoForBackend, _stringEnumConverterOptions),
                 Encoding.UTF8, "application/json");
-            HttpResponseMessage res = await cl.PostAsync(backendurl, content);
-            return JsonConvert.DeserializeObject<MoveDTO>(await res.Content.ReadAsStringAsync());
+            HttpResponseMessage res = await cl.PostAsync(backendurl, content);            
+            return JsonSerializer.Deserialize<MoveDTO>(await res.Content.ReadAsStringAsync(), _stringEnumConverterOptions);
         }
 
         private Outcome CalculateResult(Move smoorghMove, Move humanBotMove)

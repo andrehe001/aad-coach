@@ -9,8 +9,10 @@ namespace AdventureDay.Runner.Players.RealPlayers
 {
     public class RandomPlayer : RealPlayerBase
     {
-        private readonly Random _random;
-
+        public RandomPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
+        {
+        }
+        
         public override string Name => "Lachlan";
 
         private Move GetRandomMove()
@@ -44,5 +46,6 @@ namespace AdventureDay.Runner.Players.RealPlayers
         {
             return GetRandomMove();
         }
+
     }
 }

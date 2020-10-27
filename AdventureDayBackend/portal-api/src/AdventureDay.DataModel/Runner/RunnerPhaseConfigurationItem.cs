@@ -1,8 +1,9 @@
+using System.Collections.Generic;
+
 namespace AdventureDay.DataModel.Runner
 {
     public class RunnerPhaseConfigurationItem
     {
-        public int RequestExecutorLatencyMillis { get; set; }
-        public PlayerType[] PlayerTypes { get; set; }
+        public Dictionary<PlayerType, int> PlayerTypes { get; set; }
     }
 }

@@ -1,0 +1,29 @@
+name: AdventureDay-Team-Deploy-GameEngine
+on:
+  workflow_dispatch:
+    inputs:
+      azureSecretName:
+        description: 'Azure Secret Name containing the Service Principal Details'
+        required: true
+        default: 'AZURE_PROD'
+      prefix:
+        description: 'The deployment prefix used for all Azure artefacts.'
+        required: true
+        default: 'team1'
+
+jobs:
+  deploy:
+    name: Deploy Adventure Day Backend to Azure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: azure-adventure-day/aad-team
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets[github.event.inputs.azureSecretName] }}
+      - name: Login to K8s
+        run: az aks get-credentials --admin --name "${{ github.event.inputs.prefix }}" --resource-group "${{ github.event.inputs.prefix }}"
+      - name: Run Deployment
+        run: kubectl apply -f ./GameEngine/blackbox_gameengine_deployment.yaml

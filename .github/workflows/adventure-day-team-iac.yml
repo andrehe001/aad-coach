@@ -1,0 +1,34 @@
+name: AdventureDay-Team-IaC
+
+on:
+  workflow_dispatch:
+    inputs:
+      azureSecretName:
+        description: 'Azure Secret Name containing the Service Principal Details'
+        required: true
+        default: 'AZURE_PROD'
+      prefix:
+        description: 'The deployment prefix used for all Azure artefacts.'
+        required: true
+        default: 'team1'
+      location:
+        description: 'The deployment location used for all Azure artefacts.'
+        required: true
+        default: 'northeurope'
+
+jobs:
+  deploy:
+    name: Deploy Adventure Day Backend to Azure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: azure-adventure-day/aad-team
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets[github.event.inputs.azureSecretName] }}
+      - name: Run Terraform
+        run: cd $GITHUB_WORKSPACE/terraform && chmod +x ./deploy-team.sh && ./deploy-team.sh ${{ github.event.inputs.prefix }} ${{ github.event.inputs.location }}
+        env:
+          AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}

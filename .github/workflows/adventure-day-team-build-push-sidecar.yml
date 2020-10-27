@@ -1,0 +1,34 @@
+name: AdventureDay-Team-Build-Push-Sidecar
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - TeamGameHub/GameEngine/Sidecar/**
+      - .github/workflows/build-push-gamesidecar.yml
+   
+defaults:
+  run:
+    working-directory: TeamGameHub/GameEngine/Sidecar
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Docker build, tag and push     
+      run: |        
+  
+        docker login -u ricardoniepel -p ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }} ghcr.io
+        docker build -t ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamedayengine-sidecar:latest .
+        docker push ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamedayengine-sidecar:latest
+        
+        
+        
+        
+        
+        
+        
+    
