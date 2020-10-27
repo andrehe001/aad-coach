@@ -22,7 +22,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       with:
-        repository: 'azure-adventure-day/aad-team'
+        repository: 'azure-adventure-day/aad-team.git'
       
     - name: Docker build, tag and push     
       run: |        
