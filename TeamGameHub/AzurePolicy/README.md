@@ -21,11 +21,29 @@ $assignment
 ````cli
 az login
 
-az account set --subscription a654ae28-457a-4d2b-9605-1b1c959eea3e
+az account set --subscription a4baed79-40f8-4697-a6b2-7f16d29feb8b
 
 az provider register --namespace 'Microsoft.PolicyInsights'
 
-az policy definition create --name 'sql-db-skus' --display-name 'Allowed SQL DB SKUs' --description 'This policy enables you to specify a set of SQL DB SKUs' --rules 'azurepolicy.rules.json' --params 'azurepolicy.parameters.json' --mode All
+az policy definition create --name 'sql-db-skus2' --display-name 'Allowed SQL DB SKUs' --description 'This policy enables you to specify a set of SQL DB SKUs' --rules 'azurepolicy.rules2.json' --mode All
 
-az policy assignment create --name 'deny-sql-db-skus' --scope '/subscriptions/a654ae28-457a-4d2b-9605-1b1c959eea3e/' --policy "sql-db-skus" --params "{'listofSKUName':{'value':['GeneralPurpose']}}"
+az policy assignment create --name 'deny-sql-db-skus2' --scope '/subscriptions/a4baed79-40f8-4697-a6b2-7f16d29feb8b/' --policy "sql-db-skus2"
+
+az policy state trigger-scan --resource-group policytest-rg
 ````
+
+
+## Test with Terraform
+
+```
+az login
+
+
+az account set --subscription a4baed79-40f8-4697-a6b2-7f16d29feb8b
+
+az group create -n policytest-rg -l northeurope
+
+terraform init
+
+terraform apply .
+```

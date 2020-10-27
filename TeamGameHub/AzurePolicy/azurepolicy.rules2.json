@@ -13,8 +13,8 @@
             "not": {
                "anyOf": [
                   {
-                     "field": "Microsoft.SQL/servers/databases/sku.tier",
-                     "in": ["GeneralPurpose"]
+                     "field": "Microsoft.Sql/servers/databases/sku.name",
+                     "in": ["GP_Gen5", "GP_S_Gen5"]
                   }
                ]
             }
