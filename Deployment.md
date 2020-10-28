@@ -76,6 +76,8 @@ az group create -n $TERRA_STATE_RESSOURCE_GROUP -l $LOCATION
 
 az role assignment create --role "Contributor" --assignee $CLIENT_ID -g $TERRA_STATE_RESSOURCE_GROUP
 
+az role assignment create --role "Contributor" --assignee $CLIENT_ID --subscription $SUBSCRIPTION_ID
+
 ```
 
 add the json output to the secrets of your own name
