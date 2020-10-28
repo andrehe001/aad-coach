@@ -15,6 +15,7 @@ using TeamGameHub.GameEngine.WebApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace TeamGameHub.GameEngine.WebApi.Services
 {
@@ -58,6 +59,35 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             return Task.FromResult(hasValue ? challengerMatches : Enumerable.Empty<Match>());
         }
 
+        [MethodImpl(MethodImplOptions.NoOptimization | MethodImplOptions.NoInlining)]
+        private void WasteIOandCPUandRAM()
+        {
+            // Waste SQL: TODO find schema issue.
+            _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+            _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+            _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+            _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+            _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+            _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+            _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+            _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+            _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+            _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
+
+            // Waste CPU
+            var end = DateTime.Now + TimeSpan.FromSeconds(2);
+            var result = 0;
+            while (DateTime.Now < end)
+            {
+                result += 1;
+                result -= 1;
+                result += 400;
+                result *= 500;
+                result /= 500;
+            }
+            Console.WriteLine(result.ToString());
+        }
+
         public async Task<Match> PlayMatch(MatchRequest matchRequest)
         {
             _logger.LogInformation("Match request received from ${matchRequest.ChallengerId}");
@@ -65,33 +95,7 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             // If MassPlayer
             if (matchRequest.ChallengerId == "Gloria")
             {
-                // Waste SQL: TODO find schema issue.
-                //_dbContext.MatchResults
-                //    .Take(300)
-                //    .ToList();
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-                _dbContext.Database.ExecuteSqlRaw("SELECT TOP 500 * FROM [dbo].[MatchResults] ORDER BY WhenUtc");
-
-                // Waste CPU
-                var end = DateTime.Now + TimeSpan.FromSeconds(2);
-                var result = 0;
-                while (DateTime.Now < end)
-                {
-                    result += 1;
-                    result -= 1;
-                    result += 400;
-                    result *= 500;
-                    result /= 500;
-                }
-                Console.WriteLine(result.ToString());
+                WasteIOandCPUandRAM();
             }
 
             Match currentMatch = (matchRequest.MatchId != Guid.Empty)
