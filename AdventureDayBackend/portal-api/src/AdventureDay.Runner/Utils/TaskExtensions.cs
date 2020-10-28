@@ -27,6 +27,10 @@ namespace AdventureDay.Runner.Utils
                     // No need to resume on the original SynchronizationContext, so use ConfigureAwait(false)
                     await task.ConfigureAwait(false);
                 }
+                catch (TaskCanceledException)
+                {
+                    Log.Debug("Task Cancelled.");
+                }
                 catch (Exception exception)
                 {
                     Log.Error(exception, "Swallowed.");
