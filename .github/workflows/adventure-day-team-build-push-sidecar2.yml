@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     paths:
       - TeamGameHub/GameEngine/Sidecar/**
-      - .github/workflows/build-push-gamesidecar.yml
+      - .github/workflows/adventure-day-team-build-push-sidecar2.yml
    
 defaults:
   run:
@@ -25,10 +25,3 @@ jobs:
         docker build -t ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamedayengine-sidecar:latest .
         docker push ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamedayengine-sidecar:latest
         
-        
-        
-        
-        
-        
-        
-    

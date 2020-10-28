@@ -41,6 +41,8 @@ VALUES
 	( 12, 101, 717, 106, 1001, 512 )
 
 
+DELETE FROM [TeamLogEntries]
+
 INSERT INTO [TeamLogEntries]
     ([TeamId], [Timestamp], [ResponeTimeMs], [Status], [Reason])
 VALUES
@@ -51,13 +53,13 @@ VALUES
 	( 1, '2020-09-12T08:55:47.1234567', 10, 'FAILED', 'Network Exception received'),
 	( 1, '2020-09-12T08:56:47.1234567', 10, 'ATTACKED', 'Hacker was able to get access into the system'),
 	( 1, '2020-09-12T08:57:47.1234567', 10, 'CANCELED','Smoorgh has canceled the game, because the stakes from humans are too low'),
-	( 1, '2020-10-02T13:33:47.1234567', 10, 'SUCCESS', 'Smoorgh has won $20'),
-	( 1, '2020-10-02T13:33:48.1234567', 10, 'SUCCESS', 'Human has won $20'),
-	( 1, '2020-10-02T13:33:49.1234567', 10, 'FAILED', 'HTTP Status Code 500 received'),
-	( 1, '2020-10-02T13:33:50.1234567', 10, 'FAILED', 'Timeout 5s happened'),
-	( 1, '2020-10-02T13:33:51.1234567', 10, 'FAILED', 'Network Exception received'),
-	( 1, '2020-10-02T13:33:52.1234567', 10, 'ATTACKED', 'Hacker was able to get access into the system'),
-	( 1, '2020-10-02T13:33:53.1234567', 10, 'CANCELED','Smoorgh has canceled the game, because the stakes from humans are too low')
+	( 1, '2020-10-02T13:36:00.1234567', 10, 'SUCCESS', 'Smoorgh has won $20'),
+	( 1, '2020-10-02T13:34:48.1234567', 10, 'SUCCESS', 'Human has won $20'),
+	( 1, '2020-10-02T13:35:49.1234567', 10, 'FAILED', 'HTTP Status Code 500 received'),
+	( 1, '2020-10-02T13:36:50.1234567', 10, 'FAILED', 'Timeout 5s happened'),
+	( 1, '2020-10-02T13:37:51.1234567', 10, 'FAILED', 'Network Exception received'),
+	( 1, '2020-10-02T13:38:52.1234567', 10, 'ATTACKED', 'Hacker was able to get access into the system'),
+	( 1, '2020-10-02T13:39:53.1234567', 10, 'CANCELED','Smoorgh has canceled the game, because the stakes from humans are too low')
 
 
 INSERT INTO [Members]

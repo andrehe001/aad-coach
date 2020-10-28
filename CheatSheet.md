@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: blackboxgameengine
-        image: ghcr.io/ricardoniepel/azure-adventure-day-coach/gamedayengine-web:latest
+        image: ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamedayengine-web:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 80
@@ -83,7 +83,7 @@ spec:
             path: /Match
             port: 8080
       - name: istio-proxy
-        image: ghcr.io/ricardoniepel/azure-adventure-day-coach/gamedayengine-sidecar:latest
+        image: ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamedayengine-sidecar:latest
         imagePullPolicy: Always
         volumeMounts:
         - mountPath: /meshconfig

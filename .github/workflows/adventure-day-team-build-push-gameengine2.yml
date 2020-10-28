@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     paths:
       - TeamGameHub/GameEngine/WebApi/**
-      - .github/workflows/build-push-gameengine.yml
+      - .github/workflows/adventure-day-team-build-push-gameengine2.yml
    
 defaults:
   run:
@@ -24,11 +24,3 @@ jobs:
         docker login -u ricardoniepel -p ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }} ghcr.io
         docker build -t ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamedayengine-web:latest .
         docker push ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamedayengine-web:latest
-        
-        
-        
-        
-        
-        
-        
-    

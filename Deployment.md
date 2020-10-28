@@ -52,6 +52,32 @@ TERRAFORM_PATH=terraform # required, full path to terraform executable
 ./deploy-teams.sh $CSV_LIST $TERRAFORM_PATH
 ```
 
-## Gaming Backend
+## Deployment team environment using github actions
 
-todo
+Deploy using github actions requires a service principal configured in a github actions secret
+https://github.com/marketplace/actions/azure-login
+
+```
+SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+TENANT_ID=$(az account show --query tenantId -o tsv)
+RESOURCE_GROUP="aadrg"
+LOCATION="northeurope"
+TEAM_NAME="teamde234"
+TERRA_STATE_RESSOURCE_GROUP="state${TEAM_NAME}${LOCATION}"
+
+az group create -n $RESOURCE_GROUP -l $LOCATION
+
+az ad sp create-for-rbac --name "aaday${RESOURCE_GROUP}" --sdk-auth --role contributor \
+    --scopes /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP
+
+CLIENT_ID=$(az ad sp list --show-mine --display-name "aaday${RESOURCE_GROUP}" --query "[0].appId" -o tsv)
+
+az group create -n $TERRA_STATE_RESSOURCE_GROUP -l $LOCATION
+
+az role assignment create --role "Contributor" --assignee $CLIENT_ID -g $TERRA_STATE_RESSOURCE_GROUP
+
+az role assignment create --role "Contributor" --assignee $CLIENT_ID --subscription $SUBSCRIPTION_ID
+
+```
+
+add the json output to the secrets of your own name
