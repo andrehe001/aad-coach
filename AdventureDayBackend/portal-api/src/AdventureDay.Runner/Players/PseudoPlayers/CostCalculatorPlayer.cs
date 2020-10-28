@@ -62,7 +62,7 @@ namespace AdventureDay.Runner.Players.PseudoPlayers
                 .WithSubscription(team.SubscriptionId.ToString());
 
             // TODO: Take a look why costs is empty
-            long aksCosts = 0; //await GetAksCostAsync(team, httpClient, cancellationToken);
+            long aksCosts = await GetAksCostAsync(team, httpClient, cancellationToken);
             long sqlCosts = await GetSqlCostAsync(azure);
 
             var totalCost = (int)Math.Round(sqlCosts * _azureCostScaleFactor + aksCosts * _azureCostScaleFactor, MidpointRounding.AwayFromZero);
@@ -150,38 +150,38 @@ namespace AdventureDay.Runner.Players.PseudoPlayers
             return sqlCost;
         }
 
-        // private static async Task<long> GetAksCostAsync(Team team, HttpClient httpClient, CancellationToken cancellationToken)
-        // {
-        //     long aksCosts = 50; // default penalty for unavailable costs
+        private static async Task<long> GetAksCostAsync(Team team, HttpClient httpClient, CancellationToken cancellationToken)
+        {
+            long aksCosts = 50; // default penalty for unavailable costs
 
-        //     if (!string.IsNullOrWhiteSpace(team.GameEngineUri)){
-        //         Uri gameEngineSidecarUri; 
+            if (!string.IsNullOrWhiteSpace(team.GameEngineUri)){
+                Uri gameEngineSidecarUri; 
 
-        //         Log.Debug("Costplayer: Using default game uri");
-        //         var gameEngineSidecarUriBuilder = new UriBuilder(team.GameEngineUri);
-        //         gameEngineSidecarUriBuilder.Port = 80;
-        //         gameEngineSidecarUriBuilder.Path = "Metrics";
-        //         gameEngineSidecarUri = gameEngineSidecarUriBuilder.Uri;
+                Log.Debug("Costplayer: Using default game uri");
+                var gameEngineSidecarUriBuilder = new UriBuilder(team.GameEngineUri);
+                gameEngineSidecarUriBuilder.Port = 80;
+                gameEngineSidecarUriBuilder.Path = "Metrics";
+                gameEngineSidecarUri = gameEngineSidecarUriBuilder.Uri;
 
-        //         try
-        //         {
-        //             var result = await httpClient.GetAsync(gameEngineSidecarUri, cancellationToken: cancellationToken);
-        //             if (result.IsSuccessStatusCode)
-        //             {
-        //                 var response = await result.Content.ReadFromJsonAsync<MetricsResponse>(
-        //                     cancellationToken: cancellationToken);
+                try
+                {
+                    var result = await httpClient.GetAsync(gameEngineSidecarUri, cancellationToken: cancellationToken);
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var response = await result.Content.ReadFromJsonAsync<MetricsResponse>(
+                            cancellationToken: cancellationToken);
 
-        //                 aksCosts = response.Price;
-        //             }
-        //         }
-        //         catch (Exception exception)
-        //         {
-        //             Log.Information($"{nameof(CostCalculatorPlayer)}: Error in in reaching cost endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
-        //             Log.Debug(exception, $"{nameof(CostCalculatorPlayer)}: Error in in reaching cost endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
-        //         }
-        //     }
+                        aksCosts = response.Price;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.Information($"{nameof(CostCalculatorPlayer)}: Error in in reaching cost endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
+                    Log.Debug(exception, $"{nameof(CostCalculatorPlayer)}: Error in in reaching cost endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
+                }
+            }
 
-        //     return aksCosts;
-        // }
+            return aksCosts;
+        }
     }
 }
