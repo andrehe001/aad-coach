@@ -16,8 +16,8 @@ IFS=';'
 while read teamname subscriptionid tenantid teampassword comment
 do
     echo "switching into subscription for $teamname to subscription $subscriptionid in tenant $tenantid..."
-    #az login --service-principal --username $adminserviceprincipalid --password $adminserviceprincipalsecret --tenant $tenantid
-    az login -u $adminserviceprincipalid -p $adminserviceprincipalsecret --tenant $tenantid
+    echo "using $adminserviceprincipalid with $adminserviceprincipalsecret"
+    az login --service-principal -u $adminserviceprincipalid -p $adminserviceprincipalsecret --tenant $tenantid
     echo "setting subscription to $subscriptionid"
     az account set --subscription $subscriptionid
     echo "registering azure security resource provider"
