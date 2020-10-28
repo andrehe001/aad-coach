@@ -16,7 +16,7 @@ IFS=';'
 while read teamname subscriptionid tenantid teampassword comment
 do
     echo "switching into subscription for $teamname to subscription $subscriptionid in tenant $tenantid..."
-    #az login --service-principal --username $adminserviceprincipalid --password $adminserviceprincipalsecret --tenant c2630420-378e-4563-95a4-519774788b5b
+    #az login --service-principal --username $adminserviceprincipalid --password $adminserviceprincipalsecret --tenant $tenantid
     az login -u $adminserviceprincipalid -p $adminserviceprincipalsecret --tenant $tenantid
     echo "setting subscription to $subscriptionid"
     az account set --subscription $subscriptionid

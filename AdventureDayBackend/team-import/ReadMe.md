@@ -44,8 +44,8 @@ The security center activation is using the `activate-security-center.sh` script
 ```
 chmod +x ./activate-security-center.sh
 TEAMFILE=`pwd`/teams_real.csv
-ADMINUSERNAME=Coach01@asmw13.onmicrosoft.com
-ADMINPASSWORD=D9HbhcAx6!
+ADMINUSERNAME=
+ADMINPASSWORD=
 ./activate-security-center.sh $TEAMFILE $ADMINUSERNAME $ADMINPASSWORD
 ```
 
