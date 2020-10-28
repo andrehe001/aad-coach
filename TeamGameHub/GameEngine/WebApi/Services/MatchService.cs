@@ -1,3 +1,4 @@
+using Microsoft.ApplicationInsights;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -30,10 +31,12 @@ namespace TeamGameHub.GameEngine.WebApi.Services
         private readonly JsonSerializerOptions _stringEnumConverterOptions;
         private readonly Dictionary<Guid, List<Match>> _matches = new Dictionary<Guid, List<Match>>();
 
+        private TelemetryClient _telemetry;
+
         // EncryptionKey
         public static string _eKey { get; private set; }
 
-        public MatchService(ILogger<MatchService> logger, IConfiguration configuration, IDistributedCache cache, MatchDBContext dbContext, IConfiguration config)
+        public MatchService(ILogger<MatchService> logger, IConfiguration configuration, IDistributedCache cache, MatchDBContext dbContext, IConfiguration config, TelemetryClient telemetry)
 
         {
             _eKey = "asdfbaasdfjknasere456789";
@@ -42,6 +45,7 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             _cache = cache;
             _dbContext = dbContext;
             _config = config;
+            _telemetry = telemetry;
 
             _useMockBot = new Lazy<bool>(() => _configuration.GetValue<bool>("UseMockBot", false));
 
@@ -143,6 +147,24 @@ namespace TeamGameHub.GameEngine.WebApi.Services
             if (currentMatch.MatchOutcome != null)
             {
                 StoreMatchToDB(currentMatch);
+
+                try{
+                    if (_telemetry != null &&_telemetry.IsEnabled()) {
+                        _telemetry.Context.Cloud.RoleName = "engine";
+                        var properties = new Dictionary<string,string>();
+                        properties.Add("player", matchRequest.ChallengerId );
+                        properties.Add("move", matchRequest.Move.ToString() );
+                        properties.Add("botmove", botMove.Move.ToString() );
+                        properties.Add("outcome", currentMatch.MatchOutcome.ToString() );
+                        properties.Add("matchId", matchRequest.MatchId.ToString() );
+                        properties.Add("bet", (currentMatch.Bet.HasValue)? currentMatch.Bet.Value.ToString() : "0" );
+                        properties.Add("player1", currentMatch.Player1Name );
+                        properties.Add("player2", currentMatch.Player2Name );
+                        _telemetry.TrackEvent("match", properties, null);
+                    }
+                }catch(Exception ex){
+                    Console.WriteLine(ex);
+                }
             }
 
             return currentMatch;
