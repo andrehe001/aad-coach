@@ -23,7 +23,7 @@ echo "received auth token $TOKEN"
 OLDIFS=$IFS
 IFS=';'
 [ ! -f $file ] && { echo "$file file not found"; exit 99; }
-while read teamname region subscriptionid tenantid teampassword comment
+while read teamname subscriptionid tenantid teampassword comment
 do
     echo "importing $teamname with $teampassword to $tenantid in $subscriptionid..."
     echo "comment $comment"
