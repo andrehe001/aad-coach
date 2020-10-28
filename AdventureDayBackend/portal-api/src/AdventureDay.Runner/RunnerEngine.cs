@@ -102,13 +102,17 @@ namespace AdventureDay.Runner
                 }
 
                 // W8 for 5secs, before updating from config.
-                await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                Thread.Sleep(5000);
                 var (_, newRunnerProperties, newTeams) = await RefreshConfiguration(cancellationToken);
                 if (!newRunnerProperties.IsDeepEqual(runnerProperties) || !newTeams.IsDeepEqual(teams))
                 {
-                    Log.Information("Config change detected, re-configure all player threads.");
+                    Log.Information("CONFIG CHANGE detected.");
                     playerCancellationTokenSource?.Cancel();
                     playerCancellationTokenSource = null;
+                }
+                else
+                {
+                    Log.Information("-NO- CONFIG CHANGE detected.");
                 }
             }
         }
@@ -127,7 +131,7 @@ namespace AdventureDay.Runner
                         while (!cancellationToken.IsCancellationRequested)
                         {
                             InvokePlayerWithFireAndForget(playerType.Key, team, playerType.Value, currentPhase, cancellationToken);
-                            await Task.Delay(playerType.Value, cancellationToken);
+                            Thread.Sleep(playerType.Value);
                         }
                     }, cancellationToken).Forget();
                 }
