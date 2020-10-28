@@ -52,8 +52,8 @@ namespace AdventureDay.Runner.Players.PseudoPlayers
         {
             var azureCredentials = new AzureCredentials(new ServicePrincipalLoginInformation
             {
-                ClientId = _configuration.GetValue<string>("AzureSPClientId", "a521ec4a-f8fe-4cb0-b54c-93f74a47d88f"),
-                ClientSecret = _configuration.GetValue<string>("AzureSPClientSecret", "LhNqATyW_4KIy-AhDr~ic.NR.KDD5yOa9p")
+                ClientId = _configuration.GetValue<string>("AzureSPClientId", "e27ebe5d-70bb-4921-978d-7315ed6f0a3d"),
+                ClientSecret = _configuration.GetValue<string>("AzureSPClientSecret", "9T.m~b54xKTzNw6-0M-LTE7.XPsNVEF5_B")
             }, team.TenantId.ToString(), AzureEnvironment.AzureGlobalCloud);
 
             var azure = Azure
