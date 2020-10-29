@@ -1,7 +1,8 @@
 
-name: AdventureDay-Team-Build-Push-GameBot
+name: AdventureDay-Team-Build-Push-GameBot-To-AAD-GHCR
 
 on:
+  workflow_dispatch:
   push:
     branches: [ master ]
     paths:      
