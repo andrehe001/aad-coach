@@ -152,7 +152,7 @@ namespace AdventureDay.Runner.Players.PseudoPlayers
 
         private static async Task<long> GetAksCostAsync(Team team, HttpClient httpClient, CancellationToken cancellationToken)
         {
-            long aksCosts = 50; // default penalty for unavailable costs
+            long aksCosts = 5; // default penalty for unavailable costs
 
             if (!string.IsNullOrWhiteSpace(team.GameEngineUri)){
                 Uri gameEngineSidecarUri; 
@@ -171,7 +171,17 @@ namespace AdventureDay.Runner.Players.PseudoPlayers
                         var response = await result.Content.ReadFromJsonAsync<MetricsResponse>(
                             cancellationToken: cancellationToken);
 
-                        aksCosts = response.Price;
+                        if (response != null){
+                            if ( response.MetricsError )
+                            {
+                                aksCosts = 0;
+                            }else
+                            {
+                                aksCosts = response.Price;
+                            }
+                        }
+
+                        
                     }
                 }
                 catch (Exception exception)
