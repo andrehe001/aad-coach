@@ -1,3 +1,5 @@
+# Challenge 1
+
 ```
 apiVersion: v1
 kind: Service
@@ -81,7 +83,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /Match
-            port: 8080
+            port: 80
       - name: istio-proxy
         image: ghcr.io/azure-adventure-day/azure-adventure-day-coach/gamedayengine-sidecar:latest
         imagePullPolicy: Always
@@ -169,8 +171,12 @@ spec:
             value: "RANDOM"
           - name: "FF_BETS"
             value: "true"
-          
 
+```
+
+# Challenge 2 Build containers
+
+```
 REGISTRY_URL=team09acr.azurecr.io
 REGISTRY_NAME=team09acr
 REGISTRY_PASSWORD=z1txwqD8UAD5A/MSrPN7yPJARXhoY6IZ
@@ -186,19 +192,23 @@ kubectl rollout restart deployment/blackboxgameengine
 kubectl rollout restart deployment/arcadebackend
 
 kubectl logs -l name=blackboxgameengine -c blackboxgameengine
+```
 
-
-
+## Add Node Pools
+```
 az aks nodepool list --cluster-name $KUBE_NAME -g $KUBE_GROUP -o table
 
-az aks nodepool add --enable-cluster-autoscaler --node-count=2 --min-count 1 --max-count 5 -n gameworker --cluster-name $KUBE_NAME -g $KUBE_GROUP --node-vm-size=Standard_B2ms --mode System
+az aks nodepool add --enable-cluster-autoscaler --node-count=2 --min-count 1 --max-count 5 -n gameworker --cluster-name $KUBE_NAME -g $KUBE_GROUP --node-vm-size=Standard_B2ms --mode User
 
 az aks nodepool delete -n gameworker --cluster-name $KUBE_NAME -g $KUBE_GROUP
 
 az aks nodepool delete -n default --cluster-name $KUBE_NAME -g $KUBE_GROUP
 
 kubectl top pods --all-namespaces
+```
 
+## Configure autoscaler
+```
 kubectl autoscale deploy blackboxgameengine --cpu-percent=20 --max=10 --min=1
 
 kubectl autoscale deploy arcadebackend --cpu-percent=20 --max=30 --min=1
@@ -230,17 +240,31 @@ spec:
       target:
         type: AverageValue
         averageValue: 90Mi
+```
 
+## Configure Minimal rolebindings
 
-cat <<EOF | kubectl create -f -
+```
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  namespace: default
-  name: pod-reader
+  name: default-nodes-get
 rules:
-- apiGroups: [""] # "" indicates the core API group
-  resources: ["pods"]
-  verbs: ["get", "watch", "list"]
-EOF
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: default-reader
+  namespace: default
+subjects:
+- kind: Group
+  name: system:serviceaccounts
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: default-nodes-get
+  apiGroup: rbac.authorization.k8s.io
 ```
