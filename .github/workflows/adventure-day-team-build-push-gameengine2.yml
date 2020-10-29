@@ -1,6 +1,7 @@
-name: AdventureDay-Team-Build-Push-Game-Engine
+name: AdventureDay-Team-Build-Push-Game-Engine-To-AAD-GHCR
 
 on:
+  workflow_dispatch:
   push:
     branches: [ master ]
     paths:
