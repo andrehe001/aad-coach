@@ -11,10 +11,6 @@ on:
         description: 'The deployment prefix used for all Azure artefacts.'
         required: true
         default: 'azure-adventure-day'
-      location:
-        description: 'The deployment location used for all Azure artefacts.'
-        required: true
-        default: 'northeurope'
       tag:
         description: 'The container image tag to apply'
         required: true
