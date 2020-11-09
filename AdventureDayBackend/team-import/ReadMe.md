@@ -1,5 +1,8 @@
 # Team import from csv file
 
+## Generate team passwords
+http://codething.ru/passgen/?lang=en
+
 ## Team import
 A team can be imported from csv file by running the `import-teams.sh` script with the following parameters:
 
@@ -15,7 +18,7 @@ ADMIN_PASSWORT=AdminPassword
 Structure of the csv file
 
 ```
-teamname;tenantid;subscriptionid;teampassword;gameengineuri
+teamname;subscriptionid;tenantid;teampassword;comment
 ```
 
 ## Team member import

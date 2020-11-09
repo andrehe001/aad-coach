@@ -3,7 +3,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-# ./import-teams.sh csvfile.csv apirul
+# ./import-teams.sh $TEAMFILE $APIURL $ADMIN_USERNAME $ADMIN_PASSWORT
 
 export file="$1"
 export url="$2"
@@ -26,7 +26,6 @@ IFS=';'
 while read teamname subscriptionid tenantid teampassword comment
 do
     echo "importing $teamname with $teampassword to $tenantid in $subscriptionid..."
-    echo "comment $comment"
     TEAMID=$(curl -sL --header "Content-Type: application/json" \
       --header "Authorization: Bearer $TOKEN" \
       --request POST \
