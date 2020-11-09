@@ -1,6 +1,7 @@
-name: AdventureDay-Team-Build-Push-Sidecar
+name: AdventureDay-Team-Build-Push-Sidecar-To-AAD-GHCR
 
 on:
+  workflow_dispatch:
   push:
     branches: [ master ]
     paths:
