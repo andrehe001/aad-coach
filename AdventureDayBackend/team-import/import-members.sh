@@ -3,7 +3,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-# ./import-teams.sh csvfile.csv apirul
+# ./import-members.sh $MEMBERFILE $APIURL $ADMIN_USERNAME $ADMIN_PASSWORT
 
 export file="$1"
 export url="$2"
