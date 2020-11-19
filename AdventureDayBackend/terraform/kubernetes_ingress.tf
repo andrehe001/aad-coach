@@ -10,7 +10,7 @@ resource "azurerm_public_ip" "nginx_ingress_pip" {
 resource "helm_release" "nginx_ingress" {
   name      = "ingress-nginx"
   chart     = "ingress-nginx"
-  repository = "https://kubernetes.github.io"
+  repository = "https://kubernetes.github.io/ingress-nginx"
   namespace = kubernetes_namespace.nginx_ingress.metadata[0].name
 
   set {
