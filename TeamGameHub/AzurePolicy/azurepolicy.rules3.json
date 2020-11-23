@@ -1,0 +1,19 @@
+{
+   "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.SQL/servers/databases"
+        },
+        {
+          "not": {
+            "field": "Microsoft.Sql/servers/databases/sku.tier",
+            "equals": "GeneralPurpose"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+}
