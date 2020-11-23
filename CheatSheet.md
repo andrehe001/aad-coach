@@ -268,3 +268,16 @@ roleRef:
   name: default-nodes-get
   apiGroup: rbac.authorization.k8s.io
 ```
+
+
+## Application Insights
+
+```
+customEvents |
+where name == "match" |
+where customDimensions contains "Courtney" |
+order by timestamp |
+project customDimensions.move, 1 |
+summarize count(), by tostring(customDimensions_move)
+```
+```

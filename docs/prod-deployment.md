@@ -19,6 +19,12 @@
   }
 ```
 
+* Update the [appsettings.json](/AdventureDayBackend/portal-api/src/AdventureDay.Runner/appsettings.json)
+```json
+  "AzureSPClientId": "<GUID>",
+  "AzureSPClientSecret": "<GUID>",
+```  
+
 ## Executing the GitHub Actions
 
 ## 1 - Infrastructure as Code Deployment
