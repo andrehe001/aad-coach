@@ -38,16 +38,16 @@
 
 ## Players
 
-| Type | Name |
-| --- | --- |
-| RandomPlayer | Lachlan |
-| FixedPlayer | Kye |
-| BetPlayer | William |
-| IterativePlayer | Courtney |
-| PatternPlayer | Libby |
-| MassPlayer | Gloria |
-| HackPlayer | Kevin |
-| CostCalculatorPlayer | Dagobert |
+| Type | Name | Pattern |
+| --- | --- | --- |
+| FixedPlayer | Kye | Randomly choose one move during init and uses it all the time |
+| PatternPlayer | Libby | first turn is random, second turn is the same move as from human the first turn move |
+| IterativePlayer | Courtney | Iterates all possible moves per team |
+| RandomPlayer | Lachlan | Random |
+| BetPlayer | William | Random |
+| MassPlayer | Gloria | Random |
+| HackPlayer | Kevin | NO |
+| CostCalculatorPlayer | Dagobert | NO |
 
 ## Phase 1: Deployment
 * RandomPlayer tries to play with the team environment
