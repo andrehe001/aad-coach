@@ -7,26 +7,29 @@ namespace AdventureDay.Runner.Players.RealPlayers
 {
     public class FixedPlayer : RealPlayerBase
     {
-        private readonly Random _random;
-        private Move _fixedMoved;
+        private static readonly Lazy<Move> _fixedMoved = new Lazy<Move>(() => GetRandomMove());
+
+        private static Move GetRandomMove()
+        {
+            var random = new Random();
+            var values = Enum.GetValues(typeof(Move));
+            return (Move)values.GetValue(random.Next(values.Length));
+        }
 
         public override string Name => "Kye";
 
         public FixedPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {
-            _random = new Random();
         }
 
         protected override Move GetFirstMove()
         {
-            var values = Enum.GetValues(typeof(Move));
-            _fixedMoved = (Move)values.GetValue(_random.Next(values.Length));
-            return _fixedMoved;
+            return _fixedMoved.Value;
         }
 
         protected override Move GetNextMove(MatchResponse lastMatchResponse)
         {
-            return _fixedMoved;
+            return _fixedMoved.Value;
         }
     }
 }
