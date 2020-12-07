@@ -1,4 +1,4 @@
-# Azure Game Day
+# Azure Adventure Day
 
 ## Brainstorming
 * Agenda:

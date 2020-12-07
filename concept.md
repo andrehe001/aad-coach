@@ -1,7 +1,7 @@
-# Azure GameDay
+# Azure Adventure Day
 
 ## Vision
-Azure GameDay is a team-centric, heavily story and gamification based, one-day hands-on event giving attendees the opportunity for getting real experience in a safe, stressful but also very rewarding environment. It naturally complements our existing offerings - Microsoft OpenHack, Microsoft Cloud Workshops and WhatTheHacks - in terms of duration and gamification aspects. It also completes our compete offerings against AWS with having an AWS GameDay equivalent.
+Azure Adventure Day is a team-centric, heavily story and gamification based, one-day hands-on event giving attendees the opportunity for getting real experience in a safe, stressful but also very rewarding environment. It naturally complements our existing offerings - Microsoft OpenHack, Microsoft Cloud Workshops and WhatTheHacks - in terms of duration and gamification aspects. It also completes our compete offerings against AWS with having an AWS GameDay equivalent.
 
 ## Details
 The participants will be distributed in teams of 4 with a total attendee count of min. 12 and max. 48.

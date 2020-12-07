@@ -15,7 +15,7 @@ Rel(hack_team, game_system, "Provisions and improves during the day")
 
 
 System_Boundary(gameday_backend, "GameDay Backend") {
-    Container(backend_spa, "Backend SPA", "Vue.JS", "Provides a UI into the current team scores, the team details, team registration page and a admin UI for game day progress.")
+    Container(backend_spa, "Backend SPA", "Vue.JS", "Provides a UI into the current team scores, the team details, team registration page and a admin UI for adventure day progress.")
     Container(backend_app, "Backend  Application", "ASP.NET", "Delivers the static content and the Backend SPA. Provides all functionality via API.")
     ContainerDb(teamscoring_database, "Team Scoring DB", "Azure SQL Database", "Stores hack team information, their scores, the challeneges etc.")
 }
