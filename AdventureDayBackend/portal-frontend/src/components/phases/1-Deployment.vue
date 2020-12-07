@@ -10,7 +10,7 @@
     <ul>
       <li>
         World Game Fedaration has provided the source code to start with at:
-        <a href="https://github.com/RicardoNiepel/azure-adventure-day-team">azure-adventure-day-team</a>
+        <a href="https://github.com/azure-adventure-day/aad-team">azure-adventure-day-team</a>
       </li>
       <li>
         Import the existing source with the
