@@ -1,0 +1,33 @@
+
+name: AdventureDay-Team-Build-Push-Vulnerable-BaseContainer-To-AAD-GHCR
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths:      
+      - .github/workflows/adventure-day-team-build-push-vulnerablecontainer.yaml
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0 0 * * *'
+   
+defaults:
+  run:
+    working-directory: /TeamGameHub/vulnerable-basecontainer
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        repository: 'azure-adventure-day/aad-coach'
+      
+    - name: Docker build, tag and push     
+      run: |        
+  
+        docker login -u ricardoniepel -p ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }} ghcr.io
+        docker build -t ghcr.io/azure-adventure-day/azure-adventure-day-coach/8.2.0-alpine-:latest .
+        docker push ghcr.io/azure-adventure-day/azure-adventure-day-coach/8.2.0-alpine:latest
