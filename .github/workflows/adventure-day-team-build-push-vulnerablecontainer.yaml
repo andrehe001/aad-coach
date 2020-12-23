@@ -29,5 +29,5 @@ jobs:
       run: |        
   
         docker login -u ricardoniepel -p ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }} ghcr.io
-        docker build -t ghcr.io/azure-adventure-day/azure-adventure-day-coach/8.2.0-alpine:latest .
-        docker push ghcr.io/azure-adventure-day/azure-adventure-day-coach/8.2.0-alpine:latest
+        docker build -t ghcr.io/azure-adventure-day/azure-adventure-day-coach/node:8.2.0-alpine .
+        docker push ghcr.io/azure-adventure-day/azure-adventure-day-coach/node:8.2.0-alpine
