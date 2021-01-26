@@ -1,0 +1,2856 @@
+[
+    {
+      "instance": "B1LS",
+      "vCpu": 1,
+      "ram": 0.5,
+      "payAsYouGo": 0.0062,
+      "payAsYouGoWithAzureHybridBenefit": 0.0037,
+      "oneYearReserved": 0.0024,
+      "oneYearReservedWithAzureHybridBenefit": 0.0025
+    },
+    {
+      "instance": "B1S",
+      "vCpu": 1,
+      "ram": 1,
+      "payAsYouGo": 0.0124,
+      "payAsYouGoWithAzureHybridBenefit": 0.0072,
+      "oneYearReserved": 0.0047,
+      "oneYearReservedWithAzureHybridBenefit": 0.005
+    },
+    {
+      "instance": "B1MS",
+      "vCpu": 1,
+      "ram": 2,
+      "payAsYouGo": 0.0248,
+      "payAsYouGoWithAzureHybridBenefit": 0.0145,
+      "oneYearReserved": 0.0094,
+      "oneYearReservedWithAzureHybridBenefit": 0.01
+    },
+    {
+      "instance": "B2S",
+      "vCpu": 2,
+      "ram": 4,
+      "payAsYouGo": 0.0496,
+      "payAsYouGoWithAzureHybridBenefit": 0.029,
+      "oneYearReserved": 0.0187,
+      "oneYearReservedWithAzureHybridBenefit": 0.0199
+    },
+    {
+      "instance": "B2MS",
+      "vCpu": 2,
+      "ram": 8,
+      "payAsYouGo": 0.0992,
+      "payAsYouGoWithAzureHybridBenefit": 0.0582,
+      "oneYearReserved": 0.0374,
+      "oneYearReservedWithAzureHybridBenefit": 0.0397
+    },
+    {
+      "instance": "B4MS",
+      "vCpu": 4,
+      "ram": 16,
+      "payAsYouGo": 0.198,
+      "payAsYouGoWithAzureHybridBenefit": 0.1161,
+      "oneYearReserved": 0.0747,
+      "oneYearReservedWithAzureHybridBenefit": 0.0792
+    },
+    {
+      "instance": "B8MS",
+      "vCpu": 8,
+      "ram": 32,
+      "payAsYouGo": 0.397,
+      "payAsYouGoWithAzureHybridBenefit": 0.2322,
+      "oneYearReserved": 0.1494,
+      "oneYearReservedWithAzureHybridBenefit": 0.1588
+    },
+    {
+      "instance": "B12MS",
+      "vCpu": 12,
+      "ram": 48,
+      "payAsYouGo": 0.595,
+      "payAsYouGoWithAzureHybridBenefit": 0.3483,
+      "oneYearReserved": 0.2241,
+      "oneYearReservedWithAzureHybridBenefit": 0.238
+    },
+    {
+      "instance": "B16MS",
+      "vCpu": 16,
+      "ram": 64,
+      "payAsYouGo": 0.794,
+      "payAsYouGoWithAzureHybridBenefit": 0.4644,
+      "oneYearReserved": 0.2988,
+      "oneYearReservedWithAzureHybridBenefit": 0.3176
+    },
+    {
+      "instance": "B20MS",
+      "vCpu": 20,
+      "ram": 80,
+      "payAsYouGo": 0.992,
+      "payAsYouGoWithAzureHybridBenefit": 0.5805,
+      "oneYearReserved": 0.3735,
+      "oneYearReservedWithAzureHybridBenefit": 0.3968
+    },
+    {
+      "instance": "A1_v2",
+      "vCpu": 1,
+      "ram": 2,
+      "payAsYouGo": 0.043,
+      "oneYearReservedWithAzureHybridBenefit": 0.0118
+    },
+    {
+      "instance": "A2_v2",
+      "vCpu": 2,
+      "ram": 4,
+      "payAsYouGo": 0.091,
+      "oneYearReservedWithAzureHybridBenefit": 0.0248
+    },
+    {
+      "instance": "A2m_v2",
+      "vCpu": 2,
+      "ram": 16,
+      "payAsYouGo": 0.149,
+      "oneYearReservedWithAzureHybridBenefit": 0.0407
+    },
+    {
+      "instance": "A4_v2",
+      "vCpu": 4,
+      "ram": 8,
+      "payAsYouGo": 0.191,
+      "oneYearReservedWithAzureHybridBenefit": 0.0521
+    },
+    {
+      "instance": "A4m_v2",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.297,
+      "oneYearReservedWithAzureHybridBenefit": 0.081
+    },
+    {
+      "instance": "A8_v2",
+      "vCpu": 8,
+      "ram": 16,
+      "payAsYouGo": 0.4,
+      "oneYearReservedWithAzureHybridBenefit": 0.109
+    },
+    {
+      "instance": "A8m_v2",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.594,
+      "oneYearReservedWithAzureHybridBenefit": 0.1619
+    },
+    {
+      "instance": "D2a_v4",
+      "vCpu": 2,
+      "ram": 8,
+      "payAsYouGo": 0.112,
+      "payAsYouGoWithAzureHybridBenefit": 0.0673,
+      "oneYearReserved": 0.0448,
+      "oneYearReservedWithAzureHybridBenefit": 0.0218
+    },
+    {
+      "instance": "D4a_v4",
+      "vCpu": 4,
+      "ram": 16,
+      "payAsYouGo": 0.224,
+      "payAsYouGoWithAzureHybridBenefit": 0.1344,
+      "oneYearReserved": 0.0897,
+      "oneYearReservedWithAzureHybridBenefit": 0.0436
+    },
+    {
+      "instance": "D8a_v4",
+      "vCpu": 8,
+      "ram": 32,
+      "payAsYouGo": 0.448,
+      "payAsYouGoWithAzureHybridBenefit": 0.2689,
+      "oneYearReserved": 0.1793,
+      "oneYearReservedWithAzureHybridBenefit": 0.0872
+    },
+    {
+      "instance": "D16a_v4",
+      "vCpu": 16,
+      "ram": 64,
+      "payAsYouGo": 0.896,
+      "payAsYouGoWithAzureHybridBenefit": 0.5377,
+      "oneYearReserved": 0.3585,
+      "oneYearReservedWithAzureHybridBenefit": 0.1743
+    },
+    {
+      "instance": "D32a_v4",
+      "vCpu": 32,
+      "ram": 128,
+      "payAsYouGo": 1.792,
+      "payAsYouGoWithAzureHybridBenefit": 1.0753,
+      "oneYearReserved": 0.7169,
+      "oneYearReservedWithAzureHybridBenefit": 0.3486
+    },
+    {
+      "instance": "D48a_v4",
+      "vCpu": 48,
+      "ram": 192,
+      "payAsYouGo": 2.688,
+      "payAsYouGoWithAzureHybridBenefit": 1.6129,
+      "oneYearReserved": 1.0753,
+      "oneYearReservedWithAzureHybridBenefit": 0.5229
+    },
+    {
+      "instance": "D64a_v4",
+      "vCpu": 64,
+      "ram": 256,
+      "payAsYouGo": 3.584,
+      "payAsYouGoWithAzureHybridBenefit": 2.1505,
+      "oneYearReserved": 1.4337,
+      "oneYearReservedWithAzureHybridBenefit": 0.6971
+    },
+    {
+      "instance": "D96a_v4",
+      "vCpu": 96,
+      "ram": 384,
+      "payAsYouGo": 5.376,
+      "payAsYouGoWithAzureHybridBenefit": 3.2257,
+      "oneYearReserved": 2.1505,
+      "oneYearReservedWithAzureHybridBenefit": 1.0457
+    },
+    {
+      "instance": "D2as_v4",
+      "vCpu": 2,
+      "ram": 8,
+      "payAsYouGo": 0.112,
+      "payAsYouGoWithAzureHybridBenefit": 0.0673,
+      "oneYearReserved": 0.0448,
+      "oneYearReservedWithAzureHybridBenefit": 0.0218
+    },
+    {
+      "instance": "D4as_v4",
+      "vCpu": 4,
+      "ram": 16,
+      "payAsYouGo": 0.224,
+      "payAsYouGoWithAzureHybridBenefit": 0.1344,
+      "oneYearReserved": 0.0897,
+      "oneYearReservedWithAzureHybridBenefit": 0.0436
+    },
+    {
+      "instance": "D8as_v4",
+      "vCpu": 8,
+      "ram": 32,
+      "payAsYouGo": 0.448,
+      "payAsYouGoWithAzureHybridBenefit": 0.2689,
+      "oneYearReserved": 0.1793,
+      "oneYearReservedWithAzureHybridBenefit": 0.0872
+    },
+    {
+      "instance": "D16as_v4",
+      "vCpu": 16,
+      "ram": 64,
+      "payAsYouGo": 0.896,
+      "payAsYouGoWithAzureHybridBenefit": 0.5377,
+      "oneYearReserved": 0.3585,
+      "oneYearReservedWithAzureHybridBenefit": 0.1743
+    },
+    {
+      "instance": "D32as_v4",
+      "vCpu": 32,
+      "ram": 128,
+      "payAsYouGo": 1.792,
+      "payAsYouGoWithAzureHybridBenefit": 1.0753,
+      "oneYearReserved": 0.7169,
+      "oneYearReservedWithAzureHybridBenefit": 0.3486
+    },
+    {
+      "instance": "D48as_v4",
+      "vCpu": 48,
+      "ram": 192,
+      "payAsYouGo": 2.688,
+      "payAsYouGoWithAzureHybridBenefit": 1.6129,
+      "oneYearReserved": 1.0753,
+      "oneYearReservedWithAzureHybridBenefit": 0.5229
+    },
+    {
+      "instance": "D64as_v4",
+      "vCpu": 64,
+      "ram": 256,
+      "payAsYouGo": 3.584,
+      "payAsYouGoWithAzureHybridBenefit": 2.1505,
+      "oneYearReserved": 1.4337,
+      "oneYearReservedWithAzureHybridBenefit": 0.6971
+    },
+    {
+      "instance": "D96as_v4",
+      "vCpu": 96,
+      "ram": 384,
+      "payAsYouGo": 5.376,
+      "payAsYouGoWithAzureHybridBenefit": 3.2257,
+      "oneYearReserved": 2.1505,
+      "oneYearReservedWithAzureHybridBenefit": 1.0457
+    },
+    {
+      "instance": "D2d_v4",
+      "vCpu": 2,
+      "ram": 8,
+      "payAsYouGo": 0.133,
+      "payAsYouGoWithAzureHybridBenefit": 0.0785,
+      "oneYearReserved": 0.0506,
+      "oneYearReservedWithAzureHybridBenefit": 0.0138
+    },
+    {
+      "instance": "D4d_v4",
+      "vCpu": 4,
+      "ram": 16,
+      "payAsYouGo": 0.266,
+      "payAsYouGoWithAzureHybridBenefit": 0.157,
+      "oneYearReserved": 0.1011,
+      "oneYearReservedWithAzureHybridBenefit": 0.0276
+    },
+    {
+      "instance": "D8d_v4",
+      "vCpu": 8,
+      "ram": 32,
+      "payAsYouGo": 0.532,
+      "payAsYouGoWithAzureHybridBenefit": 0.314,
+      "oneYearReserved": 0.2022,
+      "oneYearReservedWithAzureHybridBenefit": 0.0552
+    },
+    {
+      "instance": "D16d_v4",
+      "vCpu": 16,
+      "ram": 64,
+      "payAsYouGo": 1.064,
+      "payAsYouGoWithAzureHybridBenefit": 0.6278,
+      "oneYearReserved": 0.4044,
+      "oneYearReservedWithAzureHybridBenefit": 0.1104
+    },
+    {
+      "instance": "D32d_v4",
+      "vCpu": 32,
+      "ram": 128,
+      "payAsYouGo": 2.128,
+      "payAsYouGoWithAzureHybridBenefit": 1.2555,
+      "oneYearReserved": 0.8087,
+      "oneYearReservedWithAzureHybridBenefit": 0.2207
+    },
+    {
+      "instance": "D48d_v4",
+      "vCpu": 48,
+      "ram": 192,
+      "payAsYouGo": 3.192,
+      "payAsYouGoWithAzureHybridBenefit": 1.8834,
+      "oneYearReserved": 1.213,
+      "oneYearReservedWithAzureHybridBenefit": 0.3311
+    },
+    {
+      "instance": "D64d_v4",
+      "vCpu": 64,
+      "ram": 256,
+      "payAsYouGo": 4.256,
+      "payAsYouGoWithAzureHybridBenefit": 2.5111,
+      "oneYearReserved": 1.6173,
+      "oneYearReservedWithAzureHybridBenefit": 0.4414
+    },
+    {
+      "instance": "D2ds_v4",
+      "vCpu": 2,
+      "ram": 8,
+      "payAsYouGo": 0.133,
+      "payAsYouGoWithAzureHybridBenefit": 0.0785,
+      "oneYearReserved": 0.0506,
+      "oneYearReservedWithAzureHybridBenefit": 0.0138
+    },
+    {
+      "instance": "D4ds_v4",
+      "vCpu": 4,
+      "ram": 16,
+      "payAsYouGo": 0.266,
+      "payAsYouGoWithAzureHybridBenefit": 0.157,
+      "oneYearReserved": 0.1011,
+      "oneYearReservedWithAzureHybridBenefit": 0.0276
+    },
+    {
+      "instance": "D8ds_v4",
+      "vCpu": 8,
+      "ram": 32,
+      "payAsYouGo": 0.532,
+      "payAsYouGoWithAzureHybridBenefit": 0.314,
+      "oneYearReserved": 0.2022,
+      "oneYearReservedWithAzureHybridBenefit": 0.0552
+    },
+    {
+      "instance": "D16ds_v4",
+      "vCpu": 16,
+      "ram": 64,
+      "payAsYouGo": 1.064,
+      "payAsYouGoWithAzureHybridBenefit": 0.6278,
+      "oneYearReserved": 0.4044,
+      "oneYearReservedWithAzureHybridBenefit": 0.1104
+    },
+    {
+      "instance": "D32ds_v4",
+      "vCpu": 32,
+      "ram": 128,
+      "payAsYouGo": 2.128,
+      "payAsYouGoWithAzureHybridBenefit": 1.2555,
+      "oneYearReserved": 0.8087,
+      "oneYearReservedWithAzureHybridBenefit": 0.2207
+    },
+    {
+      "instance": "D48ds_v4",
+      "vCpu": 48,
+      "ram": 192,
+      "payAsYouGo": 3.192,
+      "payAsYouGoWithAzureHybridBenefit": 1.8834,
+      "oneYearReserved": 1.213,
+      "oneYearReservedWithAzureHybridBenefit": 0.3311
+    },
+    {
+      "instance": "D64ds_v4",
+      "vCpu": 64,
+      "ram": 256,
+      "payAsYouGo": 4.256,
+      "payAsYouGoWithAzureHybridBenefit": 2.5111,
+      "oneYearReserved": 1.6173,
+      "oneYearReservedWithAzureHybridBenefit": 0.4414
+    },
+    {
+      "instance": "D2_v4",
+      "vCpu": 2,
+      "ram": 8,
+      "payAsYouGo": 0.112,
+      "payAsYouGoWithAzureHybridBenefit": 0.0661,
+      "oneYearReserved": 0.0426,
+      "oneYearReservedWithAzureHybridBenefit": 0.0136
+    },
+    {
+      "instance": "D4_v4",
+      "vCpu": 4,
+      "ram": 16,
+      "payAsYouGo": 0.224,
+      "payAsYouGoWithAzureHybridBenefit": 0.1322,
+      "oneYearReserved": 0.0852,
+      "oneYearReservedWithAzureHybridBenefit": 0.0271
+    },
+    {
+      "instance": "D8_v4",
+      "vCpu": 8,
+      "ram": 32,
+      "payAsYouGo": 0.448,
+      "payAsYouGoWithAzureHybridBenefit": 0.2643,
+      "oneYearReserved": 0.1703,
+      "oneYearReservedWithAzureHybridBenefit": 0.0541
+    },
+    {
+      "instance": "D16_v4",
+      "vCpu": 16,
+      "ram": 64,
+      "payAsYouGo": 0.896,
+      "payAsYouGoWithAzureHybridBenefit": 0.5287,
+      "oneYearReserved": 0.3405,
+      "oneYearReservedWithAzureHybridBenefit": 0.1082
+    },
+    {
+      "instance": "D32_v4",
+      "vCpu": 32,
+      "ram": 128,
+      "payAsYouGo": 1.792,
+      "payAsYouGoWithAzureHybridBenefit": 1.0574,
+      "oneYearReserved": 0.681,
+      "oneYearReservedWithAzureHybridBenefit": 0.2163
+    },
+    {
+      "instance": "D48_v4",
+      "vCpu": 48,
+      "ram": 192,
+      "payAsYouGo": 2.688,
+      "payAsYouGoWithAzureHybridBenefit": 1.586,
+      "oneYearReserved": 1.0215,
+      "oneYearReservedWithAzureHybridBenefit": 0.3245
+    },
+    {
+      "instance": "D64_v4",
+      "vCpu": 64,
+      "ram": 256,
+      "payAsYouGo": 3.584,
+      "payAsYouGoWithAzureHybridBenefit": 2.1147,
+      "oneYearReserved": 1.362,
+      "oneYearReservedWithAzureHybridBenefit": 0.4326
+    },
+    {
+      "instance": "D2s_v4",
+      "vCpu": 2,
+      "ram": 8,
+      "payAsYouGo": 0.112,
+      "payAsYouGoWithAzureHybridBenefit": 0.0661,
+      "oneYearReserved": 0.0426,
+      "oneYearReservedWithAzureHybridBenefit": 0.0136
+    },
+    {
+      "instance": "D4s_v4",
+      "vCpu": 4,
+      "ram": 16,
+      "payAsYouGo": 0.224,
+      "payAsYouGoWithAzureHybridBenefit": 0.1322,
+      "oneYearReserved": 0.0852,
+      "oneYearReservedWithAzureHybridBenefit": 0.0271
+    },
+    {
+      "instance": "D8s_v4",
+      "vCpu": 8,
+      "ram": 32,
+      "payAsYouGo": 0.448,
+      "payAsYouGoWithAzureHybridBenefit": 0.2643,
+      "oneYearReserved": 0.1703,
+      "oneYearReservedWithAzureHybridBenefit": 0.0541
+    },
+    {
+      "instance": "D16s_v4",
+      "vCpu": 16,
+      "ram": 64,
+      "payAsYouGo": 0.896,
+      "payAsYouGoWithAzureHybridBenefit": 0.5287,
+      "oneYearReserved": 0.3405,
+      "oneYearReservedWithAzureHybridBenefit": 0.1082
+    },
+    {
+      "instance": "D32s_v4",
+      "vCpu": 32,
+      "ram": 128,
+      "payAsYouGo": 1.792,
+      "payAsYouGoWithAzureHybridBenefit": 1.0574,
+      "oneYearReserved": 0.681,
+      "oneYearReservedWithAzureHybridBenefit": 0.2163
+    },
+    {
+      "instance": "D48s_v4",
+      "vCpu": 48,
+      "ram": 192,
+      "payAsYouGo": 2.688,
+      "payAsYouGoWithAzureHybridBenefit": 1.586,
+      "oneYearReserved": 1.0215,
+      "oneYearReservedWithAzureHybridBenefit": 0.3245
+    },
+    {
+      "instance": "D64s_v4",
+      "vCpu": 64,
+      "ram": 256,
+      "payAsYouGo": 3.584,
+      "payAsYouGoWithAzureHybridBenefit": 2.1147,
+      "oneYearReserved": 1.362,
+      "oneYearReservedWithAzureHybridBenefit": 0.4326
+    },
+    {
+      "instance": "D2_v3",
+      "vCpu": 2,
+      "ram": 8,
+      "payAsYouGo": 0.117,
+      "payAsYouGoWithAzureHybridBenefit": 0.0794,
+      "oneYearReserved": 0.0508,
+      "oneYearReservedWithAzureHybridBenefit": 0.0226
+    },
+    {
+      "instance": "D4_v3",
+      "vCpu": 4,
+      "ram": 16,
+      "payAsYouGo": 0.234,
+      "payAsYouGoWithAzureHybridBenefit": 0.1588,
+      "oneYearReserved": 0.1016,
+      "oneYearReservedWithAzureHybridBenefit": 0.0451
+    },
+    {
+      "instance": "D8_v3",
+      "vCpu": 8,
+      "ram": 32,
+      "payAsYouGo": 0.468,
+      "payAsYouGoWithAzureHybridBenefit": 0.3175,
+      "oneYearReserved": 0.2031,
+      "oneYearReservedWithAzureHybridBenefit": 0.0902
+    },
+    {
+      "instance": "D16_v3",
+      "vCpu": 16,
+      "ram": 64,
+      "payAsYouGo": 0.936,
+      "payAsYouGoWithAzureHybridBenefit": 0.6351,
+      "oneYearReserved": 0.4061,
+      "oneYearReservedWithAzureHybridBenefit": 0.1804
+    },
+    {
+      "instance": "D32_v3",
+      "vCpu": 32,
+      "ram": 128,
+      "payAsYouGo": 1.872,
+      "payAsYouGoWithAzureHybridBenefit": 1.2701,
+      "oneYearReserved": 0.8122,
+      "oneYearReservedWithAzureHybridBenefit": 0.3608
+    },
+    {
+      "instance": "D48_v3",
+      "vCpu": 48,
+      "ram": 192,
+      "payAsYouGo": 2.808,
+      "payAsYouGoWithAzureHybridBenefit": 1.6191,
+      "oneYearReserved": 1.0531,
+      "oneYearReservedWithAzureHybridBenefit": 0.5412
+    },
+    {
+      "instance": "D64_v3",
+      "vCpu": 64,
+      "ram": 256,
+      "payAsYouGo": 3.744,
+      "payAsYouGoWithAzureHybridBenefit": 2.5402,
+      "oneYearReserved": 1.6244,
+      "oneYearReservedWithAzureHybridBenefit": 0.7215
+    },
+    {
+      "instance": "D2s_v3",
+      "vCpu": 2,
+      "ram": 8,
+      "payAsYouGo": 0.117,
+      "payAsYouGoWithAzureHybridBenefit": 0.0794,
+      "oneYearReserved": 0.0508,
+      "oneYearReservedWithAzureHybridBenefit": 0.0226
+    },
+    {
+      "instance": "D4s_v3",
+      "vCpu": 4,
+      "ram": 16,
+      "payAsYouGo": 0.234,
+      "payAsYouGoWithAzureHybridBenefit": 0.1588,
+      "oneYearReserved": 0.1016,
+      "oneYearReservedWithAzureHybridBenefit": 0.0451
+    },
+    {
+      "instance": "D8s_v3",
+      "vCpu": 8,
+      "ram": 32,
+      "payAsYouGo": 0.468,
+      "payAsYouGoWithAzureHybridBenefit": 0.3175,
+      "oneYearReserved": 0.2031,
+      "oneYearReservedWithAzureHybridBenefit": 0.0902
+    },
+    {
+      "instance": "D16s_v3",
+      "vCpu": 16,
+      "ram": 64,
+      "payAsYouGo": 0.936,
+      "payAsYouGoWithAzureHybridBenefit": 0.6351,
+      "oneYearReserved": 0.4061,
+      "oneYearReservedWithAzureHybridBenefit": 0.1804
+    },
+    {
+      "instance": "D32s_v3",
+      "vCpu": 32,
+      "ram": 128,
+      "payAsYouGo": 1.872,
+      "payAsYouGoWithAzureHybridBenefit": 1.2701,
+      "oneYearReserved": 0.8122,
+      "oneYearReservedWithAzureHybridBenefit": 0.3608
+    },
+    {
+      "instance": "D48s_v3",
+      "vCpu": 48,
+      "ram": 192,
+      "payAsYouGo": 2.808,
+      "payAsYouGoWithAzureHybridBenefit": 1.6191,
+      "oneYearReserved": 1.0531,
+      "oneYearReservedWithAzureHybridBenefit": 0.5412
+    },
+    {
+      "instance": "D64s_v3",
+      "vCpu": 64,
+      "ram": 256,
+      "payAsYouGo": 3.744,
+      "payAsYouGoWithAzureHybridBenefit": 2.5402,
+      "oneYearReserved": 1.6244,
+      "oneYearReservedWithAzureHybridBenefit": 0.7215
+    },
+    {
+      "instance": "D1_v2",
+      "vCpu": 1,
+      "ram": 3.5,
+      "payAsYouGo": 0.07,
+      "payAsYouGoWithAzureHybridBenefit": 0.0426,
+      "oneYearReserved": 0.0273,
+      "oneYearReservedWithAzureHybridBenefit": 0.0145
+    },
+    {
+      "instance": "D2_v2",
+      "vCpu": 2,
+      "ram": 7,
+      "payAsYouGo": 0.14,
+      "payAsYouGoWithAzureHybridBenefit": 0.0853,
+      "oneYearReserved": 0.0546,
+      "oneYearReservedWithAzureHybridBenefit": 0.0289
+    },
+    {
+      "instance": "D3_v2",
+      "vCpu": 4,
+      "ram": 14,
+      "payAsYouGo": 0.279,
+      "payAsYouGoWithAzureHybridBenefit": 0.1715,
+      "oneYearReserved": 0.11,
+      "oneYearReservedWithAzureHybridBenefit": 0.0576
+    },
+    {
+      "instance": "D4_v2",
+      "vCpu": 8,
+      "ram": 28,
+      "payAsYouGo": 0.559,
+      "payAsYouGoWithAzureHybridBenefit": 0.3421,
+      "oneYearReserved": 0.2181,
+      "oneYearReservedWithAzureHybridBenefit": 0.1153
+    },
+    {
+      "instance": "D5_v2",
+      "vCpu": 16,
+      "ram": 56,
+      "payAsYouGo": 1.117,
+      "payAsYouGoWithAzureHybridBenefit": 0.6841,
+      "oneYearReserved": 0.4371,
+      "oneYearReservedWithAzureHybridBenefit": 0.2304
+    },
+    {
+      "instance": "DS1_v2",
+      "vCpu": 1,
+      "ram": 3.5,
+      "payAsYouGo": 0.07,
+      "payAsYouGoWithAzureHybridBenefit": 0.0426,
+      "oneYearReserved": 0.0273,
+      "oneYearReservedWithAzureHybridBenefit": 0.0145
+    },
+    {
+      "instance": "DS2_v2",
+      "vCpu": 2,
+      "ram": 7,
+      "payAsYouGo": 0.14,
+      "payAsYouGoWithAzureHybridBenefit": 0.0853,
+      "oneYearReserved": 0.0546,
+      "oneYearReservedWithAzureHybridBenefit": 0.0289
+    },
+    {
+      "instance": "DS3_v2",
+      "vCpu": 4,
+      "ram": 14,
+      "payAsYouGo": 0.279,
+      "payAsYouGoWithAzureHybridBenefit": 0.1715,
+      "oneYearReserved": 0.11,
+      "oneYearReservedWithAzureHybridBenefit": 0.0576
+    },
+    {
+      "instance": "DS4_v2",
+      "vCpu": 8,
+      "ram": 28,
+      "payAsYouGo": 0.559,
+      "payAsYouGoWithAzureHybridBenefit": 0.3421,
+      "oneYearReserved": 0.2181,
+      "oneYearReservedWithAzureHybridBenefit": 0.1153
+    },
+    {
+      "instance": "DS5_v2",
+      "vCpu": 16,
+      "ram": 56,
+      "payAsYouGo": 1.117,
+      "payAsYouGoWithAzureHybridBenefit": 0.6841,
+      "oneYearReserved": 0.4371,
+      "oneYearReservedWithAzureHybridBenefit": 0.2304
+    },
+    {
+      "instance": "DC1s_v2",
+      "vCpu": 1,
+      "ram": 4,
+      "payAsYouGo": 0.257,
+      "payAsYouGoWithAzureHybridBenefit": 0.2056,
+      "oneYearReserved": 0.1543,
+      "oneYearReservedWithAzureHybridBenefit": 0.0267
+    },
+    {
+      "instance": "DC2s_v2",
+      "vCpu": 2,
+      "ram": 8,
+      "payAsYouGo": 0.514,
+      "payAsYouGoWithAzureHybridBenefit": 0.4112,
+      "oneYearReserved": 0.3085,
+      "oneYearReservedWithAzureHybridBenefit": 0.0534
+    },
+    {
+      "instance": "DC4s_v2",
+      "vCpu": 4,
+      "ram": 16,
+      "payAsYouGo": 1.028,
+      "payAsYouGoWithAzureHybridBenefit": 0.8225,
+      "oneYearReserved": 0.6169,
+      "oneYearReservedWithAzureHybridBenefit": 0.1067
+    },
+    {
+      "instance": "DC8_v2",
+      "vCpu": 8,
+      "ram": 32,
+      "payAsYouGo": 2.056,
+      "payAsYouGoWithAzureHybridBenefit": 1.6449,
+      "oneYearReserved": 1.2337,
+      "oneYearReservedWithAzureHybridBenefit": 0.2133
+    },
+    {
+      "instance": "F2s_v2",
+      "vCpu": 2,
+      "ram": 4,
+      "payAsYouGo": 0.106,
+      "payAsYouGoWithAzureHybridBenefit": 0.0628,
+      "oneYearReserved": 0.0383,
+      "oneYearReservedWithAzureHybridBenefit": 0.0228
+    },
+    {
+      "instance": "F4s_v2",
+      "vCpu": 4,
+      "ram": 8,
+      "payAsYouGo": 0.212,
+      "payAsYouGoWithAzureHybridBenefit": 0.1256,
+      "oneYearReserved": 0.0765,
+      "oneYearReservedWithAzureHybridBenefit": 0.0456
+    },
+    {
+      "instance": "F8s_v2",
+      "vCpu": 8,
+      "ram": 16,
+      "payAsYouGo": 0.424,
+      "payAsYouGoWithAzureHybridBenefit": 0.2512,
+      "oneYearReserved": 0.153,
+      "oneYearReservedWithAzureHybridBenefit": 0.0911
+    },
+    {
+      "instance": "F16s_v2",
+      "vCpu": 16,
+      "ram": 32,
+      "payAsYouGo": 0.848,
+      "payAsYouGoWithAzureHybridBenefit": 0.5023,
+      "oneYearReserved": 0.306,
+      "oneYearReservedWithAzureHybridBenefit": 0.1822
+    },
+    {
+      "instance": "F32s_v2",
+      "vCpu": 32,
+      "ram": 64,
+      "payAsYouGo": 1.696,
+      "payAsYouGoWithAzureHybridBenefit": 1.0046,
+      "oneYearReserved": 0.612,
+      "oneYearReservedWithAzureHybridBenefit": 0.3644
+    },
+    {
+      "instance": "F48s_v2",
+      "vCpu": 48,
+      "ram": 96,
+      "payAsYouGo": 2.544,
+      "payAsYouGoWithAzureHybridBenefit": 1.5069,
+      "oneYearReserved": 0.918,
+      "oneYearReservedWithAzureHybridBenefit": 0.5465
+    },
+    {
+      "instance": "F64s_v2",
+      "vCpu": 64,
+      "ram": 128,
+      "payAsYouGo": 3.392,
+      "payAsYouGoWithAzureHybridBenefit": 2.0092,
+      "oneYearReserved": 1.2239,
+      "oneYearReservedWithAzureHybridBenefit": 0.7287
+    },
+    {
+      "instance": "F72s_v2",
+      "vCpu": 72,
+      "ram": 144,
+      "payAsYouGo": 3.816,
+      "payAsYouGoWithAzureHybridBenefit": 2.2603,
+      "oneYearReserved": 1.3769,
+      "oneYearReservedWithAzureHybridBenefit": 0.8197
+    },
+    {
+      "instance": "F1",
+      "vCpu": 1,
+      "ram": 2,
+      "payAsYouGo": 0.062,
+      "payAsYouGoWithAzureHybridBenefit": 0.0383,
+      "oneYearReserved": 0.026,
+      "oneYearReservedWithAzureHybridBenefit": 0.0152
+    },
+    {
+      "instance": "F2",
+      "vCpu": 2,
+      "ram": 4,
+      "payAsYouGo": 0.124,
+      "payAsYouGoWithAzureHybridBenefit": 0.0766,
+      "oneYearReserved": 0.052,
+      "oneYearReservedWithAzureHybridBenefit": 0.0304
+    },
+    {
+      "instance": "F4",
+      "vCpu": 4,
+      "ram": 8,
+      "payAsYouGo": 0.249,
+      "payAsYouGoWithAzureHybridBenefit": 0.1543,
+      "oneYearReserved": 0.1031,
+      "oneYearReservedWithAzureHybridBenefit": 0.061
+    },
+    {
+      "instance": "F8",
+      "vCpu": 8,
+      "ram": 16,
+      "payAsYouGo": 0.498,
+      "payAsYouGoWithAzureHybridBenefit": 0.3076,
+      "oneYearReserved": 0.2061,
+      "oneYearReservedWithAzureHybridBenefit": 0.1219
+    },
+    {
+      "instance": "F16",
+      "vCpu": 16,
+      "ram": 32,
+      "payAsYouGo": 0.996,
+      "payAsYouGoWithAzureHybridBenefit": 0.6151,
+      "oneYearReserved": 0.4123,
+      "oneYearReservedWithAzureHybridBenefit": 0.2437
+    },
+    {
+      "instance": "F1s",
+      "vCpu": 1,
+      "ram": 2,
+      "payAsYouGo": 0.062,
+      "payAsYouGoWithAzureHybridBenefit": 0.0383,
+      "oneYearReserved": 0.026,
+      "oneYearReservedWithAzureHybridBenefit": 0.0152
+    },
+    {
+      "instance": "F2s",
+      "vCpu": 2,
+      "ram": 4,
+      "payAsYouGo": 0.124,
+      "payAsYouGoWithAzureHybridBenefit": 0.0766,
+      "oneYearReserved": 0.052,
+      "oneYearReservedWithAzureHybridBenefit": 0.0304
+    },
+    {
+      "instance": "F4s",
+      "vCpu": 4,
+      "ram": 8,
+      "payAsYouGo": 0.249,
+      "payAsYouGoWithAzureHybridBenefit": 0.1543,
+      "oneYearReserved": 0.1031,
+      "oneYearReservedWithAzureHybridBenefit": 0.061
+    },
+    {
+      "instance": "F8s",
+      "vCpu": 8,
+      "ram": 16,
+      "payAsYouGo": 0.498,
+      "payAsYouGoWithAzureHybridBenefit": 0.3076,
+      "oneYearReserved": 0.2061,
+      "oneYearReservedWithAzureHybridBenefit": 0.1219
+    },
+    {
+      "instance": "F16s",
+      "vCpu": 16,
+      "ram": 32,
+      "payAsYouGo": 0.996,
+      "payAsYouGoWithAzureHybridBenefit": 0.6151,
+      "oneYearReserved": 0.4123,
+      "oneYearReservedWithAzureHybridBenefit": 0.2437
+    },
+    {
+      "instance": "E2a_v4",
+      "vCpu": 2,
+      "ram": 16,
+      "payAsYouGo": 0.14,
+      "payAsYouGoWithAzureHybridBenefit": 0.0841,
+      "oneYearReserved": 0.0561,
+      "oneYearReservedWithAzureHybridBenefit": 0.0141
+    },
+    {
+      "instance": "E4a_v4",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.28,
+      "payAsYouGoWithAzureHybridBenefit": 0.1681,
+      "oneYearReserved": 0.112,
+      "oneYearReservedWithAzureHybridBenefit": 0.0282
+    },
+    {
+      "instance": "E8a_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.336,
+      "oneYearReserved": 0.2241,
+      "oneYearReservedWithAzureHybridBenefit": 0.0564
+    },
+    {
+      "instance": "E16a_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6721,
+      "oneYearReserved": 0.448,
+      "oneYearReservedWithAzureHybridBenefit": 0.1128
+    },
+    {
+      "instance": "E20a_v4",
+      "vCpu": 20,
+      "ram": 160,
+      "payAsYouGo": 1.4,
+      "payAsYouGoWithAzureHybridBenefit": 0.84,
+      "oneYearReserved": 0.5601,
+      "oneYearReservedWithAzureHybridBenefit": 0.141
+    },
+    {
+      "instance": "E32a_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.344,
+      "oneYearReserved": 0.896,
+      "oneYearReservedWithAzureHybridBenefit": 0.2256
+    },
+    {
+      "instance": "E48a_v4",
+      "vCpu": 48,
+      "ram": 384,
+      "payAsYouGo": 3.36,
+      "payAsYouGoWithAzureHybridBenefit": 2.016,
+      "oneYearReserved": 1.344,
+      "oneYearReservedWithAzureHybridBenefit": 0.3384
+    },
+    {
+      "instance": "E64a_v4",
+      "vCpu": 64,
+      "ram": 512,
+      "payAsYouGo": 4.48,
+      "payAsYouGoWithAzureHybridBenefit": 2.6881,
+      "oneYearReserved": 1.792,
+      "oneYearReservedWithAzureHybridBenefit": 0.4512
+    },
+    {
+      "instance": "E96a_v4",
+      "vCpu": 96,
+      "ram": 672,
+      "payAsYouGo": 6.72,
+      "payAsYouGoWithAzureHybridBenefit": 4.032,
+      "oneYearReserved": 2.688,
+      "oneYearReservedWithAzureHybridBenefit": 0.6768
+    },
+    {
+      "instance": "E2as_v4",
+      "vCpu": 2,
+      "ram": 16,
+      "payAsYouGo": 0.14,
+      "payAsYouGoWithAzureHybridBenefit": 0.0841,
+      "oneYearReserved": 0.0561,
+      "oneYearReservedWithAzureHybridBenefit": 0.0141
+    },
+    {
+      "instance": "E4as_v4",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.28,
+      "payAsYouGoWithAzureHybridBenefit": 0.1681,
+      "oneYearReserved": 0.112,
+      "oneYearReservedWithAzureHybridBenefit": 0.0282
+    },
+    {
+      "instance": "E8as_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.336,
+      "oneYearReserved": 0.2241,
+      "oneYearReservedWithAzureHybridBenefit": 0.0564
+    },
+    {
+      "instance": "E16as_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6721,
+      "oneYearReserved": 0.448,
+      "oneYearReservedWithAzureHybridBenefit": 0.1128
+    },
+    {
+      "instance": "E20as_v4",
+      "vCpu": 20,
+      "ram": 160,
+      "payAsYouGo": 1.4,
+      "payAsYouGoWithAzureHybridBenefit": 0.84,
+      "oneYearReserved": 0.5601,
+      "oneYearReservedWithAzureHybridBenefit": 0.141
+    },
+    {
+      "instance": "E32as_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.344,
+      "oneYearReserved": 0.896,
+      "oneYearReservedWithAzureHybridBenefit": 0.2256
+    },
+    {
+      "instance": "E48as_v4",
+      "vCpu": 48,
+      "ram": 384,
+      "payAsYouGo": 3.36,
+      "payAsYouGoWithAzureHybridBenefit": 2.016,
+      "oneYearReserved": 1.344,
+      "oneYearReservedWithAzureHybridBenefit": 0.3384
+    },
+    {
+      "instance": "E64as_v4",
+      "vCpu": 64,
+      "ram": 512,
+      "payAsYouGo": 4.48,
+      "payAsYouGoWithAzureHybridBenefit": 2.6881,
+      "oneYearReserved": 1.792,
+      "oneYearReservedWithAzureHybridBenefit": 0.4512
+    },
+    {
+      "instance": "E96as_v4",
+      "vCpu": 96,
+      "ram": 672,
+      "payAsYouGo": 6.72,
+      "payAsYouGoWithAzureHybridBenefit": 4.032,
+      "oneYearReserved": 2.688,
+      "oneYearReservedWithAzureHybridBenefit": 0.6768
+    },
+    {
+      "instance": "E2d_v4",
+      "vCpu": 2,
+      "ram": 16,
+      "payAsYouGo": 0.162,
+      "payAsYouGoWithAzureHybridBenefit": 0.0956,
+      "oneYearReserved": 0.0616,
+      "oneYearReservedWithAzureHybridBenefit": 0.0168
+    },
+    {
+      "instance": "E4d_v4",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.324,
+      "payAsYouGoWithAzureHybridBenefit": 0.1913,
+      "oneYearReserved": 0.1232,
+      "oneYearReservedWithAzureHybridBenefit": 0.0335
+    },
+    {
+      "instance": "E8d_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.648,
+      "payAsYouGoWithAzureHybridBenefit": 0.3824,
+      "oneYearReserved": 0.2463,
+      "oneYearReservedWithAzureHybridBenefit": 0.067
+    },
+    {
+      "instance": "E16d_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.296,
+      "payAsYouGoWithAzureHybridBenefit": 0.7647,
+      "oneYearReserved": 0.4925,
+      "oneYearReservedWithAzureHybridBenefit": 0.1339
+    },
+    {
+      "instance": "E20d_v4",
+      "vCpu": 20,
+      "ram": 160,
+      "payAsYouGo": 1.62,
+      "payAsYouGoWithAzureHybridBenefit": 0.9559,
+      "oneYearReserved": 0.6156,
+      "oneYearReservedWithAzureHybridBenefit": 0.1674
+    },
+    {
+      "instance": "E32d_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.592,
+      "payAsYouGoWithAzureHybridBenefit": 1.5293,
+      "oneYearReserved": 0.985,
+      "oneYearReservedWithAzureHybridBenefit": 0.2678
+    },
+    {
+      "instance": "E48d_v4",
+      "vCpu": 48,
+      "ram": 384,
+      "payAsYouGo": 3.888,
+      "payAsYouGoWithAzureHybridBenefit": 2.294,
+      "oneYearReserved": 1.4775,
+      "oneYearReservedWithAzureHybridBenefit": 0.4017
+    },
+    {
+      "instance": "E64d_v4",
+      "vCpu": 64,
+      "ram": 504,
+      "payAsYouGo": 5.184,
+      "payAsYouGoWithAzureHybridBenefit": 3.0586,
+      "oneYearReserved": 1.9699,
+      "oneYearReservedWithAzureHybridBenefit": 0.5356
+    },
+    {
+      "instance": "E2ds_v4",
+      "vCpu": 2,
+      "ram": 16,
+      "payAsYouGo": 0.162,
+      "payAsYouGoWithAzureHybridBenefit": 0.0956,
+      "oneYearReserved": 0.0616,
+      "oneYearReservedWithAzureHybridBenefit": 0.0168
+    },
+    {
+      "instance": "E4ds_v4",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.324,
+      "payAsYouGoWithAzureHybridBenefit": 0.1913,
+      "oneYearReserved": 0.1232,
+      "oneYearReservedWithAzureHybridBenefit": 0.0335
+    },
+    {
+      "instance": "E8ds_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.648,
+      "payAsYouGoWithAzureHybridBenefit": 0.3824,
+      "oneYearReserved": 0.2463,
+      "oneYearReservedWithAzureHybridBenefit": 0.067
+    },
+    {
+      "instance": "E16ds_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.296,
+      "payAsYouGoWithAzureHybridBenefit": 0.7647,
+      "oneYearReserved": 0.4925,
+      "oneYearReservedWithAzureHybridBenefit": 0.1339
+    },
+    {
+      "instance": "E20ds_v4",
+      "vCpu": 20,
+      "ram": 160,
+      "payAsYouGo": 1.62,
+      "payAsYouGoWithAzureHybridBenefit": 0.9559,
+      "oneYearReserved": 0.6156,
+      "oneYearReservedWithAzureHybridBenefit": 0.1674
+    },
+    {
+      "instance": "E32ds_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.592,
+      "payAsYouGoWithAzureHybridBenefit": 1.5293,
+      "oneYearReserved": 0.985,
+      "oneYearReservedWithAzureHybridBenefit": 0.2678
+    },
+    {
+      "instance": "E48ds_v4",
+      "vCpu": 48,
+      "ram": 384,
+      "payAsYouGo": 3.888,
+      "payAsYouGoWithAzureHybridBenefit": 2.294,
+      "oneYearReserved": 1.4775,
+      "oneYearReservedWithAzureHybridBenefit": 0.4017
+    },
+    {
+      "instance": "E64ds_v4",
+      "vCpu": 64,
+      "ram": 504,
+      "payAsYouGo": 5.184,
+      "payAsYouGoWithAzureHybridBenefit": 3.0586,
+      "oneYearReserved": 1.9699,
+      "oneYearReservedWithAzureHybridBenefit": 0.5356
+    },
+    {
+      "instance": "E80ids_v4",
+      "vCpu": 80,
+      "ram": 504,
+      "payAsYouGo": 6.48,
+      "payAsYouGoWithAzureHybridBenefit": 3.8232,
+      "oneYearReserved": 2.4624,
+      "oneYearReservedWithAzureHybridBenefit": 0.6694
+    },
+    {
+      "instance": "E2_v4",
+      "vCpu": 2,
+      "ram": 16,
+      "payAsYouGo": 0.14,
+      "payAsYouGoWithAzureHybridBenefit": 0.0827,
+      "oneYearReserved": 0.0532,
+      "oneYearReservedWithAzureHybridBenefit": 0.014
+    },
+    {
+      "instance": "E4_v4",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.28,
+      "payAsYouGoWithAzureHybridBenefit": 0.1652,
+      "oneYearReserved": 0.1064,
+      "oneYearReservedWithAzureHybridBenefit": 0.028
+    },
+    {
+      "instance": "E8_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.3304,
+      "oneYearReserved": 0.2128,
+      "oneYearReservedWithAzureHybridBenefit": 0.056
+    },
+    {
+      "instance": "E16_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6608,
+      "oneYearReserved": 0.4256,
+      "oneYearReservedWithAzureHybridBenefit": 0.112
+    },
+    {
+      "instance": "E32_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.3215,
+      "oneYearReserved": 0.8511,
+      "oneYearReservedWithAzureHybridBenefit": 0.224
+    },
+    {
+      "instance": "E48_v4",
+      "vCpu": 48,
+      "ram": 384,
+      "payAsYouGo": 3.36,
+      "payAsYouGoWithAzureHybridBenefit": 1.9822,
+      "oneYearReserved": 1.2767,
+      "oneYearReservedWithAzureHybridBenefit": 0.336
+    },
+    {
+      "instance": "E64_v4",
+      "vCpu": 64,
+      "ram": 504,
+      "payAsYouGo": 4.48,
+      "payAsYouGoWithAzureHybridBenefit": 2.643,
+      "oneYearReserved": 1.7023,
+      "oneYearReservedWithAzureHybridBenefit": 0.448
+    },
+    {
+      "instance": "E2s_v4",
+      "vCpu": 2,
+      "ram": 16,
+      "payAsYouGo": 0.14,
+      "payAsYouGoWithAzureHybridBenefit": 0.0827,
+      "oneYearReserved": 0.0532,
+      "oneYearReservedWithAzureHybridBenefit": 0.014
+    },
+    {
+      "instance": "E4s_v4",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.28,
+      "payAsYouGoWithAzureHybridBenefit": 0.1652,
+      "oneYearReserved": 0.1064,
+      "oneYearReservedWithAzureHybridBenefit": 0.028
+    },
+    {
+      "instance": "E8s_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.3304,
+      "oneYearReserved": 0.2128,
+      "oneYearReservedWithAzureHybridBenefit": 0.056
+    },
+    {
+      "instance": "E16s_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6608,
+      "oneYearReserved": 0.4256,
+      "oneYearReservedWithAzureHybridBenefit": 0.112
+    },
+    {
+      "instance": "E20s_v4",
+      "vCpu": 20,
+      "ram": 160,
+      "payAsYouGo": 1.4,
+      "payAsYouGoWithAzureHybridBenefit": 0.826,
+      "oneYearReserved": 0.532,
+      "oneYearReservedWithAzureHybridBenefit": 0.14
+    },
+    {
+      "instance": "E32s_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.3215,
+      "oneYearReserved": 0.8511,
+      "oneYearReservedWithAzureHybridBenefit": 0.224
+    },
+    {
+      "instance": "E48s_v4",
+      "vCpu": 48,
+      "ram": 384,
+      "payAsYouGo": 3.36,
+      "payAsYouGoWithAzureHybridBenefit": 1.9822,
+      "oneYearReserved": 1.2767,
+      "oneYearReservedWithAzureHybridBenefit": 0.336
+    },
+    {
+      "instance": "E64s_v4",
+      "vCpu": 64,
+      "ram": 504,
+      "payAsYouGo": 4.48,
+      "payAsYouGoWithAzureHybridBenefit": 2.643,
+      "oneYearReserved": 1.7023,
+      "oneYearReservedWithAzureHybridBenefit": 0.448
+    },
+    {
+      "instance": "E80is_v4",
+      "vCpu": 80,
+      "ram": 504,
+      "payAsYouGo": 5.599,
+      "payAsYouGoWithAzureHybridBenefit": 3.3037,
+      "oneYearReserved": 2.1278,
+      "oneYearReservedWithAzureHybridBenefit": 0.5599
+    },
+    {
+      "instance": "E2_v3",
+      "vCpu": 2,
+      "ram": 16,
+      "payAsYouGo": 0.148,
+      "payAsYouGoWithAzureHybridBenefit": 0.0871,
+      "oneYearReserved": 0.0558,
+      "oneYearReservedWithAzureHybridBenefit": 0.0289
+    },
+    {
+      "instance": "E4_v3",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.296,
+      "payAsYouGoWithAzureHybridBenefit": 0.1744,
+      "oneYearReserved": 0.1115,
+      "oneYearReservedWithAzureHybridBenefit": 0.0578
+    },
+    {
+      "instance": "E8_v3",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.3486,
+      "oneYearReserved": 0.223,
+      "oneYearReservedWithAzureHybridBenefit": 0.1092
+    },
+    {
+      "instance": "E16_v3",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6972,
+      "oneYearReserved": 0.4458,
+      "oneYearReservedWithAzureHybridBenefit": 0.2184
+    },
+    {
+      "instance": "E20_v3",
+      "vCpu": 20,
+      "ram": 160,
+      "payAsYouGo": 1.48,
+      "payAsYouGoWithAzureHybridBenefit": 0.8232,
+      "oneYearReserved": 0.5527,
+      "oneYearReservedWithAzureHybridBenefit": 0.2886
+    },
+    {
+      "instance": "E32_v3",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.3943,
+      "oneYearReserved": 0.8916,
+      "oneYearReservedWithAzureHybridBenefit": 0.4368
+    },
+    {
+      "instance": "E48_v3",
+      "vCpu": 48,
+      "ram": 384,
+      "payAsYouGo": 3.36,
+      "payAsYouGoWithAzureHybridBenefit": 1.9755,
+      "oneYearReserved": 1.3265,
+      "oneYearReservedWithAzureHybridBenefit": 0.6552
+    },
+    {
+      "instance": "E64i_v3",
+      "vCpu": 64,
+      "ram": 432,
+      "payAsYouGo": 4.032,
+      "payAsYouGoWithAzureHybridBenefit": 2.5722,
+      "oneYearReserved": 1.5917,
+      "oneYearReservedWithAzureHybridBenefit": 0.7863
+    },
+    {
+      "instance": "E64_v3",
+      "vCpu": 64,
+      "ram": 432,
+      "payAsYouGo": 4.032,
+      "payAsYouGoWithAzureHybridBenefit": 2.6282,
+      "oneYearReserved": 1.6806,
+      "oneYearReservedWithAzureHybridBenefit": 0.7863
+    },
+    {
+      "instance": "E2s_v3",
+      "vCpu": 2,
+      "ram": 16,
+      "payAsYouGo": 0.148,
+      "payAsYouGoWithAzureHybridBenefit": 0.0871,
+      "oneYearReserved": 0.0558,
+      "oneYearReservedWithAzureHybridBenefit": 0.0289
+    },
+    {
+      "instance": "E4s_v3",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.296,
+      "payAsYouGoWithAzureHybridBenefit": 0.1744,
+      "oneYearReserved": 0.1115,
+      "oneYearReservedWithAzureHybridBenefit": 0.0578
+    },
+    {
+      "instance": "E8s_v3",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.3486,
+      "oneYearReserved": 0.223,
+      "oneYearReservedWithAzureHybridBenefit": 0.1092
+    },
+    {
+      "instance": "E16s_v3",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6972,
+      "oneYearReserved": 0.4458,
+      "oneYearReservedWithAzureHybridBenefit": 0.2184
+    },
+    {
+      "instance": "E20s_v3",
+      "vCpu": 20,
+      "ram": 160,
+      "payAsYouGo": 1.48,
+      "payAsYouGoWithAzureHybridBenefit": 0.8232,
+      "oneYearReserved": 0.5527,
+      "oneYearReservedWithAzureHybridBenefit": 0.2886
+    },
+    {
+      "instance": "E32s_v3",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.3943,
+      "oneYearReserved": 0.8916,
+      "oneYearReservedWithAzureHybridBenefit": 0.4368
+    },
+    {
+      "instance": "E48s_v3",
+      "vCpu": 48,
+      "ram": 384,
+      "payAsYouGo": 3.36,
+      "payAsYouGoWithAzureHybridBenefit": 1.9755,
+      "oneYearReserved": 1.3265,
+      "oneYearReservedWithAzureHybridBenefit": 0.6552
+    },
+    {
+      "instance": "E64is_v3",
+      "vCpu": 64,
+      "ram": 432,
+      "payAsYouGo": 4.032,
+      "payAsYouGoWithAzureHybridBenefit": 2.5722,
+      "oneYearReserved": 1.5917,
+      "oneYearReservedWithAzureHybridBenefit": 0.7863
+    },
+    {
+      "instance": "E64s_v3",
+      "vCpu": 64,
+      "ram": 432,
+      "payAsYouGo": 4.032,
+      "payAsYouGoWithAzureHybridBenefit": 2.6282,
+      "oneYearReserved": 1.6806,
+      "oneYearReservedWithAzureHybridBenefit": 0.7863
+    },
+    {
+      "instance": "D11_v2",
+      "vCpu": 2,
+      "ram": 14,
+      "payAsYouGo": 0.185,
+      "payAsYouGoWithAzureHybridBenefit": 0.1142,
+      "oneYearReserved": 0.0757,
+      "oneYearReservedWithAzureHybridBenefit": 0.0396
+    },
+    {
+      "instance": "D12_v2",
+      "vCpu": 4,
+      "ram": 28,
+      "payAsYouGo": 0.37,
+      "payAsYouGoWithAzureHybridBenefit": 0.2284,
+      "oneYearReserved": 0.1513,
+      "oneYearReservedWithAzureHybridBenefit": 0.0791
+    },
+    {
+      "instance": "D13_v2",
+      "vCpu": 8,
+      "ram": 56,
+      "payAsYouGo": 0.741,
+      "payAsYouGoWithAzureHybridBenefit": 0.4567,
+      "oneYearReserved": 0.3026,
+      "oneYearReservedWithAzureHybridBenefit": 0.1584
+    },
+    {
+      "instance": "D14_v2",
+      "vCpu": 16,
+      "ram": 112,
+      "payAsYouGo": 1.482,
+      "payAsYouGoWithAzureHybridBenefit": 0.9133,
+      "oneYearReserved": 0.6051,
+      "oneYearReservedWithAzureHybridBenefit": 0.3168
+    },
+    {
+      "instance": "D15i_v2",
+      "vCpu": 20,
+      "ram": 140,
+      "payAsYouGo": 1.852,
+      "oneYearReservedWithAzureHybridBenefit": 0.3958
+    },
+    {
+      "instance": "D15_v2",
+      "vCpu": 20,
+      "ram": 140,
+      "payAsYouGo": 1.852,
+      "payAsYouGoWithAzureHybridBenefit": 1.1416,
+      "oneYearReserved": 0.7564,
+      "oneYearReservedWithAzureHybridBenefit": 0.3958
+    },
+    {
+      "instance": "DS11_v2",
+      "vCpu": 2,
+      "ram": 14,
+      "payAsYouGo": 0.185,
+      "payAsYouGoWithAzureHybridBenefit": 0.1142,
+      "oneYearReserved": 0.0757,
+      "oneYearReservedWithAzureHybridBenefit": 0.0396
+    },
+    {
+      "instance": "DS12_v2",
+      "vCpu": 4,
+      "ram": 28,
+      "payAsYouGo": 0.37,
+      "payAsYouGoWithAzureHybridBenefit": 0.2284,
+      "oneYearReserved": 0.1513,
+      "oneYearReservedWithAzureHybridBenefit": 0.0791
+    },
+    {
+      "instance": "DS13_v2",
+      "vCpu": 8,
+      "ram": 56,
+      "payAsYouGo": 0.741,
+      "payAsYouGoWithAzureHybridBenefit": 0.4567,
+      "oneYearReserved": 0.3026,
+      "oneYearReservedWithAzureHybridBenefit": 0.1584
+    },
+    {
+      "instance": "DS14_v2",
+      "vCpu": 16,
+      "ram": 112,
+      "payAsYouGo": 1.482,
+      "payAsYouGoWithAzureHybridBenefit": 0.9133,
+      "oneYearReserved": 0.6051,
+      "oneYearReservedWithAzureHybridBenefit": 0.3168
+    },
+    {
+      "instance": "DS15i_v2",
+      "vCpu": 20,
+      "ram": 140,
+      "payAsYouGo": 1.852,
+      "oneYearReservedWithAzureHybridBenefit": 0.3958
+    },
+    {
+      "instance": "DS15_v2",
+      "vCpu": 20,
+      "ram": 140,
+      "payAsYouGo": 1.852,
+      "payAsYouGoWithAzureHybridBenefit": 1.1416,
+      "oneYearReserved": 0.7564,
+      "oneYearReservedWithAzureHybridBenefit": 0.3958
+    },
+    {
+      "instance": "G1",
+      "vCpu": 2,
+      "ram": 28,
+      "payAsYouGo": 0.61,
+      "oneYearReservedWithAzureHybridBenefit": 0.0611
+    },
+    {
+      "instance": "G2",
+      "vCpu": 4,
+      "ram": 56,
+      "payAsYouGo": 1.22,
+      "oneYearReservedWithAzureHybridBenefit": 0.1222
+    },
+    {
+      "instance": "G3",
+      "vCpu": 8,
+      "ram": 112,
+      "payAsYouGo": 2.44,
+      "oneYearReservedWithAzureHybridBenefit": 0.2443
+    },
+    {
+      "instance": "G4",
+      "vCpu": 16,
+      "ram": 224,
+      "payAsYouGo": 4.88,
+      "oneYearReservedWithAzureHybridBenefit": 0.4885
+    },
+    {
+      "instance": "G5",
+      "vCpu": 32,
+      "ram": 448,
+      "payAsYouGo": 8.69,
+      "oneYearReservedWithAzureHybridBenefit": 0.8699
+    },
+    {
+      "instance": "Gs1",
+      "vCpu": 2,
+      "ram": 28,
+      "payAsYouGo": 0.61,
+      "oneYearReservedWithAzureHybridBenefit": 0.0634
+    },
+    {
+      "instance": "Gs2",
+      "vCpu": 4,
+      "ram": 56,
+      "payAsYouGo": 1.22,
+      "oneYearReservedWithAzureHybridBenefit": 0.1268
+    },
+    {
+      "instance": "Gs3",
+      "vCpu": 8,
+      "ram": 112,
+      "payAsYouGo": 2.44,
+      "oneYearReservedWithAzureHybridBenefit": 0.2536
+    },
+    {
+      "instance": "Gs4",
+      "vCpu": 16,
+      "ram": 224,
+      "payAsYouGo": 4.88,
+      "oneYearReservedWithAzureHybridBenefit": 0.5071
+    },
+    {
+      "instance": "Gs5",
+      "vCpu": 32,
+      "ram": 448,
+      "payAsYouGo": 8.69,
+      "oneYearReservedWithAzureHybridBenefit": 0.9029
+    },
+    {
+      "instance": "M8ms",
+      "vCpu": 8,
+      "ram": 219,
+      "payAsYouGo": 1.997,
+      "payAsYouGoWithAzureHybridBenefit": 1.1487,
+      "oneYearReserved": 0.5589,
+      "oneYearReservedWithAzureHybridBenefit": 0.2011
+    },
+    {
+      "instance": "M16ms",
+      "vCpu": 16,
+      "ram": 438,
+      "payAsYouGo": 3.995,
+      "payAsYouGoWithAzureHybridBenefit": 2.2974,
+      "oneYearReserved": 1.1177,
+      "oneYearReservedWithAzureHybridBenefit": 0.4023
+    },
+    {
+      "instance": "M32ts",
+      "vCpu": 32,
+      "ram": 192,
+      "payAsYouGo": 3.016,
+      "payAsYouGoWithAzureHybridBenefit": 1.7347,
+      "oneYearReserved": 0.8439,
+      "oneYearReservedWithAzureHybridBenefit": 0.3038
+    },
+    {
+      "instance": "M32ls",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 3.201,
+      "payAsYouGoWithAzureHybridBenefit": 1.841,
+      "oneYearReserved": 0.8957,
+      "oneYearReservedWithAzureHybridBenefit": 0.3224
+    },
+    {
+      "instance": "M32ms",
+      "vCpu": 32,
+      "ram": 875,
+      "payAsYouGo": 7.99,
+      "payAsYouGoWithAzureHybridBenefit": 4.5948,
+      "oneYearReserved": 2.2353,
+      "oneYearReservedWithAzureHybridBenefit": 0.8046
+    },
+    {
+      "instance": "M64ls",
+      "vCpu": 64,
+      "ram": 512,
+      "payAsYouGo": 6.403,
+      "payAsYouGoWithAzureHybridBenefit": 3.6821,
+      "oneYearReserved": 1.7913,
+      "oneYearReservedWithAzureHybridBenefit": 0.6448
+    },
+    {
+      "instance": "M64s",
+      "vCpu": 64,
+      "ram": 1,
+      "payAsYouGo": 8.67,
+      "payAsYouGoWithAzureHybridBenefit": 4.9858,
+      "oneYearReserved": 2.4255,
+      "oneYearReservedWithAzureHybridBenefit": 0.8731
+    },
+    {
+      "instance": "M64",
+      "vCpu": 64,
+      "ram": 1,
+      "payAsYouGo": 8.67,
+      "payAsYouGoWithAzureHybridBenefit": 4.9858,
+      "oneYearReserved": 2.4255,
+      "oneYearReservedWithAzureHybridBenefit": 0.8731
+    },
+    {
+      "instance": "M64ms",
+      "vCpu": 64,
+      "ram": 1,
+      "payAsYouGo": 17.347,
+      "payAsYouGoWithAzureHybridBenefit": 9.9758,
+      "oneYearReserved": 4.8532,
+      "oneYearReservedWithAzureHybridBenefit": 1.7469
+    },
+    {
+      "instance": "M64m",
+      "vCpu": 64,
+      "ram": 1,
+      "payAsYouGo": 17.347,
+      "payAsYouGoWithAzureHybridBenefit": 9.9758,
+      "oneYearReserved": 4.8532,
+      "oneYearReservedWithAzureHybridBenefit": 1.7469
+    },
+    {
+      "instance": "M128s",
+      "vCpu": 128,
+      "ram": 2,
+      "payAsYouGo": 17.339,
+      "payAsYouGoWithAzureHybridBenefit": 9.9714,
+      "oneYearReserved": 4.851,
+      "oneYearReservedWithAzureHybridBenefit": 1.7461
+    },
+    {
+      "instance": "M128",
+      "vCpu": 128,
+      "ram": 2,
+      "payAsYouGo": 17.339,
+      "payAsYouGoWithAzureHybridBenefit": 9.9714,
+      "oneYearReserved": 4.851,
+      "oneYearReservedWithAzureHybridBenefit": 1.7461
+    },
+    {
+      "instance": "M128ms",
+      "vCpu": 128,
+      "ram": 3,
+      "payAsYouGo": 34.694,
+      "payAsYouGoWithAzureHybridBenefit": 19.9518,
+      "oneYearReserved": 9.7063,
+      "oneYearReservedWithAzureHybridBenefit": 3.4937
+    },
+    {
+      "instance": "M128m",
+      "vCpu": 128,
+      "ram": 3,
+      "payAsYouGo": 34.694,
+      "payAsYouGoWithAzureHybridBenefit": 19.9518,
+      "oneYearReserved": 9.7063,
+      "oneYearReservedWithAzureHybridBenefit": 3.4937
+    },
+    {
+      "instance": "M32dms_v2",
+      "vCpu": 32,
+      "ram": 875,
+      "payAsYouGo": 20.841,
+      "payAsYouGoWithAzureHybridBenefit": 12.1214,
+      "oneYearReserved": 5.8523,
+      "oneYearReservedWithAzureHybridBenefit": 8.3364
+    },
+    {
+      "instance": "M64ds_v2",
+      "vCpu": 64,
+      "ram": 1,
+      "payAsYouGo": 7.99,
+      "payAsYouGoWithAzureHybridBenefit": 4.647,
+      "oneYearReserved": 2.2436,
+      "oneYearReservedWithAzureHybridBenefit": 3.196
+    },
+    {
+      "instance": "M64dms_v2",
+      "vCpu": 64,
+      "ram": 1,
+      "payAsYouGo": 34.697,
+      "payAsYouGoWithAzureHybridBenefit": 20.1798,
+      "oneYearReserved": 9.743,
+      "oneYearReservedWithAzureHybridBenefit": 13.8788
+    },
+    {
+      "instance": "M128ds_v2",
+      "vCpu": 128,
+      "ram": 2,
+      "payAsYouGo": 13.442,
+      "payAsYouGoWithAzureHybridBenefit": 7.818,
+      "oneYearReserved": 3.7746,
+      "oneYearReservedWithAzureHybridBenefit": 5.3768
+    },
+    {
+      "instance": "M128dms_v2",
+      "vCpu": 128,
+      "ram": 3,
+      "payAsYouGo": 17.342,
+      "payAsYouGoWithAzureHybridBenefit": 10.0862,
+      "oneYearReserved": 4.8697,
+      "oneYearReservedWithAzureHybridBenefit": 6.9368
+    },
+    {
+      "instance": "M192ids_v2",
+      "vCpu": 192,
+      "ram": 2,
+      "payAsYouGo": 41.683,
+      "payAsYouGoWithAzureHybridBenefit": 24.2429,
+      "oneYearReserved": 11.7046,
+      "oneYearReservedWithAzureHybridBenefit": 16.6732
+    },
+    {
+      "instance": "M192idms_v2",
+      "vCpu": 192,
+      "ram": 4,
+      "payAsYouGo": 8.67,
+      "payAsYouGoWithAzureHybridBenefit": 5.0423,
+      "oneYearReserved": 2.4345,
+      "oneYearReservedWithAzureHybridBenefit": 3.468
+    },
+    {
+      "instance": "M32ms_v2",
+      "vCpu": 32,
+      "ram": 875,
+      "payAsYouGo": 41.136,
+      "payAsYouGoWithAzureHybridBenefit": 23.9246,
+      "oneYearReserved": 11.551,
+      "oneYearReservedWithAzureHybridBenefit": 4.2988
+    },
+    {
+      "instance": "M64s_v2",
+      "vCpu": 64,
+      "ram": 1,
+      "payAsYouGo": 20.294,
+      "payAsYouGoWithAzureHybridBenefit": 11.8034,
+      "oneYearReserved": 5.6988,
+      "oneYearReservedWithAzureHybridBenefit": 2.1208
+    },
+    {
+      "instance": "M64ms_v2",
+      "vCpu": 64,
+      "ram": 1,
+      "payAsYouGo": 34.15,
+      "payAsYouGoWithAzureHybridBenefit": 19.8617,
+      "oneYearReserved": 9.5894,
+      "oneYearReservedWithAzureHybridBenefit": 3.5687
+    },
+    {
+      "instance": "M128s_v2",
+      "vCpu": 128,
+      "ram": 2,
+      "payAsYouGo": 16.795,
+      "payAsYouGoWithAzureHybridBenefit": 9.768,
+      "oneYearReserved": 4.7161,
+      "oneYearReservedWithAzureHybridBenefit": 1.7551
+    },
+    {
+      "instance": "M128ms_v2",
+      "vCpu": 128,
+      "ram": 3,
+      "payAsYouGo": 13.168,
+      "payAsYouGoWithAzureHybridBenefit": 7.6588,
+      "oneYearReserved": 3.6978,
+      "oneYearReservedWithAzureHybridBenefit": 1.3761
+    },
+    {
+      "instance": "M192is_v2",
+      "vCpu": 192,
+      "ram": 2,
+      "payAsYouGo": 8.396,
+      "payAsYouGoWithAzureHybridBenefit": 4.8833,
+      "oneYearReserved": 2.3577,
+      "oneYearReservedWithAzureHybridBenefit": 0.8774
+    },
+    {
+      "instance": "M192ims_v2",
+      "vCpu": 192,
+      "ram": 4,
+      "payAsYouGo": 7.853,
+      "payAsYouGoWithAzureHybridBenefit": 4.5674,
+      "oneYearReserved": 2.2052,
+      "oneYearReservedWithAzureHybridBenefit": 0.8207
+    },
+    {
+      "instance": "M208s_v2",
+      "vCpu": 208,
+      "ram": 2,
+      "payAsYouGo": 29.003,
+      "payAsYouGoWithAzureHybridBenefit": 16.8679,
+      "oneYearReserved": 8.1431,
+      "oneYearReservedWithAzureHybridBenefit": 3.0309
+    },
+    {
+      "instance": "M208ms_v2",
+      "vCpu": 208,
+      "ram": 5,
+      "payAsYouGo": 58.006,
+      "payAsYouGoWithAzureHybridBenefit": 33.7357,
+      "oneYearReserved": 16.2862,
+      "oneYearReservedWithAzureHybridBenefit": 6.0617
+    },
+    {
+      "instance": "M416s_v2",
+      "vCpu": 416,
+      "ram": 5,
+      "payAsYouGo": 64.454,
+      "payAsYouGoWithAzureHybridBenefit": 37.4858,
+      "oneYearReserved": 18.0966,
+      "oneYearReservedWithAzureHybridBenefit": 6.7355
+    },
+    {
+      "instance": "M416ms_v2",
+      "vCpu": 416,
+      "ram": 11,
+      "payAsYouGo": 128.9,
+      "payAsYouGoWithAzureHybridBenefit": 74.964,
+      "oneYearReserved": 36.1895,
+      "oneYearReservedWithAzureHybridBenefit": 13.4701
+    },
+    {
+      "instance": "DS11-1_v2",
+      "vCpu": 2,
+      "ram": 14,
+      "payAsYouGo": 0.185,
+      "payAsYouGoWithAzureHybridBenefit": 0.1142,
+      "oneYearReserved": 0.0757,
+      "oneYearReservedWithAzureHybridBenefit": 0.0396
+    },
+    {
+      "instance": "DS12-1_v2",
+      "vCpu": 4,
+      "ram": 28,
+      "payAsYouGo": 0.37,
+      "payAsYouGoWithAzureHybridBenefit": 0.2284,
+      "oneYearReserved": 0.1513,
+      "oneYearReservedWithAzureHybridBenefit": 0.0791
+    },
+    {
+      "instance": "DS12-2_v2",
+      "vCpu": 4,
+      "ram": 28,
+      "payAsYouGo": 0.37,
+      "payAsYouGoWithAzureHybridBenefit": 0.2284,
+      "oneYearReserved": 0.1513,
+      "oneYearReservedWithAzureHybridBenefit": 0.0791
+    },
+    {
+      "instance": "E4-2as_v4",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.28,
+      "payAsYouGoWithAzureHybridBenefit": 0.1681,
+      "oneYearReserved": 0.112,
+      "oneYearReservedWithAzureHybridBenefit": 0.0282
+    },
+    {
+      "instance": "E4-2ds_v4",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.324,
+      "payAsYouGoWithAzureHybridBenefit": 0.1913,
+      "oneYearReserved": 0.1232,
+      "oneYearReservedWithAzureHybridBenefit": 0.0335
+    },
+    {
+      "instance": "E4-2s_v3",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.296,
+      "payAsYouGoWithAzureHybridBenefit": 0.1744,
+      "oneYearReserved": 0.1115,
+      "oneYearReservedWithAzureHybridBenefit": 0.0578
+    },
+    {
+      "instance": "E4-2s_v4",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.28,
+      "payAsYouGoWithAzureHybridBenefit": 0.1652,
+      "oneYearReserved": 0.1064,
+      "oneYearReservedWithAzureHybridBenefit": 0.028
+    },
+    {
+      "instance": "DS13-2_v2",
+      "vCpu": 8,
+      "ram": 56,
+      "payAsYouGo": 0.741,
+      "payAsYouGoWithAzureHybridBenefit": 0.4567,
+      "oneYearReserved": 0.3026,
+      "oneYearReservedWithAzureHybridBenefit": 0.1584
+    },
+    {
+      "instance": "E8-2as_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.336,
+      "oneYearReserved": 0.2241,
+      "oneYearReservedWithAzureHybridBenefit": 0.0564
+    },
+    {
+      "instance": "E8-2ds_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.648,
+      "payAsYouGoWithAzureHybridBenefit": 0.3824,
+      "oneYearReserved": 0.2463,
+      "oneYearReservedWithAzureHybridBenefit": 0.067
+    },
+    {
+      "instance": "E8-2s_v3",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.3486,
+      "oneYearReserved": 0.223,
+      "oneYearReservedWithAzureHybridBenefit": 0.1092
+    },
+    {
+      "instance": "E8-2s_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.3304,
+      "oneYearReserved": 0.2128,
+      "oneYearReservedWithAzureHybridBenefit": 0.056
+    },
+    {
+      "instance": "M8-2ms",
+      "vCpu": 8,
+      "ram": 219,
+      "payAsYouGo": 1.997,
+      "payAsYouGoWithAzureHybridBenefit": 1.1487,
+      "oneYearReserved": 0.5589,
+      "oneYearReservedWithAzureHybridBenefit": 0.2011
+    },
+    {
+      "instance": "DS13-4_v2",
+      "vCpu": 8,
+      "ram": 56,
+      "payAsYouGo": 0.741,
+      "payAsYouGoWithAzureHybridBenefit": 0.4567,
+      "oneYearReserved": 0.3026,
+      "oneYearReservedWithAzureHybridBenefit": 0.1584
+    },
+    {
+      "instance": "E8-4as_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.336,
+      "oneYearReserved": 0.2241,
+      "oneYearReservedWithAzureHybridBenefit": 0.0564
+    },
+    {
+      "instance": "E8-4ds_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.648,
+      "payAsYouGoWithAzureHybridBenefit": 0.3824,
+      "oneYearReserved": 0.2463,
+      "oneYearReservedWithAzureHybridBenefit": 0.067
+    },
+    {
+      "instance": "E8-4s_v3",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.3486,
+      "oneYearReserved": 0.223,
+      "oneYearReservedWithAzureHybridBenefit": 0.1092
+    },
+    {
+      "instance": "E8-4s_v4",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.56,
+      "payAsYouGoWithAzureHybridBenefit": 0.3304,
+      "oneYearReserved": 0.2128,
+      "oneYearReservedWithAzureHybridBenefit": 0.056
+    },
+    {
+      "instance": "DS14-4_v2",
+      "vCpu": 16,
+      "ram": 112,
+      "payAsYouGo": 1.482,
+      "payAsYouGoWithAzureHybridBenefit": 0.9133,
+      "oneYearReserved": 0.6051,
+      "oneYearReservedWithAzureHybridBenefit": 0.3168
+    },
+    {
+      "instance": "E16-4as_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6721,
+      "oneYearReserved": 0.448,
+      "oneYearReservedWithAzureHybridBenefit": 0.1128
+    },
+    {
+      "instance": "E16-4ds_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.296,
+      "payAsYouGoWithAzureHybridBenefit": 0.7647,
+      "oneYearReserved": 0.4925,
+      "oneYearReservedWithAzureHybridBenefit": 0.1339
+    },
+    {
+      "instance": "E16-4s_v3",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6972,
+      "oneYearReserved": 0.4458,
+      "oneYearReservedWithAzureHybridBenefit": 0.2184
+    },
+    {
+      "instance": "E16-4s_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6608,
+      "oneYearReserved": 0.4256,
+      "oneYearReservedWithAzureHybridBenefit": 0.112
+    },
+    {
+      "instance": "M8-4ms",
+      "vCpu": 8,
+      "ram": 219,
+      "payAsYouGo": 1.997,
+      "payAsYouGoWithAzureHybridBenefit": 1.1487,
+      "oneYearReserved": 0.5589,
+      "oneYearReservedWithAzureHybridBenefit": 0.2011
+    },
+    {
+      "instance": "Gs4-4",
+      "vCpu": 16,
+      "ram": 224,
+      "payAsYouGo": 4.88,
+      "oneYearReservedWithAzureHybridBenefit": 0.5071
+    },
+    {
+      "instance": "M16-4ms",
+      "vCpu": 16,
+      "ram": 438,
+      "payAsYouGo": 3.995,
+      "payAsYouGoWithAzureHybridBenefit": 2.2974,
+      "oneYearReserved": 1.1177,
+      "oneYearReservedWithAzureHybridBenefit": 0.4023
+    },
+    {
+      "instance": "DS14-8_v2",
+      "vCpu": 16,
+      "ram": 112,
+      "payAsYouGo": 1.482,
+      "payAsYouGoWithAzureHybridBenefit": 0.9133,
+      "oneYearReserved": 0.6051,
+      "oneYearReservedWithAzureHybridBenefit": 0.3168
+    },
+    {
+      "instance": "E16-8as_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6721,
+      "oneYearReserved": 0.448,
+      "oneYearReservedWithAzureHybridBenefit": 0.1128
+    },
+    {
+      "instance": "E16-8ds_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.296,
+      "payAsYouGoWithAzureHybridBenefit": 0.7647,
+      "oneYearReserved": 0.4925,
+      "oneYearReservedWithAzureHybridBenefit": 0.1339
+    },
+    {
+      "instance": "E16-8s_v3",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6972,
+      "oneYearReserved": 0.4458,
+      "oneYearReservedWithAzureHybridBenefit": 0.2184
+    },
+    {
+      "instance": "E16-8s_v4",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.12,
+      "payAsYouGoWithAzureHybridBenefit": 0.6608,
+      "oneYearReserved": 0.4256,
+      "oneYearReservedWithAzureHybridBenefit": 0.112
+    },
+    {
+      "instance": "Gs4-8",
+      "vCpu": 16,
+      "ram": 224,
+      "payAsYouGo": 4.88,
+      "oneYearReservedWithAzureHybridBenefit": 0.5071
+    },
+    {
+      "instance": "E32-8as_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.344,
+      "oneYearReserved": 0.896,
+      "oneYearReservedWithAzureHybridBenefit": 0.2256
+    },
+    {
+      "instance": "E32-8ds_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.592,
+      "payAsYouGoWithAzureHybridBenefit": 1.5293,
+      "oneYearReserved": 0.985,
+      "oneYearReservedWithAzureHybridBenefit": 0.2678
+    },
+    {
+      "instance": "E32-8s_v3",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.3943,
+      "oneYearReserved": 0.8916,
+      "oneYearReservedWithAzureHybridBenefit": 0.4368
+    },
+    {
+      "instance": "E32-8s_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.3215,
+      "oneYearReserved": 0.8511,
+      "oneYearReservedWithAzureHybridBenefit": 0.224
+    },
+    {
+      "instance": "M16-8ms",
+      "vCpu": 16,
+      "ram": 438,
+      "payAsYouGo": 3.995,
+      "payAsYouGoWithAzureHybridBenefit": 2.2974,
+      "oneYearReserved": 1.1177,
+      "oneYearReservedWithAzureHybridBenefit": 0.4023
+    },
+    {
+      "instance": "Gs5-8",
+      "vCpu": 32,
+      "ram": 448,
+      "payAsYouGo": 8.69,
+      "oneYearReservedWithAzureHybridBenefit": 0.9029
+    },
+    {
+      "instance": "M32-8ms",
+      "vCpu": 32,
+      "ram": 875,
+      "payAsYouGo": 7.99,
+      "payAsYouGoWithAzureHybridBenefit": 4.5948,
+      "oneYearReserved": 2.2353,
+      "oneYearReservedWithAzureHybridBenefit": 0.8046
+    },
+    {
+      "instance": "E32-16as_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.344,
+      "oneYearReserved": 0.896,
+      "oneYearReservedWithAzureHybridBenefit": 0.2256
+    },
+    {
+      "instance": "E32-16ds_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.592,
+      "payAsYouGoWithAzureHybridBenefit": 1.5293,
+      "oneYearReserved": 0.985,
+      "oneYearReservedWithAzureHybridBenefit": 0.2678
+    },
+    {
+      "instance": "E32-16s_v3",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.3943,
+      "oneYearReserved": 0.8916,
+      "oneYearReservedWithAzureHybridBenefit": 0.4368
+    },
+    {
+      "instance": "E32-16s_v4",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.24,
+      "payAsYouGoWithAzureHybridBenefit": 1.3215,
+      "oneYearReserved": 0.8511,
+      "oneYearReservedWithAzureHybridBenefit": 0.224
+    },
+    {
+      "instance": "E64-16s_v3",
+      "vCpu": 64,
+      "ram": 432,
+      "payAsYouGo": 4.032,
+      "payAsYouGoWithAzureHybridBenefit": 2.6282,
+      "oneYearReserved": 1.6806,
+      "oneYearReservedWithAzureHybridBenefit": 0.7863
+    },
+    {
+      "instance": "Gs5-16",
+      "vCpu": 32,
+      "ram": 448,
+      "payAsYouGo": 8.69,
+      "oneYearReservedWithAzureHybridBenefit": 0.9029
+    },
+    {
+      "instance": "E64-16ds_v4",
+      "vCpu": 64,
+      "ram": 504,
+      "payAsYouGo": 5.184,
+      "payAsYouGoWithAzureHybridBenefit": 3.0586,
+      "oneYearReserved": 1.9699,
+      "oneYearReservedWithAzureHybridBenefit": 0.5356
+    },
+    {
+      "instance": "E64-16s_v4",
+      "vCpu": 64,
+      "ram": 504,
+      "payAsYouGo": 4.48,
+      "payAsYouGoWithAzureHybridBenefit": 2.643,
+      "oneYearReserved": 1.7023,
+      "oneYearReservedWithAzureHybridBenefit": 0.448
+    },
+    {
+      "instance": "E64-16as_v4",
+      "vCpu": 64,
+      "ram": 512,
+      "payAsYouGo": 4.48,
+      "payAsYouGoWithAzureHybridBenefit": 2.6881,
+      "oneYearReserved": 1.792,
+      "oneYearReservedWithAzureHybridBenefit": 0.4512
+    },
+    {
+      "instance": "M32-16ms",
+      "vCpu": 32,
+      "ram": 875,
+      "payAsYouGo": 7.99,
+      "payAsYouGoWithAzureHybridBenefit": 4.5948,
+      "oneYearReserved": 2.2353,
+      "oneYearReservedWithAzureHybridBenefit": 0.8046
+    },
+    {
+      "instance": "M64-16ms",
+      "vCpu": 64,
+      "ram": 1,
+      "payAsYouGo": 17.347,
+      "payAsYouGoWithAzureHybridBenefit": 9.9758,
+      "oneYearReserved": 4.8532,
+      "oneYearReservedWithAzureHybridBenefit": 1.7469
+    },
+    {
+      "instance": "E96-24as_v4",
+      "vCpu": 96,
+      "ram": 672,
+      "payAsYouGo": 6.72,
+      "payAsYouGoWithAzureHybridBenefit": 4.032,
+      "oneYearReserved": 2.688,
+      "oneYearReservedWithAzureHybridBenefit": 0.6768
+    },
+    {
+      "instance": "E64-32s_v3",
+      "vCpu": 64,
+      "ram": 432,
+      "payAsYouGo": 4.032,
+      "payAsYouGoWithAzureHybridBenefit": 2.6282,
+      "oneYearReserved": 1.6806,
+      "oneYearReservedWithAzureHybridBenefit": 0.7863
+    },
+    {
+      "instance": "E64-32ds_v4",
+      "vCpu": 64,
+      "ram": 504,
+      "payAsYouGo": 5.184,
+      "payAsYouGoWithAzureHybridBenefit": 3.0586,
+      "oneYearReserved": 1.9699,
+      "oneYearReservedWithAzureHybridBenefit": 0.5356
+    },
+    {
+      "instance": "E64-32s_v4",
+      "vCpu": 64,
+      "ram": 504,
+      "payAsYouGo": 4.48,
+      "payAsYouGoWithAzureHybridBenefit": 2.643,
+      "oneYearReserved": 1.7023,
+      "oneYearReservedWithAzureHybridBenefit": 0.448
+    },
+    {
+      "instance": "E64-32as_v4",
+      "vCpu": 64,
+      "ram": 512,
+      "payAsYouGo": 4.48,
+      "payAsYouGoWithAzureHybridBenefit": 2.6881,
+      "oneYearReserved": 1.792,
+      "oneYearReservedWithAzureHybridBenefit": 0.4512
+    },
+    {
+      "instance": "M64-32ms",
+      "vCpu": 64,
+      "ram": 1,
+      "payAsYouGo": 17.347,
+      "payAsYouGoWithAzureHybridBenefit": 9.9758,
+      "oneYearReserved": 4.8532,
+      "oneYearReservedWithAzureHybridBenefit": 1.7469
+    },
+    {
+      "instance": "M128-32ms",
+      "vCpu": 128,
+      "ram": 3,
+      "payAsYouGo": 34.694,
+      "payAsYouGoWithAzureHybridBenefit": 19.9518,
+      "oneYearReserved": 9.7063,
+      "oneYearReservedWithAzureHybridBenefit": 3.4937
+    },
+    {
+      "instance": "E96-48as_v4",
+      "vCpu": 96,
+      "ram": 672,
+      "payAsYouGo": 6.72,
+      "payAsYouGoWithAzureHybridBenefit": 4.032,
+      "oneYearReserved": 2.688,
+      "oneYearReservedWithAzureHybridBenefit": 0.6768
+    },
+    {
+      "instance": "M128-64ms",
+      "vCpu": 128,
+      "ram": 3,
+      "payAsYouGo": 34.694,
+      "payAsYouGoWithAzureHybridBenefit": 19.9518,
+      "oneYearReserved": 9.7063,
+      "oneYearReservedWithAzureHybridBenefit": 3.4937
+    },
+    {
+      "instance": "L8s_v2",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGoWithAzureHybridBenefit": 0.688,
+      "oneYearReserved": 0.4383,
+      "oneYearReservedWithAzureHybridBenefit": 0.2911,
+      "threeYearReserved": 0.3974
+    },
+    {
+      "instance": "L16s_v2",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGoWithAzureHybridBenefit": 1.376,
+      "oneYearReserved": 0.8765,
+      "oneYearReservedWithAzureHybridBenefit": 0.5821,
+      "threeYearReserved": 0.7947
+    },
+    {
+      "instance": "L32s_v2",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGoWithAzureHybridBenefit": 2.752,
+      "oneYearReserved": 1.7531,
+      "oneYearReservedWithAzureHybridBenefit": 1.1642,
+      "threeYearReserved": 1.5893
+    },
+    {
+      "instance": "L48s_v2",
+      "vCpu": 48,
+      "ram": 384,
+      "payAsYouGoWithAzureHybridBenefit": 4.128,
+      "oneYearReserved": 2.6296,
+      "oneYearReservedWithAzureHybridBenefit": 1.7462,
+      "threeYearReserved": 2.384
+    },
+    {
+      "instance": "L64s_v2",
+      "vCpu": 64,
+      "ram": 512,
+      "payAsYouGoWithAzureHybridBenefit": 5.504,
+      "oneYearReserved": 3.5062,
+      "oneYearReservedWithAzureHybridBenefit": 2.3283,
+      "threeYearReserved": 3.1786
+    },
+    {
+      "instance": "L80s_v2",
+      "vCpu": 80,
+      "ram": 640,
+      "payAsYouGoWithAzureHybridBenefit": 6.88,
+      "oneYearReserved": 4.3827,
+      "oneYearReservedWithAzureHybridBenefit": 2.9104,
+      "threeYearReserved": 3.9732
+    },
+    {
+      "instance": "L4s",
+      "vCpu": 4,
+      "ram": 32,
+      "payAsYouGo": 0.344,
+      "payAsYouGoWithAzureHybridBenefit": 0.3036,
+      "oneYearReservedWithAzureHybridBenefit": 0.0688
+    },
+    {
+      "instance": "L8s",
+      "vCpu": 8,
+      "ram": 64,
+      "payAsYouGo": 0.688,
+      "payAsYouGoWithAzureHybridBenefit": 0.6071,
+      "oneYearReservedWithAzureHybridBenefit": 0.1376
+    },
+    {
+      "instance": "L16s",
+      "vCpu": 16,
+      "ram": 128,
+      "payAsYouGo": 1.376,
+      "payAsYouGoWithAzureHybridBenefit": 1.2142,
+      "oneYearReservedWithAzureHybridBenefit": 0.2752
+    },
+    {
+      "instance": "L32s",
+      "vCpu": 32,
+      "ram": 256,
+      "payAsYouGo": 2.752,
+      "payAsYouGoWithAzureHybridBenefit": 2.4284,
+      "oneYearReservedWithAzureHybridBenefit": 0.5504
+    },
+    {
+      "instance": "NC6_Promo",
+      "vCpu": 6,
+      "ram": 56,
+      "payAsYouGoWithAzureHybridBenefit": 0.475
+    },
+    {
+      "instance": "NC12_Promo",
+      "vCpu": 12,
+      "ram": 112,
+      "payAsYouGoWithAzureHybridBenefit": 0.95
+    },
+    {
+      "instance": "NC24_Promo",
+      "vCpu": 24,
+      "ram": 224,
+      "payAsYouGoWithAzureHybridBenefit": 1.901
+    },
+    {
+      "instance": "NC24r_Promo",
+      "vCpu": 24,
+      "ram": 224,
+      "payAsYouGoWithAzureHybridBenefit": 2.091
+    },
+    {
+      "instance": "NC6s_v3",
+      "vCpu": 6,
+      "ram": 112,
+      "payAsYouGoWithAzureHybridBenefit": 3.978,
+      "oneYearReserved": 2.5341,
+      "oneYearReservedWithAzureHybridBenefit": 1.273,
+      "threeYearReserved": 0.7634
+    },
+    {
+      "instance": "NC12s_v3",
+      "vCpu": 12,
+      "ram": 224,
+      "payAsYouGoWithAzureHybridBenefit": 7.956,
+      "oneYearReserved": 5.068,
+      "oneYearReservedWithAzureHybridBenefit": 2.546,
+      "threeYearReserved": 1.5268
+    },
+    {
+      "instance": "NC24rs_v3",
+      "vCpu": 24,
+      "ram": 448,
+      "payAsYouGoWithAzureHybridBenefit": 17.503,
+      "oneYearReserved": 11.1496,
+      "oneYearReservedWithAzureHybridBenefit": 6.6303,
+      "threeYearReserved": 3.3589
+    },
+    {
+      "instance": "NC24s_v3",
+      "vCpu": 24,
+      "ram": 448,
+      "payAsYouGoWithAzureHybridBenefit": 15.912,
+      "oneYearReserved": 10.136,
+      "oneYearReservedWithAzureHybridBenefit": 5.0919,
+      "threeYearReserved": 3.0536
+    },
+    {
+      "instance": "NC4as_T4 v3",
+      "vCpu": 4,
+      "ram": 28,
+      "payAsYouGoWithAzureHybridBenefit": 0.631,
+      "oneYearReserved": 0.404,
+      "oneYearReservedWithAzureHybridBenefit": 0.2399,
+      "threeYearReserved": 0.2524
+    },
+    {
+      "instance": "NC8as_T4 v3",
+      "vCpu": 8,
+      "ram": 56,
+      "payAsYouGoWithAzureHybridBenefit": 0.902,
+      "oneYearReserved": 0.5776,
+      "oneYearReservedWithAzureHybridBenefit": 0.343,
+      "threeYearReserved": 0.3608
+    },
+    {
+      "instance": "NC16as_T4 v3",
+      "vCpu": 16,
+      "ram": 112,
+      "payAsYouGoWithAzureHybridBenefit": 1.445,
+      "oneYearReserved": 0.9247,
+      "oneYearReservedWithAzureHybridBenefit": 0.5491,
+      "threeYearReserved": 0.578
+    },
+    {
+      "instance": "NC64as_T4 v3",
+      "vCpu": 64,
+      "ram": 448,
+      "payAsYouGoWithAzureHybridBenefit": 5.222,
+      "oneYearReserved": 3.3424,
+      "oneYearReservedWithAzureHybridBenefit": 1.9846,
+      "threeYearReserved": 2.0888
+    },
+    {
+      "instance": "NV12s_v3",
+      "vCpu": 12,
+      "ram": 112,
+      "payAsYouGoWithAzureHybridBenefit": 1.14,
+      "oneYearReserved": 0.7296,
+      "oneYearReservedWithAzureHybridBenefit": 0.5016,
+      "threeYearReserved": 0.2331
+    },
+    {
+      "instance": "NV24s_v3",
+      "vCpu": 24,
+      "ram": 224,
+      "payAsYouGoWithAzureHybridBenefit": 2.28,
+      "oneYearReserved": 1.4593,
+      "oneYearReservedWithAzureHybridBenefit": 1.0032,
+      "threeYearReserved": 0.4661
+    },
+    {
+      "instance": "NV48s_v3",
+      "vCpu": 48,
+      "ram": 448,
+      "payAsYouGoWithAzureHybridBenefit": 4.56,
+      "oneYearReserved": 2.9184,
+      "oneYearReservedWithAzureHybridBenefit": 2.0064,
+      "threeYearReserved": 0.9321
+    },
+    {
+      "instance": "H8",
+      "vCpu": 8,
+      "ram": 56,
+      "payAsYouGo": 0.971,
+      "payAsYouGoWithAzureHybridBenefit": 0.7233,
+      "oneYearReserved": 0.4919,
+      "oneYearReservedWithAzureHybridBenefit": 0.214
+    },
+    {
+      "instance": "H8m",
+      "vCpu": 8,
+      "ram": 112,
+      "payAsYouGo": 1.301,
+      "payAsYouGoWithAzureHybridBenefit": 0.9692,
+      "oneYearReserved": 0.6592,
+      "oneYearReservedWithAzureHybridBenefit": 0.2867
+    },
+    {
+      "instance": "H16r",
+      "vCpu": 16,
+      "ram": 112,
+      "payAsYouGo": 2.136,
+      "payAsYouGoWithAzureHybridBenefit": 1.5914,
+      "oneYearReserved": 1.0822,
+      "oneYearReservedWithAzureHybridBenefit": 0.4706
+    },
+    {
+      "instance": "H16",
+      "vCpu": 16,
+      "ram": 112,
+      "payAsYouGo": 1.941,
+      "payAsYouGoWithAzureHybridBenefit": 1.4466,
+      "oneYearReserved": 0.9838,
+      "oneYearReservedWithAzureHybridBenefit": 0.4277
+    },
+    {
+      "instance": "H16mr",
+      "vCpu": 16,
+      "ram": 224,
+      "payAsYouGo": 2.861,
+      "payAsYouGoWithAzureHybridBenefit": 2.1324,
+      "oneYearReserved": 1.4502,
+      "oneYearReservedWithAzureHybridBenefit": 0.6303
+    },
+    {
+      "instance": "H16m",
+      "vCpu": 16,
+      "ram": 224,
+      "payAsYouGo": 2.601,
+      "payAsYouGoWithAzureHybridBenefit": 1.9385,
+      "oneYearReserved": 1.3183,
+      "oneYearReservedWithAzureHybridBenefit": 0.573
+    },
+    {
+      "instance": "H8_Promo",
+      "vCpu": 8,
+      "ram": 56,
+      "payAsYouGo": 0.582
+    },
+    {
+      "instance": "H8m_Promo",
+      "vCpu": 8,
+      "ram": 112,
+      "payAsYouGo": 0.78
+    },
+    {
+      "instance": "H16_Promo",
+      "vCpu": 16,
+      "ram": 112,
+      "payAsYouGo": 1.165
+    },
+    {
+      "instance": "H16r_Promo",
+      "vCpu": 16,
+      "ram": 112,
+      "payAsYouGo": 1.281
+    },
+    {
+      "instance": "H16m_Promo",
+      "vCpu": 16,
+      "ram": 224,
+      "payAsYouGo": 1.561
+    },
+    {
+      "instance": "H16mr_Promo",
+      "vCpu": 16,
+      "ram": 224,
+      "payAsYouGo": 1.717
+    }
+  ]
