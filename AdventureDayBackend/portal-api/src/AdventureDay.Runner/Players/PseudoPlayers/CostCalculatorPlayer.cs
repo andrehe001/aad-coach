@@ -3,6 +3,8 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Serilog;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -10,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AdventureDay.DataModel;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace AdventureDay.Runner.Players.PseudoPlayers
 {
@@ -38,12 +41,50 @@ namespace AdventureDay.Runner.Players.PseudoPlayers
         }
 
         private readonly IConfiguration _configuration;
+
+        private static readonly IDictionary<string, double> virtualMachineCosts = null;
+
         private readonly double _azureCostScaleFactor;
 
         public CostCalculatorPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {
             _configuration = configuration;
-            _azureCostScaleFactor = _configuration.GetValue("AzureCostScaleFactor", 1);
+            _azureCostScaleFactor = _configuration.GetValue("AzureCostScaleFactor", 1);    
+        }
+
+        static CostCalculatorPlayer()
+        {
+            try
+            {
+                if (virtualMachineCosts == null)
+                {
+                    virtualMachineCosts = new Dictionary<string, double>();
+                    var thisAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+                    using (var stream = thisAssembly.GetManifestResourceStream("AdventureDay.Runner.Data.pricing.json"))
+                    {
+                        using (var reader = new StreamReader(stream, System.Text.Encoding.UTF8))
+                        {
+                            var payload = reader.ReadToEnd();
+                            var vmprices = Newtonsoft.Json.Linq.JArray.Parse(payload);
+                            foreach (var vm in vmprices.Children())
+                            {
+                                var vmproperties = vm.Children<Newtonsoft.Json.Linq.JProperty>();
+                                var instanceNameElement = vmproperties.FirstOrDefault(x => x.Name == "instance");
+                                var instanceNameValue = instanceNameElement.Value.ToString().Replace(" ", "_").Replace("-", "_");
+                                var priceElement = vmproperties.FirstOrDefault(x => x.Name == "payAsYouGo");
+                                var priceValue = Double.Parse(priceElement.Value.ToString());
+                                if (!virtualMachineCosts.ContainsKey("Standard_" + instanceNameValue))
+                                {
+                                    virtualMachineCosts.Add("Standard_" + instanceNameValue, priceValue);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception ex){
+                Log.Error(ex, $"{nameof(CostCalculatorPlayer)}: Error while loading price file.");
+            }    
         }
 
         public override string Name => "Dagobert";
@@ -62,7 +103,7 @@ namespace AdventureDay.Runner.Players.PseudoPlayers
                 .WithSubscription(team.SubscriptionId.ToString());
 
             // TODO: Take a look why costs is empty
-            long aksCosts = await GetAksCostAsync(team, httpClient, cancellationToken);
+            long aksCosts = await GetAksCostAsync(azure, cancellationToken);
             long sqlCosts = await GetSqlCostAsync(azure);
 
             var totalCost = (int)Math.Round(sqlCosts * _azureCostScaleFactor + aksCosts * _azureCostScaleFactor, MidpointRounding.AwayFromZero);
@@ -150,45 +191,34 @@ namespace AdventureDay.Runner.Players.PseudoPlayers
             return sqlCost;
         }
 
-        private static async Task<long> GetAksCostAsync(Team team, HttpClient httpClient, CancellationToken cancellationToken)
+        private static async Task<long> GetAksCostAsync(IAzure azure, CancellationToken cancellationToken)
         {
-            long aksCosts = 5; // default penalty for unavailable costs
+            long aksCosts = 5;
 
-            if (!string.IsNullOrWhiteSpace(team.GameEngineUri)){
-                Uri gameEngineSidecarUri; 
-
-                Log.Debug("Costplayer: Using default game uri");
-                var gameEngineSidecarUriBuilder = new UriBuilder(team.GameEngineUri);
-                gameEngineSidecarUriBuilder.Port = 80;
-                gameEngineSidecarUriBuilder.Path = "Metrics";
-                gameEngineSidecarUri = gameEngineSidecarUriBuilder.Uri;
-
-                try
+            try
+            {
+                foreach (var cluster in await azure.KubernetesClusters.ListAsync())
                 {
-                    var result = await httpClient.GetAsync(gameEngineSidecarUri, cancellationToken: cancellationToken);
-                    if (result.IsSuccessStatusCode)
+                    foreach(var pool in cluster.AgentPools)
                     {
-                        var response = await result.Content.ReadFromJsonAsync<MetricsResponse>(
-                            cancellationToken: cancellationToken);
-
-                        if (response != null){
-                            if ( response.MetricsError )
-                            {
-                                aksCosts = 0;
-                            }else
-                            {
-                                aksCosts = response.Price;
+                        try
+                        {   
+                            double perVmCost = 0;
+                            if( virtualMachineCosts != null && virtualMachineCosts.TryGetValue(pool.Value.VMSize.Value.ToString(), out perVmCost) ){
+                                double costs = perVmCost * pool.Value.Count * 10000;
+                                long longcosts = (long) (costs);
+                                aksCosts += longcosts;
                             }
+                        }   
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex, $"{nameof(CostCalculatorPlayer)}: Error while calculating price for cluster {cluster.Name}.");
                         }
-
-                        
                     }
                 }
-                catch (Exception exception)
-                {
-                    Log.Information($"{nameof(CostCalculatorPlayer)}: Error in in reaching cost endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
-                    Log.Debug(exception, $"{nameof(CostCalculatorPlayer)}: Error in in reaching cost endpoint (not counted as Team Error). URI: {gameEngineSidecarUri.ToString()} Team: {team.Name} (ID: {team.Id})");
-                }
+            }
+            catch(Exception ex){
+                Log.Error(ex, $"{nameof(CostCalculatorPlayer)}: Error while calculating costs for {azure.SubscriptionId}");
             }
 
             return aksCosts;
