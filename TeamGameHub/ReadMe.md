@@ -24,7 +24,7 @@ cd ..
 az aks get-credentials -n $TEAM -g $TEAM
 kubectl apply -f GameEngine/blackbox_gameengine_deployment.yaml
 kubectl apply -f GameBot/gamebot_deployment.yaml 
-GAMEBOT_IP=$(kubectl get services --field-selector metadata.name=arcadebackend --output=jsonpath={.items..status.loadBalancer.ingress..ip})
+GAMEBOT_IP=$(kubectl get services --field-selector metadata.name=gamebot --output=jsonpath={.items..status.loadBalancer.ingress..ip})
 GAMEENGINE_IP=$(kubectl get services --field-selector metadata.name=blackboxgameengine --output=jsonpath={.items..status.loadBalancer.ingress..ip})
 echo "GAMEBOT_IP:" $GAMEBOT_IP
 echo "GAMEENGINE_IP:" $GAMEENGINE_IP

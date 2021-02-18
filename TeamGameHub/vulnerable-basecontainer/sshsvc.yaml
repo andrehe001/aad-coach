@@ -6,7 +6,7 @@ metadata:
     name: botsvc    
 spec:
   selector:
-    name: arcadebackend    
+    name: gamebot    
   type: LoadBalancer
   externalTrafficPolicy: Local
   ports:

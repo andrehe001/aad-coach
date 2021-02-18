@@ -68,7 +68,7 @@ spec:
           - name: "ConnectionStrings__GameEngineDB"
             value: "Server=tcp:gamesqlserver7qeg9.database.windows.net,1433;Initial Catalog=gamedb;Persist Security Info=False;User ID=gamedbadministrator;Password=mJU}}$%1zeEEG5;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
           - name: "ARCADE_BACKENDURL"
-            value: "http://arcadebackend/pick"
+            value: "http://gamebot/pick"
         resources:
           requests:
             memory: "128Mi"
@@ -107,28 +107,28 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: arcadebackend
+  name: gamebot
   labels:
-    name: arcadebackend    
+    name: gamebot    
 spec:
   selector:
-    name: arcadebackend    
+    name: gamebot    
   type: LoadBalancer
   ports:
    - port: 80
-     name: arcadebackend
+     name: gamebot
      targetPort: 8080
      protocol: TCP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: arcadebackend
+  name: gamebot
 spec:
   replicas: 3
   selector:
     matchLabels:
-      name: arcadebackend      
+      name: gamebot      
   minReadySeconds: 10
   strategy:
     type: RollingUpdate
@@ -138,12 +138,12 @@ spec:
   template:
     metadata:
       labels:
-        name: arcadebackend        
+        name: gamebot        
     spec:
       imagePullSecrets:
         - name: teamregistry
       containers:
-      - name: arcadebackend
+      - name: gamebot
         image: team09acr.azurecr.io/gamebot:highrisk
         imagePullPolicy: Always
         resources:
@@ -163,7 +163,7 @@ spec:
         ports:
           - containerPort: 8080     
             protocol: TCP
-            name: arcadebackend
+            name: gamebot
         env: 
           - name: "PORT"
             value: "8080"
@@ -189,7 +189,7 @@ KUBE_NAME=team09
 
 kubectl rollout restart deployment/blackboxgameengine
 
-kubectl rollout restart deployment/arcadebackend
+kubectl rollout restart deployment/gamebot
 
 kubectl logs -l name=blackboxgameengine -c blackboxgameengine
 ```
@@ -211,7 +211,7 @@ kubectl top pods --all-namespaces
 ```
 kubectl autoscale deploy blackboxgameengine --cpu-percent=20 --max=10 --min=1
 
-kubectl autoscale deploy arcadebackend --cpu-percent=20 --max=30 --min=1
+kubectl autoscale deploy gamebot --cpu-percent=20 --max=30 --min=1
 
 
 kubectl delete hpa blackboxgameengine
