@@ -37,44 +37,8 @@ namespace AdventureDay.Runner
             _configuration = configuration;
         }
 
-        private async Task CreateEmptyScoring(CancellationToken cancellationToken)
-        {
-            Log.Information("Try to set initial team score.");
-            try
-            {
-                // TODO: This is a bit lazy ass and relies on the PRIM KEY Constraint.
-                var (_, _, teams) = await RefreshConfiguration(cancellationToken);
-                await using (var lifetimeScope = _lifetimeScope.BeginLifetimeScope())
-                {
-                    var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
-                    foreach (var team in teams)
-                    {
-                        Log.Warning("Found no score record for team. Creating first one.");
-                        await dbContext.TeamScores.AddAsync(new TeamScore()
-                        {
-                            TeamId = team.Id,
-                            Costs = 0,
-                            Income = 0,
-                            Errors = 0,
-                            Loses = 0,
-                            Wins = 0
-                        }, cancellationToken);
-                    }
-
-                    await dbContext.SaveChangesAsync(cancellationToken);
-                    Log.Information("Initial team score set.");
-                }
-            }
-            catch (Exception exception)
-            {
-                Log.Error(exception, "Could not configure initial team score. Scoring Table might already be initialized.");
-            }
-        }
-
         public async Task Run(CancellationToken cancellationToken)
         {
-            await CreateEmptyScoring(cancellationToken);
-
             CancellationTokenSource playerCancellationTokenSource = null;
             while (!cancellationToken.IsCancellationRequested) // until we cancel completely externally
             {

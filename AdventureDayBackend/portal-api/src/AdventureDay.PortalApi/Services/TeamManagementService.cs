@@ -25,7 +25,18 @@ namespace AdventureDay.PortalApi.Services
 
         public bool AddTeam(Team newTeam)
         {
-            _context.Add(newTeam);
+            _context.Teams.Add(newTeam);
+
+            _context.TeamScores.Add(new TeamScore()
+            {
+                TeamId = newTeam.Id,
+                Costs = 0,
+                Income = 0,
+                Errors = 0,
+                Loses = 0,
+                Wins = 0
+            });
+
             return SaveChanges();
         }
 
