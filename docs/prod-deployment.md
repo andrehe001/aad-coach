@@ -29,13 +29,13 @@
 
 ## 1 - Infrastructure as Code Deployment
 1. Navigate to this project's [GitHub Actions page](https://github.com/azure-adventure-day/aad-coach/actions)
-2. Navigate to the action [AdventureDay-Backend-IaC](https://github.com/azure-adventure-day/aad-coach/actions?query=workflow%3AAdventureDay-Backend-IaC). 
+2. Navigate to the action [AdventureDay-Backend-IaC](https://github.com/azure-adventure-day/aad-coach/actions/workflows/adventure-day-backend-iac.yml). 
 Changes to the attribute are only required if you need to change the `location`. Otherwise directly execute the `Run workflow` command:
 ![Image of GH Action Workflow for Backend-IaC](./imgs/gh-action-backend-iac.png)
 
 ## 2 - Backend Application Deployment
 1. Navigate to this project's [GitHub Actions page](https://github.com/azure-adventure-day/aad-coach/actions)
-2. Navigate to the action [AdventureDay-Backend-Build-Deploy](https://github.com/azure-adventure-day/aad-coach/actions?query=workflow%3AAdventureDay-Backend-Build-Deploy). 
+2. Navigate to the action [AdventureDay-Backend-Build-Deploy](https://github.com/azure-adventure-day/aad-coach/actions/workflows/adventure-day-backend-build-deploy.yml). 
 Update the `Azure Container Registry Name` (2) with the name of the deployed ACR instance from the *Infrastructure as Code Pipeline*. Finally execute the `Run workflow` (2) command:
 ![Image of GH Action Workflow for Backend-IaC](./imgs/gh-action-deploy-backend.png)
 
