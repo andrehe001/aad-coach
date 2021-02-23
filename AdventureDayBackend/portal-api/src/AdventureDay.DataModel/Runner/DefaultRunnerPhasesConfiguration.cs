@@ -53,6 +53,7 @@ namespace AdventureDay.DataModel.Runner
                         { PlayerType.Fixed, 100},
                         { PlayerType.Bet, 100},
                         { PlayerType.CostCalculator, 60 * 1000},
+                        { PlayerType.Mass, 500},
                     }
                 }
             },
