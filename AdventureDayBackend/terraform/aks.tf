@@ -95,7 +95,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
     service_cidr       = local.aks_service_cidr
     docker_bridge_cidr = local.docker_bridge_cidr
     dns_service_ip     = local.aks_dns_service_ip
+    load_balancer_sku = "standard"
     load_balancer_profile {
+      managed_outbound_ip_count = 1
       outbound_ports_allocated = 5000
     }
   }
