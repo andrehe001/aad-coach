@@ -95,6 +95,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
     service_cidr       = local.aks_service_cidr
     docker_bridge_cidr = local.docker_bridge_cidr
     dns_service_ip     = local.aks_dns_service_ip
+    load_balancer_profile {
+      outbound_ports_allocated = 5000
+    }
   }
 
   node_resource_group     = "${local.prefix_snake}_aks_nodes_rg"
