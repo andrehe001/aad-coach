@@ -27,15 +27,16 @@ namespace AdventureDay.PortalApi.Services
         {
             _context.Teams.Add(newTeam);
 
-            _context.TeamScores.Add(new TeamScore()
+            var ts = new TeamScore()
             {
-                TeamId = newTeam.Id,
+                Team = newTeam,
                 Costs = 0,
                 Income = 0,
                 Errors = 0,
                 Loses = 0,
                 Wins = 0
-            });
+            };
+            _context.TeamScores.Add(ts);
 
             return SaveChanges();
         }
