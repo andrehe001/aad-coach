@@ -93,12 +93,19 @@ namespace AdventureDay.Runner
 
                         while (!cancellationToken.IsCancellationRequested)
                         {
-                            InvokePlayerWithFireAndForget(playerType.Key, team, playerType.Value, currentPhase, cancellationToken);
+                            try
+                            {
+                                await InvokePlayerAsync(playerType.Key, team, playerType.Value, currentPhase, cancellationToken);
 
-                            // +- 20% - Not all runners/types should request synchronously 
-                            var delay = rand.Next((int)Math.Round(playerType.Value * 0.8),
-                                                  (int)Math.Round(playerType.Value * 1.2));
-                            await Task.Delay(delay);
+                                // +- 20% - Not all runners/types should request synchronously 
+                                var delay = rand.Next((int)Math.Round(playerType.Value * 0.8),
+                                                      (int)Math.Round(playerType.Value * 1.2));
+                                await Task.Delay(delay);
+                            }
+                            catch (Exception exception)
+                            {
+                                Log.Error(exception, "Swallowed.");
+                            }
                         }
                     }, cancellationToken).Forget();
                 }
@@ -118,7 +125,7 @@ namespace AdventureDay.Runner
             }
         }
 
-        private void InvokePlayerWithFireAndForget(
+        private async Task InvokePlayerAsync(
             PlayerType playerType,
             Team team,
             int delay,
@@ -129,65 +136,61 @@ namespace AdventureDay.Runner
 
             var httpTimeout = TimeSpan.FromSeconds(5);
 
-            Task.Run(async () =>
+            if (team == null)
             {
-                if (team == null)
-                {
-                    Log.Warning($"Team configuration not found TeamId: {team.Id}.");
-                    return;
-                }
+                Log.Warning($"Team configuration not found TeamId: {team.Id}.");
+                return;
+            }
 
-                var startTimestamp = DateTime.UtcNow;
-                MatchReport report = null;
-                try
-                {
-                    var player = CreatePlayerFromType(playerType, team, httpTimeout);
-                    Log.Information($"Team {team.Name} vs. {player.Name} (Latency: {delay} Phase: {phase})");
+            var startTimestamp = DateTime.UtcNow;
+            MatchReport report = null;
+            try
+            {
+                var player = CreatePlayerFromType(playerType, team, httpTimeout);
+                Log.Information($"Team {team.Name} vs. {player.Name} (Latency: {delay} Phase: {phase})");
 
-                    report = await player.Play(cancellationToken);
-                }
-                catch (TimeoutException exception)
+                report = await player.Play(cancellationToken);
+            }
+            catch (TimeoutException exception)
+            {
+                Log.Verbose(exception, $"HTTP Timeout | {team.Name} (ID: {team.Id}).");
+                report = MatchReport.FromError($"Smoorghs are unable to play - no answer within {httpTimeout.Seconds} seconds (HTTP Timeout)");
+            }
+            catch (TaskCanceledException exception)
+            {
+                var errorId = Guid.NewGuid();
+                Log.Error(exception, $"{errorId} Team {team.Name} (ID: {team.Id}) TaskCanceledException | No HTTP Timeout detected.");
+                report = MatchReport.FromError($"General error. Reference: {errorId}");
+            }
+            catch (MatchCanceledException ex)
+            {
+                report = MatchReport.FromCancellation(ex.Message);
+            }
+            catch (Exception exception)
+            {
+                if (exception.Message.Contains("An invalid request URI was provided."))
                 {
-                    Log.Verbose(exception, $"HTTP Timeout | {team.Name} (ID: {team.Id}).");
-                    report = MatchReport.FromError($"Smoorghs are unable to play - no answer within {httpTimeout.Seconds} seconds (HTTP Timeout)");
-                }
-                catch (TaskCanceledException exception)
-                {
-                    var errorId = Guid.NewGuid();
-                    Log.Error(exception, $"{errorId} Team {team.Name} (ID: {team.Id}) TaskCanceledException | No HTTP Timeout detected.");
-                    report = MatchReport.FromError($"General error. Reference: {errorId}");
-                }
-                catch (MatchCanceledException ex)
-                {
-                    report = MatchReport.FromCancellation(ex.Message);
-                }
-                catch (Exception exception)
-                {
-                    if (exception.Message.Contains("An invalid request URI was provided."))
+                    if (phase > RunnerPhase.Phase1_Deployment)
                     {
-                        if (phase > RunnerPhase.Phase1_Deployment)
-                        {
-                            Log.Debug($"No backend URI for team {team.Name} (ID: {team.Id}) found.");
-                            report = MatchReport.FromError(
-                                $"Smoorghs are unable to play - your backend URI is not configured");
-                        }
-                        else
-                        {
-                            Log.Debug($"No backend URI for team {team.Name} (ID: {team.Id}) found (IGNORED - {phase}).");
-                            report = MatchReport.FromBackendUriMissing("Smoorghs are unable to play - your backend URI is not configured");
-                        }
+                        Log.Debug($"No backend URI for team {team.Name} (ID: {team.Id}) found.");
+                        report = MatchReport.FromError(
+                            $"Smoorghs are unable to play - your backend URI is not configured");
                     }
                     else
                     {
-                        var errorId = Guid.NewGuid();
-                        Log.Error(exception, $"{errorId} Team {team.Name} (ID: {team.Id})");
-                        report = MatchReport.FromError($"General error. Reference: {errorId}");
+                        Log.Debug($"No backend URI for team {team.Name} (ID: {team.Id}) found (IGNORED - {phase}).");
+                        report = MatchReport.FromBackendUriMissing("Smoorghs are unable to play - your backend URI is not configured");
                     }
                 }
+                else
+                {
+                    var errorId = Guid.NewGuid();
+                    Log.Error(exception, $"{errorId} Team {team.Name} (ID: {team.Id})");
+                    report = MatchReport.FromError($"General error. Reference: {errorId}");
+                }
+            }
 
-                await PersistStatistics(DateTime.UtcNow - startTimestamp, team, report, cancellationToken);
-
-            }, cancellationToken).Forget();
+            await PersistStatistics(DateTime.UtcNow - startTimestamp, team, report, cancellationToken);
         }
 
         private async Task PersistStatistics(TimeSpan responseTime, Team team, MatchReport report, CancellationToken cancellationToken)
