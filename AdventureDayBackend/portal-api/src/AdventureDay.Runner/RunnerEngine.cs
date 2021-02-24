@@ -28,9 +28,6 @@ namespace AdventureDay.Runner
         private readonly ILifetimeScope _lifetimeScope;
         private readonly IConfiguration _configuration;
 
-        //private RunnerProperties _runnerProperties = RunnerProperties.CreateDefault();
-        //private List<Team> _teams = new List<Team>();
-
         public RunnerEngine(ILifetimeScope lifetimeScope, IConfiguration configuration)
         {
             _lifetimeScope = lifetimeScope;
@@ -66,7 +63,7 @@ namespace AdventureDay.Runner
                 }
 
                 // W8 for 5secs, before updating from config.
-                Thread.Sleep(5000);
+                await Task.Delay(5000);
                 var (_, newRunnerProperties, newTeams) = await RefreshConfiguration(cancellationToken);
                 if (!newRunnerProperties.IsDeepEqual(runnerProperties) || !newTeams.IsDeepEqual(teams))
                 {
@@ -92,10 +89,16 @@ namespace AdventureDay.Runner
                 {
                     Task.Run(async () =>
                     {
+                        var rand = new Random();
+
                         while (!cancellationToken.IsCancellationRequested)
                         {
                             InvokePlayerWithFireAndForget(playerType.Key, team, playerType.Value, currentPhase, cancellationToken);
-                            Thread.Sleep(playerType.Value);
+
+                            // +- 20% - Not all runners/types should request synchronously 
+                            var delay = rand.Next((int)Math.Round(playerType.Value * 0.8),
+                                                  (int)Math.Round(playerType.Value * 1.2));
+                            await Task.Delay(delay);
                         }
                     }, cancellationToken).Forget();
                 }
