@@ -1,4 +1,4 @@
-name: AdventureDay-Team-Build-Push-Game-Engine-To-AAD-GHCR
+name: Team-Build-Push-Game-Engine-To-AAD-GHCR
 
 on:
   workflow_dispatch:

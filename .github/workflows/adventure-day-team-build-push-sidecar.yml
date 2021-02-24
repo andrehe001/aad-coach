@@ -1,4 +1,4 @@
-name: AdventureDay-Team-Build-Push-Sidecar
+name: Team-Build-Push-Sidecar
 
 on:
   push:

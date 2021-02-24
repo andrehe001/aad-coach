@@ -1,4 +1,4 @@
-name: AdventureDay-Team-Deploy-GameEngine
+name: Team-Deploy-GameEngine
 on:
   workflow_dispatch:
     inputs:

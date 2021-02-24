@@ -1,4 +1,4 @@
-name: AdventureDay-Team-Deploy-GameBot
+name: Team-Deploy-GameBot
 on:
   workflow_dispatch:
     inputs:

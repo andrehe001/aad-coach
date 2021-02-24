@@ -1,4 +1,4 @@
-name: AdventureDay-Team-Build-Push-Game-Engine
+name: Team-Build-Push-Game-Engine
 
 on:
   push:

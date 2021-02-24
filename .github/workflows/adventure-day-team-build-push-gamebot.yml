@@ -1,5 +1,5 @@
 
-name: AdventureDay-Team-Build-Push-GameBot-To-AAD-GHCR
+name: Team-Build-Push-GameBot-To-AAD-GHCR
 
 on:
   workflow_dispatch:

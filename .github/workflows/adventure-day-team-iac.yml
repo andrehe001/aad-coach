@@ -1,4 +1,4 @@
-name: AdventureDay-Team-IaC
+name: Team-IaC
 
 on:
   workflow_dispatch:
