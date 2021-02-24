@@ -12,7 +12,7 @@ namespace AdventureDay.DataModel.Runner
                 {
                     PlayerTypes = new Dictionary<PlayerType, int>()
                     {
-                        { PlayerType.Random, 4000},
+                        { PlayerType.Random, 5000},
                         { PlayerType.Fixed, 4000},
                     }
                 }
@@ -23,8 +23,8 @@ namespace AdventureDay.DataModel.Runner
                 {
                     PlayerTypes = new Dictionary<PlayerType, int>()
                     {
-                        { PlayerType.Random, 4000},
-                        { PlayerType.Fixed, 4000},
+                        { PlayerType.Random, 6000},
+                        { PlayerType.Fixed, 5000},
                         { PlayerType.Bet, 4000},
                     }
                 }
@@ -35,8 +35,8 @@ namespace AdventureDay.DataModel.Runner
                 {
                     PlayerTypes = new Dictionary<PlayerType, int>()
                     {
-                        { PlayerType.Random, 4000},
-                        { PlayerType.Fixed, 4000},
+                        { PlayerType.Random, 6000},
+                        { PlayerType.Fixed, 5000},
                         { PlayerType.Bet, 4000},
                         { PlayerType.CostCalculator, 60 * 1000},
                     }
@@ -49,9 +49,9 @@ namespace AdventureDay.DataModel.Runner
                     PlayerTypes = new Dictionary<PlayerType, int>()
                     {
 
-                        { PlayerType.Random, 400},
-                        { PlayerType.Fixed, 400},
-                        { PlayerType.Bet, 400},
+                        { PlayerType.Random, 800},
+                        { PlayerType.Fixed, 800},
+                        { PlayerType.Bet, 800},
                         { PlayerType.CostCalculator, 60 * 1000},
                         { PlayerType.Mass, 400},
                     }
@@ -63,8 +63,8 @@ namespace AdventureDay.DataModel.Runner
                 {
                     PlayerTypes = new Dictionary<PlayerType, int>()
                     {
-                        { PlayerType.Random, 4000},
-                        { PlayerType.Fixed, 4000},
+                        { PlayerType.Random, 6000},
+                        { PlayerType.Fixed, 5000},
                         { PlayerType.Bet, 4000},
                         { PlayerType.CostCalculator, 60 * 1000},
                         { PlayerType.SecurityHack, 4000},
@@ -77,8 +77,8 @@ namespace AdventureDay.DataModel.Runner
                 {
                     PlayerTypes = new Dictionary<PlayerType, int>()
                     {
-                        { PlayerType.Random, 4000},
-                        { PlayerType.Fixed, 4000},
+                        { PlayerType.Random, 6000},
+                        { PlayerType.Fixed, 5000},
                         { PlayerType.Bet, 4000},
                         { PlayerType.CostCalculator, 60 * 1000},
                         { PlayerType.SecurityHack, 4000},
