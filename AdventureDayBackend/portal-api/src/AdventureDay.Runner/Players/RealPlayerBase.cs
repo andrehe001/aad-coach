@@ -34,7 +34,12 @@ namespace AdventureDay.Runner.Players
         /// <returns>The final match response or null upon failure.</returns>
         public async Task<MatchReport> Play(CancellationToken cancellationToken)
         {
-            using var httpClient = new HttpClient() { Timeout = _httpTimeout };
+            var handler = new TimeoutHandler
+            {
+                DefaultTimeout = _httpTimeout,
+                InnerHandler = new HttpClientHandler()
+            };
+            using var httpClient = new HttpClient(handler) { Timeout = Timeout.InfiniteTimeSpan };
 
             var matchRequest = new InitialMatchRequest()
             {

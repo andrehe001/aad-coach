@@ -23,7 +23,7 @@ namespace AdventureDay.Runner
     {
         private static readonly Counter PlayerInvocationsMetric = Metrics
             .CreateCounter("player_invocations", "Number of player invocations.");
-        
+
         private readonly int _refreshTimeoutInSeconds = 5;
         private readonly ILifetimeScope _lifetimeScope;
         private readonly IConfiguration _configuration;
@@ -42,7 +42,7 @@ namespace AdventureDay.Runner
                 var (lastRefresh, runnerProperties, teams) = await RefreshConfiguration(cancellationToken);
                 var currentPhaseConfiguration = runnerProperties.PhaseConfigurations[runnerProperties.CurrentPhase];
                 var currentPlayerTypes = currentPhaseConfiguration.PlayerTypes.ToList();
-                
+
                 Log.Information($"Runner Status: {runnerProperties.RunnerStatus.ToString()}");
                 switch (runnerProperties.RunnerStatus)
                 {
@@ -79,8 +79,8 @@ namespace AdventureDay.Runner
         }
 
         private void FireAndForgetForAllTeamsAndPlayers(
-            RunnerPhase currentPhase, List<Team> teams, 
-            List<KeyValuePair<PlayerType, int>> playerTypes, 
+            RunnerPhase currentPhase, List<Team> teams,
+            List<KeyValuePair<PlayerType, int>> playerTypes,
             CancellationToken cancellationToken)
         {
             foreach (var team in teams)
@@ -113,11 +113,11 @@ namespace AdventureDay.Runner
                 var runnerProperties = await dbContext.RunnerProperties.FirstOrDefaultAsync(_ =>
                     _.Name == RunnerProperties.DefaultRunnerPropertiesName, cancellationToken);
                 var teams = await dbContext.Teams.ToListAsync(cancellationToken);
-                
+
                 return (DateTime.UtcNow, runnerProperties, teams);
             }
         }
-        
+
         private void InvokePlayerWithFireAndForget(
             PlayerType playerType,
             Team team,
@@ -126,9 +126,9 @@ namespace AdventureDay.Runner
             CancellationToken cancellationToken)
         {
             PlayerInvocationsMetric.Inc();
-            
+
             var httpTimeout = TimeSpan.FromSeconds(5);
-            
+
             Task.Run(async () =>
             {
                 if (team == null)
@@ -136,32 +136,26 @@ namespace AdventureDay.Runner
                     Log.Warning($"Team configuration not found TeamId: {team.Id}.");
                     return;
                 }
-                
+
                 var startTimestamp = DateTime.UtcNow;
                 MatchReport report = null;
                 try
-                {                    
+                {
                     var player = CreatePlayerFromType(playerType, team, httpTimeout);
                     Log.Information($"Team {team.Name} vs. {player.Name} (Latency: {delay} Phase: {phase})");
 
                     report = await player.Play(cancellationToken);
                 }
+                catch (TimeoutException exception)
+                {
+                    Log.Verbose(exception, $"HTTP Timeout | {team.Name} (ID: {team.Id}).");
+                    report = MatchReport.FromError($"Smoorghs are unable to play - no answer within {httpTimeout.Seconds} seconds (HTTP Timeout)");
+                }
                 catch (TaskCanceledException exception)
                 {
                     var errorId = Guid.NewGuid();
-                    
-                    // If our cancellation token was not set, the
-                    // HTTP timeout has triggered.
-                    if (!cancellationToken.IsCancellationRequested)
-                    {
-                        Log.Information($"{errorId} HTTP Timeout | {team.Name} (ID: {team.Id}).");
-                        report = MatchReport.FromError($"Smoorghs are unable to play - no answer within {httpTimeout.Seconds} seconds (HTTP Timeout)");
-                    }
-                    else
-                    {
-                        Log.Error(exception: exception, $"{errorId} Team {team.Name} (ID: {team.Id}) TaskCanceledException | No HTTP Timeout detected.");
-                        report = MatchReport.FromError($"General error. Reference: {errorId}");
-                    }
+                    Log.Error(exception, $"{errorId} Team {team.Name} (ID: {team.Id}) TaskCanceledException | No HTTP Timeout detected.");
+                    report = MatchReport.FromError($"General error. Reference: {errorId}");
                 }
                 catch (MatchCanceledException ex)
                 {
@@ -201,13 +195,13 @@ namespace AdventureDay.Runner
             if (team == null) { throw new ArgumentNullException(nameof(team)); }
             if (report == null) { throw new ArgumentNullException(nameof(report)); }
             if (cancellationToken == null) { throw new ArgumentNullException(nameof(cancellationToken)); }
-            
+
             try
             {
                 await using (var lifetimeScope = _lifetimeScope.BeginLifetimeScope())
                 {
                     var dbContext = lifetimeScope.Resolve<AdventureDayBackendDbContext>();
-                    
+
                     // Errors
                     var error = report.HasError ? 1 : 0;
                     var loss = report.HasLost ? 1 : 0;
@@ -225,7 +219,7 @@ namespace AdventureDay.Runner
                                     Loses = _.Loses + loss,
                                     Wins = _.Wins + win
                                 }, cancellationToken);
-                        
+
                         if (rowsAffected != 1)
                         {
                             // This code can run into concurrency issues.
@@ -265,7 +259,7 @@ namespace AdventureDay.Runner
                 Log.Error(exception, $"Failed to log entries for Team {team.Name} (ID: {team.Id})");
             }
         }
-        
+
         private IPlayer CreatePlayerFromType(PlayerType playerType, Team team, TimeSpan httpTimeout)
         {
             IPlayer player = playerType switch
@@ -281,7 +275,7 @@ namespace AdventureDay.Runner
                 PlayerType.EasyPeasy => new EasyPeasyPlayer(_configuration, team, httpTimeout),
                 _ => throw new InvalidOperationException("Unexpected enum value.")
             };
-            
+
             return player;
         }
     }
