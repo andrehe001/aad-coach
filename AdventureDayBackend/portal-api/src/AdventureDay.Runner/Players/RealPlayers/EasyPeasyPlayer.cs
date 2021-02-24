@@ -7,7 +7,7 @@ namespace AdventureDay.Runner.Players.RealPlayers
 {
     public class EasyPeasyPlayer : RealPlayerBase
     {
-        public override string Name => "Kye";
+        public override string Name => "Brain";
 
         public EasyPeasyPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {

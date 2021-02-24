@@ -14,6 +14,13 @@
 |     |     |     |     |     | X   | Libby    | PatternPlayer        | First turn is random, subsequent turns are the same moves as from human the turns before |
 |     |     |     |     |     | X   | Brain    | EasyPeasyPlayer      | Has as much intelligence as a stone - plays always Rock                                  |
 
+## Possible solutions for increasing scoring
+
+* Kye: Take a look into Kye's first move per match and you know what will be the 2nd or 3th move
+* Courtney: Take a look into Courtney's first move per match - she will iterate for the 2nd or 3th move (Rock, Paper, Scissors, Metal, Snap)
+* Libby: Take a look into Libby's first move per match and you know what will be the 2nd or 3th move
+* Brain: Always return Paper or Snap
+
 ## Tables
 
 ### Team Score Table
