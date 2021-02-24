@@ -24,7 +24,7 @@
             <td class="min rank">
               <span>{{ index+1 | formatPosition }}</span>
             </td>
-            <th scope="row" title="Team ID: {{ team.id}}">{{ team.name }}</th>
+            <th scope="row" :title="'Team ID: '+team.id">{{ team.name }}</th>
             <td class="num highlight">{{ team.score }}</td>
             <td class="num">{{ team.wins }}</td>
             <td class="num">{{ team.loses }}</td>
