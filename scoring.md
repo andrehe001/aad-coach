@@ -16,9 +16,9 @@
 
 ## Possible solutions for increasing scoring
 
-* Kye: Take a look into Kye's first move per match and you know what will be the 2nd or 3th move
-* Courtney: Take a look into Courtney's first move per match - she will iterate for the 2nd or 3th move (Rock, Paper, Scissors, Metal, Snap)
-* Libby: Take a look into Libby's first move per match and you know what will be the 2nd or 3th move
+* Kye: Take a look into Kye's first move per match and you know what will be the 2nd or 3rd move
+* Courtney: Take a look into Courtney's first move per match - she will iterate for the 2nd or 3rd move (Rock, Paper, Scissors, Metal, Snap)
+* Libby: For your 2nd move, take a look what was your 1st move and fight against, same for 3rd
 * Brain: Always return Paper or Snap
 
 ## Tables
