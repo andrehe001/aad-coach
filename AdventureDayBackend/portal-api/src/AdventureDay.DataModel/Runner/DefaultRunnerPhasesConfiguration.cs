@@ -7,7 +7,7 @@ namespace AdventureDay.DataModel.Runner
         public static readonly RunnerPhasesConfiguration DefaultConfiguration = new RunnerPhasesConfiguration()
         {
             {
-                RunnerPhase.Phase1_Deployment, 
+                RunnerPhase.Phase1_Deployment,
                 new RunnerPhaseConfigurationItem()
                 {
                     PlayerTypes = new Dictionary<PlayerType, int>()
@@ -18,7 +18,7 @@ namespace AdventureDay.DataModel.Runner
                 }
             },
             {
-                RunnerPhase.Phase2_Change, 
+                RunnerPhase.Phase2_Change,
                 new RunnerPhaseConfigurationItem()
                 {
                     PlayerTypes = new Dictionary<PlayerType, int>()
@@ -30,7 +30,7 @@ namespace AdventureDay.DataModel.Runner
                 }
             },
             {
-                RunnerPhase.Phase3_Monitoring, 
+                RunnerPhase.Phase3_Monitoring,
                 new RunnerPhaseConfigurationItem()
                 {
                     PlayerTypes = new Dictionary<PlayerType, int>()
@@ -43,12 +43,12 @@ namespace AdventureDay.DataModel.Runner
                 }
             },
             {
-                RunnerPhase.Phase4_Scale, 
+                RunnerPhase.Phase4_Scale,
                 new RunnerPhaseConfigurationItem()
                 {
                     PlayerTypes = new Dictionary<PlayerType, int>()
                     {
-                        
+
                         { PlayerType.Random, 100},
                         { PlayerType.Fixed, 100},
                         { PlayerType.Bet, 100},
@@ -58,7 +58,7 @@ namespace AdventureDay.DataModel.Runner
                 }
             },
             {
-                RunnerPhase.Phase5_Security, 
+                RunnerPhase.Phase5_Security,
                 new RunnerPhaseConfigurationItem()
                 {
                     PlayerTypes = new Dictionary<PlayerType, int>()
@@ -72,7 +72,7 @@ namespace AdventureDay.DataModel.Runner
                 }
             },
             {
-                RunnerPhase.Phase6_Intelligence, 
+                RunnerPhase.Phase6_Intelligence,
                 new RunnerPhaseConfigurationItem()
                 {
                     PlayerTypes = new Dictionary<PlayerType, int>()
@@ -84,6 +84,7 @@ namespace AdventureDay.DataModel.Runner
                         { PlayerType.SecurityHack, 1000},
                         { PlayerType.Iterative, 1000},
                         { PlayerType.Pattern, 1000},
+                        { PlayerType.EasyPeasy, 1000},
                     }
                 }
             }

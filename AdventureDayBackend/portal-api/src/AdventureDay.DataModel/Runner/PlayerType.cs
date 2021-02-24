@@ -3,12 +3,13 @@ namespace AdventureDay.DataModel.Runner
     public enum PlayerType
     {
         Random,
-        Pattern,
-        Iterative,
         Fixed,
         Bet,
         CostCalculator,
+        Mass,
         SecurityHack,
-        Mass
+        Iterative,
+        Pattern,
+        EasyPeasy
     }
 }

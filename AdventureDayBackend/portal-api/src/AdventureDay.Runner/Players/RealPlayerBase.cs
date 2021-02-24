@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using AdventureDay.DataModel;
@@ -74,6 +75,13 @@ namespace AdventureDay.Runner.Players
 
             return MatchReport.FromMatchResponse(response);
         }
+
+        internal static Move GetRandomMove()
+        {
+            var values = Enum.GetValues(typeof(Move));
+            return (Move)values.GetValue(RandomNumberGenerator.GetInt32(values.Length));
+        }
+
         protected abstract Move GetFirstMove();
         protected abstract Move GetNextMove(MatchResponse lastMatchResponse);
     }

@@ -11,24 +11,17 @@ namespace AdventureDay.Runner.Players.RealPlayers
 
         public PatternPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {
-
-        }
-
-        private Move GetPatternMove(int seq)
-        {
-            var values = Enum.GetValues(typeof(Move));
-            return (Move)values.GetValue(seq % values.Length);
         }
 
         protected override Move GetFirstMove()
         {
-            // TODO: Should be random to be different from IterativePlayer
-            return GetPatternMove(0);
+            return GetRandomMove();
         }
 
         protected override Move GetNextMove(MatchResponse lastMatchResponse)
         {
-            return GetPatternMove(lastMatchResponse.Turn);
+            // Same move as the move from human the turn before
+            return lastMatchResponse.TurnsPlayer2Values[lastMatchResponse.Turn - 1];
         }
     }
 }

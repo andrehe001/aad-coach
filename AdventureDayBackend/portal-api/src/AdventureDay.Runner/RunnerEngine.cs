@@ -267,14 +267,15 @@ namespace AdventureDay.Runner
         {
             IPlayer player = playerType switch
             {
-                PlayerType.Pattern => new PatternPlayer(_configuration, team, httpTimeout),
                 PlayerType.Random => new RandomPlayer(_configuration, team, httpTimeout),
                 PlayerType.Fixed => new FixedPlayer(_configuration, team, httpTimeout),
-                PlayerType.Iterative => new IterativePlayer(_configuration, team, httpTimeout),
                 PlayerType.Bet => new BetPlayer(_configuration, team, httpTimeout),
                 PlayerType.CostCalculator => new CostCalculatorPlayer(_configuration, team, httpTimeout),
-                PlayerType.SecurityHack => new SecurityHackPlayer(_configuration, team, httpTimeout),
                 PlayerType.Mass => new MassPlayer(_configuration, team, httpTimeout),
+                PlayerType.SecurityHack => new SecurityHackPlayer(_configuration, team, httpTimeout),
+                PlayerType.Iterative => new IterativePlayer(_configuration, team, httpTimeout),
+                PlayerType.Pattern => new PatternPlayer(_configuration, team, httpTimeout),
+                PlayerType.EasyPeasy => new EasyPeasyPlayer(_configuration, team, httpTimeout),
                 _ => throw new InvalidOperationException("Unexpected enum value.")
             };
             

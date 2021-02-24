@@ -9,19 +9,10 @@ namespace AdventureDay.Runner.Players.RealPlayers
     // - but triggers crazy CPU loops and SQL queries inside GameEngine
     public class MassPlayer : RealPlayerBase
     {
-        private readonly Random _random;
-
         public override string Name => "Gloria";
 
         public MassPlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {
-            _random = new Random();
-        }
-
-        private Move GetRandomMove()
-        {            
-            var values = Enum.GetValues(typeof(Move));
-            return (Move)values.GetValue(_random.Next(values.Length));
         }
 
         protected override Move GetFirstMove()

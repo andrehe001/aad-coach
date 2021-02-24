@@ -7,19 +7,21 @@ namespace AdventureDay.Runner.Players.RealPlayers
 {
     public class IterativePlayer : RealPlayerBase
     {
-        private int _seq;
+        private static int _runnerSeq = 0;
+
+        private int _instanceSeq;
 
         public override string Name => "Courtney";
 
         public IterativePlayer(IConfiguration configuration, Team team, TimeSpan httpTimeout) : base(configuration, team, httpTimeout)
         {
-            _seq = 0;
+            _instanceSeq = _runnerSeq++;
         }
 
         private Move GetNextTickMove()
         {
             var values = Enum.GetValues(typeof(Move));
-            return (Move)values.GetValue(_seq++ % values.Length);
+            return (Move)values.GetValue(_instanceSeq++ % values.Length);
         }
 
         protected override Move GetFirstMove()
