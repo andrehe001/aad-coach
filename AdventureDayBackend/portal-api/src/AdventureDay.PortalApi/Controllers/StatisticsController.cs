@@ -25,7 +25,7 @@ namespace AdventureDay.PortalApi.Controllers
         public ActionResult<IEnumerable> GetLeaderboardStatistics()
         {
             var leaderboard = _dbContext.TeamScores
-                .Select(_ => new { _.Team.Name, _.Score, _.Wins, _.Loses, _.Errors, _.Profit })
+                .Select(_ => new {_.Team.Id, _.Team.Name, _.Score, _.Wins, _.Loses, _.Errors, _.Profit })
                 .ToList()
                 .OrderByDescending(_ => _.Score); // Score is not in the DB as column!
 
