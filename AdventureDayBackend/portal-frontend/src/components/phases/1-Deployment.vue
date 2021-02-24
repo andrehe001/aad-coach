@@ -6,20 +6,14 @@
     <h2>Phase 1: Deployment</h2>
     <p>The Smoorghs love the game "Rock, Paper, Scissors, Metal, Snap" - so we should get it ready as soon as possible in order to buy our resources back.</p>
     <p>Goal: Get the game ready as soon as possible to earn virtual money from the Smoorghs!</p>
-    <h3>Hints</h3>
+    <h3>Instructions</h3>
     <ul>
       <li>
-        World Game Fedaration has provided the source code to start with at:
+        World Game Fedaration has provided the source code and <strong>instructions</strong> to start with at:
         <a href="https://github.com/azure-adventure-day/aad-team">azure-adventure-day-team</a>
       </li>
-      <li>
-        Import the existing source with the
-        <a
-          href="https://docs.github.com/en/github/importing-your-projects-to-github/importing-a-repository-with-github-importer"
-        >GitHub Importer</a> into your own public repository
-      </li>
     </ul>
-    <h3>Other Hints</h3>
+    <h3>Hints</h3>
     <p>
       <a
         data-toggle="collapse"

@@ -18,7 +18,7 @@
     </p>
     <ul class="collapse" id="collapseHints">
       <li>Take a look at your team console logs</li>
-      <li>Inspect all components that you reuse from the World Game Federation</li>
+      <li>Inspect all components including YAMl config files that you reuse from the World Game Federation</li>
     </ul>
     <h3>Helpful Resources</h3>
     <p>
