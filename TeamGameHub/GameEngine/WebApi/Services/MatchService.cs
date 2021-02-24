@@ -224,7 +224,6 @@ namespace TeamGameHub.GameEngine.WebApi.Services
                 MatchId = currentMatch.MatchId,
                 WhenUtc = currentMatch.WhenUtc,
                 MatchOutcome = currentMatch.MatchOutcome.ToString(),
-                MatchSequenceNumber = currentMatch.MatchSequenceNumber,
                 Player1Name = currentMatch.Player1Name,
                 Player2Name = currentMatch.Player2Name
             });

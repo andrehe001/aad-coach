@@ -21,11 +21,6 @@ namespace TeamGameHub.GameEngine.WebApi.Models
         public Guid MatchId { get; set; }
 
         /// <summary>
-        /// A sequence number for each match that was setup for the provided ChallengerId.
-        /// </summary>
-        public long MatchSequenceNumber { get; set; }
-
-        /// <summary>
         /// The challenger's identifier.
         /// </summary>
         public string Player1Name { get; set; }
