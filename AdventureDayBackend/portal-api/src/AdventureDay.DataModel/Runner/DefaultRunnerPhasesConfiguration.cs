@@ -49,11 +49,11 @@ namespace AdventureDay.DataModel.Runner
                     PlayerTypes = new Dictionary<PlayerType, int>()
                     {
 
-                        { PlayerType.Random, 100},
-                        { PlayerType.Fixed, 100},
-                        { PlayerType.Bet, 100},
+                        { PlayerType.Random, 400},
+                        { PlayerType.Fixed, 400},
+                        { PlayerType.Bet, 400},
                         { PlayerType.CostCalculator, 60 * 1000},
-                        { PlayerType.Mass, 500},
+                        { PlayerType.Mass, 400},
                     }
                 }
             },
