@@ -40,13 +40,6 @@ Update the `Azure Container Registry Name` (2) with the name of the deployed ACR
 ![Image of GH Action Workflow for Backend-IaC](./imgs/gh-action-deploy-backend.png)
 
 
-## Manually scale at Scale phase
-```
-kubectl edit deployments adventure-day-runner -n adventure-day
-```
-Change replica to 4-5
-
-
 ## Other TODOs
 
 * Avoid having to update the ACR name in the setup. 
