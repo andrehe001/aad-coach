@@ -1,6 +1,6 @@
 # Azure Adventure Day
 
-## Brainstorming
+## General Setup
 * Agenda:
   * 9:00am - 9:30am Registration/Game Rules (30 Min)
   * 9:30am - 11:30am Game Play (120 Min)
