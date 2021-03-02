@@ -37,6 +37,8 @@
 * all attendees are added to the *Teams*
 * all assigned coaches for this delivery are added to the *Teams* **and** to the private *CoachesInternal* channel
 
+After everything has been properly prepared, post it in the *Azure Adventure Day/Coaches* channel with a list of Coaches and a link to the Teams environment.
+
 ## Deployment / 1 week before
 
 ### Setting up the Adventure Day PROD Backend
@@ -50,6 +52,8 @@ Use the *Admin Subscription* from *Prerequisites* above to [set up the Adventure
 Using the *AzureAdventureDay_AzurePreparation_Template.xlsx* from *Prerequisites* above the next step is to import Teams, Azure Subscriptions and Accounts into the deployed environment from the step before. This will also activate *Azure Security Center* in all subscriptions.
 
 Please follow the provided [Import Teams, Azure Subscriptions and Accounts instructions](/AdventureDayBackend/team-import/README.md).
+
+After everything has been properly prepared, post it in the *CoachesInternal* with the Environment URL.
 
 ### Team Invitation Messages
 
