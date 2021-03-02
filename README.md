@@ -1,6 +1,21 @@
 # Azure Adventure Day
 
+## Documentation
+
+### Technical
+
+* [Preparing a delivery and acting as Lead Coach](docs/prod-preparation-aslead.md)
+* [Setting up the Adventure Day PROD Backend](docs/prod-deployment.md)
+* [Monitoring the Adventure Day Backend](docs/monitoring-backend.md)
+* [Phases cheat sheet for coaches](docs/phases-cheatsheet.md)
+
+### Functional
+
+* [Player and scoring mechanics](docs/scoring.md)
+* [Concept behind Azure Adventure Day](docs/concept.md)
+
 ## General Setup
+
 * Agenda:
   * 9:00am - 9:30am Registration/Game Rules (30 Min)
   * 9:30am - 11:30am Game Play (120 Min)

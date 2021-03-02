@@ -38,9 +38,3 @@ Changes to the attribute are only required if you need to change the `location`.
 2. Navigate to the action [AdventureDay-Backend-Build-Deploy](https://github.com/azure-adventure-day/aad-coach/actions/workflows/adventure-day-backend-build-deploy.yml). 
 Update the `Azure Container Registry Name` (2) with the name of the deployed ACR instance from the *Infrastructure as Code Pipeline*. Finally execute the `Run workflow` (2) command:
 ![Image of GH Action Workflow for Backend-IaC](./imgs/gh-action-deploy-backend.png)
-
-
-## Other TODOs
-
-* Avoid having to update the ACR name in the setup. 
-* Cost SP needs to be configured automatically.
