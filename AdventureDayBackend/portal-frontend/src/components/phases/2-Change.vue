@@ -17,7 +17,7 @@
       >Toggle Hints</a>
     </p>
     <ul class="collapse" id="collapseHints">
-      <li>Always check if some functionality is not already implemented</li>
+      <li>It seems that the code is implemented but some kind of configuration is missing to enable the recent change</li>
       <li>Ensure you have multiple instances running before doing updates, otherwise you will need maintenance windows</li>
     </ul>
     <h3>Helpful Resources</h3>

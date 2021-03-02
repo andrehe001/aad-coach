@@ -17,7 +17,7 @@
       >Toggle Hints</a>
     </p>
     <ul class="collapse" id="collapseHints">
-      <li>Changing manually the resources underneath is not the way to go</li>
+      <li>Identify  bottlenecks(s),  changing manually the resources underneath is not the way to go</li>
       <li>Not all PaaS offerings are supporting automatic scaling off the shelf</li>
     </ul>
     <h3>Helpful Resources</h3>

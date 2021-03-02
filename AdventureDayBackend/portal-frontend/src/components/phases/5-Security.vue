@@ -5,7 +5,7 @@
     </div>
     <h2>Phase 5: Security</h2>
     <p>A secret society of Smoorghs has figured out what our plan is. Now we receive this hacker email demanding the release of our game engine and threatening to manipulate our games. Do we have to make the deal, or can your team protect us from it?</p>
-    <p>Protect your game and environment from unauthorized access!</p>
+    <p>It seems that someone has accessed the system with elevated rights! Protect your game and environment and find potential security holes.</p>
     <h3>Hints</h3>
     <p>
       <a
@@ -17,8 +17,9 @@
       >Toggle Hints</a>
     </p>
     <ul class="collapse" id="collapseHints">
-      <li>Take a look at your team console logs</li>
+      <li>Take a look at your team console logs. How could the hacker have got admin access?</li>
       <li>Inspect all components including YAMl config files that you reuse from the World Game Federation</li>
+      <li>Which resources are exposed to internet and what are they doing?</li>
     </ul>
     <h3>Helpful Resources</h3>
     <p>
