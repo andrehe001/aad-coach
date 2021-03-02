@@ -1,7 +1,10 @@
-# Team import from csv file
+# Import Teams, Azure Subscriptions and Accounts
 
-## Generate team passwords
-http://codething.ru/passgen/?lang=en
+## General
+
+* for generating team passwords you can use http://codething.ru/passgen/?lang=en
+* you can find sample files at [teams_real_sample.csv](./teams_real_sample.csv) and [teams-members_real_sample.csv](./teams-members_real_sample.csv)
+* Use your already filled out *AzureAdventureDay_AzurePreparation_Template.xlsx* and export CSV files from it
 
 ## Team import
 A team can be imported from csv file by running the `import-teams.sh` script with the following parameters:
@@ -40,7 +43,7 @@ Structure of the csv file
 teamname;username;password
 ```
 
-## Activating Security center 
+## Activating Security center
 
 The security center activation is using the `activate-security-center.sh` script with the following parameters:
 
