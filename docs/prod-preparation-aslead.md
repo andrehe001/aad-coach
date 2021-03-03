@@ -51,7 +51,7 @@ Use the *Admin Subscription* from *Prerequisites* above to [set up the Adventure
 
 Using the *AzureAdventureDay_AzurePreparation_Template.xlsx* from *Prerequisites* above the next step is to import Teams, Azure Subscriptions and Accounts into the deployed environment from the step before. This will also activate *Azure Security Center* in all subscriptions.
 
-Please follow the provided [Import Teams, Azure Subscriptions and Accounts instructions](/AdventureDayBackend/team-import/README.md).
+Please follow the provided [Import Teams, Azure Subscriptions and Accounts instructions](/AdventureDayBackend/team-import/ReadMe.md).
 
 After everything has been properly prepared, post it in the *CoachesInternal* with the Environment URL.
 
