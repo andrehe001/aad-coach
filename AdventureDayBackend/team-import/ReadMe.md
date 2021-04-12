@@ -51,7 +51,7 @@ The security center activation is using the `activate-security-center.sh` script
 chmod +x ./activate-security-center.sh
 TEAMFILE=`pwd`/teams_real.csv
 ADMIN_SERVICEPRINCIPAL_ID=53a5d1f4-0000-4c03-9ceb-d273cc1de174
-ADMIN_SERVICEPRINCIPAL_SECRET=qi3RxoXqX06.rM3Ix
+ADMIN_SERVICEPRINCIPAL_SECRET="qi3RxoXqX06.rM3Ix"
 ./activate-security-center.sh $TEAMFILE $ADMIN_SERVICEPRINCIPAL_ID $ADMIN_SERVICEPRINCIPAL_SECRET
 ```
 
