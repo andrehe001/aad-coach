@@ -38,13 +38,18 @@
       </li>
       <li>
         <a
+          href="https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-scale"
+        >Azure SQL Database Scaling</a>
+      </li>
+      <li>
+        <a
           href="https://docs.microsoft.com/en-us/azure/aks/use-multiple-node-pools#specify-a-vm-size-for-a-node-pool"
         >Multiple AKS node pools and specify a VM size</a>
       </li>
       <li>
         <a
-          href="https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-scale"
-        >Azure SQL Database Scaling</a>
+          href="https://docs.microsoft.com/en-us/azure/aks/operator-best-practices-scheduler#plan-for-availability-using-pod-disruption-budgets"
+        >Plan for availability using pod disruption budgets</a>
       </li>
     </ul>
   </div>
