@@ -8,6 +8,18 @@ variable "location" {
   description = "Injected via tf.ps1. Resource location."
 }
 
+variable "azure_sp_client_id" {
+  type        = string
+  description = "Injected via tf.ps1. The Azure SP client id for the runner."
+  sensitive   = true
+}
+
+variable "azure_sp_client_secret" {
+  type        = string
+  description = "Injected via tf.ps1. The Azure SP client id for the runner."
+  sensitive   = true
+}
+
 variable "aks_assign_acr_pull_role" {
   type = bool
   default = true
@@ -16,7 +28,7 @@ variable "aks_assign_acr_pull_role" {
 
 variable "aks_kubernetes_version_prefix" {
   type        = string
-  default     = "1.18"
+  default     = "1.20"
   description = "The Kubernetes Version prefix (MAJOR.MINOR) to be used by the AKS cluster. The BUGFIX version is determined automatically (latest)."
 }
 
@@ -64,14 +76,14 @@ variable "aks_default_node_pool" {
 
   default = {
     name                           = "default",
-    node_count                     = 5,
+    node_count                     = 1,
     vm_size                        = "Standard_D2s_v3"
     availability_zones             = [],
     node_labels                    = {},
     node_taints                    = [],
-    cluster_auto_scaling           = false,
-    cluster_auto_scaling_min_count = null,
-    cluster_auto_scaling_max_count = null
+    cluster_auto_scaling           = true,
+    cluster_auto_scaling_min_count = 1,
+    cluster_auto_scaling_max_count = 5
   }
 }
 
