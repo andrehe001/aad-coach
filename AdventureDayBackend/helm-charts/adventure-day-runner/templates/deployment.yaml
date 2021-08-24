@@ -41,6 +41,16 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.sqlServerSecretName }}
                   key: "connection_string"
+            - name: AzureSPClientId
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.azureSP }}
+                  key: "client_id"
+            - name: AzureSPClientSecret
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.azureSP }}
+                  key: "client_secret"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
