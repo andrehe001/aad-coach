@@ -3,7 +3,6 @@ provider "azurerm" {
 }
 
 provider "kubernetes" {
-  load_config_file       = false
   host                   = azurerm_kubernetes_cluster.aks.kube_admin_config.0.host
   client_certificate     = base64decode(azurerm_kubernetes_cluster.aks.kube_admin_config.0.client_certificate)
   client_key             = base64decode(azurerm_kubernetes_cluster.aks.kube_admin_config.0.client_key)
@@ -12,7 +11,6 @@ provider "kubernetes" {
 
 provider "helm" {
   kubernetes {
-    load_config_file       = false
     host                   = azurerm_kubernetes_cluster.aks.kube_admin_config.0.host
     client_certificate     = base64decode(azurerm_kubernetes_cluster.aks.kube_admin_config.0.client_certificate)
     client_key             = base64decode(azurerm_kubernetes_cluster.aks.kube_admin_config.0.client_key)
