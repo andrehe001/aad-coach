@@ -1,5 +1,5 @@
 data "azurerm_kubernetes_service_versions" "current" {
-  location = var.location
+  location       = var.location
   version_prefix = var.aks_kubernetes_version_prefix
 }
 
@@ -44,6 +44,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   name                = local.prefix_kebab
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
+  depends_on = [azurerm_public_ip.nginx_ingress_pip]
 
   default_node_pool {
     name                = var.aks_default_node_pool.name
@@ -95,22 +96,22 @@ resource "azurerm_kubernetes_cluster" "aks" {
     service_cidr       = local.aks_service_cidr
     docker_bridge_cidr = local.docker_bridge_cidr
     dns_service_ip     = local.aks_dns_service_ip
-    load_balancer_sku = "standard"
+    load_balancer_sku  = "standard"
     load_balancer_profile {
       managed_outbound_ip_count = 1
-      outbound_ports_allocated = 5000
+      outbound_ports_allocated  = 5000
     }
   }
 
-  node_resource_group     = "${local.prefix_snake}_aks_nodes_rg"
+  node_resource_group = "${local.prefix_snake}_aks_nodes_rg"
 
   role_based_access_control {
     azure_active_directory {
-      managed = true
+      managed                = true
       admin_group_object_ids = var.aks_admin_group_object_ids
     }
 
-    enabled                = true
+    enabled = true
   }
 
   sku_tier = var.aks_sku_tier

@@ -1,7 +1,6 @@
-
 resource "kubernetes_secret" "sql_server_secret" {
   metadata {
-    name = "sql-server-secret"
+    name      = "sql-server-secret"
     namespace = kubernetes_namespace.adventure_day_namespace.metadata[0].name
   }
 

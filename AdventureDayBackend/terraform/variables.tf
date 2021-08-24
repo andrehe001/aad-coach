@@ -21,8 +21,8 @@ variable "azure_sp_client_secret" {
 }
 
 variable "aks_assign_acr_pull_role" {
-  type = bool
-  default = true
+  type        = bool
+  default     = true
   description = "Assign Pull Role to AKS. Requires Owner rights."
 }
 
@@ -49,14 +49,14 @@ variable "leave_sql_server_firewall_open" {
 }
 
 variable "tls_cert_base64" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "Default certificate for ingress controller."
 }
 
 variable "tls_key_base64" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "Default certificate for ingress controller."
 }
 
