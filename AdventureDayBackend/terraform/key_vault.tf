@@ -5,7 +5,6 @@ resource "azurerm_key_vault" "kv" {
   resource_group_name         = azurerm_resource_group.rg.name
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
-  soft_delete_enabled         = false
   purge_protection_enabled    = false
   sku_name                    = "standard"
 }
@@ -40,16 +39,16 @@ resource "azurerm_key_vault_access_policy" "policy_users" {
 
   key_permissions = [
     # Possible values: backup, create, decrypt, delete, encrypt, get, import, list, purge, recover, restore, sign, unwrapKey, update, verify and wrapKey.
-    "get", "list", "update", "delete",
+    "get", "list", "update", "delete", "purge"
   ]
 
   secret_permissions = [
     # Possible values: backup, delete, get, list, purge, recover, restore and set.
-    "get", "list", "set", "delete",
+    "get", "list", "set", "delete", "purge"
   ]
 
   certificate_permissions = [
     # Possible value: backup, create, delete, deleteissuers, get, getissuers, import, list, listissuers, managecontacts, manageissuers, purge, recover, restore, setissuers and update.
-    "create", "get", "list", "update", "delete",
+    "create", "get", "list", "update", "delete", "purge"
   ]
 }
