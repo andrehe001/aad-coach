@@ -59,3 +59,4 @@ tolerations: []
 affinity: {}
 
 sqlServerSecretName: "sql-server-secret" 
+azureSP: "azure-sp"
