@@ -9,28 +9,28 @@ resource "kubernetes_namespace" "monitoring" {
 }
 
 resource "helm_release" "prometheus_operator" {
-  name      = "po"
-  chart     = "kube-prometheus-stack"
+  name       = "po"
+  chart      = "kube-prometheus-stack"
   repository = "https://prometheus-community.github.io/helm-charts"
-  namespace = kubernetes_namespace.monitoring.metadata[0].name
+  namespace  = kubernetes_namespace.monitoring.metadata[0].name
 
   depends_on = [helm_release.nginx_ingress]
 }
 
 resource "helm_release" "loki" {
-  name      = "loki"
-  chart     = "loki"
+  name       = "loki"
+  chart      = "loki"
   repository = "https://grafana.github.io/loki/charts"
-  namespace = kubernetes_namespace.monitoring.metadata[0].name
+  namespace  = kubernetes_namespace.monitoring.metadata[0].name
 
   depends_on = [helm_release.prometheus_operator]
 }
 
 resource "helm_release" "promtail" {
-  name      = "promtail"
-  chart     = "promtail"
+  name       = "promtail"
+  chart      = "promtail"
   repository = "https://grafana.github.io/loki/charts"
-  namespace = kubernetes_namespace.monitoring.metadata[0].name
+  namespace  = kubernetes_namespace.monitoring.metadata[0].name
 
   set {
     name  = "loki.serviceName"
