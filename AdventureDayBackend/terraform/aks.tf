@@ -44,7 +44,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
   name                = local.prefix_kebab
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  depends_on = [azurerm_public_ip.nginx_ingress_pip]
 
   default_node_pool {
     name                = var.aks_default_node_pool.name
