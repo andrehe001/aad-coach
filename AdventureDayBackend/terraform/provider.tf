@@ -1,10 +1,8 @@
 provider "azurerm" {
-  version = "=2.33.0"
   features {}
 }
 
 provider "kubernetes" {
-  version                = "=1.11.3"
   load_config_file       = false
   host                   = azurerm_kubernetes_cluster.aks.kube_admin_config.0.host
   client_certificate     = base64decode(azurerm_kubernetes_cluster.aks.kube_admin_config.0.client_certificate)
@@ -13,8 +11,6 @@ provider "kubernetes" {
 }
 
 provider "helm" {
-  version = "=1.2.2"
-
   kubernetes {
     load_config_file       = false
     host                   = azurerm_kubernetes_cluster.aks.kube_admin_config.0.host
