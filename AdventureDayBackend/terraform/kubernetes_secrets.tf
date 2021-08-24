@@ -1,4 +1,3 @@
-
 resource "kubernetes_secret" "sql_server_secret" {
   metadata {
     name      = "sql-server-secret"

@@ -1,0 +1,86 @@
+name: Backend-IaC-Build-Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      azureSecretName:
+        description: 'Azure Secret Name containing the Service Principal Details'
+        required: true
+        default: 'AZURE_PROD'
+      environmentName:
+        description: 'The environment deployment name, e.g. dev, qa or prod'
+        required: true
+        default: 'prod'
+      prefix:
+        description: 'The deployment prefix used for all Azure artefacts.'
+        required: true
+        default: 'azure-adventure-day'
+      location:
+        description: 'The deployment location used for all Azure artefacts.'
+        required: true
+        default: 'northeurope'
+      tag:
+        description: 'The container image tag to apply'
+        required: true
+        default: '1'
+
+jobs:
+  deploy-backend:
+    name: Deploy Adventure Day Backend to Azure
+    outputs:
+      admin_server_url: ${{ steps.setvars.output.admin_server_url }}
+    env:
+      AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
+    defaults:
+      run:
+        working-directory: AdventureDayBackend/terraform
+        shell: pwsh
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@master
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
+
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ env.AZURE_CREDENTIALS }}
+
+      - name: Set Environment Variables
+        run: |
+          "TF_VAR_azure_sp_client_id=${{ fromJSON(env.AZURE_CREDENTIALS).clientId }}" | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
+          "TF_VAR_azure_sp_client_secret=${{ fromJSON(env.AZURE_CREDENTIALS).clientSecret }}" | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
+
+      - name: Run Terraform Apply
+        id: tf
+        run: |
+         ./tf.ps1 -Verbose -Force -Prefix ${{ github.event.inputs.prefix }} -Location ${{ github.event.inputs.location }} -EnvironmentName ${{ github.event.inputs.environmentName }} -TargetPath . -Apply -LeaveFirewallOpen
+          echo "sql_server_connection_string = $(terraform output -raw sql_server_connection_string)" 
+
+      - name: Set out variables
+        id: vars
+        run: |
+          $output = $(terraform output -json | ConvertFrom-Json)
+          echo "::set-output name=aksName::$($output.aks_name.value)"
+          echo "::set-output name=aksRgName::$($output.aks_resource_group_name.value)"
+          echo "::set-output name=registryName::$($output.acr_name.value)"
+          echo "::set-output name=admin_server_url::$($output.admin_server_url.value)" 
+
+      - name: AZ AKS Login
+        run: az aks get-credentials --resource-group "${{ steps.vars.outputs.aksRgName }}" --name "${{ steps.vars.outputs.aksName }}" --overwrite-existing --admin
+
+      - name: Docker Build and Push All
+        working-directory: AdventureDayBackend/
+        run: ./docker_build_and_push_all.ps1 -RegistryName  "${{ steps.vars.outputs.registryName }}" -Tag "${{ github.event.inputs.tag }}"
+
+      - name: Run Helm Deploy
+        working-directory: AdventureDayBackend/helm-charts
+        run: ./helm_deploy_all.ps1 -RegistryName "${{ steps.vars.outputs.registryName }}" -Tag "${{ github.event.inputs.tag }}"
+
+      - name: Print output
+        run: | 
+          echo "admin_server_url: http://${{ steps.vars.outputs.admin_server_url }}"
