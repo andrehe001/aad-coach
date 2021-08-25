@@ -1,11 +1,12 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "adventure-day-portal-api.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
-  annotations: {}
+  annotations: 
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
     - http:
@@ -13,6 +14,7 @@ spec:
           - path: /api
             pathType: Prefix
             backend:
-              serviceName: {{ $fullName }}
-              servicePort: {{ $svcPort }}
+                name: {{ $fullName }}
+                port: 
+                  number: {{ $svcPort }}
 {{- end}}
