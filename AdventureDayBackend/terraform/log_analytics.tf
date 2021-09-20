@@ -2,8 +2,7 @@ resource "azurerm_log_analytics_workspace" "la" {
   name                = "${local.prefix_kebab}-la-${local.hash_suffix}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  sku                 = "Standard"
-  retention_in_days   = 30
+  sku                 = "PerGB2018"
 }
 
 
