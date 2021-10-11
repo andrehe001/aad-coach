@@ -379,7 +379,9 @@ function CreateOrUpdateTerraformBackend {
     $tf_hash_suffix = GetSha256 -InputString $tf_backend_resource_group_id -TrimTo 6
 
     
-    $StorageAccountNamePrefix = $Prefix.Replace("_", "").Replace("-", "").SubString(0, [System.Math]::Min(10, $Prefix.Length))
+    $StorageAccountNamePrefix = $Prefix.Replace("_", "").Replace("-", "")
+    $StorageAccountNamePrefix = $StorageAccountNamePrefix.Replace("_", "").Replace("-", "").SubString(0, [System.Math]::Min(10, $StorageAccountNamePrefix.Length))
+    
     $global:TfStateStorageAccountName = "tf$($StorageAccountNamePrefix)$($EnvironmentName)$($tf_hash_suffix)"
 
     az storage account create --name $global:TfStateStorageAccountName --resource-group $UtilResourceGroupName --location $Location --sku "Standard_LRS" --kind "BlobStorage" --access-tier "Hot" --encryption-service "blob" --encryption-service "file" --https-only "true" --default-action "Allow" --bypass "None" --output none --tags "environment=$EnvironmentName" "purpose=TerraformStateStorage" "prefix=$Prefix"
