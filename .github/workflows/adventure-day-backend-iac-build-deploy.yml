@@ -64,7 +64,7 @@ jobs:
         run: |
           echo "AZURE_CREDENTIALS=${{ secrets[github.event.inputs.azureSecretName] }}" >> $GITHUB_ENV
       - name: Fail if secret was not found
-        if: ${{ env.AZURE_CREDENTIALS == null || env.AZURE_CREDENTIALS != 'AZURE_CREDENTIALS=' }}
+        if: ${{ env.AZURE_CREDENTIALS == null || env.AZURE_CREDENTIALS == 'AZURE_CREDENTIALS=' }}
         uses: actions/github-script@v3
         with:
           script: |
