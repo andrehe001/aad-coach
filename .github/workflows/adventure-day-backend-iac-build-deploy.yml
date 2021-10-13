@@ -83,7 +83,6 @@ jobs:
           echo "${{ env.action_state }}" # This will output 'yellow'
 
       - name: Use the secret
-        id: step_two
         run: |
           echo "${{ secrets[github.event.inputs.azureSecretName] }}"
       
