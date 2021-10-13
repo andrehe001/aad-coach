@@ -46,10 +46,18 @@ jobs:
         shell: pwsh
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the code
+        uses: actions/checkout@master
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
+
       - name: Set Azure Credentials directly
-        if: github.event.inputs.azureSecretName == null
+        if: ${{ github.event.inputs.azureSecretName == null && github.event.inputs.azureSPClientId != null }}
         run: |
-          "AZURE_CREDENTIALS=format('{"clientId": "{0}", "clientSecret": "{1}", "subscriptionId": "{2}", "tenantId": "{3}"}', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)" | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
+          "AZURE_CREDENTIALS=format('{\"clientId\": \"{0}\", \"clientSecret\": \"{1}\", \"subscriptionId\": \"{2}\", \"tenantId\": \"{3}\"}', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)" | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
 
       - name: Set Azure Credentials with GitHub secret
         if: github.event.inputs.azureSecretName != null
@@ -61,14 +69,6 @@ jobs:
         with:
           script: |
               core.setFailed('No secret found with name ${{ github.event.inputs.azureSecretName }}!')
-      
-      - name: Checkout the code
-        uses: actions/checkout@master
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_wrapper: false
 
       - name: Azure Login
         uses: Azure/login@v1
