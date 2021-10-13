@@ -62,7 +62,16 @@ jobs:
       - name: Set Azure Credentials with GitHub secret
         if: github.event.inputs.azureSecretName != null
         run: |
-          echo "AZURE_CREDENTIALS=${{ secrets[github.event.inputs.azureSecretName] }}" >> $GITHUB_ENV
+          echo 'AZURE_CREDENTIALS=${{ secrets[github.event.inputs.azureSecretName] }}' >> $GITHUB_ENV
+
+      - name: test1
+        run: |
+          echo 'BLUBBER={sdfsdffsd}' >> $GITHUB_ENV
+
+      - name: test2
+        run: |
+          echo ${{ env.BLUBBER}}
+      
       - name: Fail if secret was not found
         if: ${{ env.AZURE_CREDENTIALS == null || env.AZURE_CREDENTIALS == 'AZURE_CREDENTIALS=' }}
         uses: actions/github-script@v3
