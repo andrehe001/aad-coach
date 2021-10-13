@@ -57,7 +57,7 @@ jobs:
       - name: Set Azure Credentials directly
         if: ${{ github.event.inputs.azureSecretName == null && github.event.inputs.azureSPClientId != null }}
         run: |
-          echo "${{format('{0}, {1}, {2}, {3}', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)}}"
+          echo "${{format('""{0}, {1}, {2}, {3}', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)}}"
 
           echo "${{format('{{"clientId": "{0}", "clientSecret": "{1}", "subscriptionId": "{2}", "tenantId": "{3}"}}', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)}}"
 
