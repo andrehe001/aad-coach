@@ -3,20 +3,31 @@ name: Backend-IaC-Build-Deploy
 on:
   workflow_dispatch:
     inputs:
+      azureSPClientId:
+        description: 'Azure Service Principal Client ID'
+        required: false
+      azureSPClientSecret:
+        description: 'Azure Service Principal Client Secret'
+        required: false
+      azureSubscriptionId:
+        description: 'Azure Subscription ID'
+        required: false
+      azureTenantId:
+        description: 'Azure Tenant ID'
+        required: false
       azureSecretName:
-        description: 'Azure Secret Name containing the Service Principal Details'
-        required: true
-        default: 'AZURE_PROD'
+        description: 'Use this, if you want to use a GitHub secret and not the 4 above: Azure Secret Name containing the Service Principal Details'
+        required: false
       environmentName:
         description: 'The environment deployment name, e.g. dev, qa or prod'
         required: true
         default: 'prod'
       prefix:
-        description: 'The deployment prefix used for all Azure artefacts.'
+        description: 'The deployment prefix used for all Azure artifacts.'
         required: true
         default: 'azure-adventure-day'
       location:
-        description: 'The deployment location used for all Azure artefacts.'
+        description: 'The deployment location used for all Azure artifacts.'
         required: true
         default: 'northeurope'
       tag:
@@ -29,14 +40,22 @@ jobs:
     name: Deploy Adventure Day Backend to Azure
     outputs:
       admin_server_url: ${{ steps.setvars.output.admin_server_url }}
-    env:
-      AZURE_CREDENTIALS: ${{ secrets[github.event.inputs.azureSecretName] }}
     defaults:
       run:
         working-directory: AdventureDayBackend/terraform
         shell: pwsh
     runs-on: ubuntu-latest
     steps:
+      - name: Set Azure Credentials directly
+        if: github.event.inputs.azureSecretName == null
+        run: |
+          "AZURE_CREDENTIALS=format('{"clientId": "{0}", "clientSecret": "{1}", "subscriptionId": "{2}", "tenantId": "{3}"}', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)"
+
+      - name: Set Azure Credentials with GitHub secret
+        if: github.event.inputs.azureSecretName != null
+        run: |
+          "AZURE_CREDENTIALS=${{ secrets[github.event.inputs.azureSecretName] }}"
+      
       - name: Checkout the code
         uses: actions/checkout@master
 
