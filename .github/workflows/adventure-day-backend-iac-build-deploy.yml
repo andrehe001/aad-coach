@@ -61,7 +61,7 @@ jobs:
 
           echo "${{format('{{"clientId": "{0}", "clientSecret": "{1}", "subscriptionId": "{2}", "tenantId": "{3}"}}', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)}}"
 
-          echo "AZURE_CREDENTIALS=${{format('{"clientId": "{0}", "clientSecret": "{1}", "subscriptionId": "{2}", "tenantId": "{3}"}', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)}}" >> $GITHUB_ENV
+          echo "AZURE_CREDENTIALS=${{format('{{"clientId": "{0}", "clientSecret": "{1}", "subscriptionId": "{2}", "tenantId": "{3}"}}', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)}}" >> $GITHUB_ENV
 
       - name: Set Azure Credentials with GitHub secret
         if: github.event.inputs.azureSecretName != null
