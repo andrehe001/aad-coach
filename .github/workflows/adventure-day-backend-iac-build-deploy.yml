@@ -70,7 +70,22 @@ jobs:
 
       - name: test2
         run: |
-          echo ${{ env.BLUBBER}}
+          echo "${{ env.BLUBBER }}"
+
+      - name: Set the value
+        id: step_one
+        run: |
+          echo "action_state=yellow" >> $GITHUB_ENV
+
+      - name: Use the value
+        id: step_two
+        run: |
+          echo "${{ env.action_state }}" # This will output 'yellow'
+
+      - name: Use the secret
+        id: step_two
+        run: |
+          echo "${{ secrets[github.event.inputs.azureSecretName] }}"
       
       - name: Fail if secret was not found
         if: ${{ env.AZURE_CREDENTIALS == null || env.AZURE_CREDENTIALS == 'AZURE_CREDENTIALS=' }}
