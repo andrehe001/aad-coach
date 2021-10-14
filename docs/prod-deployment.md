@@ -5,36 +5,60 @@
 * Admin subscription is setup
 * Service Principal for admin subscription is setup and credentials are known
 
-## Updating the Service Principal Details
+## Executing the Deployment for production
 
-* Navigate to this project's Settings [Secrets config page](https://github.com/azure-adventure-day/aad-coach/settings/secrets/actions).
-* Update the Secret with the name `AZURE_PROD` with the following template (replace `<GUID>` accordingly):
+1. Navigate to this project's [GitHub Actions page](https://github.com/azure-adventure-day/aad-coach/actions)
+2. Navigate to the action [Backend-IaC-Build-Deploy](https://github.com/azure-adventure-day/aad-coach/actions/workflows/adventure-day-backend-iac-build-deploy.yml).
+3. Enter the Azure Service Principal Client ID, Client Secret, Azure Subscription ID and Tenant ID.
+4. Changes to the other attributes are only required if you need to change the `location` or for example have multiple backends in one Azure Subscription.
+5. Execute the `Run workflow` command:
+
+## Executing the Deployment for development/testing
+
+> Only Core Team, as you need to have a specified GitHub secret configured
+
+To speed up testing during development, it is possible to use a GitHub secret for deployment:
+
+1. Create SP with `az ad sp create-for-rbac --sdk-auth --role Contributor --scopes /subscriptions/<GUID>`
+2. When complete, the command displays JSON output in the following form:
+
+  ```json
+  {
+    "clientId": "<GUID>",
+    "clientSecret": "<CLIENT_SECRET_VALUE>",
+    "subscriptionId": "<GUID>",
+    "tenantId": "<GUID>",
+    (...)
+  }
+  ```
+
+3. At [Secrets](https://github.com/azure-adventure-day/aad-coach/settings/secrets/actions) create a new secret named `AZURE_YOUR_ALIAS` with this output.
+
+> **NOTE: While adding secret `AZURE_YOUR_ALIAS` make sure to add like this**
 
 ```json
- {
-    "clientId": "<GUID>",
-    "clientSecret": "<GUID>",
-    "subscriptionId": "<GUID>",
-    "tenantId": "<GUID>"
-  }
+{"clientId": "<GUID>",
+  "clientSecret": "<CLIENT_SECRET_VALUE>",
+  "subscriptionId": "<GUID>",
+  "tenantId": "<GUID>",
+  (...)}
 ```
 
-* Update the [appsettings.json](/AdventureDayBackend/portal-api/src/AdventureDay.Runner/appsettings.json)
+   instead of  
+
 ```json
-  "AzureSPClientId": "<GUID>",
-  "AzureSPClientSecret": "<GUID>",
-```  
+{
+  "clientId": "<GUID>",
+  "clientSecret": "<CLIENT_SECRET_VALUE>",
+  "subscriptionId": "<GUID>",
+  "tenantId": "<GUID>",
+  (...)
+}
+```
 
-## Executing the GitHub Actions
-
-## 1 - Infrastructure as Code Deployment
-1. Navigate to this project's [GitHub Actions page](https://github.com/azure-adventure-day/aad-coach/actions)
-2. Navigate to the action [AdventureDay-Backend-IaC](https://github.com/azure-adventure-day/aad-coach/actions/workflows/adventure-day-backend-iac.yml). 
-Changes to the attribute are only required if you need to change the `location`. Otherwise directly execute the `Run workflow` command:
-![Image of GH Action Workflow for Backend-IaC](./imgs/gh-action-backend-iac.png)
-
-## 2 - Backend Application Deployment
-1. Navigate to this project's [GitHub Actions page](https://github.com/azure-adventure-day/aad-coach/actions)
-2. Navigate to the action [AdventureDay-Backend-Build-Deploy](https://github.com/azure-adventure-day/aad-coach/actions/workflows/adventure-day-backend-build-deploy.yml). 
-Update the `Azure Container Registry Name` (2) with the name of the deployed ACR instance from the *Infrastructure as Code Pipeline*. Finally execute the `Run workflow` (2) command:
-![Image of GH Action Workflow for Backend-IaC](./imgs/gh-action-deploy-backend.png)
+> **to prevent unnecessary masking of `{ }` in our logs.**
+     
+4. Navigate to the action [Backend-IaC-Build-Deploy](https://github.com/azure-adventure-day/aad-coach/actions/workflows/adventure-day-backend-iac-build-deploy.yml).
+5. Enter the GitHub Secret name you have chosen
+6. Changes to the other attributes are only required if you need to change the `location` or for example have multiple backends in one Azure Subscription.
+7. Execute the `Run workflow` command.
