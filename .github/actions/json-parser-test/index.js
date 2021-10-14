@@ -7,12 +7,12 @@ try {
     console.log(jsonToTest);
 
     try {
-        this.dom = JSON.parse(jsonToTest);
+        const dom = JSON.parse(jsonToTest);
 
         console.log(`JSON parsing successful`);
 
         const payload = JSON.stringify(dom, undefined, 2)
-        console.log(`The payload: ${payload}`);
+        console.log(`The payload:\n${payload}`);
     }
     catch (ex) {
         core.setFailed(`Content is not a valid JSON object. ${ex}`);
