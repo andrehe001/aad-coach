@@ -3,7 +3,8 @@
 ## Prerequisites
 
 * Admin subscription is setup
-* Service Principal for admin subscription is setup and credentials are known
+* Service Principal for admin subscription with Owner rights is created and credentials are known
+  * Can be created with `az ad sp create-for-rbac --sdk-auth --role Owner --scopes /subscriptions/<GUID>`
 
 ## Executing the Deployment for production
 
@@ -19,7 +20,7 @@
 
 To speed up testing during development, it is possible to use a GitHub secret for deployment:
 
-1. Create SP with `az ad sp create-for-rbac --sdk-auth --role Contributor --scopes /subscriptions/<GUID>`
+1. Create SP with `az ad sp create-for-rbac --sdk-auth --role Owner --scopes /subscriptions/<GUID>`
 2. When complete, the command displays JSON output in the following form:
 
   ```json
