@@ -64,13 +64,14 @@ jobs:
       #     echo $INPUT_AZURESPCLIENTSECRET
       #     echo "::add-mask::$INPUT_AZURESPCLIENTSECRET"
 
-      # - name: Mask SP Client Secret
-      #   run: |
-      #     echo ${{ github.event.inputs.azureSPClientSecret_TOKEN }}
-      #     echo "::add-mask::${{ github.event.inputs.azureSPClientSecret_TOKEN }}"
-      #     echo ${{ github.event.inputs.azureSPClientSecret_TOKEN }}
+      - name: Mask SP Client Secret 1
+        shell: bash
+        run: |
+          echo ${{ github.event.inputs.azureSPClientSecret_TOKEN }}
+          echo "::add-mask::${{ github.event.inputs.azureSPClientSecret_TOKEN }}"
+          echo ${{ github.event.inputs.azureSPClientSecret_TOKEN }}
 
-      - name: Mask SP Client Secret
+      - name: Mask SP Client Secret 2
         shell: bash
         run: |
           echo ${{ github.event.inputs.azureSPClientSecret }}
