@@ -57,21 +57,12 @@ jobs:
       - name: Set Azure Credentials directly
         if: ${{ github.event.inputs.azureSecretName == null && github.event.inputs.azureSPClientId != null }}
         run: |
-          echo 'AZURE_CREDENTIALS=${{format('{{"clientId": "{0}", "clientSecret": "{1}", "subscriptionId": "{2}", "tenantId": "{3}"}}', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)}}' >> $GITHUB_ENV
+          'AZURE_CREDENTIALS=${{format('{{"clientId": "{0}", "clientSecret": "{1}", "subscriptionId": "{2}", "tenantId": "{3}"}}', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)}}'  | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
 
       - name: Set Azure Credentials with GitHub secret
         if: github.event.inputs.azureSecretName != null
         run: |
-          echo 'AZURE_CREDENTIALS=${{ secrets[github.event.inputs.azureSecretName] }}' >> $GITHUB_ENV
-
-      - name: test1
-        run: |
-          echo 'BLUBBER={sdfsdffsd}' >> $GITHUB_ENV
-
-      - name: test2
-        run: |
-          echo "${{ env.BLUBBER }}"
-
+          'AZURE_CREDENTIALS=${{ secrets[github.event.inputs.azureSecretName] }}' | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
 
 
 
@@ -93,16 +84,14 @@ jobs:
 
       - name: Use the value Version 2
         run: |
-          "${{ env.action_state2 }}" | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
+          echo "${{ env.action_state2 }}" # This will output 'yellow'
 
 
 
 
-
-
-      - name: Use the secret
+      - name: Echo cred var
         run: |
-          echo "${{ secrets[github.event.inputs.azureSecretName] }}"
+          echo "${{ env.AZURE_CREDENTIALS }}"
       
       - name: Fail if secret was not found
         if: ${{ env.AZURE_CREDENTIALS == null || env.AZURE_CREDENTIALS == 'AZURE_CREDENTIALS=' }}
