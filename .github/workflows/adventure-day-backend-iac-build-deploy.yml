@@ -66,9 +66,13 @@ jobs:
 
       - name: Mask SP Client Secret
         run: |
-          echo ${{ inputs.azureSPClientSecret }}
-          echo "::add-mask::${{ inputs.azureSPClientSecret }}"
-          echo ${{ inputs.azureSPClientSecret }}
+          echo ${{ github.event.inputs.azureSPClientSecret }}
+          echo "::add-mask::${{ github.event.inputs..azureSPClientSecret }}"
+          echo ${{ github.event.inputs.azureSPClientSecret }}
+
+      - name: Test SP Client Secret
+        run: |
+          echo ${{ github.event.inputs.azureSPClientSecret }}
 
       - name: Set Azure Credentials directly
         if: ${{ github.event.inputs.azureSecretName == null && github.event.inputs.azureSPClientId != null }}
