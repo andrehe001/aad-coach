@@ -67,7 +67,7 @@ jobs:
       - name: Mask SP Client Secret
         run: |
           echo ${{ github.event.inputs.azureSPClientSecret }}
-          echo "::add-mask::${{ github.event.inputs..azureSPClientSecret }}"
+          echo "::add-mask::${{ github.event.inputs.azureSPClientSecret }}"
           echo ${{ github.event.inputs.azureSPClientSecret }}
 
       - name: Test SP Client Secret
