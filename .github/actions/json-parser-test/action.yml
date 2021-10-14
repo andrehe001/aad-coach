@@ -1,5 +1,5 @@
 name: 'json parser test'
-description: 'Tests JSON because the internal parser doesn't provide helpful error messages - see PR https://github.com/microsoft/pipelines-appservice-lib/pull/51'
+description: 'Tests JSON because the internal parser does not provide helpful error messages - see PR https://github.com/microsoft/pipelines-appservice-lib/pull/51'
 inputs:
   json-data:
     description: 'JSON to test'
