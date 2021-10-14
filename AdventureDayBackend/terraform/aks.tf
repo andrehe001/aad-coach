@@ -64,8 +64,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vnet_subnet_id = azurerm_subnet.aks_subnet.id
   }
 
-  automatic_channel_upgrade = none
-
   dns_prefix = "${local.prefix_kebab}-aks-${local.hash_suffix}"
 
   addon_profile {
