@@ -427,10 +427,8 @@ function DeleteTerraformBackend {
     $global:TfStateStorageAccountName = "tf$($StorageAccountNamePrefix)$($EnvironmentName)$($tf_hash_suffix)"
 
     az storage account delete --name $global:TfStateStorageAccountName --resource-group $UtilResourceGroupName --yes
-    if ($LastExitCode -gt 0) { throw "az CLI error." }
 
     az group delete --name "$UtilResourceGroupName" --yes
-    if ($LastExitCode -gt 0) { throw "az CLI error." }
 }
 
 function LockdownTerraformBackend {
