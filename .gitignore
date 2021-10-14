@@ -530,3 +530,6 @@ override.tf.json
 /AdventureDayBackend/terraform/output.json
 AdventureDayBackend/team-import/teams_real.csv
 AdventureDayBackend/team-import/teams-members_real.csv
+
+# Actions need to checkin node_modules
+!.github/actions/**/node_modules/
