@@ -1,7 +1,6 @@
 name: Backend-Nightly-IaC-Build-Deploy
 
 on:
-  workflow_dispatch:
   schedule:
     # every night at 2am
     - cron:  '0 2 * * *'  

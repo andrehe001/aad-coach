@@ -1,7 +1,6 @@
 name: Backend-Nightly-IaC-Destroy
 
 on:
-  workflow_dispatch:
   schedule:
     # every night at 3am
     - cron:  '0 3 * * *'  
