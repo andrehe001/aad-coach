@@ -1,0 +1,9 @@
+name: 'json parser test'
+description: 'Tests JSON'
+inputs:
+  json-data:
+    description: 'JSON to test'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
