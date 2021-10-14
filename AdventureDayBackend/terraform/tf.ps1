@@ -416,6 +416,23 @@ function CreateOrUpdateTerraformBackend {
     if ($LastExitCode -gt 0) { throw "az CLI error." }
 }
 
+function DeleteTerraformBackend {
+    $azRes = az group show --name "$UtilResourceGroupName" --output json | ConvertFrom-Json
+    if ($LastExitCode -gt 0) { throw "az CLI error." }
+
+    $tf_backend_resource_group_id = $azRes.Id
+    $tf_hash_suffix = GetSha256 -InputString $tf_backend_resource_group_id -TrimTo 6
+    
+    $StorageAccountNamePrefix = $Prefix.Replace("_", "").Replace("-", "").SubString(0, [System.Math]::Min(10, $Prefix.Length))
+    $global:TfStateStorageAccountName = "tf$($StorageAccountNamePrefix)$($EnvironmentName)$($tf_hash_suffix)"
+
+    az storage account delete --name $global:TfStateStorageAccountName --resource-group $UtilResourceGroupName --yes
+    if ($LastExitCode -gt 0) { throw "az CLI error." }
+
+    az group delete --name "$UtilResourceGroupName" -yes
+    if ($LastExitCode -gt 0) { throw "az CLI error." }
+}
+
 function LockdownTerraformBackend {
     $existingNetworkRulesResponse = az storage account network-rule list --account-name $global:TfStateStorageAccountName | ConvertFrom-Json
     if ($LastExitCode -gt 0) { throw "az CLI error." }
@@ -581,14 +598,19 @@ function TerraformDestroy {
                 Write-Host ""
                 exit
             }
-        }
 
-        if ($VarFile) {
-            &"$TerraformPath" destroy $TerraformNoColor -auto-approve -input=false -var-file="$VarFile" -lock=false
+            if ($VarFile) {
+                &"$TerraformPath" destroy $TerraformNoColor -auto-approve -input=false -var-file="$VarFile"
+            } else {
+                &"$TerraformPath" destroy $TerraformNoColor -auto-approve -input=false
+            }
+            if ($LastExitCode -gt 0) { throw "terraform error." }
         } else {
             &"$TerraformPath" destroy $TerraformNoColor -auto-approve -input=false -lock=false
+            if ($LastExitCode -gt 0) { throw "terraform error." }
+            
+            DeleteTerraformBackend
         }
-        if ($LastExitCode -gt 0) { throw "terraform error." }
     }
     finally {
         Pop-Location
