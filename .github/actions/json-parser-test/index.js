@@ -15,7 +15,7 @@ try {
         console.log(`The payload: ${payload}`);
     }
     catch (ex) {
-        core.setFailed(`Content is not a valid JSON object ${ex}`);
+        core.setFailed(`Content is not a valid JSON object. ${ex}`);
     }
 } catch (error) {
     core.setFailed(error.message);
