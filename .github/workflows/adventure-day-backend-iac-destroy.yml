@@ -1,0 +1,97 @@
+name: Backend-IaC-Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Please confirm with 1 that you are aware that this will delete this whole AAD environment.'
+        required: true
+        default: '0'
+      azureSPClientId:
+        description: 'Azure Service Principal Client ID'
+        required: false
+      azureSPClientSecret:
+        description: 'Azure Service Principal Client Secret'
+        required: false
+      azureSubscriptionId:
+        description: 'Azure Subscription ID'
+        required: false
+      azureTenantId:
+        description: 'Azure Tenant ID'
+        required: false
+      azureSecretName:
+        description: 'Use this, if you want to use a GitHub secret and not the 4 above: Azure Secret Name containing the Service Principal Details'
+        required: false
+      environmentName:
+        description: 'The environment deployment name, e.g. dev, qa or prod'
+        required: true
+        default: 'prod'
+      prefix:
+        description: 'The deployment prefix used for all Azure artifacts.'
+        required: true
+        default: 'azure-adventure-day'
+      location:
+        description: 'The deployment location used for all Azure artifacts.'
+        required: true
+        default: 'northeurope'
+
+jobs:
+  destroy-backend:
+    name: Destroy Adventure Day Backend in Azure
+    if: github.event.inputs.azureSPClientId == '1'
+    outputs:
+      admin_server_url: ${{ steps.setvars.output.admin_server_url }}
+    defaults:
+      run:
+        working-directory: AdventureDayBackend/terraform
+        shell: pwsh
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@master
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
+
+      - name: Mask SP Client Secret # Workaround as otherwise it is still in the logs, https://github.com/actions/runner/issues/643#issuecomment-708228940
+        if: github.event.inputs.azureSPClientSecret != null
+        shell: bash
+        run: |
+          MY_SECRET=$( jq -r '.inputs.azureSPClientSecret' $GITHUB_EVENT_PATH )
+          echo "::add-mask::$MY_SECRET"
+
+      - name: Set Azure Credentials directly
+        if: ${{ github.event.inputs.azureSecretName == null && github.event.inputs.azureSPClientId != null }}
+        run: |
+          'AZURE_CREDENTIALS={${{format('"clientId": "{0}", "clientSecret": "{1}", "subscriptionId": "{2}", "tenantId": "{3}"', github.event.inputs.azureSPClientId, github.event.inputs.azureSPClientSecret, github.event.inputs.azureSubscriptionId, github.event.inputs.azureTenantId)}}}' | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
+
+      - name: Set Azure Credentials with GitHub secret
+        if: github.event.inputs.azureSecretName != null
+        run: |
+          'AZURE_CREDENTIALS<<EOF' | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
+          '${{ secrets[github.event.inputs.azureSecretName] }}' | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
+          'EOF' | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
+
+      - name: Fail if secret was not found
+        if: ${{ env.AZURE_CREDENTIALS == null || env.AZURE_CREDENTIALS == 'AZURE_CREDENTIALS=' }}
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('SP details are not entered directly and no secret found with name ${{ github.event.inputs.azureSecretName }}!')
+     
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ env.AZURE_CREDENTIALS }}
+
+      - name: Set Environment Variables
+        run: |
+          "TF_VAR_azure_sp_client_id=${{ fromJSON(env.AZURE_CREDENTIALS).clientId }}" | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
+          "TF_VAR_azure_sp_client_secret=${{ fromJSON(env.AZURE_CREDENTIALS).clientSecret }}" | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
+
+      - name: Run Terraform Apply
+        id: tf
+        run: |
+         ./tf.ps1 -Verbose -Force -Prefix ${{ github.event.inputs.prefix }} -Location ${{ github.event.inputs.location }} -EnvironmentName ${{ github.event.inputs.environmentName }} -TargetPath . -Destroy
