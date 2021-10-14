@@ -38,7 +38,7 @@ on:
 jobs:
   destroy-backend:
     name: Destroy Adventure Day Backend in Azure
-    if: github.event.inputs.azureSPClientId == '1'
+    if: github.event.inputs.confirm == '1'
     outputs:
       admin_server_url: ${{ steps.setvars.output.admin_server_url }}
     defaults:
