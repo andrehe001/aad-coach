@@ -56,7 +56,11 @@ namespace AdventureDay.PortalApi.Helpers
                 var teamName = XlsxHelper.GetValue(row.Descendants<Cell>().ElementAt(columnIndices[COLUMN_TEAMS_TEAMNAME]), table);
                 var subscriptionId = XlsxHelper.GetValue(row.Descendants<Cell>().ElementAt(columnIndices[COLUMN_TEAMS_SUBSCRIPTION]), table);
                 var tenantId = XlsxHelper.GetValue(row.Descendants<Cell>().ElementAt(columnIndices[COLUMN_TEAMS_TENANT]), table);
-                var password = XlsxHelper.GetValue(row.Descendants<Cell>().ElementAt(columnIndices[COLUMN_TEAMS_PASSWORD]), table);
+                var password = "";
+                if (columnIndices[COLUMN_TEAMS_PASSWORD] >= 0)
+                {
+                    password = XlsxHelper.GetValue(row.Descendants<Cell>().ElementAt(columnIndices[COLUMN_TEAMS_PASSWORD]), table);
+                }
                 var team = new Team()
                 {
                     Name = teamName,
@@ -139,7 +143,7 @@ namespace AdventureDay.PortalApi.Helpers
                 CheckColumn(COLUMN_TEAMS_TEAMNAME, sheet, table, SHEET_TEAMS);
                 CheckColumn(COLUMN_TEAMS_SUBSCRIPTION, sheet, table, SHEET_TEAMS);
                 CheckColumn(COLUMN_TEAMS_TENANT, sheet, table, SHEET_TEAMS);
-                CheckColumn(COLUMN_TEAMS_PASSWORD, sheet, table, SHEET_TEAMS);
+                // Password is optional for team import. Will be generated if not specified in file.
             }
         }
 

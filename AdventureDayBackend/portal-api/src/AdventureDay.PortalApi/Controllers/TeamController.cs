@@ -308,13 +308,18 @@ namespace AdventureDay.PortalApi.Controllers
             }
         }
 
-        [HttpPost("importteamsxlsx")]
+        [HttpPost("importxlsx")]
         [TeamAuthorize(AuthorizationType.Admin)]
         public IActionResult ImportTeamsXlsx(List<IFormFile> files)
         {
             if (files.Count > 1)
             {
                 return BadRequest("Only one file supported.");
+            }
+
+            if (files.Count == 0)
+            {
+                return BadRequest("No file provided.");
             }
 
             var formFile = files.First();

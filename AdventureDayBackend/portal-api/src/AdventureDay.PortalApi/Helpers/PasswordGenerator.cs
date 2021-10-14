@@ -12,12 +12,12 @@ namespace AdventureDay.PortalApi.Helpers
         private static string characterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         public static string GetPassword()
         {
-            var length = 15;
+            var length = 9;
             var builder = new StringBuilder(length);
             var random = new Random(DateTime.Now.Millisecond);
             for (int i = 0; i < length; i++)
             {
-                builder.Append(characterSet[random.Next(0, length - 1)]);
+                builder.Append(characterSet[random.Next(0, characterSet.Length - 1)]);
             }
 
             return builder.ToString();

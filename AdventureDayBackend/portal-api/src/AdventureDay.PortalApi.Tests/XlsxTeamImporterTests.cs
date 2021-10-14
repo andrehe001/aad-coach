@@ -8,6 +8,23 @@ namespace AdventureDay.PortalApi.Tests
 {
     public class XlsxTeamImporterTests
     {
+
+        [Fact]
+        public void ExtractTeamsIgnoresMissingPasswordColumn()
+        {
+            using (var importer = new Helpers.XlsxTeamImporter())
+            {
+                importer.LoadFromPath("AzureAdventureDay_AzurePreparation_NoTeamsPasswords.xlsx");
+                var teams = importer.ExtractTeams();
+                Assert.Equal(13, teams.Count());
+                foreach (var team in teams)
+                {
+                    Assert.Empty(team.TeamPassword);
+                    Assert.NotEmpty(team.Name);
+                }
+            }
+        }
+
         [Fact]
         public void ExtractTeamsGets13TeamsFromBasicSample()
         {
@@ -103,6 +120,19 @@ namespace AdventureDay.PortalApi.Tests
             {
                 var teams = CreateOneTeam();
                 importer.LoadFromPath("AzureAdventureDay_AzurePreparation_BasicExample.xlsx");
+                importer.ValidateFile();
+                Assert.True(importer.FileValid);
+                Assert.Empty(importer.FileIssues);
+            }
+        }
+
+        [Fact]
+        public void ValidateFileIsOkWithTeamsPasswordColumMissing()
+        {
+            using (var importer = new Helpers.XlsxTeamImporter())
+            {
+                var teams = CreateOneTeam();
+                importer.LoadFromPath("AzureAdventureDay_AzurePreparation_NoTeamsPasswords.xlsx");
                 importer.ValidateFile();
                 Assert.True(importer.FileValid);
                 Assert.Empty(importer.FileIssues);

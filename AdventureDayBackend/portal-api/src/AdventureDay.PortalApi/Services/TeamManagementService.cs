@@ -70,6 +70,10 @@ namespace AdventureDay.PortalApi.Services
                     {
                         // This will overwrite existing teams whenever we do an xlsx import
                         // TODO: Check whether that works and makes sense
+                        // currently leads to
+                        // Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details.
+                        //--->Microsoft.Data.SqlClient.SqlException(0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_TeamScores_Teams_TeamId".The conflict occurred in database "master", table "dbo.Teams", column 'Id'.
+
                         var existingTeam = this.GetTeamByName(team.Name);
                         this.DeleteTeam(existingTeam.Id);
                     }
@@ -77,7 +81,7 @@ namespace AdventureDay.PortalApi.Services
                     this.AddTeam(team);
                 }
             }
-      
+
             return true;
         }
 

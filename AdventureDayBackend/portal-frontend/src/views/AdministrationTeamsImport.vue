@@ -3,6 +3,11 @@
     <h1>Administration Teams Import</h1>
     <div class="content overflow-auto">
       <p class="text">This will have the excel upload button.</p>
+      <input
+        type="file"
+        accept=".xlsx"
+        @change="onFileChange"/>
+      <button class="btn btn-info" @click="onUploadFile">Upload xlsx file</button>
       <table class="table table-hover">
         <thead>
           <tr>
@@ -30,23 +35,42 @@ export default {
   name: "TeamAccounts",
   data() {
     return {
-      users: []
+      teamStatus: [],
+      selectedFile: ""
     };
   },
   created() {
-    this.fetchTeamAccounts();
+    //this.fetchTeamAccounts();
   },
   methods: {
-    fetchTeamAccounts() {
+    onFileChange(e) {
+      const selectedFile = e.target.files[0]; // accessing file
+      this.selectedFile = selectedFile;
+    },
+    onUploadFile() {
+      const formData = new FormData();
+      formData.append("files", this.selectedFile);  // appending file
+
+     // sending file to the backend
       this.$http
-        .get("Team/members/current")
-        .then((response) => {
-          this.users = response.data;
+        .post("Team/importxlsx", formData)
+        .then(res => {
+          console.log(res);
         })
-        .catch(function (error) {
-          console.error(error.response);
+        .catch(err => {
+          console.log(err);
         });
     }
+    // fetchTeamAccounts() {
+    //   this.$http
+    //     .get("Team/members/current")
+    //     .then((response) => {
+    //       this.users = response.data;
+    //     })
+    //     .catch(function (error) {
+    //       console.error(error.response);
+    //     });
+    // }
   }
 };
 </script>
