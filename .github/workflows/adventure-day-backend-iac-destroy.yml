@@ -91,7 +91,7 @@ jobs:
           "TF_VAR_azure_sp_client_id=${{ fromJSON(env.AZURE_CREDENTIALS).clientId }}" | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
           "TF_VAR_azure_sp_client_secret=${{ fromJSON(env.AZURE_CREDENTIALS).clientSecret }}" | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
 
-      - name: Run Terraform Apply
+      - name: Run Terraform Destroy
         id: tf
         run: |
          ./tf.ps1 -Verbose -Force -Prefix ${{ github.event.inputs.prefix }} -Location ${{ github.event.inputs.location }} -EnvironmentName ${{ github.event.inputs.environmentName }} -TargetPath . -Destroy

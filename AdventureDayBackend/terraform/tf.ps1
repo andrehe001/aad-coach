@@ -584,9 +584,9 @@ function TerraformDestroy {
         }
 
         if ($VarFile) {
-            &"$TerraformPath" destroy $TerraformNoColor -auto-approve -input=false -var-file="$VarFile"
+            &"$TerraformPath" destroy $TerraformNoColor -auto-approve -input=false -var-file="$VarFile" -lock=false
         } else {
-            &"$TerraformPath" destroy $TerraformNoColor -auto-approve -input=false
+            &"$TerraformPath" destroy $TerraformNoColor -auto-approve -input=false -lock=false
         }
         if ($LastExitCode -gt 0) { throw "terraform error." }
     }
