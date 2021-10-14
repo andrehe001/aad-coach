@@ -1,0 +1,19 @@
+name: Backend-Nightly-IaC-Build-Deploy
+
+on:
+  workflow_dispatch:
+  schedule:
+    # every night at 2am
+    - cron:  '0 2 * * *'  
+
+jobs:
+  nightly-deploy-backend:
+    name: Nightly test of deploying Adventure Day Backend to Azure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke Backend-IaC-Build-Deploy 
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Backend-IaC-Build-Deploy
+          token: ${{ secrets.AZURE_ADVENTURE_DAY_COACH_PACKAGE_PAT }}
+          inputs: '{ "azureSecretName": "AZURE_RICARDO", "environmentName": "nightly" }'

@@ -429,7 +429,7 @@ function DeleteTerraformBackend {
     az storage account delete --name $global:TfStateStorageAccountName --resource-group $UtilResourceGroupName --yes
     if ($LastExitCode -gt 0) { throw "az CLI error." }
 
-    az group delete --name "$UtilResourceGroupName" -yes
+    az group delete --name "$UtilResourceGroupName" --yes
     if ($LastExitCode -gt 0) { throw "az CLI error." }
 }
 
