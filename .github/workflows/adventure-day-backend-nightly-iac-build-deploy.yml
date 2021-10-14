@@ -16,4 +16,4 @@ jobs:
         with:
           workflow: Backend-IaC-Build-Deploy
           token: ${{ secrets.AZURE_ADVENTURE_DAY_NIGHTLY_PAT }}
-          inputs: '{ "azureSecretName": "AZURE_RICARDO", "environmentName": "nightly" }'
+          inputs: '{ "azureSecretName": "AZURE_RICARDO", "environmentName": "night" }'

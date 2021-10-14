@@ -29,7 +29,7 @@ on:
       prefix:
         description: 'The deployment prefix used for all Azure artifacts.'
         required: true
-        default: 'az-adv-day'
+        default: 'az-adventure-day'
       location:
         description: 'The deployment location used for all Azure artifacts.'
         required: true

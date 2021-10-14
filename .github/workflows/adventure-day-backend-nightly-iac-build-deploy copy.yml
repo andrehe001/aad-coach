@@ -16,4 +16,4 @@ jobs:
         with:
           workflow: Backend-IaC-Destroy
           token: ${{ secrets.AZURE_ADVENTURE_DAY_NIGHTLY_PAT }}
-          inputs: '{ "confirm": "1", "azureSecretName": "AZURE_RICARDO", "environmentName": "nightly" }'
+          inputs: '{ "confirm": "1", "azureSecretName": "AZURE_RICARDO", "environmentName": "night" }'
