@@ -60,6 +60,8 @@ jobs:
 
       - name: Mask SP Client Secret
         run: |
+          printenv
+          echo $INPUT_AZURESPCLIENTSECRET
           echo "::add-mask::$INPUT_AZURESPCLIENTSECRET"
 
       - name: Set Azure Credentials directly
