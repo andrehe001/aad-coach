@@ -12,11 +12,11 @@
 2. Navigate to the action [Backend-IaC-Build-Deploy](https://github.com/azure-adventure-day/aad-coach/actions/workflows/adventure-day-backend-iac-build-deploy.yml).
 3. Enter the Azure Service Principal Client ID, Client Secret, Azure Subscription ID and Tenant ID.
 4. Changes to the other attributes are only required if you need to change the `location` or for example have multiple backends in one Azure Subscription.
-5. Execute the `Run workflow` command:
+5. Execute the `Run workflow` command.
 
 ## Executing the Deployment for development/testing
 
-> Only Core Team, as you need to have a specified GitHub secret configured
+> **Only Core Team, as you need to have a specified GitHub secret configured**
 
 To speed up testing during development, it is possible to use a GitHub secret for deployment:
 

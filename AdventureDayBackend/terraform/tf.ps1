@@ -608,6 +608,8 @@ function TerraformDestroy {
             if ($LastExitCode -gt 0) { throw "terraform error." }
             
             DeleteTerraformBackend
+            
+            exit
         }
     }
     finally {
