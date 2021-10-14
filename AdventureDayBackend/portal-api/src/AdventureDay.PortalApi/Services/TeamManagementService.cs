@@ -41,6 +41,48 @@ namespace AdventureDay.PortalApi.Services
             return SaveChanges();
         }
 
+        public bool AddTeamsFromXslx(string xlsxFilePath)
+        {
+            using (var importer = new XlsxTeamImporter())
+            {
+                importer.LoadFromPath(xlsxFilePath);
+                if (!importer.FileValid)
+                {
+                    // TODO: How to get the validation details to the client? Like which column might be missing or such...
+                    return false;
+                }
+
+                var teams = importer.ExtractTeams();
+                teams = importer.ExtractMembers(teams);
+                foreach (var team in teams)
+                {
+                    if (team.Name.Equals(AppSettings.AdminTeamName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    if (string.IsNullOrEmpty(team.TeamPassword))
+                    {
+                        team.TeamPassword = PasswordGenerator.GetPassword();
+                    }
+
+                    if (!this.CheckTeamNameFree(team.Name))
+                    {
+                        // This will overwrite existing teams whenever we do an xlsx import
+                        // TODO: Check whether that works and makes sense
+                        var existingTeam = this.GetTeamByName(team.Name);
+                        this.DeleteTeam(existingTeam.Id);
+                    }
+
+                    this.AddTeam(team);
+                }
+            }
+      
+            return true;
+        }
+
+        
+
         public bool RenameTeam(int teamId, string newName)
         {
             Team team = GetTeamById(teamId);
