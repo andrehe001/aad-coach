@@ -73,27 +73,13 @@ jobs:
           '${{ secrets[github.event.inputs.azureSecretName] }}' | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
           'EOF' | Out-File -Encoding utf8 -Append -FilePath $env:GITHUB_ENV
 
-
       - name: Fail if secret was not found
         if: ${{ env.AZURE_CREDENTIALS == null || env.AZURE_CREDENTIALS == 'AZURE_CREDENTIALS=' }}
         uses: actions/github-script@v3
         with:
           script: |
               core.setFailed('SP details are not entered directly and no secret found with name ${{ github.event.inputs.azureSecretName }}!')
-
-      - name: Echo cred var
-        run: |
-          echo '${{ env.AZURE_CREDENTIALS }}'
-          echo '${{ fromJSON(env.AZURE_CREDENTIALS).clientId }}'
-          echo '${{ fromJSON(env.AZURE_CREDENTIALS).clientSecret }}'
-          echo '${{ fromJSON(env.AZURE_CREDENTIALS).subscriptionId }}'
-          echo '${{ fromJSON(env.AZURE_CREDENTIALS).tenantId }}'
-
-      - name: Test JSON parser
-        uses: ./.github/actions/json-parser-test/
-        with:
-          json-data: ${{ env.AZURE_CREDENTIALS }}
-      
+     
       - name: Azure Login
         uses: Azure/login@v1
         with:
@@ -130,6 +116,6 @@ jobs:
         working-directory: AdventureDayBackend/helm-charts
         run: ./helm_deploy_all.ps1 -RegistryName "${{ steps.vars.outputs.registryName }}" -Tag "${{ github.event.inputs.tag }}"
 
-      - name: Print output
+      - name: Print Admin Server URL
         run: | 
           echo "admin_server_url: http://${{ steps.vars.outputs.admin_server_url }}"
