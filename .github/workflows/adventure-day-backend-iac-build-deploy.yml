@@ -84,7 +84,7 @@ jobs:
               core.setFailed('SP details are not entered directly and no secret found with name ${{ github.event.inputs.azureSecretName }}!')
 
       - name: Test JSON parser
-        uses: actions/json-parser-test
+        uses: ./.github/actions/json-parser-test/
         with:
           json-data: ${{ env.AZURE_CREDENTIALS }}
       
