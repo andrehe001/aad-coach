@@ -24,7 +24,7 @@
             <th scope="row">
               {{ team.name }}
             </th>
-            <td :class="team.status == 'OK' ? 'ok' : 'nok'">
+            <td :class="team.status.toLowerCase() == 'ok' ? 'ok' : 'nok'">
               {{ team.status }}
             </td>
             <td>
@@ -56,7 +56,7 @@
                 <th scope="row">
                   {{ member.username }}
                 </th>
-                <td :class="member.status == 'OK' ? 'ok' : 'nok'">
+                <td :class="member.status.toLowerCase() == 'ok' ? 'ok' : 'nok'">
                   {{ member.status }}
                 </td>
                 <td>
