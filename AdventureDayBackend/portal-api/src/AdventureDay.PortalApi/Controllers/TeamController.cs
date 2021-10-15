@@ -168,6 +168,13 @@ namespace AdventureDay.PortalApi.Controllers
             return Ok(_teamservice.GetMembers(team.Id));
         }
 
+        [HttpGet("members/all")]
+        [TeamAuthorize(AuthorizationType.Admin)]
+        public ActionResult<IEnumerable<Member>> GetAllTeamMembersOfAllTeams()
+        {
+            return Ok(_teamservice.GetAllTeamsWithMembers().SelectMany(t => t.Members));
+        }
+
         [HttpGet("members/{teamId}")]
         [TeamAuthorize(AuthorizationType.AnyTeam)]
         public ActionResult<IEnumerable<Member>> GetTeamMembers(int teamId)
@@ -329,7 +336,8 @@ namespace AdventureDay.PortalApi.Controllers
                 formFile.CopyTo(stream);
             }
 
-            var success = _teamservice.AddTeamsFromXslx(filePath);
+            string[] issues;
+            var success = _teamservice.AddTeamsFromXslx(filePath, out issues);
             if (success)
             {
                 Log.Information($"Successfully added teams from {filePath}");
@@ -338,7 +346,7 @@ namespace AdventureDay.PortalApi.Controllers
             else
             {
                 Log.Error("Error while importing teams from {filePath}");
-                return BadRequest("bad excel format");
+                return BadRequest(issues);
             }
                         
         }

@@ -41,16 +41,18 @@ namespace AdventureDay.PortalApi.Services
             return SaveChanges();
         }
 
-        public bool AddTeamsFromXslx(string xlsxFilePath)
+        public bool AddTeamsFromXslx(string xlsxFilePath, out string[] issues)
         {
             using (var importer = new XlsxTeamImporter())
             {
                 importer.LoadFromPath(xlsxFilePath);
                 if (!importer.FileValid)
                 {
-                    // TODO: How to get the validation details to the client? Like which column might be missing or such...
+                    issues = importer.FileIssues.ToArray();
                     return false;
                 }
+
+                this.ClearTeamsAndScores();
 
                 var teams = importer.ExtractTeams();
                 teams = importer.ExtractMembers(teams);
@@ -66,22 +68,14 @@ namespace AdventureDay.PortalApi.Services
                         team.TeamPassword = PasswordGenerator.GetPassword();
                     }
 
-                    if (!this.CheckTeamNameFree(team.Name))
-                    {
-                        // This will overwrite existing teams whenever we do an xlsx import
-                        // TODO: Check whether that works and makes sense
-                        // currently leads to
-                        // Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details.
-                        //--->Microsoft.Data.SqlClient.SqlException(0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_TeamScores_Teams_TeamId".The conflict occurred in database "master", table "dbo.Teams", column 'Id'.
-
-                        var existingTeam = this.GetTeamByName(team.Name);
-                        this.DeleteTeam(existingTeam.Id);
-                    }
+                    team.Status = "OK";
+                    team.Members.ToList().ForEach(m => m.Status = "OK");
 
                     this.AddTeam(team);
                 }
             }
 
+            issues = new string[] { };
             return true;
         }
 
@@ -113,6 +107,16 @@ namespace AdventureDay.PortalApi.Services
         public bool CheckTeamNameFree(string teamName)
         {
             return !_context.Teams.Any(t => t.Name.ToLower() == teamName.ToLower());
+        }
+
+        public bool ClearTeamsAndScores()
+        {
+            _context.RemoveRange(_context.TeamScores);
+            SaveChanges();
+            _context.RemoveRange(_context.Members);
+            SaveChanges();
+            _context.RemoveRange(_context.Teams);
+            return SaveChanges();
         }
 
         public bool DeleteTeam(int id)

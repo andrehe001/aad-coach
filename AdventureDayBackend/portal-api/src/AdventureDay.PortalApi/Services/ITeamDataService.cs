@@ -25,6 +25,6 @@ namespace AdventureDay.PortalApi.Services
         Team GetTeamByIdWithMembers(int teamId);
         Team GetTeamByName(string teamName);
 
-        bool AddTeamsFromXslx(string xlsxFilePath);
+        bool AddTeamsFromXslx(string xlsxFilePath, out string[] issues);
     }
 }
