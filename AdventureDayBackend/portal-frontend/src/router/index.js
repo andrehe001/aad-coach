@@ -67,6 +67,12 @@ const routes = [
     name: 'Administration',
     meta: { layout: 'main', is_admin: true },
     component: () => import(/* webpackChunkName: "administration" */ '../views/Administration.vue')
+  },
+  {
+    path: '/administration-teams-import',
+    name: 'AdministrationTeamsImport',
+    meta: { layout: 'main', is_admin: true },
+    component: () => import(/* webpackChunkName: "administration-teams-import" */ '../views/AdministrationTeamsImport.vue')
   }
 ]
 

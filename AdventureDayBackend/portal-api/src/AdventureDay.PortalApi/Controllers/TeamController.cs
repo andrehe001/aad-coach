@@ -8,6 +8,9 @@ using AdventureDay.PortalApi.Data;
 using AdventureDay.PortalApi.Controllers.Dtos;
 using AdventureDay.PortalApi.Helpers;
 using AdventureDay.PortalApi.Services;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Linq;
 
 namespace AdventureDay.PortalApi.Controllers
 {
@@ -77,7 +80,8 @@ namespace AdventureDay.PortalApi.Controllers
             {
                 Log.Information("Updates team {teamId}", team.Id);
                 return Ok(_teamservice.GetTeamById(teamId));
-            } else if (successName)
+            }
+            else if (successName)
             {
                 Log.Error("Failed to update {teamId}", team.Id);
                 return BadRequest("Failed to update game engine uri " + teamId);
@@ -162,6 +166,13 @@ namespace AdventureDay.PortalApi.Controllers
             }
 
             return Ok(_teamservice.GetMembers(team.Id));
+        }
+
+        [HttpGet("members/all")]
+        [TeamAuthorize(AuthorizationType.Admin)]
+        public ActionResult<IEnumerable<Member>> GetAllTeamMembersOfAllTeams()
+        {
+            return Ok(_teamservice.GetAllTeamsWithMembers().SelectMany(t => t.Members));
         }
 
         [HttpGet("members/{teamId}")]
@@ -304,6 +315,43 @@ namespace AdventureDay.PortalApi.Controllers
             }
         }
 
+        [HttpPost("importxlsx")]
+        [TeamAuthorize(AuthorizationType.Admin)]
+        public IActionResult ImportTeamsXlsx(List<IFormFile> files)
+        {
+            if (files.Count > 1)
+            {
+                return BadRequest("Only one file supported.");
+            }
+
+            if (files.Count == 0)
+            {
+                return BadRequest("No file provided.");
+            }
+
+            var formFile = files.First();
+            var filePath = Path.GetTempFileName();
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                formFile.CopyTo(stream);
+            }
+
+            string[] issues;
+            var success = _teamservice.AddTeamsFromXslx(filePath, out issues);
+            if (success)
+            {
+                Log.Information($"Successfully added teams from {filePath}");
+                return Ok();
+            }
+            else
+            {
+                Log.Error("Error while importing teams from {filePath}");
+                return BadRequest(issues);
+            }
+                        
+        }
+
+
         [HttpPost("login")]
         public IActionResult Login(AuthenticateRequest model)
         {
@@ -325,5 +373,6 @@ namespace AdventureDay.PortalApi.Controllers
 
             return Ok(response);
         }
+
     }
 }

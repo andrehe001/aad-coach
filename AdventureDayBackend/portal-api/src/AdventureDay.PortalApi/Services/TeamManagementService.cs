@@ -41,6 +41,46 @@ namespace AdventureDay.PortalApi.Services
             return SaveChanges();
         }
 
+        public bool AddTeamsFromXslx(string xlsxFilePath, out string[] issues)
+        {
+            using (var importer = new XlsxTeamImporter())
+            {
+                importer.LoadFromPath(xlsxFilePath);
+                if (!importer.FileValid)
+                {
+                    issues = importer.FileIssues.ToArray();
+                    return false;
+                }
+
+                this.ClearTeamsAndScores();
+
+                var teams = importer.ExtractTeams();
+                teams = importer.ExtractMembers(teams);
+                foreach (var team in teams)
+                {
+                    if (team.Name.Equals(AppSettings.AdminTeamName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    if (string.IsNullOrEmpty(team.TeamPassword))
+                    {
+                        team.TeamPassword = PasswordGenerator.GetPassword();
+                    }
+
+                    team.Status = "OK";
+                    team.Members.ToList().ForEach(m => m.Status = "OK");
+
+                    this.AddTeam(team);
+                }
+            }
+
+            issues = new string[] { };
+            return true;
+        }
+
+        
+
         public bool RenameTeam(int teamId, string newName)
         {
             Team team = GetTeamById(teamId);
@@ -67,6 +107,16 @@ namespace AdventureDay.PortalApi.Services
         public bool CheckTeamNameFree(string teamName)
         {
             return !_context.Teams.Any(t => t.Name.ToLower() == teamName.ToLower());
+        }
+
+        public bool ClearTeamsAndScores()
+        {
+            _context.RemoveRange(_context.TeamScores);
+            SaveChanges();
+            _context.RemoveRange(_context.Members);
+            SaveChanges();
+            _context.RemoveRange(_context.Teams);
+            return SaveChanges();
         }
 
         public bool DeleteTeam(int id)
