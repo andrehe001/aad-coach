@@ -61,14 +61,14 @@
               <li class="nav-item" v-if="isAdmin">
                 <router-link to="/administration" v-slot="{ href, route, navigate, isActive, isExactActive }" >
                     <a :href="href" @click="navigate" :class="['nav-link', isExactActive && 'active']" data-dismiss="modal">
-                      Administration
+                      Administration Phases
                     </a>
                 </router-link>
               </li>
               <li class="nav-item" v-if="isAdmin">
                 <router-link to="/administration-teams-import" v-slot="{ href, route, navigate, isActive, isExactActive }" >
                     <a :href="href" @click="navigate" :class="['nav-link', isExactActive && 'active']" data-dismiss="modal">
-                      AdministrationTeamsImport
+                      Teams Import
                     </a>
                 </router-link>
               </li>

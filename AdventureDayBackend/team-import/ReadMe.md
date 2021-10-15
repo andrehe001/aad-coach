@@ -7,30 +7,12 @@
 
 ## Team import
 
-> **Warning**: Team imports via Excel can be performed multiple times, but **all existing teams, imcluding scores and team members** are deleted during the process. Thus, the import should ***NEVER*** be performed once an event has started!
+> **Warning**: Team imports via Excel can be performed multiple times, but **all existing teams, including scores and team members** are deleted during the process. Thus, the import should ***NEVER*** be performed once an event has started!
 
 0. Log in as admin to the portal and navigate to the *AdministrationTeamsImport* page.
-0. Click **Choose file** and select your *AzureAdventureDay_AzurePreparation_XYZ.xlsx* file.
-0. Click **Start file upload...** and wait for the result. In case of errors that will prevent the upload as a whole, these will be displayed immediately.
+1. Click **Choose file** and select your *AzureAdventureDay_AzurePreparation_XYZ.xlsx* file.
+2. Click **Start file upload...** and wait for the result. In case of errors that will prevent the upload as a whole, these will be displayed immediately.
 
    Otherwise, the result should look similar to this:
 
    ![AdministrationTeamsImport page](./media/team-import-page.png)
-
-## Activating Security center
-
-The security center activation is using the `activate-security-center.sh` script with the following parameters:
-
-```
-chmod +x ./activate-security-center.sh
-TEAMFILE=`pwd`/teams_real.csv
-ADMIN_SERVICEPRINCIPAL_ID=53a5d1f4-0000-4c03-9ceb-d273cc1de174
-ADMIN_SERVICEPRINCIPAL_SECRET="qi3RxoXqX06.rM3Ix"
-./activate-security-center.sh $TEAMFILE $ADMIN_SERVICEPRINCIPAL_ID $ADMIN_SERVICEPRINCIPAL_SECRET
-```
-
-Structure of the csv file
-
-```
-teamname;subscriptionid;tenantid;teampassword;comment
-```
