@@ -7,6 +7,8 @@
 
 ## Team import
 
+> **Warning**: Team imports via Excel can be performed multiple times, but **all existing teams, imcluding scores and team members** are deleted during the process. Thus, the import should ***NEVER*** be performed once an event has started!
+
 0. Log in as admin to the portal and navigate to the *AdministrationTeamsImport* page.
 0. Click **Choose file** and select your *AzureAdventureDay_AzurePreparation_XYZ.xlsx* file.
 0. Click **Start file upload...** and wait for the result. In case of errors that will prevent the upload as a whole, these will be displayed immediately.
