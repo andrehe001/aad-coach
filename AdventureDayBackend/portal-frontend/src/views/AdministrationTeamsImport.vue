@@ -39,7 +39,7 @@
           </tr>
         </tbody>
       </table>
-      <!--TODO: Make some kind of tab so that we can switch between the team and member views here -->
+      <!--TODO: Make some kind of tab so that we can switch between the team, member and welcome message views here -->
       <table class="table table-hover">
         <thead>
           <tr>
@@ -70,6 +70,29 @@
           </template>
         </tbody>
       </table>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">TeamName</th>
+            <th scope="col">Welcome Message</th>
+            <th scope="col"><button>Copy all</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="team in teams" v-bind:key="team.id">
+            <th scope="row">
+              {{ team.name }}
+            </th>
+            <td>
+               <span v-html="getWelcomeMessage(team)"></span>
+            </td>
+            <td>
+              <button>Copy</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
     </div>
   </div>
 </template>
@@ -110,6 +133,10 @@ export default {
             this.$refs.errorText.innerText = err;
           }
         });
+    },
+    getWelcomeMessage(team) {
+      var link = 'http://' + location.host + '/';
+      return 'Hi Team4,<br> the Team Portal can be found at <a href="'+link+'">'+link+'</a>. Please use "' + team.name + '" as Username and "'+team.teamPassword+'" as Password. As teamname=username, if you change it, please make a note of the new one :) And now - have fun and let\'s play against the Smoorghs!';
     },
     fetchTeamsWithMembers() {
       this.$http
