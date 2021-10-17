@@ -1,6 +1,6 @@
 <template>
   <div class="team-accounts">
-    <h1>Administration Teams Import</h1>
+    <h1>Teams Import</h1>
     <div class="content overflow-auto">
       <p class="text">Teams can be imported here by uploading an excel (xlsx) file in the format that is outlined in the docs. Be aware that importing via this way will <b><em>DELETE ALL EXISTING SCORES AND TEAMS!</em></b></p>
       <p><input
