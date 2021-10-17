@@ -9,7 +9,18 @@
         @change="onFileChange"/></p>
       <p> <button class="btn btn-primary" @click="onUploadFile">Start file upload...</button></p>
       <p style="color:#e83e8c;font-weight:900" ref="errorText"></p>
-      <table class="table table-hover">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <span class="nav-link" :class="activeTab == 'teams' ? 'active' : ''" @click="onClickTab('teams')" style="cursor:pointer;">Teams</span>
+        </li>
+        <li class="nav-item">
+          <span class="nav-link" :class="activeTab == 'members' ? 'active' : ''" @click="onClickTab('members')" style="cursor:pointer;">Members</span>
+        </li>
+        <li class="nav-item" >
+          <span class="nav-link" :class="activeTab == 'messages' ? 'active' : ''" @click="onClickTab('messages')" style="cursor:pointer;">Welcome Messages</span>
+        </li>
+      </ul>
+      <table class="table table-hover" v-if="activeTab == 'teams'">
         <thead>
           <tr>
             <th scope="col">TeamName</th>
@@ -40,7 +51,7 @@
         </tbody>
       </table>
       <!--TODO: Make some kind of tab so that we can switch between the team, member and welcome message views here -->
-      <table class="table table-hover">
+      <table class="table table-hover" v-if="activeTab == 'members'">
         <thead>
           <tr>
             <th scope="col">Username</th>
@@ -70,12 +81,12 @@
           </template>
         </tbody>
       </table>
-      <table class="table table-hover">
+      <table class="table table-hover" v-if="activeTab == 'messages'">
         <thead>
           <tr>
             <th scope="col">TeamName</th>
             <th scope="col">Welcome Message</th>
-            <th scope="col"><button>Copy all</button></th>
+            <th scope="col"><button class="btn btn-info" style="white-space: nowrap;" @click="onClickCopyAll()" ref="messageButtonAll" :disabled="this.teams.length==0">Copy all</button></th>
           </tr>
         </thead>
         <tbody>
@@ -84,10 +95,10 @@
               {{ team.name }}
             </th>
             <td>
-               <span v-html="getWelcomeMessage(team)"></span>
+               <span v-html="getWelcomeMessage(team)" :ref="'messageSpan' + team.id"></span>
             </td>
             <td>
-              <button>Copy</button>
+              <button class="btn btn-info" @click="onClickCopy(team)" :ref="'messageButton' + team.id">Copy</button>
             </td>
           </tr>
         </tbody>
@@ -103,13 +114,34 @@ export default {
   data() {
     return {
       teams: [],
-      selectedFile: ""
+      selectedFile: "",
+      activeTab: "teams"
     };
   },
   created() {
     this.fetchTeamsWithMembers();
   },
   methods: {
+    onClickCopy(team) {
+      var messageSpan = this.$refs['messageSpan' + team.id][0];
+      var message = messageSpan.innerText;
+      navigator.clipboard.writeText(message);
+      var messageButton = this.$refs['messageButton' + team.id][0];
+      messageButton.innerText = "Copied!";
+    },
+    onClickCopyAll() {
+      var message = "";
+      this.teams.forEach(team => {
+        var messageSpan = this.$refs['messageSpan' + team.id][0];
+        message = message + messageSpan.innerText + "\n-------------------------------\n";
+      });
+      navigator.clipboard.writeText(message);
+      var messageButtonAll = this.$refs['messageButtonAll'];
+      messageButtonAll.innerText = "Copied!";
+    },
+    onClickTab(tab) {
+      this.activeTab = tab;
+    },
     onFileChange(e) {
       const selectedFile = e.target.files[0]; // accessing file
       this.selectedFile = selectedFile;
@@ -136,7 +168,7 @@ export default {
     },
     getWelcomeMessage(team) {
       var link = 'http://' + location.host + '/';
-      return 'Hi Team4,<br> the Team Portal can be found at <a href="'+link+'">'+link+'</a>. Please use "' + team.name + '" as Username and "'+team.teamPassword+'" as Password. As teamname=username, if you change it, please make a note of the new one :) And now - have fun and let\'s play against the Smoorghs!';
+      return '<p>Hi ' + team.name + ',</p><p>The Team Portal can be found at <a href="'+link+'">'+link+'</a>.</p><p>Please use "' + team.name + '" as username and "'+team.teamPassword+'" as password. Because teamname=username, if you change it, please make a note of the new one ;-)</p><p>And now - have fun and let\'s play against the Smoorghs!</p>';
     },
     fetchTeamsWithMembers() {
       this.$http
