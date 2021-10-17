@@ -27,4 +27,4 @@ The teams receive the logon credentials for the game portal through a welcome me
 1. For a single team, click the respective **Copy** button, and the message will be copied to the clipboard, so that it can be directly pasted into a Microsoft Teams channel.
 
    ![Welcome Messages](./media/team-import-messages.png)
-1. In case that somebody else (with no access to the administration pages) will be posting the message, click **Copy all** to have all messages at once be copied to the clipboard. With this, the messages can easily be sent via Email to the people managing the Microsoft Teams channe.
+1. In case that somebody else (with no access to the administration pages) will be posting the message, click **Copy all** to have all messages at once be copied to the clipboard. With this, the messages can easily be sent via Email to the people managing the Microsoft Teams channel.
