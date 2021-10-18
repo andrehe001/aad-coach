@@ -35,6 +35,8 @@ resource "azurerm_subnet" "aks_subnet" {
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
+  depends_on = [ "azurerm_public_ip.nginx_ingress_pip" ]
+  
   lifecycle {
     ignore_changes = [
       default_node_pool[0].node_count, tags
