@@ -100,7 +100,10 @@ param (
     [switch][Alias('p')]$PrintEnv = $false,
     
     # Force, that is do not ask for interactive input.
-    [switch][Alias('f')]$Force = $false
+    [switch][Alias('f')]$Force = $false,
+
+    # Ignore errors
+    [switch]$IgnoreErrors = $false
 )
 
 Set-StrictMode -Version latest
@@ -605,7 +608,7 @@ function TerraformDestroy {
             if ($LastExitCode -gt 0) { throw "terraform error." }
         } else {
             &"$TerraformPath" destroy $TerraformNoColor -auto-approve -input=false -lock=false
-            if ($LastExitCode -gt 0) { throw "terraform error." }
+            if (!$IgnoreErrors -And $LastExitCode -gt 0) { throw "terraform error." }
             
             DeleteTerraformBackend
             
