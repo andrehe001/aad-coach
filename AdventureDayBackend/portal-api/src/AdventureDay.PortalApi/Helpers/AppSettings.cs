@@ -25,17 +25,6 @@ namespace AdventureDay.PortalApi.Helpers
             return connectionString;
         }
 
-        public static string HashString(AppSettings settings, string input)
-        {
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: input,
-                salt: Encoding.UTF8.GetBytes(settings.HashSalt),
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-            return hashed;
-        }
-
         private static Team adminTeam = null;
         public static Team GetAdminTeam(AppSettings settings)
         {

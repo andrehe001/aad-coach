@@ -239,9 +239,7 @@ namespace AdventureDay.PortalApi.Services
                 return null;
             }
 
-            string hashedInput = AppSettings.HashString(_appSettings, model.Password);
-
-            Team team = _context.Teams.SingleOrDefault(x => x.Name.ToLower() == model.Teamname.ToLower() && x.TeamPassword == hashedInput);
+            Team team = _context.Teams.SingleOrDefault(x => x.Name.ToLower() == model.Teamname.ToLower() && x.TeamPassword == model.Password);
 
             // return null if user not found
             if (team == null)
