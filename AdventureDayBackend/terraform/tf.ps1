@@ -380,7 +380,7 @@ function CreateOrUpdateTerraformBackend {
 
     
     $StorageAccountNamePrefix = $Prefix.Replace("_", "").Replace("-", "")
-    $StorageAccountNamePrefix = $StorageAccountNamePrefix.Replace("_", "").Replace("-", "").SubString(0, [System.Math]::Min(10, $StorageAccountNamePrefix.Length))
+    $StorageAccountNamePrefix = $StorageAccountNamePrefix.SubString(0, [System.Math]::Min(10, $StorageAccountNamePrefix.Length))
     
     $global:TfStateStorageAccountName = "tf$($StorageAccountNamePrefix)$($EnvironmentName)$($tf_hash_suffix)"
 
