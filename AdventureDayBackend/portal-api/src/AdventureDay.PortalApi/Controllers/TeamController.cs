@@ -212,7 +212,7 @@ namespace AdventureDay.PortalApi.Controllers
             var team = new Team();
             team.Name = newTeam.Name;
             team.SubscriptionId = newTeam.SubscriptionId;
-            team.TeamPassword = AppSettings.HashString(_appSettings, newTeam.TeamPassword);
+            team.TeamPassword = newTeam.TeamPassword;
             team.TenantId = newTeam.TenantId;
 
             var success = _teamservice.AddTeam(team);
