@@ -18,6 +18,7 @@ on:
       azureSecretName:
         description: 'Use this, if you want to use a GitHub secret and not the 4 above: Azure Secret Name containing the Service Principal Details'
         required: false
+        default: 'AZURE_CREDENTIALS'
       environmentName:
         description: 'The environment deployment name, e.g. dev, qa or prod'
         required: true
