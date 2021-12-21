@@ -29,7 +29,7 @@ on:
       location:
         description: 'The deployment location used for all Azure artifacts.'
         required: true
-        default: 'northeurope'
+        default: 'westeurope'
       tag:
         description: 'The container image tag to apply'
         required: true
